@@ -192,6 +192,7 @@ void _setcursortype(int curstype)
 
 void textcolor(int col)
 {
+	return; // TODO Bypassing. This code may corrupt output.
         short fg, bg;
 
         FG_COL = col;
@@ -215,6 +216,7 @@ void textcolor(int col)
 
 void textbackground(int col)
 {
+	return; // TODO Bypassing. This code may corrupt output.
         short fg, bg;
 
         BG_COL = col;

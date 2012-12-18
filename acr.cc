@@ -214,6 +214,12 @@ int main(int argc, char *argv[])
   		}
 	}
 
+	{ // TODO This block is a workaround to display correct symbols. Works like '-c' arg.
+		viewwindow = &viewwindow3;
+		mapch = &mapchar3;
+		mapch2 = &mapchar4;
+	}
+
 //new_game();
 
 	initial();

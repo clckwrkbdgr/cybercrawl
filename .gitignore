@@ -1,2 +1,5 @@
 *.o
 crawl
+
+# Savefiles
+*.00a
