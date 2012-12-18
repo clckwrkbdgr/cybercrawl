@@ -1,3 +1,4 @@
+#include <string.h>
 /*
 This file was extensively modified by Wladimir van der Laan.
 */

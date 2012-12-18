@@ -1,2 +1,2 @@
-config/site.php
-files/cache/*
+*.o
+crawl

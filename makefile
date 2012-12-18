@@ -5,7 +5,7 @@ C_ARGS = -Wall
 L_ARGS = -static
 MCHMOD = 711
 INSTALLDIR = /usr/games
-LIB = -lncurses
+LIB = -lncurses -lgpm
 
 
 # Include for Linux
