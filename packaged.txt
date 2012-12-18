@@ -1,0 +1,10 @@
+
+APPLICATION: Linley's Dungeon Crawl
+VERSION:     3.3.0
+PLATFORM:    MS-DOS + Linux + OS/2 / Source
+
+AUTHORED BY: Linley Henzell (linley.henzell@student.adelaide.edu.au)
+AUTHORED ON: 26 March 1999
+
+BUNDLED BY:  Don Brodale (lar+crawl@bway.net)
+BUNDLED ON:  26 March 2002
