@@ -192,7 +192,6 @@ void _setcursortype(int curstype)
 
 void textcolor(int col)
 {
-	return; // TODO Bypassing. This code may corrupt output.
         short fg, bg;
 
         FG_COL = col;
@@ -201,22 +200,21 @@ void textcolor(int col)
         if (bg & 128)
                bg = bg - 128;
         if ((fg == 128) && (bg == 0)) // Special case: 0/0/bold = darkgray/black!
-                attrset(COLOR_PAIR(63) | A_BOLD | A_ALTCHARSET);
+                attrset(COLOR_PAIR(63) | A_BOLD);
         else
         {
                 if (fg & 128)
                 {
-                        attrset((COLOR_PAIR((fg - 128) + bg * 8)) | A_BOLD | A_ALTCHARSET);
+                        attrset((COLOR_PAIR((fg - 128) + bg * 8)) | A_BOLD);
                 }
                 else
-                        attrset(COLOR_PAIR(fg + bg * 8) | A_NORMAL | A_ALTCHARSET);
+                        attrset(COLOR_PAIR(fg + bg * 8) | A_NORMAL);
         }
 }
 
 
 void textbackground(int col)
 {
-	return; // TODO Bypassing. This code may corrupt output.
         short fg, bg;
 
         BG_COL = col;
@@ -225,15 +223,15 @@ void textbackground(int col)
         if (bg & 128)
                bg = bg - 128;
         if ((fg == 128) && (bg == 0)) // Special case: 0/0/bold = darkgray/black!
-                attrset(COLOR_PAIR(63) | A_BOLD | A_ALTCHARSET);
+                attrset(COLOR_PAIR(63) | A_BOLD);
         else
         {
                 if (fg & 128)
                 {
-                        attrset((COLOR_PAIR((fg - 128) + bg * 8)) | A_BOLD | A_ALTCHARSET);
+                        attrset((COLOR_PAIR((fg - 128) + bg * 8)) | A_BOLD);
                 }
                 else
-                        attrset(COLOR_PAIR(fg + bg * 8) | A_NORMAL | A_ALTCHARSET);
+                        attrset(COLOR_PAIR(fg + bg * 8) | A_NORMAL);
         }
 }
 
