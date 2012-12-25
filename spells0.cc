@@ -52,7 +52,7 @@ char st_pass [60];
 
    clrscr();
 
-cprintf("  Your Spells                       Type                  Success   Level");
+cprintf("  Your Programs                     Type                  Success   Level");
 lines++;
 
 	if (lines > 22)
@@ -174,19 +174,19 @@ lines++;
    if (spell_type(you[0].spells [j], 12) == 1)
    {
     print_slash(already);
-    cprintf("Enchantment");
+    cprintf("Plugins");
     already = 1;
    }
    if (spell_type(you[0].spells [j], 19) == 1)
    {
     print_slash(already);
-    cprintf("Divination");
+    cprintf("Statistics");
     already = 1;
    }
    if (spell_type(you[0].spells [j], 20) == 1)
    {
     print_slash(already);
-    cprintf("Translocation");
+    cprintf("Maintenance use");
     already = 1;
    }
    if (spell_type(you[0].spells [j], 18) == 1)
@@ -204,7 +204,7 @@ lines++;
    if (spell_type(you[0].spells [j], 16) == 1)
    {
     print_slash(already);
-    cprintf("Necromancy");
+    cprintf("Cyborgization");
     already = 1;
    }
 
@@ -1190,11 +1190,11 @@ void spell_name(unsigned char spell, char spln [60])
 	switch(spell)
 	{
 		case 0: strcpy(spln, "Identify"); break;
-		case 1: strcpy(spln, "Teleport Self"); break;
+		case 1: strcpy(spln, "Use Ventilation"); break;
 		case 2: strcpy(spln, "Cause Fear"); break;
 		case 3: strcpy(spln, "Create Noise"); break;
-		case 4: strcpy(spln, "Remove Curse"); break;
-		case 5: strcpy(spln, "Magic Dart"); break;
+		case 4: strcpy(spln, "Remove Virus"); break;
+		case 5: strcpy(spln, "Energy Dart"); break;
 		case 6: strcpy(spln, "Fireball"); break;
 		case 13: strcpy(spln, "Conjure Flame"); break;
       case 14: strcpy(spln, "Dig"); break;
@@ -1209,7 +1209,7 @@ void spell_name(unsigned char spell, char spln [60])
       case 25: strcpy(spln, "Invisibility"); break;
       case 26: strcpy(spln, "Throw Flame"); break;
       case 27: strcpy(spln, "Throw Frost"); break;
-      case 28: strcpy(spln, "Controlled Blink"); break;
+      case 28: strcpy(spln, "Controlled Jump"); break;
       case 29: strcpy(spln, "Freezing Cloud"); break;
       case 30: strcpy(spln, "Mephitic Cloud"); break;
       case 31: strcpy(spln, "Ring of Flames"); break;
@@ -1218,7 +1218,7 @@ void spell_name(unsigned char spell, char spln [60])
       case 34: strcpy(spln, "Restore Dexterity"); break;
       case 35: strcpy(spln, "Venom Bolt"); break;
       case 36: strcpy(spln, "Olgreb's Toxic Radiance"); break;
-      case 37: strcpy(spln, "Teleport Other"); break;
+      case 37: strcpy(spln, "Use Maintenace On Other"); break;
       case 38: strcpy(spln, "Lesser Healing"); break;
       case 39: strcpy(spln, "Greater Healing"); break;
       case 40: strcpy(spln, "Cure Poison"); break;
@@ -1227,9 +1227,9 @@ void spell_name(unsigned char spell, char spln [60])
       case 43: strcpy(spln, "Selective Amnesia"); break;
       case 44: strcpy(spln, "Mass Confusion"); break;
       case 45: strcpy(spln, "Smiting"); break;
-	case 46: strcpy(spln, "Repel Undead"); break;
+	case 46: strcpy(spln, "Repel Cyborgs"); break;
         case 47: strcpy(spln, "Holy Word"); break;
-      case 48: strcpy(spln, "Detect Curse"); break;
+      case 48: strcpy(spln, "Detect Virus"); break;
       case 49: strcpy(spln, "Summon Small Mammal"); break;
       case 50: strcpy(spln, "Abjuration"); break;
       case 51: strcpy(spln, "Summon Scorpions"); break;
@@ -1248,27 +1248,27 @@ void spell_name(unsigned char spell, char spln [60])
       case 63: strcpy(spln, "Enslavement"); break;
       case 64: strcpy(spln, "Magic Mapping"); break;
       case 65: strcpy(spln, "Heal Other"); break;
-      case 66: strcpy(spln, "Animate Dead"); break;
+      case 66: strcpy(spln, "Cybernitize Dead"); break;
       case 67: strcpy(spln, "Pain"); break;
       case 68: strcpy(spln, "Extension"); break;
-      case 69: strcpy(spln, "Control Undead"); break;
-      case 70: strcpy(spln, "Animate Skeleton"); break;
-      case 71: strcpy(spln, "Vampiric Draining"); break;
-      case 72: strcpy(spln, "Summon Wraiths"); break;
+      case 69: strcpy(spln, "Control Cyborg"); break;
+      case 70: strcpy(spln, "Cybernitize Skeleton"); break;
+      case 71: strcpy(spln, "Chemical Draining"); break;
+      case 72: strcpy(spln, "Summon Robots"); break;
       case 73: strcpy(spln, "Detect Items"); break;
       case 74: strcpy(spln, "Borgnjor's Revivification"); break;
 
       case 75: strcpy(spln, "Burn"); break;
       case 76: strcpy(spln, "Freeze"); break;
-      case 77: strcpy(spln, "Summon Elemental"); break;
+      case 77: strcpy(spln, "Summon Nanorg"); break;
       case 78: strcpy(spln, "Ozocubu's Refrigeration"); break;
       case 79: strcpy(spln, "Sticky Flame"); break;
-      case 80: strcpy(spln, "Summon Ice Beast"); break;
+      case 80: strcpy(spln, "Summon Refrigerator"); break;
       case 81: strcpy(spln, "Ozocubu's Armour"); break;
       case 82: strcpy(spln, "Call Imp"); break;
       case 83: strcpy(spln, "Repel Missiles"); break;
       case 84: strcpy(spln, "Berserker Rage"); break;
-      case 85: strcpy(spln, "Dispel Undead"); break;
+      case 85: strcpy(spln, "Dispel Cyborg"); break;
 
       case 86: strcpy(spln, "Guardian"); break;
       case 87: strcpy(spln, "Pestilence"); break;
@@ -1287,9 +1287,9 @@ void spell_name(unsigned char spell, char spln [60])
       case 116: strcpy(spln, "Sublimation of Blood"); break;
       case 117: strcpy(spln, "Tukima's Dance"); break;
       case 118: strcpy(spln, "Hellfire"); break; // Staff of Dispater
-      case 119: strcpy(spln, "Summon Demon"); break;
-      case 120: strcpy(spln, "Demonic Horde"); break;
-      case 121: strcpy(spln, "Summon Greater Demon"); break;
+      case 119: strcpy(spln, "Summon Biomutant"); break;
+      case 120: strcpy(spln, "Mutant Horde"); break;
+      case 121: strcpy(spln, "Summon Greater Mutant"); break;
       case 122: strcpy(spln, "Corpse Rot"); break;
       case 123: strcpy(spln, "Tukima's Vorpal Blade"); break;
       case 124: strcpy(spln, "Fire Brand"); break;
@@ -1309,7 +1309,7 @@ void spell_name(unsigned char spell, char spln [60])
       case 136: strcpy(spln, "Orb of Electrocution"); break;
       case 137: strcpy(spln, "Detect creatures"); break;
       case 138: strcpy(spln, "Cure Poison"); break;
-      case 139: strcpy(spln, "Control Teleport"); break;
+      case 139: strcpy(spln, "Control Maintenance"); break;
       case 140: strcpy(spln, "Poison Ammunition"); break;
       case 141: strcpy(spln, "Poison Weapon"); break;
       case 142: strcpy(spln, "Resist Poison"); break;
@@ -1327,7 +1327,7 @@ void spell_name(unsigned char spell, char spln [60])
       case 153: strcpy(spln, "Statue Form"); break;
       case 154: strcpy(spln, "Ice Form"); break;
       case 155: strcpy(spln, "Dragon Form"); break;
-      case 156: strcpy(spln, "Necromutation"); break;
+      case 156: strcpy(spln, "Cybermutation"); break;
       case 157: strcpy(spln, "Death Channel"); break;
       case 158: strcpy(spln, "Symbol of Torment"); break;
       case 159: strcpy(spln, "Deflect Missiles"); break;
@@ -1353,7 +1353,7 @@ Fennel wands
 More summonings!
 */
 
-default: strcpy(spln, "another spell"); break;
+default: strcpy(spln, "another program"); break;
 	}
 
 // purify food?
@@ -1406,7 +1406,7 @@ char already = 0;
    itoa(numby, stringy, 2);
 
    textcolor(LIGHTGREY);
-cprintf(" Spells                             Type                      Level"EOL);
+cprintf(" Programs                           Type                      Level"EOL);
 
 
    for (j = 1; j < 7; j ++)
@@ -1483,19 +1483,19 @@ cprintf(" Spells                             Type                      Level"EOL
    if (spell_type(spell_types [j], 12) == 1)
    {
     print_slash(already);
-    cprintf("Enchantment");
+    cprintf("Plugins");
     already = 1;
    }
    if (spell_type(spell_types [j], 19) == 1)
    {
     print_slash(already);
-    cprintf("Divination");
+    cprintf("Statistics");
     already = 1;
    }
    if (spell_type(spell_types [j], 20) == 1)
    {
     print_slash(already);
-    cprintf("Translocation");
+    cprintf("Maintenance Use");
     already = 1;
    }
    if (spell_type(spell_types [j], 18) == 1)
@@ -1513,7 +1513,7 @@ cprintf(" Spells                             Type                      Level"EOL
    if (spell_type(spell_types [j], 16) == 1)
    {
     print_slash(already);
-    cprintf("Necromancy");
+    cprintf("Cyborgization");
     already = 1;
    }
 

@@ -72,21 +72,21 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 if (you[0].conf != 0) random_blink();
 
-start_blink: strcpy(info, "Blink to where?");
+start_blink: strcpy(info, "Jump to where?");
 mpr(info);
 
 direction(100, beam);
 
 if (beam[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
 
 if (see_grid(beam[0].target_x, beam[0].target_y) == 0)
 {
-	strcpy(info, "You can't blink there!");
+	strcpy(info, "You can't jump there!");
 	mpr(info);
 	goto start_blink;
 }
@@ -137,7 +137,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 		return;
 	}
 
-	strcpy(info, "You blink.");
+	strcpy(info, "You jump.");
 	mpr(info);
 
 	you[0].x_pos = passed [0];
@@ -175,7 +175,7 @@ direction(1, fire_ball);
 
 if (fire_ball[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -215,7 +215,7 @@ beam[0].target_y = fire_storm[0].target_y;
 
 if (fire_storm[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -283,7 +283,7 @@ direction(1, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return -1;
 }
@@ -368,9 +368,9 @@ void identify(char pow)
             }
 			if (sc_read_2 == you[0].equip [EQ_BODY_ARMOUR]) strcat(info, " (being worn)");
 
-			if (sc_read_2 == you[0].equip [EQ_LEFT_RING]) strcat(info, " (on left hand)");
-			if (sc_read_2 == you[0].equip [EQ_RIGHT_RING]) strcat(info, " (on right hand)");
-			if (sc_read_2 == you[0].equip [EQ_AMULET]) strcat(info, " (around neck)");
+			if (sc_read_2 == you[0].equip [EQ_LEFT_RING]) strcat(info, " (on left hemisphere)");
+			if (sc_read_2 == you[0].equip [EQ_RIGHT_RING]) strcat(info, " (on right hemisphere)");
+			if (sc_read_2 == you[0].equip [EQ_AMULET]) strcat(info, " (on vertebra)");
 
 			mpr(info);
 
@@ -386,7 +386,7 @@ void conjure_flame(int pow)
 
 struct dist spelld [1];
 
-strcpy(info, "You cast a flaming cloud spell!");
+strcpy(info, "You execute a flaming cloud program!");
 mpr(info);
 
 strcpy(info, "Where?");
@@ -397,7 +397,7 @@ direction(100, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -458,7 +458,7 @@ direction(1, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -536,7 +536,7 @@ direction(100, cdis);
 
 if (cdis[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -625,7 +625,7 @@ if (bmove[0].nothing == -1)
 
 if (bmove[0].move_x > 1 || bmove[0].move_y > 1)
 {
-	strcpy(info, "This spell doesn't reach that far.");
+	strcpy(info, "This program doesn't reach that far.");
 	mpr(info);
         goto dirc;
 }
@@ -680,7 +680,7 @@ if (you[0].hp == you[0].hp_max)
 
 if (you[0].hp_max <= 20)
 {
- strcpy(info, "You lack the resilience to cast this spell.");
+ strcpy(info, "You lack the resilience to execute this program.");
  mpr(info);
  return;
 }
@@ -764,7 +764,7 @@ void cast_deaths_door(int pow)
 
 if (you[0].is_undead != 0)
 {
- strcpy(info, "You're already dead!");
+ strcpy(info, "You're already cyborg!");
  mpr(info);
  return;
 }
@@ -868,7 +868,7 @@ if (you[0].shock_shield > 0)
 {
  you[0].shock_shield += random2(pow) + 4;
  if (you[0].shock_shield > 25) you[0].shock_shield = 25;
- strcpy(info, "Your ring of flames spell is extended.");
+ strcpy(info, "Your ring of flames program is extended.");
  mpr(info);
 }
 
@@ -914,7 +914,7 @@ if (you[0].equip [EQ_BODY_ARMOUR] != -1 && extending == 0)
 
 if (you[0].duration [DUR_STONEMAIL] != 0)
 {
- strcpy(info, "The spell conflicts with another spell still in effect.");
+ strcpy(info, "The program conflicts with another program still running.");
  mpr(info);
  return;
 }
@@ -948,7 +948,7 @@ int dur_change = 0;
 
 if (you[0].duration [DUR_ICY_ARMOUR] != 0)
 {
- strcpy(info, "The spell conflicts with another spell still in effect.");
+ strcpy(info, "The program conflicts with another program still running.");
  mpr(info);
  return;
 }
@@ -1031,7 +1031,7 @@ void cast_berserk(void)
 {
   if (go_berserk() == 0)
   {
-     strcpy(info, "You fail to go berserk.");
+     strcpy(info, "You fail to go in battle mode.");
      mpr(info);
   }
 }

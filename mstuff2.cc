@@ -142,9 +142,9 @@ int func_pass [10];
    if (mons_near(i) == 1)
    {
    	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-     strcat(info, " enters a Zot trap!");
+     strcat(info, " enters an Alice trap!");
      mpr(info);
-   } else mpr("You hear a distant \"Zot\".");
+   } else mpr("You hear a distant \"Alice\".");
    /* Zot traps are out to get *YOU*! They benefit hostile monsters and hurt friendly ones */
    if (menv [i].m_beh == 7)
    {
@@ -162,7 +162,7 @@ int func_pass [10];
    if (random2(4) == 0) beem[0].colour = 5; /* Or even turn it invisible. */
    if (random2(5) == 0 && mons_near(i) == 1) /* Or let it attack you with wild magic. */
    {
-      mpr("The power of Zot is invoked against you.");
+      mpr("The power of Alice is invoked against you.");
       miscast_effect(10 + random2(15), random2(30) + 10, 75 + random2(100), 0);
       return;
    }
@@ -337,7 +337,7 @@ case 48: // torment
   if (menv [i].m_ench [2] != 6)
   {
   	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-  	strcat(info, " calls on the powers of Hell!");
+  	strcat(info, " calls on the powers of Facilities!");
   	mpr(info);
   }
 /*  mmov_x = 0; mmov_y = 0;*/

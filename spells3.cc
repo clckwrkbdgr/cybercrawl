@@ -36,12 +36,12 @@ int keyin = 0;
 
 if (you[0].spell_no == 0)
 {
-	strcpy(info, "You don't know any spells."); // can this happen?
+	strcpy(info, "You don't have any program installed."); // can this happen?
 	mpr(info);
 	return;
 }
 
-query : strcpy(info, "Forget which spell?");
+query : strcpy(info, "Uninstall which program?");
 mpr(info);
 
 // test relay_message();
@@ -71,7 +71,7 @@ spc = (int) keyin;
 
 if (spc < 65 || (spc > 90 && spc < 97) || spc > 122)
 {
-	unknown : strcpy(info, "You don't know that spell.");
+	unknown : strcpy(info, "You don't have that program.");
 	mpr(info);
 	return;
 }
@@ -85,7 +85,7 @@ if (you[0].spells [spc2] == 210)
 
 if (random2(25) == 0)
 {
- strcpy(info, "Oops! This spell sure is a blunt instrument.");
+ strcpy(info, "Oops! This program sure is a blunt instrument.");
  mpr(info);
  forget_map(20 + random2(50));
  return;
@@ -96,7 +96,7 @@ if (ep_gain < 0) ep_gain = 0;
 
 if (ep_gain == spell_value(you[0].spells [spc2]))
 {
- strcpy(info, "The spell releases its latent energy back to you as it unravels.");
+ strcpy(info, "The program releases its latent energy back to you as it unravels.");
 }
 
 mpr(info);
@@ -171,7 +171,7 @@ for (i = 0; i < 52; i ++)
 //{
 // strcpy(info, "You sense a malignant aura.");
 //} else
-strcpy(info, "You sense the presence of curses on your possessions.");
+strcpy(info, "You sense the presence of viruses on your possessions.");
 
  mpr(info);
 
@@ -190,7 +190,7 @@ direction(100, beam);
 
 if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -224,7 +224,7 @@ direction(100, beam);
 
 if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 {
-	strcpy(info, "The spell fizzles.");
+	strcpy(info, "The program fizzles.");
 	mpr(info);
 	return;
 }
@@ -254,7 +254,7 @@ void cast_bone_shards(int power)
 
 if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]] != 14)//  || you[0].inv_type [you[0].equip [0]] != 1)
 {
- strcpy(info, "The spell fails.");
+ strcpy(info, "The program fails.");
  mpr(info);
  return;
 }
@@ -304,7 +304,7 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
 {
  if (you[0].deaths_door != 0)
  {
-  strcpy(info, "A conflicting enchantment prevents the spell from coming into effect.");
+  strcpy(info, "A conflicting plugins prevents the program from executing.");
   mpr(info);
   return;
  }
@@ -316,7 +316,7 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
   return;
  }
 
- strcpy(info, "You draw magical energy from your own body!");
+ strcpy(info, "You draw cyber energy from your own body!");
  mpr(info);
 
  while(you[0].ep < you[0].ep_max && you[0].hp > 1)
@@ -337,7 +337,7 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 strcpy(info, "The chunk of flesh you are holding crumbles to dust.");
 mpr(info);
-strcpy(info, "A flood of magical energy pours into your mind!");
+strcpy(info, "A flood of energy pours into your cyberbrain!");
 mpr(info);
 
 if (pow > 100) pow = 100;
@@ -396,7 +396,7 @@ for (i = 0; i < ITEMS; i++)
 {
  if (i >= 480)
  {
-  strcpy(info, "The demon of the infinite void grins at you.");
+  strcpy(info, "The demon of the infinite cyberspace grins at you.");
   mpr(info);
   return;
  }
@@ -446,13 +446,13 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 if (you[0].duration [DUR_TELEPORT] != 0)
 {
- strcpy(info, "You feel strangely stable.");
+ strcpy(info, "You feel ventilation shaft opening.");
  mpr(info);
  you[0].duration [DUR_TELEPORT] = 0;
  return;
 }
 
-strcpy(info, "You feel strangely unstable.");
+strcpy(info, "You feel ventilation shaft opening.");
 mpr(info);
 you[0].duration [DUR_TELEPORT] = 4 + random2(3);
 
@@ -468,7 +468,7 @@ int plox [2];
 if (you[0].attribute [ATTR_CONTROL_TELEPORT] != 0 && you[0].level_type != 2 && you[0].conf == 0 && allow_control == 1)
 {
  mpr("You may choose your destination (press '.' or delete to select).");
- mpr("Expect minor deviation; teleporting into an open area is recommended.");
+ mpr("Expect minor deviation; travelling into an open area is recommended.");
  more();
  plox [0] = 1;
  show_map(plox);
@@ -494,7 +494,7 @@ mpr(info);
 
  if (plox [0] < 6 || plox [1] < 6 || plox [0] > 75 || plox [1] > 65)
  {
-  mpr("Nearby solid objects disrupt your rematerialisation!");
+  mpr("Nearby solid objects disrupt your exiting from vent!");
   goto random_teleport;
  }
 
@@ -723,18 +723,18 @@ char dir_sign = 0;
 
 if (you[0].where_are_you != 0) // && you[0].where_are_you < 10)
 {
- mpr("This spell doesn't work here.");
+ mpr("This program doesn't work here.");
  return;
 }
 if (you[0].level_type != 0)
 {
- mpr("This spell doesn't work here.");
+ mpr("This program doesn't work here.");
  return;
 }
 
 if (grd [you[0].x_pos] [you[0].y_pos] != 67)
 {
- mpr("You must be on a piece of normal floor to cast this spell.");
+ mpr("You must be on a piece of normal floor to execute this program.");
  return;
 }
 
@@ -743,12 +743,12 @@ get_dir : char keyi = get_ch();
 if (keyi != '<' && keyi != '>' && keyi != 'x') goto get_dir;
 if (keyi == '<' && you[0].your_level == 0)
 {
- mpr("You can't go any further upwards with this spell.");
+ mpr("You can't go any further upwards with this program.");
  goto get_dir;
 }
 if (keyi == '>' && you[0].your_level == 35)
 {
- mpr("You can't go any further downwards with this spell.");
+ mpr("You can't go any further downwards with this program.");
  goto get_dir;
 }
 
@@ -780,7 +780,7 @@ if (you[0].where_are_you == 0)
  if (target_level > 35) target_level = 35;
 }
 
-mpr("You fall through a mystic portal, and materialise at the foot of a staircase.");
+mpr("You fall through a ventilation shaft, and drop on floor at the foot of a staircase.");
 more();
 int old_lev = you[0].your_level;
 you[0].your_level = target_level - 1;
@@ -793,7 +793,7 @@ down_stairs(1, old_lev);
 void cast_death_channel(int pow)
 {
 
-mpr("You feel a great wave of evil energy pour through your body.");
+mpr("You feel a great amount of bad traffic pour through your body.");
 
 you[0].duration [DUR_DEATH_CHANNEL] += 15 + random2((pow / 3) + 1);
 if (you[0].duration [DUR_DEATH_CHANNEL] > 30) you[0].duration [DUR_DEATH_CHANNEL] = 30;

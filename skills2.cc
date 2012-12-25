@@ -53,24 +53,24 @@ char *skills[50][5] = {
 {NULL},
 {NULL},
 
-{"Spellcasting",   "Magician", "Wizard", "Eclecticist", "Archmage"}, // spellcasting
+{"Hacking",   "Newbee", "Programmer", "Hacker", "Superhacker"}, // spellcasting
 {"Conjurations",   "Evoker", "Conjurer", "Destroyer", "Annihilator"}, // conjure
-{"Enchantments",   "Charm-Maker", "Enchanter", "Infuser", "Spellbinder"}, // enchant
-{"Summonings",	   "Caller", "Invoker", "Summoner", "Demonologist"}, // summoning
+{"Plugins",   "Plugin-Maker", "Designer", "Infuser", "Crafter"}, // enchant
+{"Summonings",	   "Caller", "Invoker", "Summoner", "Biologist"}, // summoning
 // 29:
-{"Necromancy",	   "Grave Robber", "Necromancer", "Reanimator", "Death Mage"}, // death
-{"Translocations", "Jumper", "Shifter", "Blinker", "Translocater"}, // translocations
-{"Transmigration", "Changer", "Transformer", "Transmogrifier", "Transmuter"}, // transmigrations
-{"Divinations",	   "Seer", "Overseer", "Diviner", "Oracle"}, // divinations
+{"Cyborgization",	   "Grave Robber", "Cyborgizator", "Reanimator", "Necromancer"}, // death
+{"Maintenancer", "Jumper", "Shifter", "Blinker", "Translocater"}, // translocations
+{"Shapeshifting", "Changer", "Transformer", "Transmogrifier", "Transmuter"}, // transmigrations
+{"Statistics",	   "Seer", "Overseer", "Diviner", "Oracle"}, // divinations
 
 // 33:
 
-{"Fire Magic",	   "Igniter", "Burner", "Pyromancer", "Infernalist"},
-{"Ice Magic",	   "Freezer", "Refrigerator", "Cryomancer", "Englaciator"},
-{"Air Magic",	   "Air Mage", "Cloud mage", "Sky Mage", "Storm Mage"},
-{"Earth Magic",	   "Digger", "Geomancer", "Petrifier", "Earth Mage"},
+{"Fire Programming",	   "Igniter", "Burner", "Pyromancer", "Infernalist"},
+{"Ice Programming",	   "Freezer", "Refrigerator", "Cryomancer", "Englaciator"},
+{"Air Programming",	   "Air Hacker", "Cloud Hacker", "Sky Hacker", "Storm Hacker"},
+{"Earth Programming",	   "Digger", "Geomancer", "Petrifier", "Earth Hacker"},
 
-{"Poison Magic",   "Stinger", "Tainter", "Poisoner", "Venom Mage"},
+{"Poison Programming",   "Stinger", "Tainter", "Poisoner", "Venom Hacker"},
 
 /*NOTE: If more skills are added, must change ranges in level_change() in crawl99.cc */
 
@@ -78,7 +78,7 @@ char *skills[50][5] = {
 
 // 38:
 
-{"Invocations",	   "Believer", "Servant", "Worldly Agent", "Invoker"},
+{"Employing",	   "Believer", "Servant", "Worldly Agent", "Invoker"},
 
 {NULL},
 {NULL},

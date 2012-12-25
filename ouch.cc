@@ -228,7 +228,7 @@ void item_corrode(char itco)
  if (wearing_amulet(AMU_RESIST_CORROSION) == 1 && random() % 10 != 0)
  {
 #ifdef DEBUG
-strcpy(info, "Amulet protects.");
+strcpy(info, "Implant protects.");
 mpr(info);
 #endif
  return; /* amulet of resist corrosion/cloak of preservation */
@@ -282,7 +282,7 @@ unsigned char burn_no = 0;
 if (wearing_amulet(AMU_CONSERVATION) == 1 && random() % 10 != 0)
 {
 #ifdef DEBUG
-strcpy(info, "Amulet conserves.");
+strcpy(info, "Implant conserves.");
 mpr(info);
 #endif
  return;
@@ -316,16 +316,16 @@ for (burnc = 0; burnc < 52; burnc++)
 
 if (burn_no == 1)
 {
-        if (target_class == 6) strcpy(info, "A scroll you are carrying catches fire!");
-        if (target_class == 8) strcpy(info, "A potion you are carrying freezes and shatters!");
+        if (target_class == 6) strcpy(info, "A device you are carrying catches fire!");
+        if (target_class == 8) strcpy(info, "A vial you are carrying freezes and shatters!");
  if (target_class == 4) strcpy(info, "Some of your food is covered with spores!");
  mpr(info);
 }
 
 if (burn_no > 1)
 {
-        if (target_class == 6) strcpy(info, "Some of the scrolls you are carrying catch fire!");
-        if (target_class == 8) strcpy(info, "Some of the potions you are carrying freeze and shatter!");
+        if (target_class == 6) strcpy(info, "Some of the devices you are carrying catch fire!");
+        if (target_class == 8) strcpy(info, "Some of the vials you are carrying freeze and shatter!");
  if (target_class == 4) strcpy(info, "Some of your food is covered with spores!");
  mpr(info);
 }
@@ -355,7 +355,7 @@ if (dam > -9000)
  case 5:
  if (random2(you[0].hp_max) > you[0].hp && dam > random2(you[0].hp) && random2(5) == 0)
  {
-  mpr("Xom protects you from harm!");
+  mpr("The Anonimous protects you from harm!");
   return;
  }
  break;
@@ -445,22 +445,22 @@ if (points < 10) strcat(death_string, " ");
         switch(you[0].species)
         {
          case 1: strcat(death_string, "Hu"); break;
-         case 2: strcat(death_string, "El"); break;
-         case 3: strcat(death_string, "HE"); break;
-         case 4: strcat(death_string, "GE"); break;
-         case 5: strcat(death_string, "DE"); break;
-         case 6: strcat(death_string, "SE"); break;
-         case 7: strcat(death_string, "HD"); break;
-         case 8: strcat(death_string, "MD"); break;
-         case 9: strcat(death_string, "Ha"); break;
-         case 10: strcat(death_string, "HO"); break;
-         case 11: strcat(death_string, "Ko"); break;
-         case 12: strcat(death_string, "Mu"); break;
-         case 13: strcat(death_string, "Na"); break;
-         case 14: strcat(death_string, "Gn"); break;
-         case 15: strcat(death_string, "Og"); break;
-         case 16: strcat(death_string, "Tr"); break;
-         case 17: strcat(death_string, "OM"); break;
+         case 2: strcat(death_string, "SN"); break;
+         case 3: strcat(death_string, "Ni"); break;
+         case 4: strcat(death_string, "GN"); break;
+         case 5: strcat(death_string, "CN"); break;
+         case 6: strcat(death_string, "NS"); break;
+         case 7: strcat(death_string, "CE"); break;
+         case 8: strcat(death_string, "ME"); break;
+         case 9: strcat(death_string, "FE"); break;
+         case 10: strcat(death_string, "Te"); break;
+         case 11: strcat(death_string, "Sm"); break;
+         case 12: strcat(death_string, "Ro"); break;
+         case 13: strcat(death_string, "As"); break;
+         case 14: strcat(death_string, "Ap"); break;
+         case 15: strcat(death_string, "Mu"); break;
+         case 16: strcat(death_string, "Bu"); break;
+         case 17: strcat(death_string, "MH"); break;
          case 18:
          case 19:
          case 20:
@@ -473,13 +473,13 @@ if (points < 10) strcat(death_string, " ");
          case 27:
          case 28:
          case 29: strcat(death_string, "Dr"); break;
-         case 30: strcat(death_string, "Ce"); break;
-         case 31: strcat(death_string, "DG"); break;
-         case 32: strcat(death_string, "Sp"); break;
-         case 33: strcat(death_string, "Mi"); break;
-         case 34: strcat(death_string, "DS"); break;
-         case 35: strcat(death_string, "Gh"); break;
-         case 36: strcat(death_string, "Ke"); break;
+         case 30: strcat(death_string, "Ra"); break;
+         case 31: strcat(death_string, "Fr"); break;
+         case 32: strcat(death_string, "Th"); break;
+         case 33: strcat(death_string, "BM"); break;
+         case 34: strcat(death_string, "Su"); break;
+         case 35: strcat(death_string, "Lo"); break;
+         case 36: strcat(death_string, "BM"); break;
         }
         death_string [strlen(death_string)] = you[0].clasnam [0];
 
@@ -517,7 +517,7 @@ strcat(death_string, point_print);
  break;*/
 
  case 5: // falling into lava
-  strcat(death_string, " took a swim in molten lava");
+  strcat(death_string, " took a swim in radioactive waste");
  break;
 
  case 6: // falling into water
@@ -543,11 +543,11 @@ strcat(death_string, point_print);
  break;
 
  case 11:
-  strcat(death_string, " got out of the dungeon alive.");
+  strcat(death_string, " got out of the installation alive.");
  break;
 
  case 12:
-  strcat(death_string, " escaped with the Orb.");
+  strcat(death_string, " escaped with the Disk.");
  break;
 
  case 13:
@@ -571,11 +571,11 @@ strcat(death_string, point_print);
  break;
 
  case 18: /* from function miscast_effect */
-  strcat(death_string, ", killed by wild magic");
+  strcat(death_string, ", killed by corrupted program");
  break;
 
  case 19:
-  strcat(death_string, ", killed by Xom");
+  strcat(death_string, ", killed by The Anonimous");
  break;
 
  case 20:
@@ -598,12 +598,12 @@ if (death_type != 11 && death_type != 12)
 
  if (you[0].level_type == 2)
  {
-   strcat(death_string, " in the Abyss.");
+   strcat(death_string, " in the Dump.");
    goto ending;
  }
  if (you[0].level_type == 3)
  {
-   strcat(death_string, " in Pandemonium.");
+   strcat(death_string, " in Bioengineerings.");
    goto ending;
  }
  if (you[0].level_type == 1)
@@ -637,24 +637,24 @@ if (you[0].where_are_you != 3)
 
 switch (you[0].where_are_you)
 {
- case 1: strcat(death_string, " of Dis"); break;
- case 2: strcat(death_string, " of Gehenna"); break;
- case 3: strcat(death_string, " in the Vestibule"); break;
- case 4: strcat(death_string, " of Cocytus"); break;
- case 5: strcat(death_string, " of Tartarus"); break;
- case 10: strcat(death_string, " of the Mines"); break;
+ case 1: strcat(death_string, " of Iron Works"); break;
+ case 2: strcat(death_string, " of Refuelings"); break;
+ case 3: strcat(death_string, " in the Lobby"); break;
+ case 4: strcat(death_string, " of Cooling Plants"); break;
+ case 5: strcat(death_string, " of Cyborg Researchs"); break;
+ case 10: strcat(death_string, " of the Terrorists"); break;
  case 11: strcat(death_string, " of the Hive"); break;
- case 12: strcat(death_string, " of the Lair"); break;
- case 13: strcat(death_string, " of the Slime Pits"); break;
- case 14: strcat(death_string, " of the Vaults"); break;
- case 15: strcat(death_string, " of the Crypt"); break;
+ case 12: strcat(death_string, " of the Biodome"); break;
+ case 13: strcat(death_string, " of the Waste Pits"); break;
+ case 14: strcat(death_string, " of the Storage Area"); break;
+ case 15: strcat(death_string, " of the Cyborg Manufactory"); break;
  case 16: strcat(death_string, " of the Hall"); break;
- case 17: strcat(death_string, " of Zot's Hall"); break;
- case 18: strcat(death_string, " of the Temple"); break;
+ case 17: strcat(death_string, " of Alice's Hall"); break;
+ case 18: strcat(death_string, " of the Terminal Hub"); break;
  case 19: strcat(death_string, " of the Snake Pit"); break;
- case 20: strcat(death_string, " of the Elf Hall"); break;
- case 21: strcat(death_string, " of the Tomb"); break;
- case 22: strcat(death_string, " of the Swamp"); break;
+ case 20: strcat(death_string, " of the Ninja Palace"); break;
+ case 21: strcat(death_string, " of the Cyborg Hub"); break;
+ case 22: strcat(death_string, " of the Greenhouse"); break;
 }
 
 

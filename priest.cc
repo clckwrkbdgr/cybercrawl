@@ -19,12 +19,12 @@ char *god_name(char which_god)
 
 switch(which_god)
 {
-case 1: return "Zin";
-case 2: return "The Shining One";
-case 3: return "Elyvilon";
-case 4: return "Nelemex Xobeh";
+case 1: return "Knights Templar";
+case 2: return "UNATCO";
+case 3: return "Aperture Labs";
+case 4: return "Triads";
 case 5: return "Jurubetut";
-case 6: return "Vuhemeti";
+case 6: return "Digicorp";
 case 7: return "Okawaru";
 case 8: return "Kikubaaqudgha";
 case 9: return "Sif Muna";

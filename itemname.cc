@@ -135,7 +135,7 @@ switch(item_clas)
 	{
 	 if (it_plus >= 130)
 	 {
-		strcat(glog, "cursed ");
+		strcat(glog, "virused ");
 	 }
 	}
 
@@ -223,9 +223,9 @@ switch(item_da / 30)
 {
    case DWPN_RUNED: strcat(glog, "runed "); break;
    case DWPN_GLOWING: strcat(glog, "glowing "); break;
-   case DWPN_ORCISH: strcat(glog, "orcish "); break;
-   case DWPN_ELVEN: strcat(glog, "elven "); break;
-   case DWPN_DWARVEN: strcat(glog, "dwarven "); break;
+   case DWPN_ORCISH: strcat(glog, "terrorist "); break;
+   case DWPN_ELVEN: strcat(glog, "ninja "); break;
+   case DWPN_DWARVEN: strcat(glog, "engineering "); break;
 } // end switch
 } // end if
 
@@ -233,7 +233,7 @@ if (ident_lev > 1)
 {
 switch(item_da % 30)
 {
- case SPWPN_VAMPIRICISM: strcat(glog, "vampiric "); break;
+ case SPWPN_VAMPIRICISM: strcat(glog, "chemist "); break;
 } // end switch
 } // end if
 
@@ -249,7 +249,7 @@ if (ident_lev > 1)
   case SPWPN_FREEZING: strcat(glog, " of freezing"); break;
   case SPWPN_HOLY_WRATH: strcat(glog, " of holy wrath"); break;
   case SPWPN_ELECTROCUTION: strcat(glog, " of electrocution"); break;
-  case SPWPN_ORC_SLAYING: strcat(glog, " of orc slaying"); break;
+  case SPWPN_ORC_SLAYING: strcat(glog, " of terrorist slaying"); break;
   case SPWPN_VENOM: strcat(glog, " of venom"); break;
   case SPWPN_PROTECTION: strcat(glog, " of protection"); break;
   case SPWPN_DRAINING: strcat(glog, " of draining"); break;
@@ -299,9 +299,9 @@ if (item_da % 30 == 3 || item_da % 30 == 4)
         {
          switch(item_da / 30)
          {
-           case DWPN_ORCISH: strcat(glog, "orcish "); break;
-           case DWPN_ELVEN: strcat(glog, "elven "); break;
-           case DWPN_DWARVEN: strcat(glog, "dwarven "); break;
+           case DWPN_ORCISH: strcat(glog, "terrorist "); break;
+           case DWPN_ELVEN: strcat(glog, "ninja "); break;
+           case DWPN_DWARVEN: strcat(glog, "engineering "); break;
          }
         }
 
@@ -346,7 +346,7 @@ if (ident_lev > 1)
 	{
 		if (it_plus >= 130)
 		{
-			strcat(glog, "cursed ");
+			strcat(glog, "virused ");
 		}
 	}
 
@@ -385,9 +385,9 @@ if (item_typ != 10)
                    strcat(glog, "shiny "); break;
    case DARM_RUNED: strcat(glog, "runed "); break;
    case DARM_GLOWING: strcat(glog, "glowing "); break;
-   case DARM_ELVEN: strcat(glog, "elven "); break;
-   case DARM_DWARVEN: strcat(glog, "dwarven "); break;
-   case DARM_ORCISH: strcat(glog, "orcish "); break;
+   case DARM_ELVEN: strcat(glog, "ninja "); break;
+   case DARM_DWARVEN: strcat(glog, "engineering "); break;
+   case DARM_ORCISH: strcat(glog, "terrorist "); break;
  } // end switch
 }
 if (item_typ == ARM_HELMET && item_plus2 <= 1)
@@ -429,12 +429,12 @@ strcat(glog, str_pass2);
    case SPARM_INTELLIGENCE: strcat(glog, " of intelligence"); break;
    case SPARM_PONDEROUSNESS: strcat(glog, " of ponderousness"); break;
    case SPARM_LEVITATION: strcat(glog, " of levitation"); break;
-   case SPARM_MAGIC_RESISTANCE: strcat(glog, " of magic resistance"); break;
+   case SPARM_MAGIC_RESISTANCE: strcat(glog, " of hacking resistance"); break;
    case SPARM_PROTECTION: strcat(glog, " of protection"); break;
    case SPARM_STEALTH: strcat(glog, " of stealth"); break;
    case SPARM_RESISTANCE: strcat(glog, " of resistance"); break;
    case SPARM_POSITIVE_ENERGY: strcat(glog, " of positive energy"); break;
-   case SPARM_ARCHMAGI: strcat(glog, " of the Archmagi"); break;
+   case SPARM_ARCHMAGI: strcat(glog, " of the Superhackers"); break;
    case SPARM_PRESERVATION: strcat(glog, " of preservation"); break;
   }
  }
@@ -447,26 +447,26 @@ strcat(glog, str_pass2);
 	{
 		switch(item_typ)
 		{
-		case WAND_FLAME: strcat(glog, "wand of flame"); break;
-		case WAND_FROST: strcat(glog, "wand of frost"); break;
-		case WAND_SLOWING: strcat(glog, "wand of slowing"); break;
-		case WAND_HASTING: strcat(glog, "wand of hasting"); break;
-		case WAND_MAGIC_DARTS: strcat(glog, "wand of magic darts"); break;
-		case WAND_HEALING: strcat(glog, "wand of healing"); break;
-		case WAND_PARALYSIS: strcat(glog, "wand of paralysis"); break;
-		case WAND_FIRE: strcat(glog, "wand of fire"); break;
-		case WAND_COLD: strcat(glog, "wand of cold"); break;
-		case WAND_CONFUSION: strcat(glog, "wand of confusion"); break;
-		case WAND_INVISIBILITY: strcat(glog, "wand of invisibility"); break;
-		case WAND_DIGGING: strcat(glog, "wand of digging"); break;
-        case WAND_FIREBALL: strcat(glog, "wand of fireball"); break;
-        case WAND_TELEPORTATION: strcat(glog, "wand of teleportation"); break;
-		case WAND_LIGHTNING: strcat(glog, "wand of lightning"); break;
-        case WAND_POLYMORPH_OTHER: strcat(glog, "wand of polymorph other"); break;
-        case WAND_ENSLAVEMENT: strcat(glog, "wand of enslavement"); break;
-        case WAND_DRAINING: strcat(glog, "wand of draining"); break;
-        case WAND_RANDOM_EFFECTS: strcat(glog, "wand of random effects"); break;
-        case WAND_DISINTEGRATION: strcat(glog, "wand of disintegration"); break;
+		case WAND_FLAME: strcat(glog, "gun of flame"); break;
+		case WAND_FROST: strcat(glog, "gun of frost"); break;
+		case WAND_SLOWING: strcat(glog, "gun of slowing"); break;
+		case WAND_HASTING: strcat(glog, "gun of hasting"); break;
+		case WAND_MAGIC_DARTS: strcat(glog, "gun of energy darts"); break;
+		case WAND_HEALING: strcat(glog, "gun of healing"); break;
+		case WAND_PARALYSIS: strcat(glog, "gun of paralysis"); break;
+		case WAND_FIRE: strcat(glog, "gun of fire"); break;
+		case WAND_COLD: strcat(glog, "gun of cold"); break;
+		case WAND_CONFUSION: strcat(glog, "gun of confusion"); break;
+		case WAND_INVISIBILITY: strcat(glog, "gun of invisibility"); break;
+		case WAND_DIGGING: strcat(glog, "gun of digging"); break;
+        case WAND_FIREBALL: strcat(glog, "gun of fireball"); break;
+        case WAND_TELEPORTATION: strcat(glog, "gun of ventilation"); break;
+		case WAND_LIGHTNING: strcat(glog, "gun of lightning"); break;
+        case WAND_POLYMORPH_OTHER: strcat(glog, "gun of polymorph other"); break;
+        case WAND_ENSLAVEMENT: strcat(glog, "gun of enslavement"); break;
+        case WAND_DRAINING: strcat(glog, "gun of draining"); break;
+        case WAND_RANDOM_EFFECTS: strcat(glog, "gun of random effects"); break;
+        case WAND_DISINTEGRATION: strcat(glog, "gun of disintegration"); break;
       }
 	} else
 	{
@@ -474,18 +474,18 @@ strcat(glog, str_pass2);
 	{
 	switch(item_da )
 	{
-	case 0: strcat(glog , "iron wand"); break;
-	case 1: strcat(glog , "brass wand"); break;
-	case 2: strcat(glog , "bone wand"); break;
-	case 3: strcat(glog , "wooden wand"); break;
-	case 4: strcat(glog , "copper wand"); break;
-	case 5: strcat(glog , "gold wand"); break;
-	case 6: strcat(glog , "silver wand"); break;
-	case 7: strcat(glog , "bronze wand"); break;
-	case 8: strcat(glog , "ivory wand"); break;
-	case 9: strcat(glog , "glass wand"); break;
-	case 10: strcat(glog , "lead wand"); break;
-	case 11: strcat(glog , "plastic wand"); break;
+	case 0: strcat(glog , "iron gun"); break;
+	case 1: strcat(glog , "brass gun"); break;
+	case 2: strcat(glog , "bone gun"); break;
+	case 3: strcat(glog , "wooden gun"); break;
+	case 4: strcat(glog , "copper gun"); break;
+	case 5: strcat(glog , "gold gun"); break;
+	case 6: strcat(glog , "silver gun"); break;
+	case 7: strcat(glog , "bronze gun"); break;
+	case 8: strcat(glog , "ivory gun"); break;
+	case 9: strcat(glog , "glass gun"); break;
+	case 10: strcat(glog , "lead gun"); break;
+	case 11: strcat(glog , "plastic gun"); break;
 	} // end of switch(randnum)
 
 	} else //ie if it's uncommon:
@@ -511,18 +511,18 @@ strcat(glog, str_pass2);
 
 	switch((int) item_da % 12)
 	{
-	 case 0: strcat(glog , "iron wand"); break;
-	 case 1: strcat(glog , "brass wand"); break;
-	 case 2: strcat(glog , "bone wand"); break;
-	 case 3: strcat(glog , "wooden wand"); break;
-	 case 4: strcat(glog , "copper wand"); break;
-	 case 5: strcat(glog , "gold wand"); break;
-	 case 6: strcat(glog , "silver wand"); break;
-	 case 7: strcat(glog , "bronze wand"); break;
-	 case 8: strcat(glog , "ivory wand"); break;
-	 case 9: strcat(glog , "glass wand"); break;
-	 case 10: strcat(glog , "lead wand"); break;
-	 case 11: strcat(glog , "plastic wand"); break;
+	 case 0: strcat(glog , "iron gun"); break;
+	 case 1: strcat(glog , "brass gun"); break;
+	 case 2: strcat(glog , "bone gun"); break;
+	 case 3: strcat(glog , "wooden gun"); break;
+	 case 4: strcat(glog , "copper gun"); break;
+	 case 5: strcat(glog , "gold gun"); break;
+	 case 6: strcat(glog , "silver gun"); break;
+	 case 7: strcat(glog , "bronze gun"); break;
+	 case 8: strcat(glog , "ivory gun"); break;
+	 case 9: strcat(glog , "glass gun"); break;
+	 case 10: strcat(glog , "lead gun"); break;
+	 case 11: strcat(glog , "plastic gun"); break;
 	} // end of switch(randnum)
 
 	} // end of if uncommon wand
@@ -545,10 +545,10 @@ strcat(glog, str_pass2);
 	{
 		if (it_quant == 1)
 		{
-			strcat(glog, "potion of ");
+			strcat(glog, "vial of ");
 		} else
 		{
-			strcat(glog, "potions of ");
+			strcat(glog, "vials of ");
 		}
 	}
 
@@ -577,10 +577,10 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 		case POT_DECAY: strcat(glog , "decay"); break; // Rare!
 	    case POT_WATER: strcat(glog , "water"); break;
 	    case POT_EXPERIENCE: strcat(glog , "experience"); break;
-	    case POT_MAGIC: strcat(glog , "magic"); break;
+	    case POT_MAGIC: strcat(glog , "energy"); break;
 	    case POT_RESTORE_ABILITIES: strcat(glog , "restore abilities"); break;
 		case POT_STRONG_POISON: strcat(glog , "strong poison"); break;
-        case POT_BERSERK_RAGE: strcat(glog , "berserk rage"); break;
+        case POT_BERSERK_RAGE: strcat(glog , "battle mode"); break;
         case POT_CURE_MUTATION: strcat(glog , "cure mutation"); break;
         case POT_MUTATION: strcat(glog , "mutation"); break;
    }
@@ -697,10 +697,10 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 	case OBJ_SCROLLS: // scrolls
 	if (it_quant == 1)
 	{
-		strcat(glog, "scroll ");
+		strcat(glog, "device ");
 	} else
 	{
-		strcat(glog, "scrolls ");
+		strcat(glog, "devices ");
 	}
 
 	if (id [1] [item_typ] == 1)
@@ -709,28 +709,28 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 	switch(item_typ)
 	{
 	case SCR_IDENTIFY: strcat(glog , "of identify"); break;
-	case SCR_TELEPORTATION: strcat(glog , "of teleportation"); break;
+	case SCR_TELEPORTATION: strcat(glog , "of ventilation"); break;
 	case SCR_FEAR: strcat(glog , "of fear"); break;
 	case SCR_NOISE: strcat(glog , "of noise"); break;
-	case SCR_REMOVE_CURSE: strcat(glog , "of remove curse"); break;
-	case SCR_DETECT_CURSE: strcat(glog , "of detect curse"); break;
+	case SCR_REMOVE_CURSE: strcat(glog , "of remove virus"); break;
+	case SCR_DETECT_CURSE: strcat(glog , "of detect virus"); break;
 	case SCR_SUMMONING: strcat(glog , "of summoning"); break;
-	case SCR_ENCHANT_WEAPON_I: strcat(glog , "of enchant weapon I"); break;
-	case SCR_ENCHANT_ARMOUR: strcat(glog , "of enchant armour"); break;
+	case SCR_ENCHANT_WEAPON_I: strcat(glog , "of upgrade weapon I"); break;
+	case SCR_ENCHANT_ARMOUR: strcat(glog , "of upgrade armour"); break;
 	case SCR_TORMENT: strcat(glog , "of torment"); break;
-	case SCR_RANDOM_USELESSNESS: strcat(glog , "of random uselessness"); break;
-	case SCR_CURSE_WEAPON: strcat(glog , "of curse weapon"); break;
-	case SCR_CURSE_ARMOUR: strcat(glog , "of curse armour"); break;
+	case SCR_RANDOM_USELESSNESS: strcat(glog , "of hologram"); break;
+	case SCR_CURSE_WEAPON: strcat(glog , "of virus weapon"); break;
+	case SCR_CURSE_ARMOUR: strcat(glog , "of virus armour"); break;
 	case SCR_IMMOLATION: strcat(glog , "of immolation"); break;
 	case SCR_BLINKING: strcat(glog , "of blinking"); break;
 	case SCR_PAPER: strcat(glog , "of paper"); break;
-	case SCR_MAGIC_MAPPING: strcat(glog , "of magic mapping"); break;
-	case SCR_FORGETFULNESS: strcat(glog , "of forgetfulness"); break;
-	case SCR_ACQUIREMENT: strcat(glog , "of acquirement"); break;
-    case SCR_ENCHANT_WEAPON_II: strcat(glog , "of enchant weapon II"); break;
+	case SCR_MAGIC_MAPPING: strcat(glog , "of cyber mapping"); break;
+	case SCR_FORGETFULNESS: strcat(glog , "of uninstalling"); break;
+	case SCR_ACQUIREMENT: strcat(glog , "of 3D printing"); break;
+    case SCR_ENCHANT_WEAPON_II: strcat(glog , "of upgrade weapon II"); break;
 	case SCR_VORPALISE_WEAPON: strcat(glog , "of vorpalise weapon"); break;
     case SCR_RECHARGING: strcat(glog , "of recharging"); break;
-    case SCR_ENCHANT_WEAPON_III: strcat(glog , "of enchant weapon III"); break;
+    case SCR_ENCHANT_WEAPON_III: strcat(glog , "of upgrade weapon III"); break;
 //        case 23: strcat(glog , "of portal travel"); break;
 	} break;
 
@@ -751,7 +751,7 @@ Remember, potions food and scrolls stack on the basis of class and type only.
    {
       if (it_plus >= 80)
       {
-         strcat(glog, "cursed ");
+         strcat(glog, "virused ");
       }
    }
 
@@ -786,41 +786,41 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 
 	switch(item_typ)
 	{
-	case RING_REGENERATION: strcat(glog , "ring of regeneration"); break;
-	case RING_PROTECTION: strcat(glog , "ring of protection"); break;
-	case RING_PROTECTION_FROM_FIRE: strcat(glog , "ring of protection from fire"); break;
-	case RING_POISON_RESISTANCE: strcat(glog , "ring of poison resistance"); break;
-	case RING_PROTECTION_FROM_COLD: strcat(glog , "ring of protection from cold"); break;
-	case RING_STRENGTH: strcat(glog , "ring of strength"); break;
-	case RING_SLAYING: strcat(glog , "ring of slaying"); break;
-	case RING_SEE_INVISIBLE: strcat(glog , "ring of see invisible"); break;
-	case RING_INVISIBILITY: strcat(glog , "ring of invisibility"); break;
-	case RING_HUNGER: strcat(glog , "ring of hunger"); break;
-	case RING_TELEPORTATION: strcat(glog , "ring of teleportation"); break;
-	case RING_EVASION: strcat(glog , "ring of evasion"); break;
-    case RING_SUSTAIN_ABILITIES: strcat(glog , "ring of sustain abilities"); break;
-    case RING_SUSTENANCE: strcat(glog , "ring of sustenance"); break;
-    case RING_DEXTERITY: strcat(glog , "ring of dexterity"); break;
-    case RING_INTELLIGENCE: strcat(glog , "ring of intelligence"); break;
-    case RING_WIZARDRY: strcat(glog , "ring of wizardry"); break;
-    case RING_MAGICAL_POWER: strcat(glog , "ring of magical power"); break;
-    case RING_LEVITATION: strcat(glog , "ring of levitation"); break;
-    case RING_LIFE_PROTECTION: strcat(glog , "ring of life protection"); break;
-    case RING_PROTECTION_FROM_MAGIC: strcat(glog , "ring of protection from magic"); break;
-    case RING_FIRE: strcat(glog , "ring of fire"); break;
-    case RING_ICE: strcat(glog , "ring of ice"); break;
-    case RING_TELEPORT_CONTROL: strcat(glog , "ring of teleport control"); break;
+	case RING_REGENERATION: strcat(glog , "chip of regeneration"); break;
+	case RING_PROTECTION: strcat(glog , "chip of protection"); break;
+	case RING_PROTECTION_FROM_FIRE: strcat(glog , "chip of protection from fire"); break;
+	case RING_POISON_RESISTANCE: strcat(glog , "chip of poison resistance"); break;
+	case RING_PROTECTION_FROM_COLD: strcat(glog , "chip of protection from cold"); break;
+	case RING_STRENGTH: strcat(glog , "chip of strength"); break;
+	case RING_SLAYING: strcat(glog , "chip of slaying"); break;
+	case RING_SEE_INVISIBLE: strcat(glog , "chip of see invisible"); break;
+	case RING_INVISIBILITY: strcat(glog , "chip of invisibility"); break;
+	case RING_HUNGER: strcat(glog , "chip of hunger"); break;
+	case RING_TELEPORTATION: strcat(glog , "chip of ventilation"); break;
+	case RING_EVASION: strcat(glog , "chip of evasion"); break;
+    case RING_SUSTAIN_ABILITIES: strcat(glog , "chip of sustain abilities"); break;
+    case RING_SUSTENANCE: strcat(glog , "chip of sustenance"); break;
+    case RING_DEXTERITY: strcat(glog , "chip of dexterity"); break;
+    case RING_INTELLIGENCE: strcat(glog , "chip of intelligence"); break;
+    case RING_WIZARDRY: strcat(glog , "chip of hacking"); break;
+    case RING_MAGICAL_POWER: strcat(glog , "chip of cyber power"); break;
+    case RING_LEVITATION: strcat(glog , "chip of levitation"); break;
+    case RING_LIFE_PROTECTION: strcat(glog , "chip of life protection"); break;
+    case RING_PROTECTION_FROM_MAGIC: strcat(glog , "chip of protection from hacking"); break;
+    case RING_FIRE: strcat(glog , "chip of fire"); break;
+    case RING_ICE: strcat(glog , "chip of ice"); break;
+    case RING_TELEPORT_CONTROL: strcat(glog , "chip of ventilation control"); break;
 
-    case AMU_RAGE: strcat(glog , "amulet of rage"); break;
-    case AMU_MAINTAIN_SPEED: strcat(glog , "amulet of maintain speed"); break;
-    case AMU_CLARITY: strcat(glog , "amulet of clarity"); break;
-    case AMU_WARDING: strcat(glog , "amulet of warding"); break;
-    case AMU_RESIST_CORROSION: strcat(glog , "amulet of resist corrosion"); break;
-    case AMU_THE_GOURMAND: strcat(glog , "amulet of the gourmand"); break;
-    case AMU_CONSERVATION: strcat(glog , "amulet of conservation"); break;
-    case AMU_CONTROLLED_FLIGHT: strcat(glog , "amulet of controlled flight"); break;
-    case AMU_INACCURACY: strcat(glog , "amulet of inaccuracy"); break;
-    case AMU_RESIST_MUTATION: strcat(glog , "amulet of resist mutation"); break;
+    case AMU_RAGE: strcat(glog , "implant of rage"); break;
+    case AMU_MAINTAIN_SPEED: strcat(glog , "implant of maintain speed"); break;
+    case AMU_CLARITY: strcat(glog , "implant of clarity"); break;
+    case AMU_WARDING: strcat(glog , "implant of warding"); break;
+    case AMU_RESIST_CORROSION: strcat(glog , "implant of resist corrosion"); break;
+    case AMU_THE_GOURMAND: strcat(glog , "implant of the gourmand"); break;
+    case AMU_CONSERVATION: strcat(glog , "implant of conservation"); break;
+    case AMU_CONTROLLED_FLIGHT: strcat(glog , "implant of controlled flight"); break;
+    case AMU_INACCURACY: strcat(glog , "implant of inaccuracy"); break;
+    case AMU_RESIST_MUTATION: strcat(glog , "implant of resist mutation"); break;
  }
 /* ? of imputed learning - 100% exp from tames/summoned kills */
 	break;
@@ -852,20 +852,20 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 
 	switch(item_da % 13)
 	{
-	case 0: strcat(glog, "wooden ring"); break;
-	case 1: strcat(glog, "silver ring"); break;
-	case 2: strcat(glog, "golden ring"); break;
-	case 3: strcat(glog, "iron ring"); break;
-	case 4: strcat(glog, "steel ring"); break;
-	case 5: strcat(glog, "bronze ring"); break;
-	case 6: strcat(glog, "brass ring"); break;
-	case 7: strcat(glog, "copper ring"); break;
-	case 8: strcat(glog, "granite ring"); break;
-	case 9: strcat(glog, "ivory ring"); break;
-	case 10: strcat(glog, "bone ring"); break;
-	case 11: strcat(glog, "marble ring"); break;
-	case 12: strcat(glog, "jade ring"); break;
-	case 13: strcat(glog, "glass ring"); break;
+	case 0: strcat(glog, "wooden chip"); break;
+	case 1: strcat(glog, "silver chip"); break;
+	case 2: strcat(glog, "golden chip"); break;
+	case 3: strcat(glog, "iron chip"); break;
+	case 4: strcat(glog, "steel chip"); break;
+	case 5: strcat(glog, "bronze chip"); break;
+	case 6: strcat(glog, "brass chip"); break;
+	case 7: strcat(glog, "copper chip"); break;
+	case 8: strcat(glog, "granite chip"); break;
+	case 9: strcat(glog, "ivory chip"); break;
+	case 10: strcat(glog, "bone chip"); break;
+	case 11: strcat(glog, "marble chip"); break;
+	case 12: strcat(glog, "jade chip"); break;
+	case 13: strcat(glog, "glass chip"); break;
 	} // end of switch(randnum)
        } // end of rings
         else // ie is an amulet
@@ -896,20 +896,20 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 
 	switch(item_da % 13)
 	{
-	case 0: strcat(glog, "zirconium amulet"); break;
-	case 1: strcat(glog, "sapphire amulet"); break;
-	case 2: strcat(glog, "golden amulet"); break;
-	case 3: strcat(glog, "emerald amulet"); break;
-	case 4: strcat(glog, "garnet amulet"); break;
-	case 5: strcat(glog, "bronze amulet"); break;
-	case 6: strcat(glog, "brass amulet"); break;
-	case 7: strcat(glog, "copper amulet"); break;
-	case 8: strcat(glog, "ruby amulet"); break;
-	case 9: strcat(glog, "ivory amulet"); break;
-	case 10: strcat(glog, "bone amulet"); break;
-	case 11: strcat(glog, "platinum amulet"); break;
-	case 12: strcat(glog, "jade amulet"); break;
-	case 13: strcat(glog, "plastic amulet"); break;
+	case 0: strcat(glog, "zirconium implant"); break;
+	case 1: strcat(glog, "sapphire implant"); break;
+	case 2: strcat(glog, "golden implant"); break;
+	case 3: strcat(glog, "emerald implant"); break;
+	case 4: strcat(glog, "garnet implant"); break;
+	case 5: strcat(glog, "bronze implant"); break;
+	case 6: strcat(glog, "brass implant"); break;
+	case 7: strcat(glog, "copper implant"); break;
+	case 8: strcat(glog, "ruby implant"); break;
+	case 9: strcat(glog, "ivory implant"); break;
+	case 10: strcat(glog, "bone implant"); break;
+	case 11: strcat(glog, "platinum implant"); break;
+	case 12: strcat(glog, "jade implant"); break;
+	case 13: strcat(glog, "plastic implant"); break;
 	} // end of switch(randnum)
        } // end of amulets
 	break;
@@ -928,8 +928,8 @@ case 0:
  case MISC_LANTERN_OF_SHADOWS: strcat(glog, "bone lantern"); break;
  case MISC_HORN_OF_GERYON: strcat(glog, "silver horn"); break;
  case MISC_BOX_OF_BEASTS: strcat(glog, "small ebony casket"); break;
- case MISC_DECK_OF_WONDERS: strcat(glog, "deck of cards"); break;
- case MISC_DECK_OF_SUMMONINGS: strcat(glog, "deck of cards"); break;
+ case MISC_DECK_OF_WONDERS: strcat(glog, "nanite construction kit"); break;
+ case MISC_DECK_OF_SUMMONINGS: strcat(glog, "nanite construction kit"); break;
  case MISC_CRYSTAL_BALL_OF_ENERGY: strcat(glog, "crystal ball"); break;
  case MISC_EMPTY_EBONY_CASKET: strcat(glog, "small ebony casket"); break;
  case MISC_CRYSTAL_BALL_OF_FIXATION: strcat(glog, "crystal ball"); break;
@@ -944,17 +944,17 @@ case 0:
   case 13: strcat(glog, "slimy "); break;
   case 14: strcat(glog, "silver "); break;
   case 19: strcat(glog, "serpentine "); break;
-  case 20: strcat(glog, "elven "); break;
+  case 20: strcat(glog, "ninja "); break;
   case 21: strcat(glog, "golden "); break;
   case 22: strcat(glog, "decaying "); break;
-  case 50: strcat(glog, "demonic "); break; /* found in pandemonium */
-  case 51: strcat(glog, "abyssal "); break; /* found in abyss */
+  case 50: strcat(glog, "genetical "); break; /* found in pandemonium */
+  case 51: strcat(glog, "trash "); break; /* found in abyss */
  } /* If more are added here, must also add below. */
- strcat(glog, "rune");
+ strcat(glog, "keycard");
  break;
- case MISC_DECK_OF_TRICKS: strcat(glog, "deck of cards"); break;
- case MISC_DECK_OF_POWER: strcat(glog, "deck of cards"); break;
- case MISC_PORTABLE_ALTAR_OF_NEMELEX: strcat(glog, "portable altar of Nemelex"); break;
+ case MISC_DECK_OF_TRICKS: strcat(glog, "nanite construction kit"); break;
+ case MISC_DECK_OF_POWER: strcat(glog, "nanite construction kit"); break;
+ case MISC_PORTABLE_ALTAR_OF_NEMELEX: strcat(glog, "portable terminal of Triads"); break;
 
  }
 break;
@@ -971,8 +971,8 @@ default:
  case MISC_HORN_OF_GERYON: strcat(glog, "Horn of Geryon"); break;
 
  case MISC_BOX_OF_BEASTS: strcat(glog, "box of beasts"); break;
- case MISC_DECK_OF_WONDERS: strcat(glog, "deck of wonders"); break;
- case MISC_DECK_OF_SUMMONINGS: strcat(glog, "deck of summonings"); break;
+ case MISC_DECK_OF_WONDERS: strcat(glog, "nanite construction kit of wonders"); break;
+ case MISC_DECK_OF_SUMMONINGS: strcat(glog, "nanite construction kit of summonings"); break;
  case MISC_CRYSTAL_BALL_OF_ENERGY: strcat(glog, "crystal ball of energy"); break;
  case MISC_EMPTY_EBONY_CASKET: strcat(glog, "empty ebony casket"); break;
  case MISC_CRYSTAL_BALL_OF_FIXATION: strcat(glog, "crystal ball of fixation"); break;
@@ -987,17 +987,17 @@ default:
   case 13: strcat(glog, "slimy "); break;
   case 14: strcat(glog, "silver "); break;
   case 19: strcat(glog, "serpentine "); break;
-  case 20: strcat(glog, "elven "); break;
+  case 20: strcat(glog, "ninja "); break;
   case 21: strcat(glog, "golden "); break;
   case 22: strcat(glog, "decaying "); break;
-  case 50: strcat(glog, "demonic "); break; /* found in pandemonium */
-  case 51: strcat(glog, "abyssal "); break; /* found in abyss */
+  case 50: strcat(glog, "genetic "); break; /* found in pandemonium */
+  case 51: strcat(glog, "trash "); break; /* found in abyss */
  } /* If more are added here, must also add above. */
- strcat(glog, "rune of Zot");
+ strcat(glog, "keycard of Alice");
  break;
- case MISC_DECK_OF_TRICKS: strcat(glog, "deck of tricks"); break;
- case MISC_DECK_OF_POWER: strcat(glog, "deck of power"); break;
- case MISC_PORTABLE_ALTAR_OF_NEMELEX: strcat(glog, "portable altar of Nemelex"); break;
+ case MISC_DECK_OF_TRICKS: strcat(glog, "nanite construction kit of tricks"); break;
+ case MISC_DECK_OF_POWER: strcat(glog, "nanite construction kit of power"); break;
+ case MISC_PORTABLE_ALTAR_OF_NEMELEX: strcat(glog, "portable terminal of Nemelex"); break;
  }
 break;
 
@@ -1027,68 +1027,68 @@ switch(item_da / 10)
  }
 	switch(item_da % 10)
 	{
- 	case 0: strcat(glog , "paperback book"); break;
- 	case 1: strcat(glog , "hardcover book"); break;
- 	case 2: strcat(glog , "leatherbound book"); break;
- 	case 3: strcat(glog , "metal-bound book"); break;
- 	case 4: strcat(glog , "papyrus book"); break;
- 	case 5: strcat(glog , "book"); break;
- 	case 6: strcat(glog , "book"); break;
+ 	case 0: strcat(glog , "paperback archive"); break;
+ 	case 1: strcat(glog , "hardcover archive"); break;
+ 	case 2: strcat(glog , "leatherbound archive"); break;
+ 	case 3: strcat(glog , "metal-bound archive"); break;
+ 	case 4: strcat(glog , "papyrus archive"); break;
+ 	case 5: strcat(glog , "archive"); break;
+ 	case 6: strcat(glog , "archive"); break;
  }
 } else
 	switch(item_typ)
 	{
- 	case BOOK_MINOR_MAGIC_I: strcat(glog , "book of Minor Magic"); break;
-	 case BOOK_MINOR_MAGIC_II: strcat(glog , "book of Minor Magic"); break;
- 	case BOOK_MINOR_MAGIC_III: strcat(glog , "book of Minor Magic"); break;
- 	case BOOK_CONJURATIONS_I: strcat(glog , "book of Conjurations"); break;
- 	case BOOK_CONJURATIONS_II: strcat(glog , "book of Conjurations"); break;
- 	case BOOK_FLAMES: strcat(glog , "book of Flames"); break;
- 	case BOOK_FROST: strcat(glog , "book of Frost"); break;
-  case BOOK_INVOCATIONS: strcat(glog , "book of Invocations"); break;
- case BOOK_FIRE: strcat(glog , "book of Fire"); break;
- case BOOK_ICE: strcat(glog , "book of Ice"); break;
- case BOOK_SURVEYANCES: strcat(glog , "book of Surveyances"); break;
- case BOOK_SPATIAL_TRANSLOCATIONS: strcat(glog , "book of Spatial Translocations"); break;
- case BOOK_ENCHANTMENTS: strcat(glog , "book of Enchantments"); break;
- case BOOK_POISONINGS: strcat(glog , "book of Poisonings"); break;
- case BOOK_STORMS_AND_FIRE: strcat(glog , "book of Storms and Fire"); break;
- case BOOK_DEATH: strcat(glog , "book of Death"); break;
- case BOOK_HINDERANCE: strcat(glog , "book of Hinderance"); break;
- case BOOK_CHANGES: strcat(glog , "book of Changes"); break;
- case BOOK_TRANSFIGURATIONS: strcat(glog , "book of Transfigurations"); break;
- case BOOK_USEFUL_MAGIC: strcat(glog , "book of Useful Magic"); break;
- case BOOK_WAR_CHANTS: strcat(glog , "book of War Chants"); break;
- case BOOK_CLOUDS: strcat(glog , "book of Clouds"); break;
- case BOOK_HEALING: strcat(glog , "book of Healing"); break;
- case BOOK_NECROMANCY: strcat(glog , "book of Necromancy"); break;
- case BOOK_NECRONOMICON: strcat(glog , "Necronomicon"); break;
- case BOOK_SUMMONINGS: strcat(glog , "book of Summonings"); break;
- case BOOK_CHARMS: strcat(glog , "book of Charms"); break;
- case BOOK_DEMONOLOGY: strcat(glog , "book of Demonology"); break;
+ 	case BOOK_MINOR_MAGIC_I: strcat(glog , "archive of Minor Hacking"); break;
+	 case BOOK_MINOR_MAGIC_II: strcat(glog , "archive of Minor Hacking"); break;
+ 	case BOOK_MINOR_MAGIC_III: strcat(glog , "archive of Minor Hacking"); break;
+ 	case BOOK_CONJURATIONS_I: strcat(glog , "archive of Conjurations"); break;
+ 	case BOOK_CONJURATIONS_II: strcat(glog , "archive of Conjurations"); break;
+ 	case BOOK_FLAMES: strcat(glog , "archive of Flames"); break;
+ 	case BOOK_FROST: strcat(glog , "archive of Frost"); break;
+  case BOOK_INVOCATIONS: strcat(glog , "archive of Communications"); break;
+ case BOOK_FIRE: strcat(glog , "archive of Fire"); break;
+ case BOOK_ICE: strcat(glog , "archive of Ice"); break;
+ case BOOK_SURVEYANCES: strcat(glog , "archive of Surveyances"); break;
+ case BOOK_SPATIAL_TRANSLOCATIONS: strcat(glog , "archive of Spatial Translocations"); break;
+ case BOOK_ENCHANTMENTS: strcat(glog , "archive of Plugins"); break;
+ case BOOK_POISONINGS: strcat(glog , "archive of Poisonings"); break;
+ case BOOK_STORMS_AND_FIRE: strcat(glog , "archive of Storms and Fire"); break;
+ case BOOK_DEATH: strcat(glog , "archive of Death"); break;
+ case BOOK_HINDERANCE: strcat(glog , "archive of Hinderance"); break;
+ case BOOK_CHANGES: strcat(glog , "archive of Changes"); break;
+ case BOOK_TRANSFIGURATIONS: strcat(glog , "archive of Transfigurations"); break;
+ case BOOK_USEFUL_MAGIC: strcat(glog , "archive of Useful Hacking"); break;
+ case BOOK_WAR_CHANTS: strcat(glog , "archive of War Chants"); break;
+ case BOOK_CLOUDS: strcat(glog , "archive of Clouds"); break;
+ case BOOK_HEALING: strcat(glog , "archive of Healing"); break;
+ case BOOK_NECROMANCY: strcat(glog , "archive of Cyborgizationgs"); break;
+ case BOOK_NECRONOMICON: strcat(glog , "Cyborgizator"); break;
+ case BOOK_SUMMONINGS: strcat(glog , "archive of Summonings"); break;
+ case BOOK_CHARMS: strcat(glog , "archive of Utilities"); break;
+ case BOOK_DEMONOLOGY: strcat(glog , "archive of Genetics"); break;
 
- case BOOK_AIR: strcat(glog , "book of Air"); break;
- case BOOK_SKY: strcat(glog , "book of the Sky"); break;
- case BOOK_DIVINATIONS: strcat(glog , "book of Divinations"); break;
- case BOOK_WARP: strcat(glog , "book of the Warp"); break;
- case BOOK_ENVENOMATIONS: strcat(glog , "book of Envenomations"); break;
- case BOOK_ANNIHILATIONS: strcat(glog , "book of Annihilations"); break;
- case BOOK_UNLIFE: strcat(glog , "book of Unlife"); break;
+ case BOOK_AIR: strcat(glog , "archive of Air"); break;
+ case BOOK_SKY: strcat(glog , "archive of the Sky"); break;
+ case BOOK_DIVINATIONS: strcat(glog , "archive of Statistics"); break;
+ case BOOK_WARP: strcat(glog , "archive of the Warp"); break;
+ case BOOK_ENVENOMATIONS: strcat(glog , "archive of Envenomations"); break;
+ case BOOK_ANNIHILATIONS: strcat(glog , "archive of Annihilations"); break;
+ case BOOK_UNLIFE: strcat(glog , "archive of Cyborgs"); break;
 
  case BOOK_DESTRUCTION: strcat(glog , "tome of destruction"); break;
 
- case BOOK_CONTROL: strcat(glog , "book of Control"); break;
- case BOOK_MUTATIONS: strcat(glog , "book of Mutations"); break;
- case BOOK_TUKIMA: strcat(glog , "book of Tukima"); break;
- case BOOK_GEOMANCY: strcat(glog , "book of Geomancy"); break;
- case BOOK_EARTH: strcat(glog , "book of Earth"); break;
+ case BOOK_CONTROL: strcat(glog , "archive of Control"); break;
+ case BOOK_MUTATIONS: strcat(glog , "archive of Mutations"); break;
+ case BOOK_TUKIMA: strcat(glog , "archive of Tukima"); break;
+ case BOOK_GEOMANCY: strcat(glog , "archive of Geomancy"); break;
+ case BOOK_EARTH: strcat(glog , "archive of Earth"); break;
 
  case BOOK_MANUAL: strcat(glog , "manual of ");
  strcat(glog, skill_name(it_plus));
  break;
 
- case BOOK_WIZARDRY: strcat(glog , "book of Wizardry"); break;
- case BOOK_POWER: strcat(glog , "book of Power"); break;
+ case BOOK_WIZARDRY: strcat(glog , "archive of Wizardry"); break;
+ case BOOK_POWER: strcat(glog , "archive of Power"); break;
 
 	} // end switch
 /*
@@ -1144,15 +1144,15 @@ if (ident_lev == 0)
  } // end switch
 } // end if
 
-if (ident_lev > 0 && item_typ >= STAFF_SMITING && item_typ < STAFF_AIR) strcat(glog, "spell ");
+if (ident_lev > 0 && item_typ >= STAFF_SMITING && item_typ < STAFF_AIR) strcat(glog, "program ");
 
-strcat(glog, "staff");
+strcat(glog, "ROM");
 
 if (ident_lev > 0)
 {
 	switch(item_typ)
 	{
- 	case STAFF_WIZARDRY: strcat(glog , " of wizardry"); break;
+ 	case STAFF_WIZARDRY: strcat(glog , " of hacking"); break;
 	 case STAFF_POWER: strcat(glog , " of power"); break;
  	case STAFF_FIRE: strcat(glog , " of fire"); break;
  	case STAFF_COLD: strcat(glog , " of cold"); break;
@@ -1160,7 +1160,7 @@ if (ident_lev > 0)
   case STAFF_ENERGY: strcat(glog , " of energy"); break; // crappy name. oh well
   case STAFF_DEATH: strcat(glog , " of death"); break;
   case STAFF_CONJURATION: strcat(glog , " of conjuration"); break;
-  case STAFF_ENCHANTMENT: strcat(glog , " of enchantment"); break;
+  case STAFF_ENCHANTMENT: strcat(glog , " of plugins"); break;
   case STAFF_SUMMONING_I: strcat(glog , " of summoning"); break;
 
  case STAFF_SMITING: strcat(glog , " of smiting"); break;
@@ -1171,7 +1171,7 @@ if (ident_lev > 0)
  case STAFF_DESTRUCTION_IV: strcat(glog , " of destruction"); break;
  case STAFF_WARDING: strcat(glog , " of warding"); break;
  case STAFF_DISCOVERY: strcat(glog , " of discovery"); break;
- case STAFF_DEMONOLOGY: strcat(glog , " of demonology"); break;
+ case STAFF_DEMONOLOGY: strcat(glog , " of genetics"); break;
 
  case STAFF_AIR: strcat(glog , " of air"); break;
  case STAFF_EARTH: strcat(glog , " of earth"); break;
@@ -1186,7 +1186,7 @@ case OBJ_ORBS:
 switch(item_typ)
 {
 case ORB_ZOT:
-default : strcpy(glog , "Orb of Zot"); break;
+default : strcpy(glog , "Disc of Alice"); break;
 /*
 case 1: strcpy(glog, "Orb of Zug"); break;
 case 2: strcpy(glog, "Orb of Xob"); break;
@@ -1219,7 +1219,7 @@ break;
 
 
 case 15: // money
-strcat(glog , "gold piece");
+strcat(glog , "credit chip");
 //if (it_quant > 1) strcat(glog, "s");
 break;
 

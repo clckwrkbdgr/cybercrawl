@@ -109,7 +109,7 @@ for (i = 0; i < 52; i ++)
 
 textcolor(7);
 
-cprintf(EOL"Hello, and welcome to Dungeon Crawl v"VERSION"!");
+cprintf(EOL"Hello, and welcome to Cybercrawl v"VERSION"!");
 cprintf(EOL"(Copyright 1997, 1998, 1999 Linley Henzell)");
 cprintf(EOL"Please read Crawl.txt for instructions and legal details."EOL EOL);
 name_q : cprintf("What is your name today? ");
@@ -189,24 +189,24 @@ close(handle);
 cprintf(EOL EOL"");
 cprintf("You must be new here!"EOL);
 spec_query2 : cprintf("You can be:"EOL);
-cprintf("a - Human                     s - Centaur"EOL);
-cprintf("b - Elf                       t - Demigod"EOL);
-cprintf("c - High Elf                  u - Spriggan"EOL);
-cprintf("d - Grey Elf                  v - Minotaur"EOL);
-cprintf("e - Deep Elf                  w - Demonspawn"EOL);
-cprintf("f - Sludge Elf                x - Ghoul"EOL);
-cprintf("g - Hill Dwarf                y - Kenku"EOL);
-cprintf("h - Mountain Dwarf"EOL);
-cprintf("i - Halfling"EOL);
-cprintf("j - Hill Orc"EOL);
-cprintf("k - Kobold"EOL);
-cprintf("l - Mummy"EOL);
-cprintf("m - Naga"EOL);
-cprintf("n - Gnome"EOL);
-cprintf("o - Ogre"EOL);
-cprintf("p - Troll"EOL);
-cprintf("q - Ogre-Mage"EOL);
-cprintf("r - Draconian"EOL);
+cprintf("a - Human                     s - Ranger"EOL);
+cprintf("b - Small Ninja               t - Freelancer"EOL);
+cprintf("c - Ninja                     u - Thief"EOL);
+cprintf("d - Grey Ninja                v - Bull mutant"EOL);
+cprintf("e - Cyber Ninja               w - Supersoldier"EOL);
+cprintf("f - Ninja Scientist           x - Lowlife"EOL);
+cprintf("g - Combat Engineer           y - Bird Mutant"EOL);
+cprintf("h - Military Engineer"EOL);
+cprintf("i - Field Engineer"EOL);
+cprintf("j - Terrorist"EOL);
+cprintf("k - Smuggler"EOL);
+cprintf("l - Robot"EOL);
+cprintf("m - Assassin"EOL);
+cprintf("n - Apprentice"EOL);
+cprintf("o - Mutant"EOL);
+cprintf("p - Builder"EOL);
+cprintf("q - Mutant-Hacker"EOL);
+cprintf("r - Lizard Mutant"EOL);
 cprintf("? - Random"EOL);
 cprintf("X - Quit"EOL);
 
@@ -394,22 +394,22 @@ for (i = 0; i < 19; i ++)
  switch(i)
  {
   case 0: cprintf("fighter"); break;
-  case 1: cprintf("Wizard"); break;
-  case 2: cprintf("priest"); break;
+  case 1: cprintf("Hacker"); break;
+  case 2: cprintf("Operator"); break;
   case 3: cprintf("Thief"); break;
   case 4: cprintf("Gladiator"); break;
-  case 5: cprintf("Necromancer"); break;
+  case 5: cprintf("Cyborgizator"); break;
   case 6: cprintf("Paladin"); break;
   case 7: cprintf("assassin"); break;
   case 8: cprintf("Berserker"); break;
   case 9: cprintf("Ranger"); break;
   case 10: cprintf("conjurer"); break;
-  case 11: cprintf("enchanter"); break;
-  case 12: cprintf("Fire Elementalist"); break;
-  case 13: cprintf("Ice Elementalist"); break;
+  case 11: cprintf("Designer"); break;
+  case 12: cprintf("Fire Scientist"); break;
+  case 13: cprintf("Ice Scientist"); break;
   case 14: cprintf("Summoner"); break;
-  case 15: cprintf("Air Elementalist"); break;
-  case 16: cprintf("Earth Elementalist"); break;
+  case 15: cprintf("Air Scientist"); break;
+  case 16: cprintf("Earth Scientist"); break;
   case 17: cprintf("Crusader"); break;
   case 18: cprintf("Death knight"); break;
  }
@@ -431,25 +431,25 @@ for (i = 0; i < 30; i ++)
  switch(i)
  {
   case JOB_FIGHTER: cprintf("fighter"); break;
-  case JOB_WIZARD: cprintf("Wizard"); break;
-  case JOB_PRIEST: cprintf("priest"); break;
+  case JOB_WIZARD: cprintf("Hacker"); break;
+  case JOB_PRIEST: cprintf("Operator"); break;
   case JOB_THIEF: cprintf("Thief"); break;
   case JOB_GLADIATOR: cprintf("Gladiator"); break;
-  case JOB_NECROMANCER: cprintf("Necromancer"); break;
+  case JOB_NECROMANCER: cprintf("Cyborgizator"); break;
   case JOB_PALADIN: cprintf("Paladin"); break;
   case JOB_ASSASSIN: cprintf("assassin"); break;
   case JOB_BERSERKER: cprintf("Berserker"); break;
   case JOB_RANGER: cprintf("Ranger"); break;
   case JOB_CONJURER: cprintf("conjurer"); break;
-  case JOB_ENCHANTER: cprintf("enchanter"); break;
-  case JOB_FIRE_ELEMENTALIST: cprintf("Fire Elementalist"); break;
-  case JOB_ICE_ELEMENTALIST: cprintf("Ice Elementalist"); break;
+  case JOB_ENCHANTER: cprintf("Designer"); break;
+  case JOB_FIRE_ELEMENTALIST: cprintf("Fire Scientist"); break;
+  case JOB_ICE_ELEMENTALIST: cprintf("Ice Scientist"); break;
   case JOB_SUMMONER: cprintf("Summoner"); break;
-  case JOB_AIR_ELEMENTALIST: cprintf("Air Elementalist"); break;
-  case JOB_EARTH_ELEMENTALIST: cprintf("Earth Elementalist"); break;
+  case JOB_AIR_ELEMENTALIST: cprintf("Air Scientist"); break;
+  case JOB_EARTH_ELEMENTALIST: cprintf("Earth Scientist"); break;
   case JOB_CRUSADER: cprintf("Crusader"); break;
   case JOB_DEATH_KNIGHT: cprintf("Death knight"); break;
-  case JOB_VENOM_MAGE: cprintf("Venom Mage"); break;
+  case JOB_VENOM_MAGE: cprintf("Venom Hacker"); break;
   case JOB_CHAOS_KNIGHT: cprintf("Chaos Knight"); break;
   case JOB_TRANSMUTER: cprintf("transmuter"); break;
   case JOB_HEALER: cprintf("Healer"); break;
@@ -741,7 +741,7 @@ if (you[0].species != SP_OGRE && you[0].species != SP_TROLL)
 break;
 
 case JOB_WIZARD: // wizard
-	strcpy(you[0].clasnam, "Wizard");
+	strcpy(you[0].clasnam, "Hacker");
 	you[0].hp = 10; you[0].hp_max = 10;
 	you[0].ep = 3; you[0].ep_max = 3;
 /*	you[0].f_abil = 5;
@@ -820,7 +820,7 @@ break;
 
 
 case JOB_PRIEST: // priest
-	strcpy(you[0].clasnam, "priest");
+	strcpy(you[0].clasnam, "Operator");
         you[0].piety = 45;
 	you[0].hp = 12; you[0].hp_max = 12;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -899,9 +899,9 @@ case JOB_PRIEST: // priest
  you[0].skills [SK_INVOCATIONS] = 4;
 
 clrscr();
-cprintf(EOL" Which God do you wish to serve?"EOL);
-cprintf("a - Zin (for traditional priests)"EOL);
-cprintf("b - Yredelemnul (for priests of death)"EOL);
+cprintf(EOL" Which Company do you wish to work for?"EOL);
+cprintf("a - Knights Templar (for traditional operator)"EOL);
+cprintf("b - NSF (for operator of terrorists)"EOL);
 
 getkey : keyn = get_ch();
 switch(keyn)
@@ -1079,7 +1079,7 @@ break;
 
 
 case JOB_NECROMANCER: // Necromancer
-	strcpy(you[0].clasnam, "Necromancer");
+	strcpy(you[0].clasnam, "Cyborgizator");
 	you[0].hp = 10; you[0].hp_max = 10;
 	you[0].ep = 3; you[0].ep_max = 3;
 /*	you[0].f_abil = 5;
@@ -1450,13 +1450,13 @@ case JOB_VENOM_MAGE:
 case JOB_TRANSMUTER:
 case JOB_WARPER:
     if (you[0].clas == JOB_CONJURER) strcpy(you[0].clasnam, "conjurer");
-	if (you[0].clas == JOB_ENCHANTER) strcpy(you[0].clasnam, "Enchanter");
-	if (you[0].clas == JOB_FIRE_ELEMENTALIST) strcpy(you[0].clasnam, "Fire Elementalist");
-	if (you[0].clas == JOB_ICE_ELEMENTALIST) strcpy(you[0].clasnam, "Ice Elementalist");
+	if (you[0].clas == JOB_ENCHANTER) strcpy(you[0].clasnam, "Designer");
+	if (you[0].clas == JOB_FIRE_ELEMENTALIST) strcpy(you[0].clasnam, "Fire Scientist");
+	if (you[0].clas == JOB_ICE_ELEMENTALIST) strcpy(you[0].clasnam, "Ice Scientist");
 	if (you[0].clas == JOB_SUMMONER) strcpy(you[0].clasnam, "Summoner");
-	if (you[0].clas == JOB_AIR_ELEMENTALIST) strcpy(you[0].clasnam, "Air Elementalist");
-	if (you[0].clas == JOB_EARTH_ELEMENTALIST) strcpy(you[0].clasnam, "Earth Elementalist");
-	if (you[0].clas == JOB_VENOM_MAGE) strcpy(you[0].clasnam, "Venom Mage");
+	if (you[0].clas == JOB_AIR_ELEMENTALIST) strcpy(you[0].clasnam, "Air Scientist");
+	if (you[0].clas == JOB_EARTH_ELEMENTALIST) strcpy(you[0].clasnam, "Earth Scientist");
+	if (you[0].clas == JOB_VENOM_MAGE) strcpy(you[0].clasnam, "Venom Hacker");
 	if (you[0].clas == JOB_TRANSMUTER) strcpy(you[0].clasnam, "transmuter");
 	if (you[0].clas == JOB_WARPER) strcpy(you[0].clasnam, "warper");
 
@@ -1760,8 +1760,8 @@ else
 {
  clrscr();
  cprintf(EOL" From where do you draw your power?"EOL);
- cprintf("a - Necromantic magic"EOL);
- cprintf("b - the God Yredelemnul"EOL);
+ cprintf("a - Cyborg hacking"EOL);
+ cprintf("b - the NSF"EOL);
 
  getkey1 : keyn = get_ch();
  switch(keyn)
@@ -1837,15 +1837,15 @@ case JOB_CHAOS_KNIGHT: // Chaos knight
  you[0].skills [SK_STABBING] = 1;
 
 clrscr();
-cprintf(EOL" Which God of Chaos do you wish to serve?"EOL);
-cprintf("a - Xom of Chaos"EOL);
-cprintf("b - Makhleb the Destroyer"EOL);
+cprintf(EOL" Which Company of Chaos do you wish to work for?"EOL);
+cprintf("a - The Anonymous"EOL);
+cprintf("b - Netchaos Order"EOL);
 
 getkey2 : keyn = get_ch();
 switch(keyn)
 {
  case 'a': you[0].religion = GOD_XOM; you[0].skills [SK_FIGHTING] ++; cprintf(EOL"A new plaything! Welcome..."); break;
- case 'b': you[0].religion = GOD_MAKHLEB; you[0].skills [SK_INVOCATIONS] = 2; cprintf(EOL"Blood and souls for Makhleb!"); break;
+ case 'b': you[0].religion = GOD_MAKHLEB; you[0].skills [SK_INVOCATIONS] = 2; cprintf(EOL"Blood and souls for Netchaos Order!"); break;
  default: goto getkey2;
 }
 

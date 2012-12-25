@@ -40,19 +40,19 @@ int powc = 0;
 
 if (you[0].spell_no == 0)
 {
-	strcpy(info, "You don't know any spells.");
+	strcpy(info, "You don't have any program installed.");
 	mpr(info);
 	return;
 }
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
 
-query : strcpy(info, "Cast which spell? (? or * to list)");
+query : strcpy(info, "Execute which program? (? or * to list)");
 mpr(info);
 
 int keyin = get_ch();
@@ -80,7 +80,7 @@ spc = (int) keyin;
 
 if (spc < 97 || spc > 121)
 {
-	unknown : strcpy(info, "You don't know that spell.");
+	unknown : strcpy(info, "You don't have that program.");
 	mpr(info);
 	return;
 }
@@ -94,14 +94,14 @@ if (you[0].spells [spc2] == 210)
 
 if (spell_value(you[0].spells [spc2]) > you[0].ep)
 {
-	strcpy(info, "You don't have enough magic to cast that spell.");
+	strcpy(info, "You don't have enough energy to execute that program.");
 	mpr(info);
 	return;
 }
 
 if (you[0].hunger <= spell_hunger(spell_value(you[0].spells [spc2]), you[0].spells [spc2]) || you[0].hung_state <= 1)
 {
- strcpy(info, "You don't have the energy to cast that spell.");
+ strcpy(info, "You are too hungry to execute that program.");
  mpr(info);
  you[0].turnover = 1; // ??
  return;
@@ -185,7 +185,7 @@ int spfl = random2(33) + random2(34) + random2(35);
 
  if (spfl < spell_fail(spc2))
  {
-  mpr("You miscast the spell.");
+  mpr("Program failed.");
   if (you[0].religion == GOD_SIF_MUNA && you[0].piety >= 100 && random2(150) <= you[0].piety)
   {
    mpr("Nothing appears to happen.");
@@ -204,7 +204,7 @@ int spfl = random2(33) + random2(34) + random2(35);
 
 if (you[0].species == SP_MUMMY && spell_type(spc2, 17) == 1)
 {
-  strcpy(info, "You can't use this type of magic!");
+  strcpy(info, "You can't use this type of programs!");
   mpr(info);
   return -1;
 }
@@ -477,7 +477,7 @@ switch(spc2)
    }
    if (you[0].level_type == 3)
    {
-    mpr("Your Earth magic lacks the power to map Pandemonium.");
+    mpr("Your Earth programming lacks the power to map Bioengineering.");
     return 1;
    }
    strcpy(info, "You feel aware of your surroundings.");
@@ -497,7 +497,7 @@ switch(spc2)
    return 1;
 
    case 66: // Animate Dead
-   strcpy(info, "You call on the dead to walk for you.");
+   strcpy(info, "You call on the dead to be cybernetisized for you.");
    mpr(info);
    animate_dead(powc + 1, 7, you[0].pet_target, 1);
    return 1;
@@ -517,7 +517,7 @@ switch(spc2)
    return 1;
 
    case 70: // animate skeleton
-   strcpy(info, "You attempt to give life to the dead...");
+   strcpy(info, "You attempt to cybernitize the dead...");
    mpr(info);
    animate_a_corpse(you[0].x_pos, you[0].y_pos, 7, you[0].pet_target, 1);
    return 1;
@@ -665,13 +665,13 @@ switch(spc2)
    return 1;
 
    case 119: // summon demon
-   strcpy(info, "You open a gate to Pandemonium!");
+   strcpy(info, "You open a gate to Bioengineerings!");
    mpr(info);
    summon_ice_beast_etc(powc, summon_any_demon(1));
    return 1;
 
    case 120: // demonic horde
-   strcpy(info, "You open a gate to Pandemonium!");
+   strcpy(info, "You open a gate to Bioengineerings!");
    mpr(info);
    dem_hor2 = 3 + random2(5);
    for (dem_hor = 0; dem_hor < 4 + dem_hor2; dem_hor ++)
@@ -683,7 +683,7 @@ switch(spc2)
    return 1;
 
    case 121: // greater demon
-   strcpy(info, "You open a gate to Pandemonium!");
+   strcpy(info, "You open a gate to Bioengineerings!");
    mpr(info);
    dem_hor = 100;
    if (random2(powc) <= 5)
@@ -701,7 +701,7 @@ switch(spc2)
    case 123: // takumi's vorpal blade
    if (brand_weapon(10, powc) == 0)
    {
-    strcpy(info, "The spell fizzles.");
+    strcpy(info, "The program fizzles.");
     mpr(info);
    }
    return 1;
@@ -709,7 +709,7 @@ switch(spc2)
    case 124: // Fire brand
    if (brand_weapon(1, powc) == 0)
    {
-    strcpy(info, "The spell fizzles.");
+    strcpy(info, "The program fizzles.");
     mpr(info);
    }
    return 1;
@@ -717,7 +717,7 @@ switch(spc2)
    case 125: // Ice Aura
    if (brand_weapon(2, powc) == 0)
    {
-    strcpy(info, "The spell fizzles.");
+    strcpy(info, "The program fizzles.");
     mpr(info);
    }
    return 1;
@@ -725,7 +725,7 @@ switch(spc2)
    case 126: // lethal infusion
    if (brand_weapon(7, powc) == 0)
    {
-    strcpy(info, "The spell fizzles.");
+    strcpy(info, "The program fizzles.");
     mpr(info);
    }
    return 1;
@@ -794,7 +794,7 @@ switch(spc2)
    case 141: // poison blade
    if (brand_weapon(6, powc) == 0)
    {
-    strcpy(info, "Your current weapon is inappropriate for this spell.");
+    strcpy(info, "Your current weapon is inappropriate for this program.");
     mpr(info);
    }
    return 1;
@@ -810,13 +810,13 @@ switch(spc2)
    case 144: // mutation
    if (you[0].hp < you[0].hp_max / 2)
    {
-    mpr("Your body is in too bad a condition for this spell to function.");
+    mpr("Your body is in too bad a condition for this program to function.");
     return 1;
    }
    mpr("Your body is suffused with transfigurative energy!");
    you[0].hp = random2(you[0].hp) + 1;
    you[0].hp_ch = 1;
-   if (mutate(100) == 0) mpr("The spell fails.");
+   if (mutate(100) == 0) mpr("The program fails.");
    return 1;
 
    case 145: // debug
@@ -892,7 +892,7 @@ switch(spc2)
    case 158: // Symbol of Torment
    if (you[0].is_undead != 0 || you[0].mutation [MUT_TORMENT_RESISTANCE] != 0)
    {
-    mpr("This spell will not function for one who is immune to its effects.");
+    mpr("This program will not function for one who is immune to its effects.");
     return 1;
    }
    torment();
@@ -996,7 +996,7 @@ switch(spc2)
    return 1;
 */
 default:
-strcpy(info, "Invalid spell!");
+strcpy(info, "Invalid program!");
 mpr(info);
 break;
 

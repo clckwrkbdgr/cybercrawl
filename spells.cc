@@ -135,7 +135,7 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You are blasted with magical energy!");
+  strcpy(info, "You are blasted with cyber energy!");
   mpr(info);
   ouch(4 + random2(7) + random2(7), 0, 18);
   break;
@@ -167,7 +167,7 @@ switch(spec_effect)
   ouch(9 + random2(12) + random2(12), 0, 18);
   break;
   case 1:
-  strcpy(info, "There is a sudden explosion of magical energy!");
+  strcpy(info, "There is a sudden explosion of cyber energy!");
   mpr(info);
   beam[0].type = 43;
   beam[0].damage = 110;
@@ -353,7 +353,7 @@ switch(spec_effect)
   potion_effect(POT_CONFUSION, 30); // conf
   break;
   case 2:
-  strcpy(info, "You are cast into the Abyss!");
+  strcpy(info, "You are thrown into the Dump!");
   mpr(info);
   more();
   banished(96); // sends you to the abyss
@@ -447,7 +447,7 @@ switch(spec_effect)
   }
   break;
   case 3:
-  strcpy(info, "You are cast into the Abyss!");
+  strcpy(info, "You are thrown into the Dump!");
   mpr(info);
   banished(96); // sends you to the abyss
   break;
@@ -531,7 +531,7 @@ switch(spec_effect)
   case 0:
   if (forget_spell() == 1)
   {
-   strcpy(info, "You have forgotten a spell!");
+   strcpy(info, "Some program have been uninstalled!");
   } else strcpy(info, "You get a splitting headache.");
   mpr(info);
   break;
@@ -1320,7 +1320,7 @@ unsigned char nthing = 0;
 
 if (you[0].spell_levels <= 0)
 {
- strcpy(info, "You can't memorise any more spells yet.");
+ strcpy(info, "You can't install any more programs yet.");
  mpr(info);
  return 0;
 }
@@ -1333,16 +1333,16 @@ if (you[0].inv_no == 0)
 	}
 
 query :
-strcpy(info, "You can memorise ");
+strcpy(info, "You can install ");
 itoa(you[0].spell_levels, st_prn, 10);
 strcat(info, st_prn);
-strcat(info, " more level");
+strcat(info, " more slot");
 if (!(st_prn [0] == '1' && st_prn [1] == 0)) strcat(info, "s");
-strcat(info, " of spells");
+strcat(info, " of programs");
  strcat(info, ".");
 
 mpr(info);
-strcpy(info, "Memorise from which spellbook?");
+strcpy(info, "Install from which archive?");
 mpr(info);
 
 keyin = get_ch();
@@ -1381,13 +1381,13 @@ if (you[0].inv_quant [sc_read_2] == 0)
 
 if (you[0].inv_class [sc_read_2] != 10)
 {
-	mpr("That isn't a spellbook!");
+	mpr("That isn't a program archive!");
 	return 0;
 }
 
 if (you[0].inv_type [sc_read_2] == 41) /* manuals */
 {
-	mpr("That isn't a spellbook!");
+	mpr("That isn't a program archive!");
 	return 0;
 }
 
@@ -1403,7 +1403,7 @@ read_book(spell_container);
 
 if (you[0].inv_plus [spell_container] == 64)
 {
-   strcpy(info, "That spellbook is empty.");
+   strcpy(info, "That archive is empty.");
    mpr(info);
    return 0;
 }
@@ -1471,7 +1471,7 @@ for (i = SK_SPELLCASTING; i < SK_POISON_MAGIC; i ++)
 
 if (j == 0)
 {
- mpr("You can't use spell magic! I'm afraid it's scrolls only for now.");
+ mpr("You can't use programs! I'm afraid it's devices only for now.");
  return;
 }
 
@@ -1512,14 +1512,14 @@ char is_good = 1;
 
 if (you[0].spell_no == 21 && specspell != 43) //if changed, must also change for priest in level_change. You can always memorise selective amnesia
 {
- strcpy(info, "Your head is already too full of spells!");
+ strcpy(info, "Your cyberbrain is already too full of programs!");
  mpr(info);
  return;
 }
 
 if (you[0].species == SP_MUMMY && spell_type(specspell, 17) == 1)
 {
-  strcpy(info, "You can't use this type of magic!");
+  strcpy(info, "You can't use this type of programs!");
   mpr(info);
   return;
 }
@@ -1527,7 +1527,7 @@ if (you[0].species == SP_MUMMY && spell_type(specspell, 17) == 1)
 //if (you[0].is_undead != 0 && specspell == 42)
 if ((you[0].is_undead == 1 && undead_can_memorise(specspell) == 2) || (you[0].is_undead == 2 && undead_can_memorise(specspell) != 0))
 {
-  strcpy(info, "You can't use this spell.");
+  strcpy(info, "You can't use this program.");
   mpr(info);
   return;
 }
@@ -1539,7 +1539,7 @@ for (i = 0; i < 25; i ++)
       #ifdef PLAIN_TERM
       redraw_screen();
       #endif
-      strcpy(info, "You already know that spell!");
+      strcpy(info, "You already have that program!");
       mpr(info);
       you[0].turnover = 1;
       return;
@@ -1554,7 +1554,7 @@ if (you[0].spell_levels < levels_needed)
    #ifdef PLAIN_TERM
    redraw_screen();
    #endif
-   strcpy(info, "You can't memorise that many levels of magic yet!");
+   strcpy(info, "You can't install that many programs yet!");
    mpr(info);
    you[0].turnover = 1;
    return;
@@ -1588,22 +1588,22 @@ chance = spell_fail(specspell);
 
  if (chance >= 80)
  {
-  strcpy(info, "This spell is very difficult to memorise.");
+  strcpy(info, "This program is very difficult to install.");
   mpr(info);
  } else
  if (chance >= 60)
  {
-  strcpy(info, "This spell is quite difficult to commit to memory.");
+  strcpy(info, "This program is quite difficult to commit to memory.");
   mpr(info);
  } else
  if (chance >= 45)
  {
-  strcpy(info, "This spell is rather tricky to learn.");
+  strcpy(info, "This program is rather tricky to install.");
   mpr(info);
  } else
  if (chance >= 30)
  {
-  strcpy(info, "This spell is a little tricky to absorb.");
+  strcpy(info, "This program is a little tricky to copy.");
   mpr(info);
  }
 
@@ -1611,7 +1611,7 @@ chance = spell_fail(specspell);
 redraw_screen();
 #endif
 
-strcpy(info, "Memorise ");
+strcpy(info, "Install ");
 spell_name(specspell, spell_string);
 strcat(info, spell_string);
 strcat(info, "?");
@@ -1640,22 +1640,22 @@ if (random2(40) + random2(40) + random2(40) < chance) //powm <= random2(chance) 
 #ifdef PLAIN_TERM
 redraw_screen();
 #endif
- strcpy(info, "You fail to memorise the spell.");
+ strcpy(info, "You fail to install the program.");
  mpr(info);
  you[0].turnover = 1;
  if (you[0].inv_type [spell_container] == 24)
  {
-   mpr("The pages of the Necronomicon glow with a malevolent light...");
+   mpr("The screen of the Necronomicon glow with a malevolent light...");
    miscast_effect(16, 8, random2(30) + random2(30) + random2(30), 100);
  }
  if (you[0].inv_type [spell_container] == 27) /* Demonology */
  {
-   mpr("This book does not appreciate being disturbed by one of your ineptitude!");
+   mpr("This archive does not appreciate being disturbed by one of your ineptitude!");
    miscast_effect(18, 7, random2(30) + random2(30) + random2(30), 100);
  }
  if (you[0].inv_type [spell_container] == 33) /* Annihilations */
  {
-   mpr("This book does not appreciate being disturbed by one of your ineptitude!");
+   mpr("This archive does not appreciate being disturbed by one of your ineptitude!");
    miscast_effect(11, 8, random2(30) + random2(30) + random2(30), 100);
  }
 
@@ -1664,7 +1664,7 @@ redraw_screen();
 #endif
 
 #ifdef DEBUG
- strcpy(info, "But I'll let you memorise it anyway, okay?");
+ strcpy(info, "But I'll let you install it anyway, okay?");
  mpr(info);
 #endif
 

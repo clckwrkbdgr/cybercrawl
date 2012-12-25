@@ -156,7 +156,7 @@ void quit_game(void)
 
 void version(void)
 {
- 	strcpy(info, "This is Dungeon Crawl v"VERSION". (Last build 26/3/99)");
+ 	strcpy(info, "This is Cybercrawl v"VERSION". (Last build 26/3/99)");
  	mpr(info);
 }
 
@@ -164,7 +164,7 @@ void version(void)
 void adjust(void)
 {
 
-	strcpy(info, "Adjust (i)tems or (s)pells?");
+	strcpy(info, "Adjust (i)tems or program(s)?");
 	mpr(info);
 
 	unsigned char keyin = get_ch();
@@ -328,12 +328,12 @@ void adjust_spells(void)
 
 	if (you[0].spell_no == 0)
 	{
-		strcpy(info, "You don't know any spells.");
+		strcpy(info, "You don't have any program installed.");
 		mpr(info);
 		return;
 	}
 
-	query : strcpy(info, "Adjust which spell?");
+	query : strcpy(info, "Adjust which program?");
 	mpr(info);
 
 	unsigned char keyin = get_ch();
@@ -355,7 +355,7 @@ void adjust_spells(void)
 
 	if (throw_1 < 97 || throw_1 > 119)
 	{
-		strcpy(info, "You don't know that spell.");
+		strcpy(info, "You don't have that program.");
 		mpr(info);
 		return;
 	}
@@ -364,7 +364,7 @@ void adjust_spells(void)
 
 	if (you[0].spells [throw_2] == 210)
 	{
-		strcpy(info, "You don't know that spell.");
+		strcpy(info, "You don't have that program.");
 		mpr(info);
 		return;
 	}

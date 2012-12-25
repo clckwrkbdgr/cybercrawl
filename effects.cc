@@ -76,7 +76,7 @@ char go_berserk(void)
 {
   if (you[0].berserker != 0 || you[0].slow != 0) return 0;
   if (you[0].is_undead == 2) return 0;
-  strcpy(info, "A red film seems to cover your vision as you go berserk!");
+  strcpy(info, "A red film seems to cover your vision as you go in battle mode!");
   mpr(info);
   strcpy(info, "You feel yourself moving faster!");
   mpr(info);
@@ -295,7 +295,7 @@ switch(ru)
 	break;
 
 	case 1:
-	strcpy(info, "The scroll reassembles itself in your hand!");
+	strcpy(info, "The device reassembles itself in your hand!");
 	you[0].inv_quant [sc_read_2]++;
 	mpr(info);
  burden_change();
@@ -426,11 +426,11 @@ for (acqc = 0; acqc < 50; acqc ++)
 if (force_class == 250)
 {
 
- mpr("This is a scroll of acquirement!");
+ mpr("This is a device of 3D printing!");
  query :
- mpr("a - Weapon, b - Armour, c - Jewellery,");
- mpr("d - Book, e - Staff, f - Miscellaneous");
- mpr("What kind of item would you like to acquire? ");
+ mpr("a - Weapon, b - Armour, c - Implant,");
+ mpr("d - Archive, e - ROM, f - Miscellaneous");
+ mpr("What kind of item would you like to print? ");
  keyin = get_ch();
 
  switch(keyin)

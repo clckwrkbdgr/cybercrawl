@@ -709,7 +709,7 @@ break;
 case MONS_GIANT_EYEBALL:
 if (random2(2) == 0 && (menv [i].m_ench [2] != 6 || player_see_invis() != 0))
 {
-  mpr("The giant eyeball stares at you.");
+  mpr("The camera stares at you.");
   if (you[0].paralysis < 10) you[0].paralysis += 2 + random2(3);
 }
 break;
@@ -717,7 +717,7 @@ break;
 case MONS_EYE_OF_DRAINING:
 if (random2(2) == 0 && (menv [i].m_ench [2] != 6 || player_see_invis() != 0))
 {
-  mpr("The eye of draining stares at you.");
+  mpr("The camera of draining stares at you.");
   you[0].ep -= random2(5) + random2(5) + random2(5) + 2;
   if (you[0].ep < 0) you[0].ep = 1;
   you[0].ep_ch = 1;
@@ -838,14 +838,14 @@ beem[0].target_y = beem[0].trac_targ_y;
 beem[0].aim_down = 1;
 	beem[0].range = random2(10) + 5;
 	beem[0].source_x = menv [i].m_x; beem[0].source_y = menv [i].m_y;
-		strcpy(beem[0].beam_name, "glob of lava");
+		strcpy(beem[0].beam_name, "glob of radioactive waste");
 		beem[0].damage = 108;
 		beem[0].colour = RED;
 		beem[0].type = '#'; /* hash # */
 		beem[0].flavour = 20; /* lava */
 		beem[0].hit = 20;
 		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-		strcat(info, " spits lava!");
+		strcat(info, " spits radioactive waste!");
                 beem[0].beam_source = i;
 		mpr(info);
 	beem[0].thing_thrown = 4;
@@ -943,7 +943,7 @@ if (random2(7) == 0) // phantom
    if (mons_near(i) == 1)
    {
     strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-    strcat(info, " blinks.");
+    strcat(info, " jumps.");
     mpr(info);
    }
    monster_blink(i);
@@ -1027,7 +1027,7 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (mons_near(i) != 0)
   {
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " drinks a potion.");
+   strcat(info, " drinks a vial.");
    mpr(info);
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
    strcat(info, " is healed!");
@@ -1045,7 +1045,7 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (mons_near(i) != 0)
   {
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " drinks a potion.");
+   strcat(info, " drinks a vial.");
    mpr(info);
    mons_ench_f2(i, 1, func_pass, beem);
   } else goto out_of_potion;
@@ -1072,7 +1072,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (mons_near(i) != 0)
   {
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " reads a scroll.");
+   strcat(info, " uses a device.");
    mpr(info);
   }
   monster_teleport(i, 0);
@@ -1083,10 +1083,10 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (mons_near(i) != 0)
   {
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " reads a scroll.");
+   strcat(info, " uses a device.");
    mpr(info);
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " blinks!");
+   strcat(info, " jumps!");
    mpr(info);
    monster_blink(i);
   } else goto out_of_scroll;
@@ -1097,7 +1097,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (mons_near(i) != 0)
   {
    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " reads a scroll.");
+   strcat(info, " uses a device.");
    mpr(info);
   }
   create_monster(MONS_LARGE_ABOMINATION, 21, menv [i].m_beh, menv [i].m_x, menv [i].m_y, menv [i].m_hit, 250);
@@ -1251,8 +1251,8 @@ out_of_scroll : if (menv [i].m_inv [5] != 501 && random2(2) == 0 && menv [i].m_b
         if (mons_near(i) != 0)
         {
 	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-         strcat(info, " zaps a wand.");
-        } else strcpy(info, "You hear a zap.");
+         strcat(info, " shoots a gun.");
+        } else strcpy(info, "You hear a shot.");
         mpr(info);
 
         mitm.iplus [menv [i].m_inv [5]] --;
@@ -1479,7 +1479,7 @@ if (menv [i].m_class == MONS_STEAM_DRAGON || menv [i].m_class == MONS_MOTTLED_DR
 		mpr(info);
  	 } else
       	       {
-       		    strcat(info, " casts a spell.");
+       		    strcat(info, " executes a program.");
        		    mpr(info);
                }
 /*
@@ -1501,7 +1501,7 @@ if (spell_cast == 16)
  if (mons_near(i) == 1)
 	{
 		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-		strcat(info, " blinks!");
+		strcat(info, " jumps!");
 		mpr(info);
   monster_blink(i);
   continue;

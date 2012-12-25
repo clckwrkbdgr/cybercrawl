@@ -389,7 +389,7 @@ if (igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9] != 501)
 {
  if (mitm.iclass [igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] == 15)
  {
-  mpr("You see some money here.");
+  mpr("You see some credit chips here.");
  } else
  {
   strcpy(info, "You see ");
@@ -411,14 +411,14 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   case 5: // secret door
   if (you[0].level_type == 3)
   {
-   mpr("A wall of the weird stuff which makes up Pandemonium.");
+   mpr("A wall of the weird stuff which makes up Bioengineerings.");
   } else mpr("A rock wall.");
   break;
   case 3: mpr("A closed door.");
   break;
   case 4: mpr("A metal wall.");
   break;
-  case 6: mpr("A wall of green crystal.");
+  case 6: mpr("A wall of green glass.");
   break;
   case 7: mpr("An orcish idol.");
   break;
@@ -430,7 +430,7 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   break;
   case 23: mpr("An orange crystal statue.");
   break;
-  case 61: mpr("Some lava.");
+  case 61: mpr("Some radioactive waste.");
   break;
   case 62: mpr("Some deep water.");
   break;
@@ -458,7 +458,7 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   case 88:
   mpr("A stone staircase leading up.");
   break;
-  case 69: mpr("A gateway to hell.");
+  case 69: mpr("A gateway to Facilities.");
   break;
   case 71: mpr("A staircase to a branch level.");
   break;
@@ -481,11 +481,11 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
    case 1: mpr("An arrow trap."); break;
    case 2: mpr("A spear trap."); break;
    case 3: mpr("An axe trap."); break;
-   case 4: mpr("A teleportation trap."); break;
+   case 4: mpr("A ventilation trap."); break;
    case 5: mpr("An amnesia trap."); break;
    case 6: mpr("A blade trap."); break;
    case 7: mpr("A bolt trap."); break;
-   case 8: mpr("A Zot trap."); break;
+   case 8: mpr("An Alice trap."); break;
    default: mpr("An undefined trap. Huh?"); break;
   }
   break;
@@ -493,52 +493,52 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   break;
   case 81: mpr("A labyrinth entrance.");
   break;
-  case 92: mpr("A gateway to the Iron City of Dis.");
+  case 92: mpr("A gateway to the Iron Works.");
   break;
-  case 93: mpr("A gateway to Gehenna.");
+  case 93: mpr("A gateway to Refueling Base.");
   break;
-  case 94: mpr("A gateway to the freezing wastes of Cocytus.");
+  case 94: mpr("A gateway to the freezing wastes of Cooling Plants.");
   break;
-  case 95: mpr("A gateway to the decaying netherworld of Tartarus.");
+  case 95: mpr("A gateway to the Cyborg Research Labs.");
   break;
-  case 96: mpr("A gateway to the infinite Abyss.");
+  case 96: mpr("A gateway to the infinite Dump.");
   break;
-  case 97: mpr("A gateway leading out of the Abyss.");
+  case 97: mpr("A gateway leading out of the Dump.");
   break;
-  case 98: mpr("An empty arch of ancient stone.");
+  case 98: mpr("An opened blast door of solid metal.");
   break;
-  case 99: mpr("A gate leading to the halls of Pandemonium.");
+  case 99: mpr("A gate leading to the halls of Bioengineerings.");
   break;
-  case 100: mpr("A gate leading out of Pandemonium.");
+  case 100: mpr("A gate leading out of Bioengineerings.");
   break;
-  case 101: mpr("A gate leading to another region of Pandemonium.");
+  case 101: mpr("A gate leading to another region of Bioengineerings.");
   break;
 
-  case 110: mpr("A staircase to the Orcish Mines.");
+  case 110: mpr("A staircase to the Terrorist Lair.");
   break;
   case 111: mpr("A staircase to the Hive.");
   break;
-  case 112: mpr("A staircase to the Lair.");
+  case 112: mpr("A staircase to the Biodome.");
   break;
-  case 113: mpr("A staircase to the Slime Pits.");
+  case 113: mpr("A staircase to the Waste Pits.");
   break;
-  case 114: mpr("A staircase to the Vaults.");
+  case 114: mpr("A staircase to the Storage Area.");
   break;
-  case 115: mpr("A staircase to the Crypt.");
+  case 115: mpr("A staircase to the Cyborg Manufactory.");
   break;
-  case 116: mpr("A staircase to the Hall of Blades.");
+  case 116: mpr("A staircase to the Armory.");
   break;
-  case 117: mpr("A gate to the Realm of Zot.");
+  case 117: mpr("A gate to the Vault of Alice.");
   break;
-  case 118: mpr("A staircase to the Ecumenical Temple.");
+  case 118: mpr("A staircase to the Terminal Hub.");
   break;
   case 119: mpr("A staircase to the Snake Pit.");
   break;
-  case 120: mpr("A staircase to the Elven Halls.");
+  case 120: mpr("A staircase to the Ninja Palace.");
   break;
-  case 121: mpr("A staircase to the Tomb.");
+  case 121: mpr("A staircase to the Cyborg Hub.");
   break;
-  case 122: mpr("A staircase to the Swamp.");
+  case 122: mpr("A staircase to the Greenhouse.");
   break;
 
   case 130:
@@ -546,76 +546,76 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   case 132:
   case 134:
   case 138:
-  mpr("A staircase back to the Dungeon.");
+  mpr("A staircase back to the Installation.");
   break;
   case 133:
-  mpr("A staircase back to the Lair.");
+  mpr("A staircase back to the Biodome.");
   break;
   case 135:
-  mpr("A staircase back to the Vaults.");
+  mpr("A staircase back to the Storage Area.");
   break;
   case 136:
-  mpr("A staircase back to the Crpyt.");
+  mpr("A staircase back to the Cyborg Manufactory.");
   break;
   case 139:
-  mpr("A staircase back to the Lair.");
+  mpr("A staircase back to the Biodome.");
   break;
   case 140:
-  mpr("A staircase back to the Mines.");
+  mpr("A staircase back to the Terrorists.");
   break;
   case 141:
-  mpr("A staircase back to the Crypt.");
+  mpr("A staircase back to the Cyborg Manufactory.");
   break;
   case 137:
   mpr("A gate leading back out of this place.");
   break;
   case 142:
-  mpr("A staircase back to the Lair.");
+  mpr("A staircase back to the Biodome.");
   break;
 
   case 180:
-  mpr("A glowing white marble altar of Zin.");
+  mpr("A glowing white marble terminal of Knights Templar.");
   break;
   case 181:
-  mpr("A glowing golden altar of the Shining One.");
+  mpr("A glowing golden terminal of the UNATCO.");
   break;
   case 182:
-  mpr("An ancient bone altar of Kikubaaqudgha.");
+  mpr("An ancient bone terminal of Manticore.");
   break;
   case 183:
-  mpr("A basalt altar of Yredelemnul.");
+  mpr("A basalt terminal of NSF.");
   break;
   case 184:
-  mpr("A shimmering altar of Xom.");
+  mpr("A shimmering terminal of The Anonimous.");
   break;
   case 185:
-  mpr("A shining altar of Vehumet.");
+  mpr("A shining terminal of Digicorp.");
   break;
 // case 185
   case 186:
-  mpr("An iron altar of Okawaru.");
+  mpr("An iron terminal of S.T.A.R.S.");
   break;
   case 187:
-  mpr("A burning altar of Makhleb.");
+  mpr("A burning terminal of Netchaos order.");
   break;
   case 188:
-  mpr("A deep blue altar of Sif Muna.");
+  mpr("A deep blue terminal of Black Mesa Research Facility.");
   break;
   case 189:
-  mpr("A bloodstained altar of Trog.");
+  mpr("A bloodstained terminal of Human Liberation Front.");
   break;
   case 190:
-  mpr("A sparkling altar of Nemelex Xobeh.");
+  mpr("A sparkling terminal of Triads.");
   break;
   case 191:
-  mpr("A silver altar of Elyvilon.");
+  mpr("A silver terminal of Aperture Labs.");
   break;
 
   case 200:
-  mpr("A fountain of clear blue water.");
+  mpr("A water conduit of clear blue water.");
   break;
   case 202:
-  mpr("A fountain of sparkling water.");
+  mpr("A water conduit of sparkling water.");
   break;
   case 201:
   case 203:
@@ -623,7 +623,7 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
   case 207:
   case 209:
   case 210:
-  mpr("A dry fountain.");
+  mpr("A dry water conduit.");
   break;
 
 

@@ -64,7 +64,7 @@ if (grd [you[0].x_pos] [you[0].y_pos] >= 180 && grd [you[0].x_pos] [you[0].y_pos
 {
  if (you[0].species == SP_DEMIGOD)
  {
-  mpr("Sorry, a being of your status cannot worship here.");
+  mpr("Sorry, a being of your status cannot employ here.");
   return; /* demigod */
  }
  god_pitch(grd [you[0].x_pos] [you[0].y_pos] - 179);
@@ -81,7 +81,7 @@ if (you[0].religion == GOD_NO_GOD)
 
 if (you[0].religion == GOD_XOM)
 {
-mpr("Xom ignores you.");
+mpr("The Anonimous ignores you.");
 return;
 }
 strcpy(info, "You offer a prayer to ");
@@ -226,7 +226,7 @@ Remember to check for water/lava
  if (you[0].religion == GOD_YREDELEMNUL && random2(you[0].piety) > 80 && random2(10) == 0)
  {
    strcpy(info, god_name(you[0].religion));
-   strcat(info, " grants you an undead servant!");
+   strcat(info, " grants you a cyborg servant!");
    mpr(info);
    more();
    int und_serv = MONS_WRAITH; /* wraith */
@@ -316,22 +316,22 @@ case 7: strcat(info, "Okawaru."); break;
 case 8: strcat(info, "Kikubaaqudgha."); break;
 case 9: strcat(info, "Sif Muna."); break;
 case 10: strcat(info, "Trog."); break;*/
-case 0: return "You aren't religious!";
-case 1: return "Zin";
-case 2: return "The Shining One";
-case 3: return "Kikubaaqudgha";
-case 4: return "Yredelemnul";
-case 5: return "Xom";
-case 6: return "Vehumet";
-case 7: return "Okawaru";
-case 8: return "Makhleb";
-case 9: return "Sif Muna";
-case 10: return "Trog";
-case 11: return "Nemelex Xobeh";
-case 12: return "Elyvilon";
+case 0: return "You aren't employed!";
+case 1: return "Knights Templar";
+case 2: return "UNATCO";
+case 3: return "Manticore";
+case 4: return "NSF";
+case 5: return "The Anonimous";
+case 6: return "Digicorp";
+case 7: return "S.T.A.R.S.";
+case 8: return "Netchaos Order";
+case 9: return "Black Mesa";
+case 10: return "Human Liberation Front";
+case 11: return "Triads";
+case 12: return "Aperture Labs";
 }
 
-return "Illegal god";
+return "Illegal employer!";
 
 }
 
@@ -342,21 +342,21 @@ char *god_name_long(int which_god)
 switch(which_god)
 {
 case 0: return "Nobody";
-case 1: return "Zin the Law-Giver";
-case 2: return "The Shining One";
-case 3: return "Kikubaaqudgha";
-case 4: return "Yredelemnul";
-case 5: return "Xom of Chaos";
-case 6: return "Vehumet";
-case 7: return "Okawaru";
-case 8: return "Makhleb";
-case 9: return "Sif Muna";
-case 10: return "Trog";
-case 11: return "Nemelex Xobeh";
-case 12: return "Elyvilon the Healer";
+case 1: return "Mighty Knights Templar";
+case 2: return "United Nation Anti-Terrorist Coalition";
+case 3: return "Manticore Bioresearch";
+case 4: return "National Sessionist Forces";
+case 5: return "The Anonimous";
+case 6: return "Digicorp";
+case 7: return "S.T.A.R.S.";
+case 8: return "Netchaos Order";
+case 9: return "Black Mesa Research Facility";
+case 10: return "Human Liberation Front";
+case 11: return "Triads";
+case 12: return "Aperture Science Laboratories";
 }
 
-return "Illegal God";
+return "Illegal employer!";
 
 }
 
@@ -382,10 +382,10 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
  {
   switch(random2(4))
   {
-   case 0: mpr("Xom notices you."); break;
-   case 1: mpr("Xom's attention turns to you for a moment."); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal laughter."); break;
+   case 0: mpr("Anonimous notices you."); break;
+   case 1: mpr("Anonimous's attention turns to you for a moment."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal laughter."); break;
   }
   miscast_effect(10 + random2(15), random2(10) + 5, random2(100), 0);
   return;
@@ -395,9 +395,9 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   switch(random2(4))
   {
    case 0: mpr("\"Suffer!\""); break;
-   case 1: mpr("Xom's malign attention turns to you for a moment."); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal laughter."); break;
+   case 1: mpr("Anonimous's malign attention turns to you for a moment."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal laughter."); break;
   }
   lose_stat(100, 1 + random2(3));
   return;
@@ -406,10 +406,10 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
  {
   switch(random2(4))
   {
-   case 0: mpr("Xom notices you."); break;
-   case 1: mpr("Xom's attention turns to you for a moment."); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal laughter."); break;
+   case 0: mpr("Anonimous notices you."); break;
+   case 1: mpr("Anonimous's attention turns to you for a moment."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal laughter."); break;
   }
   miscast_effect(10 + random2(15), random2(15) + 5, random2(250), 0);
   return;
@@ -420,8 +420,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"You need some minor adjustments, mortal!\""); break;
    case 1: mpr("\"Let me alter your pitiful body.\""); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal laughter."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal laughter."); break;
   }
   mpr("Your body is suffused with distortional energy.");
   you[0].hp = random2(you[0].hp) + 1;
@@ -440,8 +440,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"You have displeased me, mortal.\""); break;
    case 1: mpr("\"You have grown too confident for your meagre worth.\""); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal laughter."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal laughter."); break;
   }
  if (random2(4) == 0 && player_prot_life() == 0)
  {
@@ -463,7 +463,7 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"Time to have some fun!\""); break;
    case 1: mpr("\"Fight to survive, mortal.\""); break;
-   case 2: mpr("You hear Xom's maniacal laughter."); break;
+   case 2: mpr("You hear Anonimous's maniacal laughter."); break;
   }
   if (random2(4) != 0)
   {
@@ -482,8 +482,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   switch(random2(3))
   {
    case 0: mpr("\"You have grown too comfortable in your little world, mortal!\""); break;
-   case 1: mpr("Xom casts you into the Abyss!"); break;
-   case 2: mpr("The world seems to spin as Xom's maniacal laughter rings in your ears."); break;
+   case 1: mpr("Anonimous throws you into the Dump!"); break;
+   case 2: mpr("The world seems to spin as Anonimous's maniacal laughter rings in your ears."); break;
   }
   banished(96);
   return;
@@ -491,7 +491,7 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
 
  if (random2(4) != 0) goto okay_try_again;
 
- mpr("You hear Xom's maniacal laughter.");
+ mpr("You hear Anonimous's maniacal laughter.");
  return;
 }
 /* ouch(x, 19, y); for killed by Xom message */
@@ -503,8 +503,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"Go forth and destroy!\""); break;
    case 1: mpr("\"Go forth and destroy, mortal!\""); break;
-   case 2: mpr("Xom grants you a minor favour."); break;
-   case 3: mpr("Xom smiles on you."); break;
+   case 2: mpr("Anonimous grants you a minor favour."); break;
+   case 3: mpr("Anonimous smiles on you."); break;
   }
   switch(random2(7))
   {
@@ -523,8 +523,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   switch(random2(3))
   {
    case 0: mpr("\"Serve the mortal, my children!\""); break;
-   case 1: mpr("Xom grants you some temporary aid."); break;
-   case 2: mpr("Xom opens a gate."); break;
+   case 1: mpr("Anonimous grants you some temporary aid."); break;
+   case 2: mpr("Anonimous opens a gate."); break;
   }
    create_monster(MONS_NEQOXEC + random2(5), 22, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
    create_monster(MONS_NEQOXEC + random2(5), 22, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
@@ -538,8 +538,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   switch(random2(3))
   {
    case 0: mpr("\"Take this token of my esteem.\""); break;
-   case 1: mpr("Xom grants you a gift!"); break;
-   case 2: mpr("Xom's generous nature manifests itself."); break;
+   case 1: mpr("Anonimous grants you a gift!"); break;
+   case 2: mpr("Anonimous's generous nature manifests itself."); break;
   }
   if (grd [you[0].x_pos] [you[0].y_pos] == 61 || grd [you[0].x_pos] [you[0].y_pos] == 62)
   {
@@ -559,8 +559,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   switch(random2(3))
   {
    case 0: mpr("\"Serve the mortal, my child!\""); break;
-   case 1: mpr("Xom grants you a demonic servitor."); break;
-   case 2: mpr("Xom opens a gate."); break;
+   case 1: mpr("Anonimous grants you a demonic servitor."); break;
+   case 2: mpr("Anonimous opens a gate."); break;
   }
   if (random2(you[0].xl) <= 5) create_monster(MONS_WHITE_IMP + random2(5), 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
    else create_monster(MONS_NEQOXEC + random2(5), 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
@@ -572,8 +572,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"Take this instrument of destruction!\""); break;
    case 1: mpr("\"You have earned yourself a gift.\""); break;
-   case 2: mpr("Xom grants you an implement of death."); break;
-   case 3: mpr("Xom smiles on you."); break;
+   case 2: mpr("Anonimous grants you an implement of death."); break;
+   case 3: mpr("Anonimous smiles on you."); break;
   }
   acquirement(OBJ_WEAPONS);
   return;
@@ -584,8 +584,8 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   {
    case 0: mpr("\"You need some minor adjustments, mortal!\""); break;
    case 1: mpr("\"Let me alter your pitiful body.\""); break;
-   case 2: mpr("Xom's power touches on you for a moment."); break;
-   case 3: mpr("You hear Xom's maniacal chuckling."); break;
+   case 2: mpr("Anonimous's power touches on you for a moment."); break;
+   case 3: mpr("You hear Anonimous's maniacal chuckling."); break;
   }
   mpr("Your body is suffused with distortional energy.");
   you[0].hp = random2(you[0].hp) + 1;
@@ -653,7 +653,7 @@ switch(thing_done)
  case 1: /* killed a living monster in god's name */
  switch(you[0].religion)
  {
-  case GOD_ELYVILON: mpr("Elyvilon did not appreciate that!");
+  case GOD_ELYVILON: mpr("Aperture Labs did not appreciate that!");
   naughty(3, 10);
   break;
   case GOD_KIKUBAAQUDGHA:
@@ -812,25 +812,25 @@ if (you[0].piety >= 30 && old_piety < 30)
  {
   case GOD_ZIN:
   case GOD_SHINING_ONE:
-  mpr("You can now repel the undead.");
+  mpr("You can now repel the cyborgs.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You can now recall your undead servants at will.");
+  mpr("You can now recall your cyborgs servants at will.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can now animate corpses.");
+  mpr("You can now cybernitize corpses.");
   break;
   case GOD_VEHUMET:
-  mpr("You can gain power by killing in Vehumet's name, or by your servants' kills.");
+  mpr("You can gain power by killing in Digicorp's name, or by your servants' kills.");
   break;
   case GOD_OKAWARU:
   mpr("You can now give your body great, if temporary, strength.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can now gain power by killing in Makhleb's name.");
+  mpr("You can now gain power by killing in Netchaos Order's name.");
   break;
   case GOD_TROG:
-  mpr("You can now go berserk at will.");
+  mpr("You can now go in battle mode at will.");
   break;
   case GOD_ELYVILON:
   mpr("You now have minor healing powers.");
@@ -843,28 +843,28 @@ if (you[0].piety >= 50 && old_piety < 50)
  switch(you[0].religion)
  {
   case GOD_ZIN:
-  mpr("You can now call upon Zin for minor healing.");
+  mpr("You can now call upon Knights Templar for minor healing.");
   break;
   case GOD_SHINING_ONE:
   mpr("You can now smite your foes.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You now have some protection from the side-effects of necromantic magic.");
+  mpr("You now have some protection from the side-effects of cyberbrain hacks.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can now recall your undead slaves.");
+  mpr("You can now recall your cyborg slaves.");
   break;
   case GOD_VEHUMET:
-  mpr("Your destructive magics cast in Vehumet's name will rarely fail.");
+  mpr("Your destructive programs executes in Digicorp's name will rarely fail.");
   break;
   case GOD_OKAWARU:
-  mpr("You can now call upon Okawaru for minor healing.");
+  mpr("You can now call upon S.T.A.R.S. for minor healing.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can now call on Makhleb's destructive powers.");
+  mpr("You can now call on Netchaos Order's destructive powers.");
   break;
   case GOD_SIF_MUNA:
-  mpr("You can now forget spells at will.");
+  mpr("You can now uninstall programs at will.");
   break;
   case GOD_TROG:
   mpr("You can now give your body great, if temporary, strength.");
@@ -883,19 +883,19 @@ if (you[0].piety >= 75 && old_piety < 75)
   mpr("You can now call a plague of pestilential beasts upon your enemies!");
   break;
   case GOD_SHINING_ONE:
-  mpr("You can now dispel the undead.");
+  mpr("You can now dispel the cyborgs.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You can now permanently enslave the undead.");
+  mpr("You can now permanently reprogram the cyborgs.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can now animate whole legions of the undead.");
+  mpr("You can now animate whole legions of the cyborgs.");
   break;
   case GOD_VEHUMET:
-  mpr("During prayer you are protected from summoned creatures.");
+  mpr("During communication you are protected from summoned creatures.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can now summon a lesser servant of Makhleb.");
+  mpr("You can now summon a lesser servant of Netchaos Order.");
   break;
   case GOD_ELYVILON:
   mpr("You now have more powerful healing abilities.");
@@ -917,13 +917,13 @@ if (you[0].piety >= 100 && old_piety < 100)
   mpr("You can now drain life from all living things around you.");
   break;
   case GOD_VEHUMET:
-  mpr("You can channel ambient magical energy for your own uses.");
+  mpr("You can channel ambient energy for your own uses.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can now call on the greater of Makhleb's destructive powers.");
+  mpr("You can now call on the greater of Netchaos Order's destructive powers.");
   break;
   case GOD_SIF_MUNA:
-  mpr("You now have some protection from the side-effects of magic.");
+  mpr("You now have some protection from the side-effects of programming.");
   break;
   case GOD_TROG:
   mpr("You can now haste yourself.");
@@ -939,7 +939,7 @@ if (you[0].piety >= 120 && old_piety < 120)
  switch(you[0].religion)
  {
   case GOD_ZIN:
-  mpr("You can now summon a guardian angel.");
+  mpr("You can now summon a guardian agent.");
   break;
   case GOD_SHINING_ONE:
   mpr("You can now summon a divine warrior!");
@@ -948,13 +948,13 @@ if (you[0].piety >= 120 && old_piety < 120)
   mpr("You can now summon an emissary of Death!"); /* ie a reaper */
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can now control the undead.");
+  mpr("You can now control the cyborgs.");
   break;
   case GOD_OKAWARU:
   mpr("You can now haste yourself.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can now summon a greater servant of Makhleb.");
+  mpr("You can now summon a greater servant of Netchaos Order.");
   break;
   case GOD_ELYVILON:
   mpr("You now have incredible healing powers.");
@@ -1083,7 +1083,7 @@ if (you[0].piety < 120 && old_piety >= 120)
  switch(you[0].religion)
  {
   case GOD_ZIN:
-  mpr("You can no longer summon a guardian angel.");
+  mpr("You can no longer summon a guardian agent.");
   break;
   case GOD_SHINING_ONE:
   mpr("You can no longer summon a divine warrior.");
@@ -1092,10 +1092,10 @@ if (you[0].piety < 120 && old_piety >= 120)
   mpr("You can no longer summon an emissary of Death."); /* ie a reaper */
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can no longer control the undead.");
+  mpr("You can no longer control the cyborgs.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can no longer summon a greater servant of Makhleb.");
+  mpr("You can no longer summon a greater servant of Netchaos Order.");
   break;
   case GOD_ELYVILON:
   mpr("You no longer have incredible healing powers.");
@@ -1120,10 +1120,10 @@ if (you[0].piety < 100 && old_piety >= 100)
   mpr("You have lost your channelling abilities.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can no longer call on Makhleb's greater destructive powers.");
+  mpr("You can no longer call on Netchaos Order's greater destructive powers.");
   break;
   case GOD_SIF_MUNA:
-  mpr("You no longer have special protection from the side-effects of magic.");
+  mpr("You no longer have special protection from the side-effects of programming.");
   break;
   case GOD_TROG:
   mpr("You can no longer haste yourself.");
@@ -1143,19 +1143,19 @@ if (you[0].piety < 75 && old_piety >= 75)
   mpr("You can no longer call a plague.");
   break;
   case GOD_SHINING_ONE:
-  mpr("You can no longer dispel the undead.");
+  mpr("You can no longer dispel the cyborgs.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You can no longer permanently enslave the undead.");
+  mpr("You can no longer permanently reprogram the cyborgs.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can no longer animate legions of the dead.");
+  mpr("You can no longer animate legions of the cyborgs.");
   break;
   case GOD_VEHUMET:
   mpr("You feel vulnerable.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can no longer summon any servants of Makhleb.");
+  mpr("You can no longer summon any servants of Netchaos Order.");
   break;
   case GOD_ELYVILON:
   mpr("You lose your powerful healing abilities.");
@@ -1169,25 +1169,25 @@ if (you[0].piety < 50 && old_piety >= 50)
  switch(you[0].religion)
  {
   case GOD_ZIN:
-  mpr("You can no longer call upon Zin for minor healing.");
+  mpr("You can no longer call upon Knights Templar for minor healing.");
   break;
   case GOD_SHINING_ONE:
   mpr("You can no longer smite your foes.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You no longer have any special protection from miscast necromancy.");
+  mpr("You no longer have any special protection from corrupted programs.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can no longer recall your undead slaves.");
+  mpr("You can no longer recall your cyborg slaves.");
   break;
   case GOD_VEHUMET:
   mpr("You feel fallible.");
   break;
   case GOD_MAKHLEB:
-  mpr("You can no longer call on Makhleb's destructive powers.");
+  mpr("You can no longer call on Netchaos Order's destructive powers.");
   break;
   case GOD_SIF_MUNA:
-  mpr("You can no longer forget spells at will.");
+  mpr("You can no longer uninstall programs at will.");
   break;
   case GOD_TROG:
   mpr("You can no longer give your body strength.");
@@ -1205,20 +1205,20 @@ if (you[0].piety < 30 && old_piety >= 30)
  {
   case GOD_ZIN:
   case GOD_SHINING_ONE:
-  mpr("You can no longer repel the undead.");
+  mpr("You can no longer repel the cyborgs.");
   break;
   case GOD_KIKUBAAQUDGHA:
-  mpr("You can no longer recall your undead servants at will.");
+  mpr("You can no longer recall your cyrborg servants at will.");
   break;
   case GOD_YREDELEMNUL:
-  mpr("You can no longer animate corpses.");
+  mpr("You can no longer cybernitize corpses.");
   break;
   case GOD_VEHUMET:
   case GOD_MAKHLEB:
   mpr("You can no longer gain power from your kills.");
   break;
   case GOD_TROG:
-  mpr("You can no longer go berserk at will.");
+  mpr("You can no longer go in battle mode at will.");
   break;
   case GOD_ELYVILON:
   mpr("You have lost your minor healing powers.");
@@ -1234,7 +1234,7 @@ if (you[0].piety < 30 && old_piety >= 30)
 
 void excommunication(void)
 {
- mpr("You have lost your religion!");
+ mpr("You have lost your employment!");
  more();
  if (you[0].religion == GOD_XOM) Xom_acts(0, you[0].xl * 2, 1);
  if (you[0].religion == GOD_KIKUBAAQUDGHA || you[0].religion == GOD_YREDELEMNUL)
@@ -1282,11 +1282,11 @@ for (i = 0; i < 4; i ++)
 
  if (igrd [you[0].x_pos] [you[0].y_pos] == 501 || you[0].religion == GOD_SHINING_ONE || you[0].religion == GOD_XOM)
  {
-  mpr("You kneel at the altar and pray.");
+  mpr("You connect to the terminal and send message.");
   return;
  }
 
-mpr("You kneel at the altar and pray.");
+mpr("You connect to the terminal and send message.");
 
 i = igrd [you[0].x_pos] [you[0].y_pos];
 
@@ -1351,7 +1351,7 @@ i = j;
 void god_pitch(unsigned char which_god)
 {
 
-strcpy(info, "You kneel at the altar of ");
+strcpy(info, "You connect to the terminal of ");
 strcat(info, god_name(which_god));
 strcat(info, ".");
 mpr(info);
@@ -1361,14 +1361,14 @@ more();
 if ((you[0].is_undead != 0 || you[0].species == SP_DEMONSPAWN) && (which_god == GOD_ZIN || which_god == GOD_SHINING_ONE || which_god == GOD_ELYVILON))
 {
  strcpy(info, god_name(which_god));
- strcat(info, " does not accept worship from those such as you!");
+ strcat(info, " does not employ those such as you!");
  mpr(info);
  return;
 }
 
 describe_god(which_god);
 
-mpr("Do you wish to join this religion?");
+mpr("Do you wish to join this company?");
 char keyi = get_ch();
 if (keyi != 'Y' && keyi != 'y') return;
 

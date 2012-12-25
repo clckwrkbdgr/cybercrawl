@@ -79,7 +79,7 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -324,7 +324,7 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
   break;
 
   case SPWPN_ORC_SLAYING:
-  strcpy(info, "You feel a sudden desire to kill orcs!");
+  strcpy(info, "You feel a sudden desire to kill terrorists!");
   if (you[0].species == SP_HILL_ORC) strcpy(info, "You feel a sudden desire to commit suicide.");
   mpr(info);
   break;
@@ -559,7 +559,7 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -1113,7 +1113,7 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
 	break;
 
  case SPARM_MAGIC_RESISTANCE:
- strcpy(info, "You feel resistant to magic.");
+ strcpy(info, "You feel resistant to hacking.");
  mpr(info);
 /* you[0].res_magic += 40;*/
  break;
@@ -1192,7 +1192,7 @@ unsigned char nthing = 0;
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -1384,7 +1384,7 @@ struct bolt beam [1];
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -1469,7 +1469,7 @@ int throw_2 = 0;
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -1791,7 +1791,7 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -1859,21 +1859,21 @@ if (you[0].inv_type [ring_wear_2] < AMU_RAGE)
 {
  if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80)
  {
-	strcpy(info, "You can't take your gloves off to wear a ring!");
+	strcpy(info, "You can't take your gloves off to wear a chip!"); // FIXME Sounds weird.
 	mpr(info);
 	return;
  }
 
  if (you[0].inv_class [ring_wear_2] == OBJ_JEWELLERY && you[0].equip [EQ_LEFT_RING] != -1 && you[0].equip [EQ_RIGHT_RING] != -1) // and you are trying to wear body you[0].equip.
  {
-	strcpy(info, "You are already wearing a ring on each hand.");
+	strcpy(info, "You are already have a chip installed on each hemisphere.");
 	mpr(info);
 	return;
  }
 } else
 if (you[0].equip [EQ_AMULET] != -1)
 {
-	strcpy(info, "You are already wearing an amulet.");
+	strcpy(info, "You are already have an implant installed.");
         if (random2(20))
         {
          strcat(info, " And I must say it looks quite fetching.");
@@ -1892,14 +1892,14 @@ if (you[0].inv_type [ring_wear_2] >= AMU_RAGE)
   else
 if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1)
 {
-	strcpy(info, "Put on which hand (l or r)?");
+	strcpy(info, "Put on which hemisphere (l or r)?");
 	mpr(info);
 
 	keyin = get_ch();
 
 	if (keyin != 'r' && keyin != 'l')
 	{
-		strcpy(info, "You don't have such a hand!");
+		strcpy(info, "You don't have such a hemisphere!");
 		mpr(info);
 		return;
 	}
@@ -1923,9 +1923,9 @@ strcpy(info, " ");
 			item_name(you[0].inv_plus2 [ring_wear_2], you[0].inv_class [ring_wear_2], you[0].inv_type [ring_wear_2], you[0].inv_dam [ring_wear_2], you[0].inv_plus [ring_wear_2], you[0].inv_quant [ring_wear_2], you[0].inv_ident [ring_wear_2], 3, str_pass);
 			strcat(info, str_pass);
 
-			if (hand_used == 0) strcat(info, " (on left hand)");
-			if (hand_used == 1) strcat(info, " (on right hand)");
-			if (hand_used == 2) strcat(info, " (around neck)");
+			if (hand_used == 0) strcat(info, " (on left hemisphere)");
+			if (hand_used == 1) strcat(info, " (on right hemisphere)");
+			if (hand_used == 2) strcat(info, " (vertebra)");
 			mpr(info);
 
 
@@ -2142,21 +2142,21 @@ int ring_wear_2;
 
 if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1 && you[0].equip [EQ_AMULET] == -1)
 {
-	strcpy(info, "You aren't wearing any rings or amulets.");
+	strcpy(info, "You aren't wearing any chips or implants.");
 	mpr(info);
 	return;
 }
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
 
 if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80 && you[0].equip [EQ_AMULET] == -1)
 {
-	strcpy(info, "You can't take your gloves off to remove any rings!");
+	strcpy(info, "You can't take your gloves off to remove any chips!"); // FIXME Weird. Must be helmet.
 	mpr(info);
 	return;
 }
@@ -2168,7 +2168,7 @@ if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1 && y
 
 if (hand_used == 10)
 {
-	query : strcpy(info, "Remove from where (l or r hand, or n for neck)?");
+	query : strcpy(info, "Remove from where (l or r hemispere, or n for vertebra)?");
 	mpr(info);
 
 	keyin = get_ch();
@@ -2189,7 +2189,7 @@ if (hand_used == 10)
 
 	if (keyin != 'r' && keyin != 'l' && keyin != 'n')
 	{
-		strcpy(info, "You don't have such a hand or neck.");
+		strcpy(info, "You don't have such a hemisphere or vertebra.");
 		mpr(info);
 		return;
 	}
@@ -2202,7 +2202,7 @@ if (hand_used == 10)
 
 if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80 && hand_used < 2)
 {
-	strcpy(info, "You can't take your gloves off to remove any rings!");
+	strcpy(info, "You can't take your gloves off to remove any chips!"); // FIXME Weird again.
 	mpr(info);
 	return;
 }
@@ -2406,13 +2406,13 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
 
 
-query : strcpy(info, "Zap which item?");
+query : strcpy(info, "Shoot which item?");
 mpr(info);
 
 unsigned char keyin = get_ch();
@@ -2506,8 +2506,8 @@ you[0].inv_plus [zap_device_2] --;
 
 if (get_id(you[0].inv_class [zap_device_2], you[0].inv_type [zap_device_2]) == 1 && (you[0].inv_ident [zap_device_2] > 1 || you[0].skills [SK_ENCHANTMENTS] > random2(15) + 5))
 {
- if (you[0].inv_ident [zap_device_2] <= 1) mpr("Your skill with enchantments lets you calculate the power of this device...");
- strcpy(info, "This wand has ");
+ if (you[0].inv_ident [zap_device_2] <= 1) mpr("Your skill with plugins lets you calculate the power of this device...");
+ strcpy(info, "This gun has ");
  itoa(you[0].inv_plus [zap_device_2], st_prn, 10);
  strcat(info, st_prn);
  strcat(info, " charge");
@@ -2686,7 +2686,7 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -2851,13 +2851,13 @@ if (you[0].inv_no == 0)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You in battle mode!");
  mpr(info);
  return;
 }
 
 
-query : strcpy(info, "Read which item?");
+query : strcpy(info, "Execute which item?");
 mpr(info);
 
 unsigned char keyin = get_ch();
@@ -2934,14 +2934,14 @@ redraw_screen();
 
 if (you[0].inv_class [sc_read_2] != OBJ_SCROLLS)
 {
-	strcpy(info, "You can't read that!");
+	strcpy(info, "You can't execute that!");
 	mpr(info);
 	return;
 }
 
 if (you[0].inv_type [sc_read_2] == SCR_PAPER)
 {
-  strcpy(info, "This scroll appears to be blank.");
+  strcpy(info, "This device appears to be empty.");
   mpr(info);
   you[0].turnover = 1;
   set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
@@ -2951,7 +2951,7 @@ if (you[0].inv_type [sc_read_2] == SCR_PAPER)
 if (you[0].mutation [MUT_BLURRY_VISION] > 0 && random2(5) < you[0].mutation [MUT_BLURRY_VISION])
 {
  if (you[0].mutation [MUT_BLURRY_VISION] == 3 && random2(3) == 0)
-   mpr("This scroll appears to be blank.");
+   mpr("This device appears to be empty.");
     else mpr("The writing blurs in front of your eyes.");
  you[0].turnover = 1;
  return;
@@ -2976,7 +2976,7 @@ unsigned char scroll = 0;
 
 scroll = sc_read_2;
 
-strcpy(info, "As you read the scroll, it crumbles to dust.");
+strcpy(info, "As you execute the device, it crumbles to dust.");
 mpr(info);
 burden_change();
 
@@ -3475,7 +3475,7 @@ do
 
 
 case SCR_IMMOLATION: // immolation
-strcpy(info, "The scroll explodes in your hands!");
+strcpy(info, "The device explodes in your hands!");
 mpr(info);
 
 	beam[0].type = 43;

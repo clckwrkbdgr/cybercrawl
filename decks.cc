@@ -121,7 +121,7 @@ int card [50];
 unsigned char max_card = 0;
 int i = 0;
 
-strcpy(info, "You draw a card...");
+strcpy(info, "You execute a nanite program...");
 mpr(info);
 
 switch(which_deck)
@@ -160,7 +160,7 @@ i = card [random2(max_card)];
 
 if (random2(250) == 0)
 {
- mpr("This card doesn't seem to belong here.");
+ mpr("This program doesn't seem to belong here.");
  i = random2(TOTAL_CARDS);
 }
 
@@ -169,7 +169,7 @@ cards(i);
 you[0].inv_plus [you[0].equip [EQ_WEAPON]] --;
 if (you[0].inv_plus [you[0].equip [EQ_WEAPON]] == 0)
 {
- strcpy(info, "The deck of cards disappears in a puff of smoke.");
+ strcpy(info, "You throw away the empty kit of nanite programs.");
  mpr(info);
  unwield_item(you[0].equip [EQ_WEAPON]);
  you[0].inv_quant [you[0].equip [EQ_WEAPON]] --;
@@ -205,61 +205,61 @@ strcpy(info, "It is blank.");
 mpr(info);
 break;
 case 1:
-mpr("You have drawn the Butterfly.");
-mpr("A brightly coloured insect flies from the card!");
+mpr("You have execute the Butterfly.");
+mpr("A brightly coloured insect flies from the nanites!");
 create_monster(MONS_BUTTERFLY, 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 2:
-mpr("You have drawn the Wraith.");
+mpr("You have execute the Wraith.");
 lose_level();
 drain_exp();
 break;
 case 3:
-mpr("You have drawn Experience.");
+mpr("You have execute Experience.");
 if (you[0].xp < 27)
  you[0].xp = exp_needed(you[0].xl + 2, you[0].species) + 1;
 level_change();
 break;
 case 4:
-mpr("You have drawn Wealth.");
+mpr("You have execute Wealth.");
 you[0].gp += 800 + random2(500) + random2(500);
 you[0].gp_ch = 1;
 break;
 case 5:
-mpr("You have drawn the Brain!");
+mpr("You have execute the Brain!");
 you[0].max_intel += 1 + random2(2) + random2(2);
 you[0].intel_ch = 1; // note that only the maximum is increased
 break;
 case 6:
-mpr("You have drawn Strength!");
+mpr("You have execute Strength!");
 you[0].max_strength += 1 + random2(2) + random2(2);
 you[0].strength_ch = 1;
 break;
 case 7:
-mpr("You have drawn the Quicksilver card.");
+mpr("You have execute the Quicksilver card.");
 you[0].max_dex += 1 + random2(2) + random2(2);
 you[0].dex_ch = 1;
 break;
 case 8:
-mpr("You have drawn Stupidity!");
+mpr("You have execute Stupidity!");
 you[0].intel -= 2 + random2(2) + random2(2);
 if (you[0].intel <= 3) you[0].intel = 0;
 you[0].intel_ch = 1;
 break;
 case 9:
-mpr("You have drawn Weakness.");
+mpr("You have execute Weakness.");
 you[0].strength -= 2 + random2(2) + random2(2);
 if (you[0].strength <= 3) you[0].strength = 0;
 you[0].strength_ch = 1;
 break;
 case 10:
-mpr("You have drawn the Slug.");
+mpr("You have execute the Slug.");
 you[0].dex -= 2 + random2(2) + random2(2);
 if (you[0].dex <= 3) you[0].dex = 0;
 you[0].dex_ch = 1;
 break;
 case 11: // shuffle stats
-mpr("You have drawn the Shuffle card!");
+mpr("You have execute the Shuffle card!");
 //you[0].strength = you[0].max_strength;
 //you[0].intel = you[0].max_intel;
 //you[0].dex = you[0].max_dex;
@@ -300,7 +300,7 @@ you[0].dex_ch = 1;
 burden_change();
 break;
 case 12: // mutation
-mpr("You have drawn the Freak!");
+mpr("You have execute the Freak!");
 mutate(100);
 mutate(100);
 mutate(100);
@@ -309,7 +309,7 @@ mutate(100);
 mutate(100);
 break;
 case 13: // reaper
-strcpy(info, "Oh no! You have drawn the Death card!");
+strcpy(info, "Oh no! You have execute the Death program!");
 if (you[0].duration [DUR_TELEPORT] != 0) you_teleport(); /* heh heh heh */
 create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
@@ -318,7 +318,7 @@ create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 14: // lose mutations
-mpr("You have drawn Normalisation.");
+mpr("You have execute Normalisation.");
 delete_mutation(100);
 delete_mutation(100);
 delete_mutation(100);
@@ -327,11 +327,11 @@ delete_mutation(100);
 delete_mutation(100);
 break;
 case 15: // soul eater
-mpr("You have drawn the Shadow.");
+mpr("You have execute the Shadow.");
 create_monster(MONS_SOUL_EATER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 16: // gate to abyss
-mpr("You have drawn the Gate!");
+mpr("You have execute the Gate!");
 more();
 if (you[0].level_type == 2)
 {
@@ -346,41 +346,41 @@ if (you[0].level_type == 1)
 banished(96);
 break;
 case 17: // pet
-mpr("You have drawn the Crystal Statue.");
+mpr("You have execute the Crystal Statue.");
 create_monster(MONS_CRYSTAL_GOLEM, 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
 break;
 case 18: // acquirement
-mpr("You have drawn Acquisition!");
-mpr("The card unfolds to form a scroll of paper.");
+mpr("You have execute Acquisition!");
+mpr("The nanites assembles to form a single-use device.");
 acquirement(250);
 break;
 case 19: // Haste
-mpr("You have drawn Haste.");
+mpr("You have execute Haste.");
 potion_effect(POT_SPEED, 150);
 break;
 case 20:
-strcpy(info, "On the card is a picture of a little demon.");
+strcpy(info, "On the program is a picture of a little demon.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 21:
-strcpy(info, "On the card is a picture of a demon.");
+strcpy(info, "On the program is a picture of a demon.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_NEQOXEC + random2(5), 21 + random2(3), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 22:
-strcpy(info, "On the card is a picture of a huge demon.");
+strcpy(info, "On the program is a picture of a huge demon.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_NEQOXEC + random2(5), 20 + random2(3), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 23:
-strcpy(info, "On the card is a picture of a swarm of little demons.");
+strcpy(info, "On the program is a picture of a swarm of little demons.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
@@ -393,21 +393,21 @@ create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, yo
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 24:
-strcpy(info, "On the card is a picture of a huge shaggy yak.");
+strcpy(info, "On the program is a picture of a huge shaggy yak.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_DEATH_YAK, 25, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 25:
-strcpy(info, "On the card is a picture of a huge scaly devil.");
+strcpy(info, "On the program is a picture of a huge scaly devil.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_FIEND, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 26:
-strcpy(info, "On the card is a picture of a huge scaly dragon.");
+strcpy(info, "On the program is a picture of a huge scaly dragon.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
@@ -416,21 +416,21 @@ if (random2(2) == 0)
   else create_monster(MONS_ICE_DRAGON, 22, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 27:
-strcpy(info, "On the card is a picture of a statue.");
+strcpy(info, "On the program is a picture of a statue.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_CLAY_GOLEM + random2(6), 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 28:
-strcpy(info, "On the card is a picture of a very ugly thing.");
+strcpy(info, "On the program is a picture of a very ugly thing.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
 create_monster(MONS_VERY_UGLY_THING, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 29:
-strcpy(info, "On the card is a picture of a very irritated-looking skeletal thing.");
+strcpy(info, "On the program is a picture of a very irritated-looking skeletal thing.");
 mpr(info);
 strcpy(info, "The picture comes to life!");
 mpr(info);
@@ -443,7 +443,7 @@ if (player_see_invis() == 0)
  mpr(info);
 } else
 {
- strcpy(info, "On the card is a picture of a hideous abomination.");
+ strcpy(info, "On the program is a picture of a hideous abomination.");
  mpr(info);
  strcpy(info, "The picture comes to life!");
  mpr(info);
@@ -451,27 +451,27 @@ if (player_see_invis() == 0)
 create_monster(MONS_UNSEEN_HORROR, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 31: // Blink
-mpr("You have drawn Blink.");
+mpr("You have execute Blink.");
 random_blink();
 break;
 case 32:
-mpr("You have drawn the Portal of Delayed Transposition.");
+mpr("You have execute the Portal of Delayed Transposition.");
 you_teleport();
 break;
 case 33:
-mpr("You have drawn the Portal of Instantaneous Transposition.");
+mpr("You have execute the Portal of Instantaneous Transposition.");
 you_teleport2(1);
 break;
 case 34:
-mpr("You have drawn Rage.");
+mpr("You have execute Rage.");
 if (go_berserk() == 0) mpr("Nothing appears to happen.");
 break;
 case 35:
-mpr("You have drawn Levity.");
+mpr("You have execute Levity.");
 potion_effect(POT_LEVITATION, 100);
 break;
 case 36:
-mpr("You have drawn Venom.");
+mpr("You have execute Venom.");
 if (player_res_poison() == 0)
 {
   you[0].poison += 2 + random2(3);
@@ -479,15 +479,15 @@ if (player_res_poison() == 0)
 }
 break;
 case 37:
-mpr("You have drawn the card of Xom!");
+mpr("You have execute the program of Anonimous!");
 Xom_acts(1, 5 + random2(12), 1);
 break;
 case 38:
-mpr("You have drawn Slowness.");
+mpr("You have execute Slowness.");
 potion_effect(POT_SLOWING, 100);
 break;
 case 39:
-mpr("You have drawn Decay.");
+mpr("You have execute Decay.");
 if (you[0].is_undead != 0)
 {
    strcpy(info, "You feel terrible.");
@@ -499,27 +499,27 @@ mpr(info);
 you[0].rotting += random2(5) + 4;
 break;
 case 40:
-mpr("You have drawn the Elixir of Health.");
+mpr("You have execute the Elixir of Health.");
 potion_effect(POT_HEALING, 100);
 break;
 case 41:
-mpr("You have drawn the Symbol of Immediate Regeneration.");
+mpr("You have execute the Symbol of Immediate Regeneration.");
 potion_effect(POT_HEALING, 100);
 break;
 case 42:
-mpr("You have drawn the Symbol of Torment.");
+mpr("You have execute the Symbol of Torment.");
 torment();
 break;
 case 43:
-mpr("You have drawn the Fountain.");
+mpr("You have execute the Fountain.");
 if (grd [you[0].x_pos] [you[0].y_pos] == 67)
 {
-  mpr("A beautiful fountain of clear blue water grows from the floor at your feet.");
+  mpr("A water conduit of clear blue water grows from the floor at your feet.");
   grd [you[0].x_pos] [you[0].y_pos] = 200;
 } else mpr("Nothing appears to happen.");
 break;
 case 44:
-mpr("You have drawn the Altar.");
+mpr("You have execute the Terminal.");
 if (you[0].religion == GOD_NO_GOD)
 {
  mpr("Nothing appears to happen.");
@@ -528,7 +528,7 @@ if (you[0].religion == GOD_NO_GOD)
 dvar1 = 179 + you[0].religion;
 if (grd [you[0].x_pos] [you[0].y_pos] == 67)
 {
-  mpr("An altar grows from the floor at your feet!");
+  mpr("A terminal grows from the floor at your feet!");
   grd [you[0].x_pos] [you[0].y_pos] = dvar1;
 } else
 {
@@ -538,11 +538,11 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 67)
   dvar [1] = 10 + random2(60);
  } while (grd [dvar [0]] [dvar [1]] != 67);
  grd [dvar [0]] [dvar [1]] = dvar1;
- mpr("An altar waits for you somewhere on this level!");
+ mpr("A terminal waits for you somewhere on this level!");
 }
 break;
 case 45:
-mpr("You have drawn Famine.");
+mpr("You have execute Famine.");
 if (you[0].is_undead == 2)
 {
  mpr("You feel rather smug.");
@@ -552,7 +552,7 @@ you[0].hunger = 500;
 food_change();
 break;
 case 46:
-mpr("You have drawn the Feast.");
+mpr("You have execute the Feast.");
 if (you[0].is_undead == 2)
 {
  mpr("You feel a horrible emptiness.");
@@ -562,29 +562,29 @@ you[0].hunger = 12000;
 food_change();
 break;
 case 47:
-mpr("You have drawn Wild Magic.");
+mpr("You have execute Corrupted Program.");
 miscast_effect(10 + random2(15), random2(15) + 5, random2(250), 0);
 break;
 case 48:
-mpr("You have drawn Violence.");
+mpr("You have execute Violence.");
 acquirement(0);
 break;
 case 49:
-mpr("You have drawn Protection.");
+mpr("You have execute Protection.");
 acquirement(2);
 break;
 case 50:
-mpr("You have drawn Knowledge.");
+mpr("You have execute Knowledge.");
 acquirement(10);
 break;
 case 51:
-mpr("You have drawn the Maze!");
+mpr("You have execute the Maze!");
 more();
 if (you[0].level_type != 0) break;
 banished(81);
 break;
 case 52:
-mpr("You have drawn the Pandemonium card!");
+mpr("You have execute the Bioengineering program!");
 more();
 if (you[0].level_type == 3)
 {
@@ -599,11 +599,11 @@ if (you[0].level_type == 1)
 banished(99);
 break;
 case 53:
-mpr("You have drawn the rules for contract bridge.");
+mpr("You have execute the rules for contract bridge.");
 mpr("How intriguing!");
 break;
 case 54:
-mpr("You have drawn the Prison!");
+mpr("You have execute the Prison!");
 entomb();
 break;
 

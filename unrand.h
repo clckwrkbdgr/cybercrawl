@@ -158,7 +158,7 @@ SPWPN_VORPAL, 0, 0, 0, 0, 0,
 ""},
 
 /* 3 */
-{/* true name: */ "ring of Shadows", /* un-id'd name */ "black ring",
+{/* true name: */ "chip of Shadows", /* un-id'd name */ "black chip",
 /* class, type, plus (to-hit), plus2 (depends on class), colour */
 OBJ_JEWELLERY, RING_INVISIBILITY, 0, 0, DARKGREY,
 /* Properties, all approx thirty of them: */
@@ -213,7 +213,7 @@ OBJ_ARMOUR, ARM_LARGE_SHIELD, 155, 0, BROWN,
 
 
 /* 6 */
-{"Holy Armour of Zin", "glowing golden plate mail",
+{"Holy Armour of Knights Templar", "glowing golden plate mail",
 OBJ_ARMOUR, ARM_PLATE_MAIL, 56, 0, YELLOW,
 {
 0, 0, 0, 4, 0, 0,
@@ -303,7 +303,7 @@ OBJ_ARMOUR, ARM_HELMET, 53, 0, BROWN,
 ""},
 
 /* 12 */
-{"demon blade \"Leech\"", "runed demon blade",
+{"drone blade \"Leech\"", "runed drone blade",
 OBJ_WEAPONS, WPN_DEMON_BLADE, 163, 54, MAGENTA,
 {
 SPWPN_VAMPIRICISM, -1, -1, -1, -1, -1,
@@ -318,7 +318,7 @@ SPWPN_VAMPIRICISM, -1, -1, -1, -1, -1,
 ""},
 
 /* 13 */
-{"amulet of Cekugob", "crystal amulet",
+{"implant of Cekugob", "crystal implant",
 OBJ_JEWELLERY, AMU_WARDING, 50, 0, LIGHTGREY,
 {
 0, 1, 1, 0, 0, 0,

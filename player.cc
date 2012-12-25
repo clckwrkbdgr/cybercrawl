@@ -192,47 +192,47 @@ int player_res_magic(void)
    case 9: strcat(glog, " of intelligence"); break;
   case 10: strcat(glog, " of ponderousness"); break;
   case 11: strcat(glog, " of levitation"); break;
-  case 12: strcat(glog, " of magic resistance"); break;
+  case 12: strcat(glog, " of hacking resistance"); break;
   case 13: strcat(glog, " of protection"); break;
   case 14: strcat(glog, " of stealth"); break;
   case 15: strcat(glog, " of resistance"); break;
   case 16: strcat(glog, " of positive energy"); break;
-  case 17: strcat(glog, " of the Archmagi"); break;
+  case 17: strcat(glog, " of the Superhacker"); break;
   case 18: strcat(glog, " of preservation"); break;
 
-	case 0: strcat(glog , "ring of regeneration"); break;
-	case 1: strcat(glog , "ring of protection"); break;
-	case 2: strcat(glog , "ring of protection from fire"); break;
-	case 3: strcat(glog , "ring of poison resistance"); break;
-	case 4: strcat(glog , "ring of protection from cold"); break;
-	case 5: strcat(glog , "ring of strength"); break;
-	case 6: strcat(glog , "ring of slaying"); break;
-	case 7: strcat(glog , "ring of see invisible"); break;
-	case 8: strcat(glog , "ring of invisibility"); break;
-	case 9: strcat(glog , "ring of hunger"); break;
-	case 10: strcat(glog , "ring of teleportation"); break;
-	case 11: strcat(glog , "ring of evasion"); break;
- case 12: strcat(glog , "ring of sustain abilities"); break;
- case 13: strcat(glog , "ring of sustenance"); break;
- case 14: strcat(glog , "ring of dexterity"); break;
- case 15: strcat(glog , "ring of intelligence"); break;
- case 16: strcat(glog , "ring of wizardry"); break;
- case 17: strcat(glog , "ring of magical power"); break;
- case 18: strcat(glog , "ring of levitation"); break;
- case 19: strcat(glog , "ring of life protection"); break;
- case 20: strcat(glog , "ring of protection from magic"); break;
- case 21: strcat(glog , "ring of fire"); break;
- case 22: strcat(glog , "ring of ice"); break;
- case 23: strcat(glog , "ring of teleport control"); break;
- case 35: strcat(glog , "amulet of rage"); break;
- case 36: strcat(glog , "amulet of maintain speed"); break; // not foolproof
- case 37: strcat(glog , "amulet of clarity"); break; // not foolproof
- case 38: strcat(glog , "amulet of warding"); break;
- case 39: strcat(glog , "amulet of resist corrosion"); break;
- case 40: strcat(glog , "amulet of the gourmand"); break;
- case 41: strcat(glog , "amulet of conservation"); break;
- case 42: strcat(glog , "amulet of controlled flight"); break;
- case 43: strcat(glog , "amulet of inaccuracy"); break;
+	case 0: strcat(glog , "chip of regeneration"); break;
+	case 1: strcat(glog , "chip of protection"); break;
+	case 2: strcat(glog , "chip of protection from fire"); break;
+	case 3: strcat(glog , "chip of poison resistance"); break;
+	case 4: strcat(glog , "chip of protection from cold"); break;
+	case 5: strcat(glog , "chip of strength"); break;
+	case 6: strcat(glog , "chip of slaying"); break;
+	case 7: strcat(glog , "chip of see invisible"); break;
+	case 8: strcat(glog , "chip of invisibility"); break;
+	case 9: strcat(glog , "chip of hunger"); break;
+	case 10: strcat(glog , "chip of maintenance"); break;
+	case 11: strcat(glog , "chip of evasion"); break;
+ case 12: strcat(glog , "chip of sustain abilities"); break;
+ case 13: strcat(glog , "chip of sustenance"); break;
+ case 14: strcat(glog , "chip of dexterity"); break;
+ case 15: strcat(glog , "chip of intelligence"); break;
+ case 16: strcat(glog , "chip of hacking"); break;
+ case 17: strcat(glog , "chip of cyber power"); break;
+ case 18: strcat(glog , "chip of levitation"); break;
+ case 19: strcat(glog , "chip of life protection"); break;
+ case 20: strcat(glog , "chip of protection from hacking"); break;
+ case 21: strcat(glog , "chip of fire"); break;
+ case 22: strcat(glog , "chip of ice"); break;
+ case 23: strcat(glog , "chip of maintenance control"); break;
+ case 35: strcat(glog , "implant of rage"); break;
+ case 36: strcat(glog , "implant of maintain speed"); break; // not foolproof
+ case 37: strcat(glog , "implant of clarity"); break; // not foolproof
+ case 38: strcat(glog , "implant of warding"); break;
+ case 39: strcat(glog , "implant of resist corrosion"); break;
+ case 40: strcat(glog , "implant of the gourmand"); break;
+ case 41: strcat(glog , "implant of conservation"); break;
+ case 42: strcat(glog , "implant of controlled flight"); break;
+ case 43: strcat(glog , "implant of inaccuracy"); break;
  }
 */
 
@@ -1852,7 +1852,7 @@ void display_char_status(void)
 
 if (you[0].is_undead == 0)
  strcpy(info, "You are alive.");
-  else strcpy(info, "You are undead.");
+  else strcpy(info, "You are cyborg.");
 mpr(info);
 
 switch(you[0].attribute [ATTR_TRANSFORMATION])
@@ -1883,7 +1883,7 @@ if (you[0].duration [DUR_REPEL_MISSILES] != 0)
 
 if (you[0].duration [DUR_PRAYER] != 0)
 {
- strcpy(info, "You are praying."); // not yet implemented
+ strcpy(info, "You are communicating."); // not yet implemented
  mpr(info);
 }
 
@@ -1919,19 +1919,19 @@ if (you[0].duration [DUR_CONTROLLED_FLIGHT] != 0)
 
 if (you[0].duration [DUR_TELEPORT] != 0)
 {
- strcpy(info, "You are about to teleport.");
+ strcpy(info, "You are about to be sucked into ventilation.");
  mpr(info);
 }
 
 if (you[0].duration [DUR_CONTROL_TELEPORT] != 0)
 {
- strcpy(info, "You can control teleportation.");
+ strcpy(info, "You can control ventilation.");
  mpr(info);
 }
 
 if (you[0].duration [DUR_DEATH_CHANNEL] != 0)
 {
- strcpy(info, "You are channeling the dead.");
+ strcpy(info, "You are channeling the cyborgs.");
  mpr(info);
 }
 
@@ -1974,7 +1974,7 @@ if (you[0].might != 0)
 
 if (you[0].berserker != 0)
 {
-	strcpy(info, "You are possessed by a berserker rage.");
+	strcpy(info, "You are in battle mode.");
 	mpr(info);
 }
 
@@ -2007,9 +2007,9 @@ if (you[0].disease != 0)
 
 if (you[0].mpower > 5)
 {
- if (you[0].disease > 25) mpr("You are almost glowing with magical energy."); else
- if (you[0].disease > 15) mpr("You are infused with magical energy."); else
-  mpr("You are mildly infused with magical energy.");
+ if (you[0].disease > 25) mpr("You are almost glowing with cyber energy."); else
+ if (you[0].disease > 15) mpr("You are infused with cyber energy."); else
+  mpr("You are mildly infused with cyber energy.");
 }
 
 
@@ -2054,47 +2054,47 @@ char *species_name(char speci)
 {
 
 if (you[0].species >= SP_RED_DRACONIAN && you[0].species <= SP_UNK2_DRACONIAN && you[0].xl < 7)
- return "Draconian"; /* Causes minor problems with ghosts, but nevermind */
+ return "Lizard Mutant"; /* Causes minor problems with ghosts, but nevermind */
 
 switch(speci)
 {
  case SP_HUMAN: return "Human";
- case SP_ELF: return "Elf";
- case SP_HIGH_ELF: return "High Elf";
- case SP_GREY_ELF: return "Grey Elf";
- case SP_DEEP_ELF: return "Deep Elf";
- case SP_SLUDGE_ELF: return "Sludge Elf";
- case SP_HILL_DWARF: return "Hill Dwarf";
- case SP_MOUNTAIN_DWARF: return "Mountain Dwarf";
- case SP_HALFLING: return "Halfling";
- case SP_HILL_ORC: return "Hill Orc";
- case SP_KOBOLD: return "Kobold";
- case SP_MUMMY: return "Mummy";
- case SP_NAGA: return "Naga";
- case SP_GNOME: return "Gnome";
- case SP_OGRE: return "Ogre";
- case SP_TROLL: return "Troll";
- case SP_OGRE_MAGE: return "Ogre-Mage";
- case SP_RED_DRACONIAN: return "Red Draconian"; /* Fire */
- case SP_WHITE_DRACONIAN: return "White Draconian"; /* Cold */
- case SP_GREEN_DRACONIAN: return "Green Draconian"; /* Poison */
- case SP_GOLDEN_DRACONIAN: return "Yellow Draconian"; /* Acid */
- case SP_GREY_DRACONIAN: return "Grey Draconian"; /* Nothing */
- case SP_BLACK_DRACONIAN: return "Black Draconian"; /* Elec */
- case SP_PURPLE_DRACONIAN: return "Purple Draconian"; /* Energy */
+ case SP_ELF: return "Small Ninja";
+ case SP_HIGH_ELF: return "Ninja";
+ case SP_GREY_ELF: return "Grey Ninja";
+ case SP_DEEP_ELF: return "Cyber Ninja";
+ case SP_SLUDGE_ELF: return "Ninja Scientist";
+ case SP_HILL_DWARF: return "Combat Engineer";
+ case SP_MOUNTAIN_DWARF: return "Military Engineer";
+ case SP_HALFLING: return "Field Engineer";
+ case SP_HILL_ORC: return "Terrorist";
+ case SP_KOBOLD: return "Smuggler";
+ case SP_MUMMY: return "Robot";
+ case SP_NAGA: return "Assassin";
+ case SP_GNOME: return "Apprentice";
+ case SP_OGRE: return "Mutant";
+ case SP_TROLL: return "Builder";
+ case SP_OGRE_MAGE: return "Mutant-Hacker";
+ case SP_RED_DRACONIAN: return "Red Lizard Mutant"; /* Fire */
+ case SP_WHITE_DRACONIAN: return "White Lizard Mutant"; /* Cold */
+ case SP_GREEN_DRACONIAN: return "Green Lizard Mutant"; /* Poison */
+ case SP_GOLDEN_DRACONIAN: return "Yellow Lizard Mutant"; /* Acid */
+ case SP_GREY_DRACONIAN: return "Grey Lizard Mutant"; /* Nothing */
+ case SP_BLACK_DRACONIAN: return "Black Lizard Mutant"; /* Elec */
+ case SP_PURPLE_DRACONIAN: return "Purple Lizard Mutant"; /* Energy */
 
- case SP_MOTTLED_DRACONIAN: return "Mottled Draconian"; /*  */
- case SP_PALE_DRACONIAN: return "Pale Draconian"; /*  */
- case SP_UNK0_DRACONIAN: return "Draconian"; /*  */
- case SP_UNK1_DRACONIAN: return "Draconian"; /*  */
- case SP_UNK2_DRACONIAN: return "Draconian"; /*  */
- case SP_CENTAUR: return "Centaur";
- case SP_DEMIGOD: return "Demigod";
- case SP_SPRIGGAN: return "Spriggan";
- case SP_MINOTAUR: return "Minotaur";
- case SP_DEMONSPAWN: return "Demonspawn";
- case SP_GHOUL: return "Ghoul";
- case SP_KENKU: return "Kenku";
+ case SP_MOTTLED_DRACONIAN: return "Mottled Lizard Mutant"; /*  */
+ case SP_PALE_DRACONIAN: return "Pale Lizard Mutant"; /*  */
+ case SP_UNK0_DRACONIAN: return "Lizard Mutant"; /*  */
+ case SP_UNK1_DRACONIAN: return "Lizard Mutant"; /*  */
+ case SP_UNK2_DRACONIAN: return "Lizard Mutant"; /*  */
+ case SP_CENTAUR: return "Ranger";
+ case SP_DEMIGOD: return "Freelancer";
+ case SP_SPRIGGAN: return "Thief";
+ case SP_MINOTAUR: return "Bull Mutant";
+ case SP_DEMONSPAWN: return "Supersoldier";
+ case SP_GHOUL: return "Lowlife";
+ case SP_KENKU: return "Bird Mutant";
 
 }
 

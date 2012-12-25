@@ -46,7 +46,7 @@ void species_ability(void) /* Now handles all special abilities */
 
 	if (you[0].berserker > 0)
 	{
- 		mpr("You're too berserk!");
+ 		mpr("You're in battle mode!");
  		return;
 	}
 
@@ -537,7 +537,7 @@ always changing around */
  		if (ability [i] != 0) break;
  		if (i == 119)
 	 	{
-  			strcpy(info, "Sorry, you're not good enough to have a special ability.");
+  			strcpy(info, "Sorry, you're not good enough to have a special augmentation.");
   			mpr(info);
   			return;
  		}
@@ -1802,7 +1802,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 
    	clrscr();
 
-	cprintf("  Ability                           Cost                    Success");
+	cprintf("  Augmentation                      Cost                    Success");
 	lines++;
 
 	if (lines > 22)
@@ -1888,77 +1888,77 @@ char show_abilities(int ability [120], int ability_fail [120])
 			switch(ability [j])
 			{
 				case ABIL_SPIT_POISON:
-					cprintf("Spit Poison                     Food");
+					cprintf("Shot Poison                     Food");
 					break;
 				case ABIL_MAPPING:
 					cprintf("Sense Surroundings              Food");
 					break;
 				case ABIL_TELEPORTATION:
-					cprintf("Teleportation                   3 Magic, Food");
+					cprintf("Use Ventilation                 3 Magic, Food");
 					break;
 				case ABIL_BREATHE_FIRE:
-					cprintf("Breathe Fire                    Food, Delay");
+					cprintf("Shot    Fire                    Food, Delay");
 					break;
 				case ABIL_BLINK:
-					cprintf("Blink                           1 Magic, Food ");
+					cprintf("Jump                            1 Magic, Food ");
 					break;
 				case ABIL_BREATHE_FROST:
-					cprintf("Breathe Frost                   Food, Delay");
+					cprintf("Shot    Frost                   Food, Delay");
 					break;
 				case ABIL_BREATHE_POISON:
-					cprintf("Breathe Poison Gas              Food, Delay");
+					cprintf("Shot    Poison Gas              Food, Delay");
 					break;
 				case ABIL_BREATHE_LIGHTNING:
-					cprintf("Breathe Lightning               Food, Delay");
+					cprintf("Shot    Lightning               Food, Delay");
 					break;
 				case ABIL_SPIT_ACID:
-					cprintf("Spit Acid                       Food");
+					cprintf("Shot Acid                       Food");
 					break;
 				case ABIL_BREATHE_POWER:
-					cprintf("Breathe Power                   Food, Delay");
+					cprintf("Shot    Power                   Food, Delay");
 					break;
 				case ABIL_GO_BERSERK_I:
-					cprintf("Go Berserk                      None");
+					cprintf("Go In Battle Mode               None");
 					break;
 				case ABIL_BREATHE_STICKY_FLAME:
-					cprintf("Breathe Sticky Flame            Food, Delay");
+					cprintf("Shot    Sticky Flame            Food, Delay");
 					break;
 				case ABIL_BREATHE_STEAM:
-					cprintf("Breathe Steam                   Food, Delay");
+					cprintf("Shot    Steam                   Food, Delay");
 					break;
 				case ABIL_FLY:
 					cprintf("Fly                             3 Magic, Food");
 					break;
 /* Demonic powers: */
 				case ABIL_SUMMON_MINOR_DEMON:
-					cprintf("Summon Minor Demon              3 Magic, 3 hp, Food");
+					cprintf("Summon Minor Cyborg             3 Magic, 3 hp, Food");
 					break;
 				case ABIL_SUMMON_DEMON:
-					cprintf("Summon Demon                    5 Magic, 5 hp, Food");
+					cprintf("Summon Cyborg                   5 Magic, 5 hp, Food");
 					break;
 				case ABIL_HELLFIRE:
 					cprintf("Hellfire                        8 Magic, 8 hp, Food");
 					break;
 				case ABIL_TORMENT:
-					cprintf("Torment                         9 Magic, Food");
+					cprintf("Neurodamage                     9 Magic, Food");
 					break;
 				case ABIL_RAISE_DEAD:
-					cprintf("Raise Dead                      5 Magic, 5 hp, Food");
+					cprintf("Cybernitize Dead                5 Magic, 5 hp, Food");
 					break;
 				case ABIL_CONTROL_DEMON:
-					cprintf("Control Demon                   4 Magic, 4 hp, Food");
+					cprintf("Control Cyborg                  4 Magic, 4 hp, Food");
 					break;
 				case ABIL_TO_PANDEMONIUM:
-					cprintf("Open Gate to Pandemonium        7 Magic, Food");
+					cprintf("Open Gate to Bioengineerings    7 Magic, Food");
 					break;
 				case ABIL_CHANNELING:
 					cprintf("Channeling                      1 hp, Food");
 					break;
 				case ABIL_THROW_FLAME:
-					cprintf("Throw Flame                     1 Magic, 1 hp, Food");
+					cprintf("Shot  Flame                     1 Magic, 1 hp, Food");
 					break;
 				case ABIL_THROW_FROST:
-					cprintf("Throw Frost                     1 Magic, 1 hp, Food");
+					cprintf("Shot  Frost                     1 Magic, 1 hp, Food");
 					break;
 				case ABIL_BOLT_OF_DRAINING:
 					cprintf("Bolt of Draining                4 Magic, 4 hp, Food");
@@ -1985,7 +1985,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 /* Invocations: */
 				case ABIL_REPEL_UNDEAD_I:
 				case ABIL_REPEL_UNDEAD_II:
-					cprintf("Repel Undead                    1 Magic, Food");
+					cprintf("Repel Cyborg                    1 Magic, Food");
 					break;
 				case ABIL_MINOR_HEALING:
 					cprintf("Minor Healing                   2 Magic, Food, Piety");
@@ -2004,7 +2004,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 					cprintf("Smiting                         3 Magic, Food, Piety");
 					break;
 				case ABIL_ANNIHILATE_UNDEAD:
-					cprintf("Annihilate Undead               3 Magic, Food, Piety");
+					cprintf("Annihilate Cyborg               3 Magic, Food, Piety");
 					break;
 				case ABIL_THUNDERBOLT:
 					cprintf("Thunderbolt                     5 Magic, Food, Piety");
@@ -2014,29 +2014,29 @@ char show_abilities(int ability [120], int ability_fail [120])
 					break;
 
 				case ABIL_RECALL_UNDEAD_SLAVES:
-					cprintf("Recall Undead Slaves            1 Magic");
+					cprintf("Recall Cyborg Slaves            1 Magic");
 					break;
 				case ABIL_ENSLAVE_UNDEAD:
-					cprintf("Enslave Undead                  2 Magic, Food, Piety");
+					cprintf("Enslave Cyborg                  2 Magic, Food, Piety");
 					break;
 				case ABIL_INVOKE_DEATH:
 					cprintf("Invoke Death                    3 Magic, Food, Piety");
 					break;
 
 				case ABIL_ANIMATE_CORPSE:
-					cprintf("Animate Corpse                  3 Magic, Food");
+					cprintf("Cybernitize Corpse              3 Magic, Food");
 					break;
 				case ABIL_RECALL_UNDEAD:
-					cprintf("Recall Undead                   4 Magic, Food");
+					cprintf("Recall Cyborg                   4 Magic, Food");
 					break;
 				case ABIL_ANIMATE_DEAD:
-					cprintf("Animate Dead                    7 Magic, Food, Piety");
+					cprintf("Cybernitize Dead                7 Magic, Food, Piety");
 					break;
 				case ABIL_DRAIN_LIFE:
 					cprintf("Drain Life                      6 Magic, Food, Piety");
 					break;
 				case ABIL_CONTROL_UNDEAD:
-					cprintf("Control Undead                  5 Magic, Food, Piety");
+					cprintf("Control Cyborg                  5 Magic, Food, Piety");
 					break;
 
 				case ABIL_CHANNEL_ENERGY:
@@ -2054,21 +2054,21 @@ char show_abilities(int ability [120], int ability_fail [120])
 					break;
 
 				case ABIL_MINOR_DESTRUCTION:
-					cprintf("Minor Destruction               1 Magic, Food");
+					cprintf("Minor Neurodamage               1 Magic, Food");
 					break;
 				case ABIL_LESSER_SERVANT_OF_MAKHLEB:
-					cprintf("Lesser Servant of Makhleb       2 Magic, Food, Piety");
+					cprintf("Lesser Servant of Netchaos      2 Magic, Food, Piety");
 					break;
 				case ABIL_MAJOR_DESTRUCTION:
-					cprintf("Major Destruction               3 Magic, Food, Piety");
+					cprintf("Major Neurodamage               3 Magic, Food, Piety");
 					break;
 				case ABIL_GREATER_SERVANT_OF_MAKHLEB:
-					cprintf("Greater Servant of Makhleb      4 Magic, Food, Piety");
+					cprintf("Greater Servant of Netchaos     4 Magic, Food, Piety");
 					break;
 
 
 				case ABIL_GO_BERSERK_II:
-					cprintf("Go Berserk                      Food");
+					cprintf("Go In Battle Mode               Food");
 					break;
 				case ABIL_MIGHT_II:
 					cprintf("Might                           Food, Piety");
@@ -2078,7 +2078,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 					break;
 
 				case ABIL_FORGET_SPELL:
-					cprintf("Forget Spell                    5 Magic, Piety");
+					cprintf("Uninstall Program               5 Magic, Piety");
 					break;
 
 				case ABIL_LESSER_HEALING:
@@ -2098,7 +2098,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 					break;
 
 				case ABIL_RENOUNCE_RELIGION:
-					cprintf("Renounce Religion               None");
+					cprintf("Quit the Company                None");
 					break;
 
 			}

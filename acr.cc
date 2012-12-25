@@ -280,7 +280,7 @@ void input(void)
 			 	case 0: mpr("You finish eating."); break;
 			 	case 1: mpr("You finish putting on your armour."); break;
 		 		case 2: mpr("You finish taking off your armour."); break;
-	         	case 3: mpr("You finish memorising."); break;
+	         	case 3: mpr("You finish installing."); break;
 		 		case 4: if (you[0].species == SP_TROLL || you[0].species == SP_GHOUL) mpr("You finish ripping the corpse into pieces.");
 				else mpr("You finish chopping the corpse into pieces.");
 				break;
@@ -440,7 +440,7 @@ void input(void)
 		case '^':
 			if (you[0].religion == GOD_NO_GOD)
 			{
-				mpr("You aren't religious.");
+				mpr("You aren't employed.");
 			 	break;
 			}
 			describe_god(you[0].religion);
@@ -470,7 +470,7 @@ void input(void)
 		 	if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == 0 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 >= 25)
 		  	if (randart_wpn_properties(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], 0, RAP_PREVENT_SPELLCASTING) == 1)
  			{
-            	mpr("Something is interfering with your magic!");
+            	mpr("Something is interfering with your hacking!");
 			 	break;
 			}
 			cast_a_spell(); break;
@@ -863,7 +863,7 @@ break;
       you[0].duration [DUR_REPEL_MISSILES] --;
       if (you[0].duration [DUR_REPEL_MISSILES] == 6)
       {
-       mpr("Your repel missiles spell is about to expire...");
+       mpr("Your repel missiles program is about to finish...");
        you[0].duration [DUR_REPEL_MISSILES] -= random2(2);
       }
     }
@@ -878,7 +878,7 @@ break;
       you[0].duration [DUR_DEFLECT_MISSILES] --;
       if (you[0].duration [DUR_DEFLECT_MISSILES] == 6)
       {
-       mpr("Your deflect missiles spell is about to expire...");
+       mpr("Your deflect missiles program is about to finish...");
        you[0].duration [DUR_DEFLECT_MISSILES] -= random2(2);
       }
     }
@@ -908,7 +908,7 @@ break;
 	if (you[0].duration [DUR_PRAYER] > 0) you[0].duration [DUR_PRAYER] --;
 	if (you[0].duration [DUR_PRAYER] == 1)
 	{
- 		mpr("Your prayer is over.");
+ 		mpr("Your communication is over.");
 	 	you[0].duration [DUR_PRAYER] = 0;
 	}
 
@@ -1191,7 +1191,7 @@ break;
 	if (you[0].berserker > 1) you[0].berserker--;
 	if (you[0].berserker == 1)
 	{
-		strcpy(info, "You are no longer berserk.");
+		strcpy(info, "You went out battle mode.");
 		mpr(info);
 		strcpy(info, "You feel exhausted.");
 		mpr(info);
@@ -1411,7 +1411,7 @@ break;
      {
       if (random2(3) == 0)
       {
-       mpr("A hostile presence attacks your mind!");
+       mpr("A hostile presence attacks your cyberbrain!");
        miscast_effect(SPTYP_DIVINATION, random2(15), random2(150), 100);
       }
       visible [2] --;
@@ -2100,7 +2100,7 @@ void move(char move_x, char move_y)
 					break;
 
    				case 4:
-				   	mpr("You enter a teleport trap!");
+				   	mpr("You enter a ventilation shaft trap!");
 	   				if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == 0 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 >= 25)
     				if (randart_wpn_properties(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], 0, RAP_PREVENT_TELEPORTATION) > 0)
 				    {

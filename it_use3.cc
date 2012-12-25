@@ -212,7 +212,7 @@ if (you[0].equip [EQ_WEAPON] == -1)
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are too berserk!");
+ strcpy(info, "You are in battle mode!");
  mpr(info);
  return;
 }
@@ -226,7 +226,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  {
   case NWPN_STAFF_OF_DISPATER: // staff of Dispater
   if (you[0].deaths_door != 0 || you[0].hp <= 10 || you[0].ep <= 4) goto nothing_hap;
-  strcpy(info, "You feel the staff feeding on your energy!");
+  strcpy(info, "You feel the ROM feeding on your energy!");
   mpr(info);
   you[0].hp -= random2(10) + random2(10) + 5;
   if (you[0].hp <= 0) you[0].hp = 1;
@@ -278,7 +278,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   you[0].ep += 3 + random2(5);
   if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
   you[0].ep_ch = 1;
-  strcpy(info, "Magical energy flows into your mind!");
+  strcpy(info, "Energy flows into your cyberbrain!");
   mpr(info);
   if (random2(3) == 0) miscast_effect(19, random2(9), random2(70), 100);
   break;
@@ -302,7 +302,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   you[0].ep += 1 + random2(3);
   if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
   you[0].ep_ch = 1;
-  strcpy(info, "You channel some magical energy.");
+  strcpy(info, "You channel some energy.");
   mpr(info);
   break;
  }
@@ -414,7 +414,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  case MISC_PORTABLE_ALTAR_OF_NEMELEX: // card table
  if (you[0].where_are_you == 18)
  {
-  mpr("Don't you think this level already has more than enough altars?");
+  mpr("Don't you think this level already has more than enough terminals?");
   return;
  }
  if (grd [you[0].x_pos] [you[0].y_pos] != 67)
@@ -422,7 +422,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   mpr("You need a piece of empty floor to place this item.");
   break;
  }
- mpr("You unfold the altar and place it on the floor.");
+ mpr("You unfold the terminal and place it on the floor.");
  grd [you[0].x_pos] [you[0].y_pos] = 190;
  unwield_item(you[0].equip [EQ_WEAPON]);
  you[0].inv_quant [you[0].equip [EQ_WEAPON]] = 0;
@@ -452,7 +452,7 @@ you[0].turnover = 1;
 void efreet_flask(void)
 {
 
-strcpy(info, "You open the flask, and a huge efreet comes out.");
+strcpy(info, "You open the flask, and a huge walking plasma turret comes out.");
 mpr(info);
 
 unwield_item(you[0].equip [EQ_WEAPON]);
@@ -585,7 +585,7 @@ void staff_spell(char zap_device_2)
 
 if (you[0].inv_plus [zap_device_2] == 64 || you[0].inv_type [zap_device_2] < STAFF_SMITING || you[0].inv_type [zap_device_2] >= STAFF_AIR)
 {
-   strcpy(info, "That staff has no spells in it.");
+   strcpy(info, "That ROM has no spells in it.");
    mpr(info);
    return;
 }
@@ -673,7 +673,7 @@ int spell_casted = 0;
 char keyin = 0;
 struct bolt beam [1];
 
-strcpy(info, "The book opens to a page covered in ");
+strcpy(info, "The archive opens to a screen covered in ");
 
 char str_pass [40];
 
@@ -709,14 +709,14 @@ you[0].turnover = 1;
 
 if (you[0].mutation [MUT_BLURRY_VISION] > 0 && random2(4) < you[0].mutation [MUT_BLURRY_VISION])
 {
- mpr("The page is too blurry for you to read.");
+ mpr("The screen is too blurry for you to read.");
  you[0].turnover = 1;
  return;
 }
 
 powc = magic_ability(player_mag_abil(), you[0].intel);
 
-strcpy(info, "You find yourself reciting the magical words!");
+strcpy(info, "You find yourself reciting the program code!");
 mpr(info);
 
 switch(random2(50))
@@ -726,7 +726,7 @@ case 11:
 case 12:
         if (random2(5) == 0)
         {
-        strcpy(info, "The book disappears in a mighty explosion!");
+        strcpy(info, "The archive disappears in a mighty explosion!");
         mpr(info);
         you[0].inv_quant [sc_read_2] = 0;
         you[0].inv_no --;
@@ -750,7 +750,7 @@ case 12:
 
 case 1:
 case 14:
-strcpy(info, "A cloud of choking fumes pours from the book's pages!");
+strcpy(info, "A cloud of choking fumes pours from the archive's screen!");
 mpr(info);
 big_cloud(4, you[0].x_pos, you[0].y_pos, 20);
 //if (random() % 3 == 0) return; else break;
@@ -758,7 +758,7 @@ return;
 
 case 2:
 case 13:
-strcpy(info, "A cloud of freezing gas pours from the book's pages!");
+strcpy(info, "A cloud of freezing gas pours from the archive's screen!");
 mpr(info);
 big_cloud(3, you[0].x_pos, you[0].y_pos, 20);
 //if (random() % 3 == 0) return; else break;
@@ -771,7 +771,7 @@ case 6:
 case 7:
 case 8:
 case 9:
-strcpy(info, "A cloud of weird smoke pours from the book's pages!");
+strcpy(info, "A cloud of weird smoke pours from the acrhive's screen!");
 mpr(info);
 big_cloud(5 + random2(3), you[0].x_pos, you[0].y_pos, 20);
 return;// else break;
@@ -872,7 +872,7 @@ exercise(you[0].inv_plus [sc_read_2], 100);
 
 if (random2(10) == 0)
 {
-        strcpy(info, "The book crumbles into dust.");
+        strcpy(info, "The archive destroys into dust.");
         mpr(info);
         you[0].inv_quant [sc_read_2] = 0;
         you[0].inv_no --;
@@ -884,7 +884,7 @@ if (random2(10) == 0)
         burden_change();
 } else
 {
- strcpy(info, "The book looks increasingly old and worn.");
+ strcpy(info, "The archive looks increasingly old and worn.");
  mpr(info);
 }
 

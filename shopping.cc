@@ -123,17 +123,17 @@ char sh_name [40];
       strcat(sh_name, "'s ");
       switch(env[0].sh_type [shoppy])
       {
-       case 0: strcat(sh_name, "Weapon Shop!"); break;
-       case 1: strcat(sh_name, "Armour Shop!"); break;
-       case 2: strcat(sh_name, "Antique Weapon Shop!"); break;
-       case 3: strcat(sh_name, "Antique Armour Shop!"); break;
+       case 0: strcat(sh_name, "Weapon Store!"); break;
+       case 1: strcat(sh_name, "Armour Store!"); break;
+       case 2: strcat(sh_name, "Antique Weapon Store!"); break;
+       case 3: strcat(sh_name, "Antique Armour Store!"); break;
        case 4: strcat(sh_name, "Assorted Antiques!"); break;
-       case 5: strcat(sh_name, "Jewellery Shop!"); break;
-       case 6: strcat(sh_name, "Magical Wand Shop!"); break;
-       case 7: strcat(sh_name, "Book Shop!"); break;
+       case 5: strcat(sh_name, "Bioimplant Lab!"); break;
+       case 6: strcat(sh_name, "Gun Shop!"); break;
+       case 7: strcat(sh_name, "Program Repository!"); break;
        case 8: strcat(sh_name, "Food Shop!"); break;
-       case 9: strcat(sh_name, "Distillery!"); break;
-       case 10: strcat(sh_name, "Magic scroll Shop!"); break;
+       case 9: strcat(sh_name, "Chem Lab!"); break;
+       case 10: strcat(sh_name, "Devices Store!"); break;
        case 11: strcat(sh_name, "General Store!"); break;
       }
 
@@ -161,7 +161,7 @@ itty = igrd [0] [5 + shoppy];
 
     if (igrd [0] [5 + shoppy] == 501)
      {
-      empty_shop : shop_print("I'm sorry, my shop is empty now.", 20);
+      empty_shop : shop_print("I'm sorry, my store is empty now.", 20);
       more3();
       goto goodbye;
      }
@@ -211,7 +211,7 @@ itty = igrd [0] [5 + shoppy];
        gotoxy(60, i);
        itoa(gp_value, st_pass, 10);
        cprintf(st_pass);
-       cprintf("gp");
+       cprintf("cc");
        if (mitm.ilink [itty] == 501) break;
 
        itty = mitm.ilink [itty];
@@ -226,7 +226,7 @@ itty = igrd [0] [5 + shoppy];
       strcpy(sh_name, "You have ");
       itoa(you[0].gp, gold_p, 10);
       strcat(sh_name, gold_p);
-      strcat(sh_name, " gold piece");
+      strcat(sh_name, " credit chip");
       if (you[0].gp == 1) strcat(sh_name, "."); else strcat(sh_name, "s.");
       shop_print(sh_name, 19);
 
@@ -296,7 +296,7 @@ itty = igrd [0] [5 + shoppy];
 
       if (greedy * (item_value(mitm.iclass [shop_items [ft]], mitm.itype [shop_items [ft]], mitm.idam [shop_items [ft]], mitm.iplus [shop_items [ft]], mitm.iplus2 [shop_items [ft]], mitm.iquant [shop_items [ft]], mitm.iid [shop_items [ft]], id)) / 10 > you[0].gp)
       {
-	 shop_print("I'm sorry, you don't seem to have enough money.", 20);
+	 shop_print("I'm sorry, you don't seem to have enough credits.", 20);
          more3();
          goto purchase;
       }
@@ -437,7 +437,7 @@ void purchase(int item_got)
  {
   if (i == 52)
     {
-     shop_print("The demon of the infinite void grins at you.", 20);
+     shop_print("The demon of the infinite cyberspace grins at you.", 20);
      more3();
      return;
     }

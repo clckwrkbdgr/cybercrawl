@@ -399,7 +399,7 @@ void beam(struct bolt beam [1])
                           mpr("You feel trapped.");
                           break;
                         }
-                        mpr("You are cast into the Abyss!"); more();
+                        mpr("You are cast into the Dump!"); more();
                         banished(96);
                         beam[0].wand_id = 1;
                         return; // banishment to the abyss
@@ -412,7 +412,7 @@ void beam(struct bolt beam [1])
    						}
 		   				strcpy(info, "Pain shoots through your body!");
    						mpr(info);
-   						strcpy(beam[0].beam_name, "spell");
+   						strcpy(beam[0].beam_name, "program");
                         if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
    						 ouch(random2(beam[0].hit), 0, 22);
                           else
@@ -421,7 +421,7 @@ void beam(struct bolt beam [1])
    						return;
   	 				case 15:
    						mpr("You are blasted!");
-   						strcpy(beam[0].beam_name, "spell");
+   						strcpy(beam[0].beam_name, "program");
                         if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
    						 ouch(random2(beam[0].hit), 0, 22);
                           else
@@ -718,7 +718,7 @@ void beam(struct bolt beam [1])
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
-	 				strcpy(beam[0].beam_name, "spell");
+	 				strcpy(beam[0].beam_name, "program");
  					char killer = 0;
 					switch(beam[0].thing_thrown)
 					{
@@ -785,7 +785,7 @@ void beam(struct bolt beam [1])
  					strcat(info, " is blasted.");
  					mpr(info);
  					menv[o].m_hp -= random2(beam[0].hit + 1);
-	 				strcpy(beam[0].beam_name, "spell");
+	 				strcpy(beam[0].beam_name, "program");
  					char killer = 0;
 					switch(beam[0].thing_thrown)
 					{
@@ -1932,7 +1932,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 						if (grd [menv [o].m_x] [menv [o].m_y] == 12)
                         {
 	                        strcat(info, " falls into the water!");
-						} else strcat(info, " falls into the lava!");
+						} else strcat(info, " falls into the radioactive waste!");
                         mpr(info);
 	                }
 					switch(beam[0].thing_thrown)

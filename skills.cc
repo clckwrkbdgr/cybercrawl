@@ -244,7 +244,7 @@ if (exsk < SK_SLINGS)
          you[0].ep_ch = 1;
          calc_ep();
          if (you[0].skills [exsk] == 1 && best_skill(SK_SPELLCASTING, SK_POISON_MAGIC, 99) == SK_SPELLCASTING)
-          mpr("You're starting to get the hang of this magic thing.");
+          mpr("You're starting to get the hang of this computer thing.");
         }
 
         if (best_skill(0, 50, 99) != old_best_skill || old_best_skill == exsk)

@@ -583,7 +583,7 @@ char *monam(int mons_cla, int mons_e, char desc, char see_invis)
  if (mons_e == 400)
  {
   strcpy(gmo_n, ghost.gname);
-  strcat(gmo_n, "'s ghost");
+  strcat(gmo_n, "'s corpse");
   return gmo_n;
  }
  if (mons_e == 401)

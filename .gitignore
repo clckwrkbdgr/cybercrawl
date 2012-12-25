@@ -1,5 +1,8 @@
 *.o
 crawl
 
-# Savefiles
-*.00a
+# Savefiles and morgue
+morgue.txt
+scores
+*.??a
+*.sav

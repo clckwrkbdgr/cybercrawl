@@ -163,7 +163,7 @@ gmon_use
 {3,3,5,0}, 2, 13, 15, 7, 250, C_CLEAN, Z_SMALL, S_BARK, I_ANIMAL, 0},
 
 // note: these things regenerate
-{8, '5', RED, "imp", M_RES_POISON|M_RES_HELLFIRE|M_ED_COLD|M_FLIES|M_SEE_INVIS | M_SPEAKS,
+{8, '5', RED, "small robot", M_RES_POISON|M_RES_HELLFIRE|M_ED_COLD|M_FLIES|M_SEE_INVIS | M_SPEAKS,
 0, 13, 8, H_DEMONIC, -9, {4,0,0,0},
 {3,3,3,0}, 3, 14, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SHOUT, I_HIGH, 1},
 
@@ -179,24 +179,24 @@ gmon_use
 150, 5, 11, H_NORMAL, -3, {3,0,0,0},
 {1,3,5,0}, 1, 5, 5, 7, 250, C_POISON, Z_SMALL, S_SILENT, I_INSECT, 0},
 
-{12, 'm', 6, "manticore", M_NO_FLAGS,
+{12, 'm', 6, "tank", M_NO_FLAGS,
 1800, 10, 12, H_NORMAL, -3, {14,8,8,0},
 {9,3,5,0}, 5, 7, 7, 7, 250, C_CONTAMINATED, Z_BIG, S_SILENT, I_NORMAL, 1},
 
 // this thing doesn't have nr. 13 for nothing, has it? ($pellbinder)
-{13, 'n', DARKGREY, "necrophage", M_RES_POISON|M_RES_COLD,
+{13, 'n', DARKGREY, "vacuum cleaner", M_RES_POISON|M_RES_COLD,
 500, 10, 13, H_UNDEAD, -5, {8,0,0,0},
 {5,3,5,0}, 2, 10, 10, 7, 250, C_HCL, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{14, 'o', 12, "orc", M_NO_FLAGS,
+{14, 'o', 12, "terrorist", M_NO_FLAGS,
 600, 10, 14, H_NORMAL, -3, {5,0,0,0},
 {1,4,6,0}, 0, 10, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{15, 'p', BLUE, "phantom", M_RES_POISON|M_RES_COLD,
+{15, 'p', BLUE, "battle hologram", M_RES_POISON|M_RES_COLD,
 0, 10, 15, H_UNDEAD, -4, {10,0,0,0},
 {7,3,5,0}, 3, 13, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{16, 'q', 7, "quasit", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{16, 'q', 7, "light drone", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 16, H_NORMAL, 50, {3,2,2,0},
 {3,2,6,0}, 5, 17, 15, 7, 250, C_POISON, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
@@ -238,7 +238,7 @@ gmon_use
 0, 6, 25, H_UNDEAD, 5000, {10,0,0,0},
 {1,5,5,0}, 0, 4, 5, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{26, 'A', WHITE, "Angel", M_RES_POISON|M_FLIES|M_RES_ELEC|M_SPELLCASTER,
+{26, 'A', WHITE, "Agent", M_RES_POISON|M_FLIES|M_RES_ELEC|M_SPELLCASTER,
 0, 10, 26, H_HOLY, -8, {20,0,0,0},
 {9,3,5,0}, 10, 10, 10, 7, 111, C_NOCORPSE, Z_NOZOMBIE, S_SHOUT, I_HIGH, 3},
 
@@ -250,11 +250,11 @@ gmon_use
 2500, 10, 28, H_NORMAL, -3, {35,0,0,0},
 {9,3,5,0}, 5, 3, 7, 7, 250, C_CLEAN, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
-{29, 'D', GREEN, "dragon", M_RES_POISON|M_RES_FIRE|M_ED_COLD|M_FLIES,
+{29, 'D', GREEN, "mutant reptile", M_RES_POISON|M_RES_FIRE|M_ED_COLD|M_FLIES,
 2200, 12, 29, H_NORMAL, -4, {20,13,13,0},
 {12,5,5,0}, 10, 8, 10, 7, 250, C_CLEAN, Z_BIG, S_SILENT, I_NORMAL, 1},
 
-{30, 'O', LIGHTRED, "two-headed ogre", M_NO_FLAGS,
+{30, 'O', LIGHTRED, "two-headed mutant", M_NO_FLAGS,
 1500, 11, 30, H_NORMAL, -4, {17,13,0,0},
 {6,3,5,0}, 1, 4, 8, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT2, I_NORMAL, 1},
 
@@ -266,11 +266,11 @@ gmon_use
 0, 10, 32, H_NORMAL, -3, {1,0,0,0},
 {1,0,0,1}, 0, 10, 15, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{33, 'g', 6, "hobgoblin", M_NO_FLAGS,
+{33, 'g', 6, "bum", M_NO_FLAGS,
 500, 10, 33, H_NORMAL, -3, {5,0,0,0},
 {1,4,5,0}, 0, 10, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{34, 'I', WHITE, "ice beast", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
+{34, 'I', WHITE, "cooler", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
 0, 12, 34, H_NORMAL, -3, {5,0,0,0},
 {5,3,5,0}, 5, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_ANIMAL, 0},
 
@@ -278,7 +278,7 @@ gmon_use
 0, 13, 35, H_NORMAL, -3, {8,0,0,0},
 {3,5,5,0}, 0, 2, 9, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{36, 'K', 6, "kobold", M_NO_FLAGS,
+{36, 'K', 6, "smuggler", M_NO_FLAGS,
 400, 10, 36, H_NORMAL, -3, {4,0,0,0},
 {1,2,3,0}, 2, 12, 10, 7, 250, C_POISON, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
@@ -286,15 +286,15 @@ gmon_use
 0, 16, 37, H_UNDEAD, -11, {15,0,0,0},
 {20,2,4,0}, 10, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SHOUT, I_HIGH, 1},
 
-{38, 'M', 15, "mummy", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
+{38, 'M', 15, "robot", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
 0, 10, 38, H_UNDEAD, -5, {20,0,0,0},
 {3,5,3,0}, 3, 6, 6, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{39, 'N', LIGHTGREEN, "guardian naga", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{39, 'N', LIGHTGREEN, "guardian assassin", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 350, 10, 39, H_NORMAL, -6, {19,0,0,0},
 {8,3,5,0}, 6, 14, 15, 7, 10, C_MUTATE, Z_SMALL, S_SHOUT, I_HIGH, 1},
 
-{40, 'O', 6, "ogre", M_NO_FLAGS,
+{40, 'O', 6, "mutant", M_NO_FLAGS,
 1300, 10, 40, H_NORMAL, -3, {17,0,0,0},
 {5,3,5,0}, 1, 6, 10, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
@@ -306,7 +306,7 @@ gmon_use
 200, 14, 42, H_NORMAL, -3, {20,0,0,0},
 {7,3,5,0}, 10, 10, 10, 7, 250, C_POISON, Z_SMALL, S_SILENT, I_INSECT, 0},
 
-{43, 'R', 14, "rakshasa", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{43, 'R', 14, "big guardian robot", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 0, 15, 43, H_NORMAL, -10, {20,0,0,0},
 {10,3,5,0}, 10, 14, 10, 7, 54, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 3},
 
@@ -314,7 +314,7 @@ gmon_use
 200, 10, 44, H_NORMAL, -3, {5,0,0,0},
 {2,3,5,0}, 1, 15, 13, 7, 250, C_CONTAMINATED, Z_SMALL, S_SILENT, I_PLANT, 0},
 
-{45, 'T', 6, "troll", M_NO_FLAGS,
+{45, 'T', 6, "builder robot", M_NO_FLAGS,
 1500, 10, 45, H_NORMAL, -3, {20,15,15,0},
 {7,3,5,0}, 3, 10, 10, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
@@ -322,11 +322,11 @@ gmon_use
 0, 12, 46, H_NORMAL, -3, {12,0,0,0},
 {7,3,5,0}, 5, 10, 30, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_ANIMAL, 0},
 
-{47, 'V', RED, "vampire", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS,
+{47, 'V', RED, "chemist", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS,
 0, 11, 47, H_UNDEAD, -6, {22,0,0,0},
 {6,3,5,0}, 10, 10, 10, 7, 40, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{48, 'W', DARKGREY, "wraith", M_RES_POISON|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
+{48, 'W', DARKGREY, "combat robot", M_RES_POISON|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
 0, 11, 48, H_UNDEAD, -7, {13,0,0,0},
 {6,3,5,0}, 10, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
@@ -344,19 +344,19 @@ gmon_use
 0, 6, 51, H_UNDEAD, 5000, {23,0,0,0},
 {6,3,5,0}, 8, 5, 5, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{52, 'o', 14, "orc warrior", M_NO_FLAGS,
+{52, 'o', 14, "terrorist sergeant", M_NO_FLAGS,
 0, 10, 14, H_NORMAL, -3, {20,0,0,0},
 {4,4,6,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{53, 'K', MAGENTA, "kobold demonologist", M_SPELLCASTER,
+{53, 'K', MAGENTA, "smuggler hacker", M_SPELLCASTER,
 0, 10, 36, H_NORMAL, -5, {4,0,0,0},
 {4,3,5,0}, 2, 13, 10, 7, 250, C_POISON, Z_NOZOMBIE, S_SHOUT, I_NORMAL, 3},
 
-{54, 'o', MAGENTA, "orc wizard", M_SPELLCASTER,
+{54, 'o', MAGENTA, "terrorist hacker", M_SPELLCASTER,
 0, 10, 14, H_NORMAL, -5, {10,0,0,0},
 {3,3,4,0}, 1, 12, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{55, 'o', LIGHTCYAN, "orc knight", M_NO_FLAGS,
+{55, 'o', LIGHTCYAN, "terrorist captain", M_NO_FLAGS,
 0, 10, 14, H_NORMAL, -3, {25,0,0,0},
 {9,4,7,0}, 2, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
@@ -364,15 +364,15 @@ gmon_use
 0, 10, 56, H_NORMAL, 5000, {0,0,0,0},
 {10,5,5,0}, 3, 3, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{57, 'D', LIGHTRED, "wyvern", M_NO_FLAGS,
+{57, 'D', LIGHTRED, "robot plane", M_NO_FLAGS,
 2000, 10, 57, H_NORMAL, -3, {20,0,0,0},
 {5,3,5,0}, 5, 10, 15, 7, 250, C_CLEAN, Z_SMALL, S_SILENT, I_PLANT, 0},
 
-{58, 'K', RED, "big kobold", M_NO_FLAGS,
+{58, 'K', RED, "smuggler captain", M_NO_FLAGS,
 0, 10, 58, H_NORMAL, -3, {7,0,0,0},
 {5,3,5,0}, 3, 12, 10, 7, 250, C_POISON, Z_SMALL, S_SILENT, I_ANIMAL, 3},
 
-{59, 'G', WHITE, "giant eyeball", M_NO_SKELETON|M_LEVITATE,
+{59, 'G', WHITE, "camera", M_NO_SKELETON|M_LEVITATE,
 400, 10, 59, H_NORMAL, -3, {0,0,0,0},
 {3,3,5,0}, 0, 1, 3, 7, 250, C_CLEAN, Z_SMALL, S_SILENT, I_PLANT, 0},
 
@@ -392,11 +392,11 @@ gmon_use
 0, 10, 63, H_UNDEAD, -5, {5,0,0,0},
 {3,3,5,0}, 12, 10, 10, 7, BLACK, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{64, 'p', GREEN, "hungry ghost", M_RES_POISON|M_RES_COLD,
+{64, 'p', GREEN, "broken medbot", M_RES_POISON|M_RES_COLD,
 0, 10, 64, H_UNDEAD, -4, {5,0,0,0},
 {7,3,5,0}, 0, 17, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{65, 'G', LIGHTGREY, "eye of draining", M_NO_SKELETON|M_LEVITATE,
+{65, 'G', LIGHTGREY, "camera of draining", M_NO_SKELETON|M_LEVITATE,
 400, 10, 65, H_NORMAL, 5000, {0,0,0,0},
 {7,3,5,0}, 3, 1, 5, 7, 250, C_MUTATE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
@@ -408,7 +408,7 @@ gmon_use
 0, 10, 67, H_NORMAL, -3, {20,0,0,0},
 {8,3,5,0}, 5, 0, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{68, 'E', RED, "efreet", M_RES_POISON|M_RES_FIRE|M_ED_COLD|M_SPELLCASTER|M_LEVITATE,
+{68, 'E', RED, "walking plasma turret", M_RES_POISON|M_RES_FIRE|M_ED_COLD|M_SPELLCASTER|M_LEVITATE,
 0, 12, 68, H_NORMAL, -3, {12,0,0,0},
 {7,3,5,0}, 10, 5, 10, 7, 50, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 3},
 
@@ -424,7 +424,7 @@ gmon_use
 2500, 10, 71, H_NORMAL, -3, {35,0,0,0},
 {9,3,5,0}, 20, 2, 3, 7, 250, C_POISON, Z_BIG, S_SILENT, I_INSECT, 0},
 
-{72, 'z', WHITE, "flying skull", M_RES_POISON|M_RES_FIRE|M_RES_COLD|M_LEVITATE,
+{72, 'z', WHITE, "flying turrent", M_RES_POISON|M_RES_FIRE|M_RES_COLD|M_LEVITATE,
 0, 10, 72, H_UNDEAD, -3, {7,0,0,0},
 {2,3,5,0}, 10, 17, 15, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SCREAM, I_PLANT, 0},
 
@@ -432,7 +432,7 @@ gmon_use
 0, 10, 73, H_DEMONIC, -3, {13,0,0,0},
 {5,3,5,0}, 6, 13, 15, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_BARK, I_NORMAL, 0},
 
-{74, 'm', LIGHTRED, "minotaur", M_NO_FLAGS,
+{74, 'm', LIGHTRED, "bull mutant", M_NO_FLAGS,
 1500, 10, 74, H_NORMAL, -3, {35,0,0,0},
 {13,3,5,0}, 5, 7, 10, 7, 250, C_CONTAMINATED, Z_BIG, S_BELLOW, I_NORMAL, 3},
 
@@ -444,16 +444,16 @@ gmon_use
 0, 5, 76, H_NORMAL, -3, {22,0,0,0},
 {11,3,5,0}, 1, 4, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{77, 'W', LIGHTBLUE, "freezing wraith", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
+{77, 'W', LIGHTBLUE, "freezing combat robot", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
 0, 10, 77, H_UNDEAD, -4, {19,0,0,0},
 {8,3,5,0}, 12, 10, 8, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
 // fake R - conjured by the R's illusion spell.
-{78, 'R', YELLOW, "rakshasa", M_RES_POISON,
+{78, 'R', YELLOW, "big guardian robot", M_RES_POISON,
 0, 10, 78, H_NORMAL, 5000, {0,0,0,0},
 {1,0,0,1}, 0, 30, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_ROAR, I_PLANT, 0},
 
-{79, 'G', GREEN, "great orb of eyes", M_NO_SKELETON|M_RES_POISON|M_SPELLCASTER|M_LEVITATE|M_SEE_INVIS,
+{79, 'G', GREEN, "great camera of eyes", M_NO_SKELETON|M_RES_POISON|M_SPELLCASTER|M_LEVITATE|M_SEE_INVIS,
 900, 13, 79, H_NORMAL, 5000, {20,0,0,0},
 {12,3,5,0}, 10, 3, 10, 7, 55, C_MUTATE, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
@@ -461,7 +461,7 @@ gmon_use
 0, 11, 80, H_DEMONIC, -7, {10,0,0,0},
 {7,3,5,0}, 5, 10, 10, 7, RED, C_NOCORPSE, Z_NOZOMBIE, S_SCREAM, I_HIGH, 1},
 
-{81, '4', GREEN, "rotting devil", M_RES_POISON|M_RES_COLD,
+{81, '4', GREEN, "cybernitized guard", M_RES_POISON|M_RES_COLD,
 0, 10, 81, H_DEMONIC, -7, {8,0,0,0},
 {5,3,5,0}, 2, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
@@ -477,15 +477,15 @@ gmon_use
 0, 12, 84, H_DEMONIC, -10, {25,0,0,0},
 {11,3,5,0}, 18, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
-{85, '4', LIGHTRED, "hairy devil", M_RES_POISON,
+{85, '4', LIGHTRED, "hairy guard", M_RES_POISON,
 0, 10, 85, H_DEMONIC, -4, {9,9,0,0},
 {6,3,5,0}, 7, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SHOUT, I_HIGH, 1},
 
-{86, '2', WHITE, "ice devil", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_SEE_INVIS,
+{86, '2', WHITE, "ice guard", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_SEE_INVIS,
 0, 11, 86, H_DEMONIC, -6, {16,0,0,0},
 {11,3,5,0}, 12, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
-{87, '3', BLUE, "blue devil", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_FLIES,
+{87, '3', BLUE, "blue guard", M_RES_POISON|M_ED_FIRE|M_RES_COLD|M_FLIES,
 0, 10, 87, H_DEMONIC, -5, {21,0,0,0},
 {7,3,5,0}, 14, 10, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
@@ -494,7 +494,7 @@ gmon_use
 0, 10, 88, H_DEMONIC, -3, {12,0,0,0},
 {5,3,5,0}, 0, 0, 0, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_RANDOM, I_NORMAL, 1},
 
-{89, '3', CYAN, "iron devil", M_RES_ELEC|M_RES_POISON|M_RES_HELLFIRE|M_RES_COLD,
+{89, '3', CYAN, "iron guard", M_RES_ELEC|M_RES_POISON|M_RES_HELLFIRE|M_RES_COLD,
 0, 10, 89, H_DEMONIC, -6, {14,14,0,0},
 {8,3,5,0}, 16, 8, 8, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SCREECH, I_HIGH, 1},
 
@@ -518,19 +518,19 @@ gmon_use
 750, 10, 102, H_NORMAL, -3, {17,0,0,0},
 {12,3,5,0}, 4, 8, 8, 7, 250, C_MUTATE, Z_BIG, S_SHOUT, I_NORMAL, 3},
 
-{103, 'o', DARKGREY, "orc sorceror", M_RES_FIRE|M_SPELLCASTER|M_SEE_INVIS | M_SPEAKS,
+{103, 'o', DARKGREY, "terrorist programmer", M_RES_FIRE|M_SPELLCASTER|M_SEE_INVIS | M_SPEAKS,
 600, 12, 14, H_NORMAL, -3, {7,0,0,0},
 {8,2,3,0}, 5, 12, 10, 7, 56, C_POISON, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{104, 'H', BROWN, "hippogriff", M_FLIES,
+{104, 'H', BROWN, "flying tank", M_FLIES,
 1000, 10, 104, H_NORMAL, -3, {10,8,8,0},
 {7,3,5,0}, 2, 7, 10, 7, 250, C_CLEAN, Z_BIG, S_SCREECH, I_ANIMAL, 1},
 
-{105, 'H', YELLOW, "griffon", M_FLIES,
+{105, 'H', YELLOW, "big flying tank", M_FLIES,
 1800, 10, 105, H_NORMAL, -3, {18,10,10,0},
 {12,3,5,0}, 4, 6, 10, 7, 250, C_CLEAN, Z_BIG, S_SCREECH, I_ANIMAL, 1},
 
-{106, 'D', LIGHTGREEN, "hydra", M_RES_POISON,
+{106, 'D', LIGHTGREEN, "multiheaded mutant", M_RES_POISON,
 1800, 11, 106, H_NORMAL, -3, {18,0,0,0},
 {13,3,5,0}, 0, 5, 10, 7, 250, C_POISON, Z_NOZOMBIE, S_ROAR, I_ANIMAL, 1},
 
@@ -544,23 +544,23 @@ gmon_use
 0, 10, 108, H_UNDEAD, 5000, {0,0,0,0},
 {0,0,0,0}, 0, 0, 0, 0, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{109, '@', RED, "hell knight", M_RES_FIRE|M_SPELLCASTER,
+{109, '@', RED, "guardian captain", M_RES_FIRE|M_SPELLCASTER,
 550, 10, 114, H_NORMAL, -3, {13,0,0,0},
 {10,3,6,0}, 0, 10, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{110, '@', DARKGREY, "necromancer", M_SPELLCASTER,
+{110, '@', DARKGREY, "cyborg engineer", M_SPELLCASTER,
 550, 10, 114, H_NORMAL, -4, {6,0,0,0},
 {10,2,4,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{111, '@', MAGENTA, "wizard", M_SPELLCASTER | M_SPEAKS,
+{111, '@', MAGENTA, "hacker", M_SPELLCASTER | M_SPEAKS,
 550, 10, 114, H_NORMAL, -4, {6,0,0,0},
 {10,2,4,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{112, 'o', LIGHTGREEN, "orc priest", M_SPELLCASTER,
+{112, 'o', LIGHTGREEN, "terrorist operator", M_SPELLCASTER,
 600, 10, 14, H_NORMAL, -4, {6,0,0,0},
 {3,3,4,0}, 1, 10, 10, 7, 67, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{113, 'o', GREEN, "orc high priest", M_RES_HELLFIRE|M_SPELLCASTER|M_SEE_INVIS | M_SPEAKS,
+{113, 'o', GREEN, "terrorist high operator", M_RES_HELLFIRE|M_SPELLCASTER|M_SEE_INVIS | M_SPEAKS,
 600, 10, 14, H_UNDEAD, -4, {7,0,0,0},
 {11,3,4,0}, 1, 12, 10, 7, 68, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
@@ -569,31 +569,31 @@ gmon_use
 550, 10, 114, H_NORMAL, -3, {6,0,0,0},
 {1,3,5,0}, 0, 10, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{115, 'g', YELLOW, "gnoll", M_NO_FLAGS,
+{115, 'g', YELLOW, "thug", M_NO_FLAGS,
 750, 10, 115, H_NORMAL, -3, {9,0,0,0},
 {2,4,5,0}, 2, 9, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{116, '8', BROWN, "clay golem", M_RES_POISON|M_RES_FIRE|M_RES_COLD|M_SEE_INVIS,
+{116, '8', BROWN, "clay nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD|M_SEE_INVIS,
 0, 10, 116, H_NORMAL, 5000, {11,11,0,0},
 {8,7,3,0}, 7, 5, 8, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{117, '8', YELLOW, "wood golem", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
+{117, '8', YELLOW, "wood nanorg", M_RES_POISON|M_ED_FIRE|M_RES_COLD,
 0, 10, 117, H_NORMAL, 5000, {10,0,0,0},
 {6,6,3,0}, 5, 6, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{118, '8', LIGHTGREY, "stone golem", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{118, '8', LIGHTGREY, "stone nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 118, H_NORMAL, 5000, {28,0,0,0},
 {12,7,4,0}, 12, 4, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{119, '8', CYAN, "iron golem", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{119, '8', CYAN, "iron nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 119, H_NORMAL, 5000, {35,0,0,0},
 {15,7,4,0}, 15, 3, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{120, '8', WHITE, "crystal golem", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{120, '8', WHITE, "crystal nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 120, H_NORMAL, 5000, {40,0,0,0},
 {13,7,4,0}, 22, 3, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{121, '8', LIGHTGREY, "toenail golem", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{121, '8', LIGHTGREY, "toenail nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 121, H_NORMAL, 5000, {13,0,0,0},
 {9,5,3,0}, 8, 5, 8, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
@@ -601,15 +601,15 @@ gmon_use
 1100, 10, 122, H_NORMAL, -3, {15,0,0,0},
 {5,3,5,0}, 5, 10, 10, 7, 69, C_POISON, Z_SMALL, S_SILENT, I_ANIMAL, 1},
 
-{123, 177, BROWN, "earth elemental", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
+{123, 177, BROWN, "earth nanorg", M_RES_POISON|M_RES_FIRE|M_RES_COLD,
 0, 10, 123, H_NORMAL, -3, {40,0,0,0},
 {10,5,5,0}, 14, 4, 6, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{124, '#', YELLOW, "fire elemental", M_RES_POISON|M_RES_HELLFIRE|M_ED_COLD,
+{124, '#', YELLOW, "fire nanorg", M_RES_POISON|M_RES_HELLFIRE|M_ED_COLD,
 0, 10, 124, H_NORMAL, -3, {5,0,0,0},
 {10,3,5,0}, 4, 12, 13, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{125, 'v', LIGHTGREY, "air elemental", M_RES_ELEC|M_RES_POISON|M_LEVITATE,
+{125, 'v', LIGHTGREY, "air nanorg", M_RES_ELEC|M_RES_POISON|M_LEVITATE,
 0, 10, 125, H_NORMAL, -3, {15,0,0,0},
 {10,3,5,0}, 2, 18, 25, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
@@ -631,7 +631,7 @@ gmon_use
 600, 10, 129, H_NORMAL, -3, {20,0,0,0},
 {5,3,5,0}, 4, 10, 10, 7, 250, C_CLEAN, Z_SMALL, S_SILENT, I_ANIMAL, 0},
 
-{130, 'W', LIGHTGREEN, "spectral warrior", M_RES_POISON|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
+{130, 'W', LIGHTGREEN, "scouting robot", M_RES_POISON|M_RES_COLD|M_LEVITATE|M_SEE_INVIS,
 0, 13, 130, H_UNDEAD, -6, {18,0,0,0},
 {9,3,5,0}, 12, 10, 10, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},
 
@@ -651,7 +651,7 @@ gmon_use
 1500, 10, 134, H_NORMAL, -5, {30,0,0,0},
 {14,3,5,0}, 9, 5, 10, 7, 250, C_POISON, Z_BIG, S_BELLOW, I_ANIMAL, 0},
 
-{135, 'T', LIGHTGREY, "rock troll", M_NO_FLAGS,
+{135, 'T', LIGHTGREY, "rock builder", M_NO_FLAGS,
 2200, 11, 135, H_NORMAL, -4, {30,20,20,0},
 {11,3,5,0}, 13, 6, 8, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
@@ -659,7 +659,7 @@ gmon_use
 3000, 10, 136, H_NORMAL, -4, {45,0,0,0},
 {16,3,5,0}, 12, 2, 10, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
-{137, 'p', RED, "flayed ghost", M_RES_POISON,
+{137, 'p', RED, "flayed hologram", M_RES_POISON,
 0, 10, 137, H_UNDEAD, -5, {30,0,0,0},
 {11,3,5,0}, 0, 14, 10, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
@@ -679,7 +679,7 @@ gmon_use
 0, 21, 141, H_NORMAL, 5000, {0,0,0,0},
 {12,2,3,0}, 0, 12, 10, 7, 73, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{142, 'O', MAGENTA, "ogre-mage", M_SPELLCASTER|M_SEE_INVIS,
+{142, 'O', MAGENTA, "mutant-hacker", M_SPELLCASTER|M_SEE_INVIS,
 0, 16, 40, H_NORMAL, -6, {12,0,0,0},
 {10,3,5,0}, 1, 7, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
@@ -693,7 +693,7 @@ gmon_use
 0, 20, 144, H_NORMAL, 5000, {15,0,0,0},
 {15,1,0,0}, 10, 20, 15, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
-{145, 'C', MAGENTA, "titan", M_RES_ELEC|M_SPELLCASTER,
+{145, 'C', MAGENTA, "terminator", M_RES_ELEC|M_SPELLCASTER,
 3500, 12, 145, H_NORMAL, -7, {55,0,0,0},
 {20,3,5,0}, 10, 3, 10, 7, 94, C_CLEAN, Z_BIG, S_SHOUT, I_HIGH, 1},
 
@@ -702,7 +702,7 @@ gmon_use
 {18,4,4,0}, 15, 7, 10, 7, 95, C_POISON, Z_BIG, S_ROAR, I_HIGH, 1},
 
 // dummy monster, used for corpses etc
-{147, 'e', DARKGREY, "elf", M_NO_FLAGS,
+{147, 'e', DARKGREY, "ninja", M_NO_FLAGS,
 450, 10, 147, H_NORMAL, -3, {0,0,0,0},
 {0,0,0,0}, 0, 0, 0, 0, 250, C_CONTAMINATED, Z_SMALL, S_SILENT, I_PLANT, 3},
 
@@ -739,7 +739,7 @@ gmon_use
 1200, 10, 155, H_NORMAL, -3, {13,0,0,0},
 {3,3,5,0}, 2, 7, 10, 7, 250, C_CLEAN, Z_SMALL, S_BELLOW, I_ANIMAL, 0},
 
-{156, 'n', RED, "ghoul", M_RES_POISON|M_RES_COLD,
+{156, 'n', RED, "lowlife", M_RES_POISON|M_RES_COLD,
 500, 12, 156, H_UNDEAD, -5, {9,0,0,0},
 {4,3,5,0}, 4, 10, 10, 7, 250, C_HCL, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
@@ -757,11 +757,11 @@ gmon_use
 
 
 
-{160, 'T', CYAN, "iron troll", M_RES_FIRE|M_RES_COLD,
+{160, 'T', CYAN, "iron builder", M_RES_FIRE|M_RES_COLD,
 2400, 10, 160, H_NORMAL, -5, {35,25,25,0},
 {16,3,5,0}, 20, 4, 7, 7, 250, C_POISON, Z_BIG, S_ROAR, I_NORMAL, 1},
 
-{161, 'N', GREEN, "naga", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{161, 'N', GREEN, "assassin", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 750, 10, 161, H_NORMAL, -6, {6,0,0,0},
 {5,3,5,0}, 6, 10, 8, 7, 106, C_POISON, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
@@ -789,7 +789,7 @@ gmon_use
 600, 10, 167, H_NORMAL, -3, {30,0,0,0},
 {11,3,5,0}, 4, 16, 18, 7, 250, C_CLEAN, Z_SMALL, S_SILENT, I_ANIMAL, 0},
 
-{168, 'T', DARKGREY, "deep troll", M_NO_FLAGS,
+{168, 'T', DARKGREY, "deep builder", M_NO_FLAGS,
 1500, 12, 168, H_NORMAL, -3, {27,20,20,0},
 {10,3,5,0}, 6, 10, 10, 7, 250, C_CONTAMINATED, Z_BIG, S_SHOUT, I_NORMAL, 1},
 
@@ -844,7 +844,7 @@ gmon_use
 
 
 
-{220, '5', WHITE, "white imp", M_RES_COLD|M_SPELLCASTER|M_FLIES,
+{220, '5', WHITE, "white robot", M_RES_COLD|M_SPELLCASTER|M_FLIES,
 0, 10, 220, H_DEMONIC, -3, {4,0,0,0},
 {2,3,5,0}, 4, 10, 10, 7, 74, C_CONTAMINATED, Z_NOZOMBIE, S_SHOUT, I_NORMAL, 3},
 
@@ -868,7 +868,7 @@ gmon_use
 0, 12, 225, H_DEMONIC, -6, {15,0,0,0},
 {6,3,5,0}, 4, 12, 10, 7, 76, C_CONTAMINATED, Z_NOZOMBIE, S_SHOUT, I_NORMAL, 1},
 
-{226, '3', LIGHTRED, "orange demon", M_NO_FLAGS,
+{226, '3', LIGHTRED, "orange mutant", M_NO_FLAGS,
 0, 12, 226, H_DEMONIC, -6, {10,5,0,0},
 {8,4,5,0}, 3, 7, 7, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SCREECH, I_NORMAL, 0},
 
@@ -876,7 +876,7 @@ gmon_use
 0, 12, 227, H_DEMONIC, -6, {17,10,0,0},
 {7,4,5,0}, 8, 10, 10, 7, 77, C_CONTAMINATED, Z_NOZOMBIE, S_MOAN, I_NORMAL, 1},
 
-{228, '4', LIGHTGREY, "smoke demon", M_RES_POISON|M_RES_FIRE|M_SPELLCASTER|M_FLIES,
+{228, '4', LIGHTGREY, "smoke mutant", M_RES_POISON|M_RES_FIRE|M_SPELLCASTER|M_FLIES,
 0, 12, 228, H_DEMONIC, -6, {8,5,5,0},
 {7,3,5,0}, 5, 9, 9, 7, 78, C_CONTAMINATED, Z_NOZOMBIE, S_ROAR, I_NORMAL, 3},
 
@@ -905,19 +905,19 @@ gmon_use
 {13,3,5,0}, 11, 10, 10, 7, 79, C_CONTAMINATED, Z_NOZOMBIE, S_SHOUT, I_HIGH, 1},
 
 
-{235, '3', DARKGREY, "demonic crawler", M_RES_ELEC|M_RES_POISON|M_RES_COLD|M_RES_FIRE|M_SEE_INVIS,
+{235, '3', DARKGREY, "mutant crawler", M_RES_ELEC|M_RES_POISON|M_RES_COLD|M_RES_FIRE|M_SEE_INVIS,
 0, 12, 235, H_DEMONIC, -6, {13,13,13,13},
 {9,3,5,0}, 10, 6, 9, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SCREAM, I_NORMAL, 1},
 
-{236, '2', YELLOW, "sun demon", M_RES_ELEC|M_RES_POISON|M_ED_COLD|M_RES_HELLFIRE|M_SEE_INVIS|M_LEVITATE,
+{236, '2', YELLOW, "sun mutant", M_RES_ELEC|M_RES_POISON|M_ED_COLD|M_RES_HELLFIRE|M_SEE_INVIS|M_LEVITATE,
 0, 14, 236, H_DEMONIC, -6, {30,0,0,0},
 {10,3,5,0}, 10, 12, 12, 7, 250, C_CONTAMINATED, Z_NOZOMBIE, S_SHOUT, I_NORMAL, 3},
 
-{237, '5', DARKGREY, "shadow imp", M_RES_COLD|M_SPELLCASTER|M_FLIES|M_RES_POISON,
+{237, '5', DARKGREY, "shadow robot", M_RES_COLD|M_SPELLCASTER|M_FLIES|M_RES_POISON,
 0, 11, 237, H_DEMONIC, -3, {6,0,0,0},
 {2,3,5,0}, 3, 11, 10, 7, 118, C_CONTAMINATED, Z_NOZOMBIE, S_SHOUT, I_NORMAL, 1},
 
-{238, '3', DARKGREY, "shadow demon", M_RES_POISON|M_RES_COLD|M_SEE_INVIS|M_INVIS,
+{238, '3', DARKGREY, "shadow mutant", M_RES_POISON|M_RES_COLD|M_SEE_INVIS|M_INVIS,
 0, 12, 238, H_DEMONIC, -7, {21,0,0,0},
 {6,3,5,0}, 7, 12, 11, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_CROAK, I_HIGH, 1},
 
@@ -925,7 +925,7 @@ gmon_use
 0, 12, 239, H_DEMONIC, -7, {25,25,0,0},
 {12,3,5,0}, 10, 12, 9, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_MOAN, I_HIGH, 1},
 
-{240, 'W', BLUE, "shadow wraith", M_RES_POISON|M_LEVITATE|M_SEE_INVIS|M_INVIS,
+{240, 'W', BLUE, "shadow combat robot", M_RES_POISON|M_LEVITATE|M_SEE_INVIS|M_INVIS,
 0, 15, 240, H_UNDEAD, -8, {20,0,0,0},
 {10,3,5,0}, 7, 7, 10, 10, 250, C_CONTAMINATED, Z_NOZOMBIE, S_MOAN, I_HIGH, 1},
 
@@ -954,17 +954,17 @@ gmon_use
 1300, 10, 246, H_NORMAL, -3, {26,0,0,0},
 {8,3,5,0}, 13, 4, 6, 7, 250, C_POISON, Z_BIG, S_SILENT, I_INSECT, 0},
 
-{247, 'g', DARKGREY, "gargoyle", M_RES_POISON|M_FLIES,
+{247, 'g', DARKGREY, "android", M_RES_POISON|M_FLIES,
 0, 12, 247, H_NORMAL, -6, {10,6,6,0},
 {4,3,5,0}, 18, 6, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 0},
 
 // only appear in Dis castle
-{248, 'g', CYAN, "metal gargoyle", M_RES_POISON|M_FLIES,
+{248, 'g', CYAN, "metal android", M_RES_POISON|M_FLIES,
 0, 12, 248, H_NORMAL, -6, {19,10,10,0},
 {8,3,5,0}, 20, 4, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 0},
 
 // only appear in Gehenna castle
-{249, 'g', RED, "molten gargoyle", M_RES_POISON|M_FLIES|M_RES_FIRE,
+{249, 'g', RED, "molten android", M_RES_POISON|M_FLIES|M_RES_FIRE,
 0, 12, 249, H_NORMAL, -6, {12,8,8,0},
 {5,3,5,0}, 14, 7, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 0},
 
@@ -992,63 +992,63 @@ gmon_use
 0, 25, 255, H_DEMONIC, -3, {30,0,0,0},
 {16,0,0,100}, 10, 10, 10, 7, 93, C_POISON, Z_NOZOMBIE, S_SILENT, I_HIGH, 1},*/
 
-{260, 'N', LIGHTRED, "naga mage", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{260, 'N', LIGHTRED, "assassin hacker", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 750, 13, 161, H_NORMAL, -6, {5,0,0,0},
 {7,3,5,0}, 6, 10, 8, 7, 107, C_POISON, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{261, 'N', BLUE, "naga warrior", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{261, 'N', BLUE, "assassin sergeant", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 750, 12, 161, H_NORMAL, -6, {11,0,0,0},
 {10,5,5,0}, 6, 10, 8, 7, 106, C_POISON, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{262, 'o', RED, "orc warlord", M_NO_FLAGS,
+{262, 'o', RED, "terrorist general", M_NO_FLAGS,
 600, 15, 14, H_NORMAL, -3, {32,0,0,0},
 {15,4,7,0}, 3, 10, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{263, 'e', CYAN, "deep elf soldier", M_SPELLCASTER,
+{263, 'e', CYAN, "cyber ninja soldier", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {6,0,0,0},
 {3,3,3,0}, 0, 12, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{264, 'e', LIGHTBLUE, "deep elf fighter", M_SPELLCASTER,
+{264, 'e', LIGHTBLUE, "cyber ninja fighter", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {9,0,0,0},
 {6,3,3,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{265, 'e', BLUE, "deep elf knight", M_SPELLCASTER,
+{265, 'e', BLUE, "cyber ninja captain", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {14,0,0,0},
 {11,3,3,0}, 0, 15, 11, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{266, 'e', LIGHTRED, "deep elf mage", M_SPELLCASTER,
+{266, 'e', LIGHTRED, "cyber ninja hacker", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {5,0,0,0},
 {4,3,3,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{267, 'e', YELLOW, "deep elf summoner", M_SPELLCASTER,
+{267, 'e', YELLOW, "cyber ninja builder", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {5,0,0,0},
 {6,3,3,0}, 0, 13, 10, 7, 96, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{268, 'e', LIGHTGREEN, "deep elf conjurer", M_SPELLCASTER,
+{268, 'e', LIGHTGREEN, "cyber ninja shooter", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {5,0,0,0},
 {6,3,3,0}, 0, 13, 10, 7, 250, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{269, 'e', LIGHTGREY, "deep elf priest", M_SPELLCASTER,
+{269, 'e', LIGHTGREY, "cyber ninja operator", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {9,0,0,0},
 {5,3,3,0}, 0, 13, 10, 7, 99, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{270, 'e', DARKGREY, "deep elf high priest", M_SPELLCASTER | M_SPEAKS,
+{270, 'e', DARKGREY, "cyber ninja high operator", M_SPELLCASTER | M_SPEAKS,
 450, 10, 147, H_NORMAL, -6, {14,0,0,0},
 {11,3,3,0}, 3, 13, 10, 7, 100, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{271, 'e', MAGENTA, "deep elf demonologist", M_SPELLCASTER,
+{271, 'e', MAGENTA, "cyber ninja programmer", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {12,0,0,0},
 {12,3,3,0}, 0, 13, 10, 7, 101, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{272, 'e', GREEN, "deep elf annihilator", M_SPELLCASTER,
+{272, 'e', GREEN, "cyber ninja annihilator", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {12,0,0,0},
 {15,3,3,0}, 0, 13, 10, 7, 102, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{273, 'e', RED, "deep elf sorceror", M_SPELLCASTER,
+{273, 'e', RED, "cyber ninja developer", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {12,0,0,0},
 {14,3,3,0}, 0, 13, 10, 7, 103, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
-{274, 'e', WHITE, "deep elf death mage", M_SPELLCASTER,
+{274, 'e', WHITE, "cyber ninja cracker", M_SPELLCASTER,
 450, 10, 147, H_NORMAL, -6, {12,0,0,0},
 {15,3,3,0}, 0, 13, 10, 7, 104, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
@@ -1097,7 +1097,7 @@ hp_dice[4], AC, ev, speed, speed_inc, sec (spell), corpse_thingy, zombie_size, s
 0, 20, 114, H_NORMAL, -3, {5,0,0,0},
 {3,0,0,25}, 0, 11, 10, 7, 1, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
-{284, 'o', BROWN, "Blork the orc", M_SPELLCASTER | M_SPEAKS,
+{284, 'o', BROWN, "Blork the terrorist", M_SPELLCASTER | M_SPEAKS,
 0, 20, 14, H_NORMAL, -3, {7,0,0,0},
 {3,0,0,32}, 0, 9, 8, 7, 2, C_CONTAMINATED, Z_SMALL, S_SHOUT, I_NORMAL, 3},
 
@@ -1237,19 +1237,19 @@ hp_dice[4], AC, ev, speed, speed_inc, sec (spell), corpse_thingy, zombie_size, s
 
 /* These nasties are never randomly generated, only sometimes specially
 placed in the Crypt. */
-{361, 'z', DARKGREY, "curse skull", M_RES_ELEC|M_RES_POISON|M_RES_HELLFIRE|M_RES_COLD|M_LEVITATE|M_SPELLCASTER|M_SEE_INVIS,
+{361, 'z', DARKGREY, "virus turret", M_RES_ELEC|M_RES_POISON|M_RES_HELLFIRE|M_RES_COLD|M_LEVITATE|M_SPELLCASTER|M_SEE_INVIS,
 0, 50, 361, H_UNDEAD, -6, {0,0,0,0},
 {13,0,0,66}, 40, 3, 10, 7, 108, C_NOCORPSE, Z_NOZOMBIE, S_MOAN, I_HIGH, 0},
 
-{362, 'V', CYAN, "vampire knight", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS,
+{362, 'V', CYAN, "chemist captain", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS,
 0, 13, 47, H_UNDEAD, -6, {33,0,0,0},
 {11,3,7,0}, 10, 10, 10, 7, 40, C_NOCORPSE, Z_NOZOMBIE, S_SHOUT, I_HIGH, 3},
 
-{363, 'V', MAGENTA, "vampire mage", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS|M_FLIES,
+{363, 'V', MAGENTA, "chemist hacker", M_RES_POISON|M_RES_COLD|M_SPELLCASTER|M_SEE_INVIS|M_FLIES,
 0, 15, 47, H_UNDEAD, -6, {22,0,0,0},
 {8,3,4,0}, 10, 10, 10, 7, 61, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_HIGH, 3},
 
-{364, 'G', LIGHTMAGENTA, "shining eye", M_NO_SKELETON|M_LEVITATE|M_SPELLCASTER,
+{364, 'G', LIGHTMAGENTA, "shining camera", M_NO_SKELETON|M_LEVITATE|M_SPELLCASTER,
 0, 14, 364, H_NORMAL, 5000, {0,0,0,0},
 {10,3,5,0}, 3, 1, 7, 7, 109, C_POISON, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
@@ -1266,7 +1266,7 @@ placed in the Crypt. */
 0, 11, 367, H_UNDEAD, 5000, {20,0,0,0},
 {8,3,5,0}, 8, 5, 7, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 
-{368, 'N', RED, "greater naga", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
+{368, 'N', RED, "greater assassin", M_RES_POISON|M_SPELLCASTER|M_SEE_INVIS,
 750, 10, 161, H_NORMAL, 5000, {18,0,0,0},
 {15,3,5,0}, 6, 10, 8, 7, 107, C_POISON, Z_SMALL, S_SHOUT, I_HIGH, 3},
 
@@ -1278,7 +1278,7 @@ placed in the Crypt. */
 0, 10, 370, H_NORMAL, -5, {22,17,13,19},
 {25,3,5,0}, 5, 5, 9, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{371, 'H', LIGHTGREY, "sphinx", M_FLIES|M_SEE_INVIS|M_SPELLCASTER,
+{371, 'H', LIGHTGREY, "flying terminator", M_FLIES|M_SEE_INVIS|M_SPELLCASTER,
 0, 10, 371, H_NORMAL, -3, {25,12,12,0},
 {16,3,5,0}, 5, 5, 13, 7, 114, C_CLEAN, Z_NOZOMBIE, S_SHOUT, I_HIGH, 1},
 
@@ -1286,19 +1286,19 @@ placed in the Crypt. */
 0, 12, 372, H_UNDEAD, -5, {25,0,0,0},
 {10,3,5,0}, 5, 7, 8, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_NORMAL, 1},
 
-{373, 'M', YELLOW, "guardian mummy", M_RES_POISON|M_RES_COLD,
+{373, 'M', YELLOW, "guardian robot", M_RES_POISON|M_RES_COLD,
 0, 13, 373, H_UNDEAD, -5, {30,0,0,0},
 {7,5,3,0}, 6, 9, 9, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 3},
 
-{374, 'M', DARKGREY, "greater mummy", M_RES_POISON|M_RES_COLD|M_RES_ELEC|M_SPELLCASTER,
+{374, 'M', DARKGREY, "greater robot", M_RES_POISON|M_RES_COLD|M_RES_ELEC|M_SPELLCASTER,
 0, 20, 374, H_UNDEAD, 5000, {35,0,0,0},
 {15,5,3,100}, 10, 6, 10, 7, 115, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 3},
 
-{375, 'M', RED, "mummy priest", M_RES_POISON|M_RES_COLD|M_RES_ELEC|M_SPELLCASTER,
+{375, 'M', RED, "robot operator", M_RES_POISON|M_RES_COLD|M_RES_ELEC|M_SPELLCASTER,
 0, 16, 375, H_UNDEAD, 5000, {30,0,0,0},
 {10,5,3,0}, 8, 7, 9, 7, 115, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 3},
 
-{376, 'c', YELLOW, "centaur warrior", M_NO_FLAGS,
+{376, 'c', YELLOW, "ranger sergeant", M_NO_FLAGS,
 1500, 12, 2, H_NORMAL, -3, {16,0,0,0},
 {9,3,5,0}, 4, 8, 15, 7, 250, C_CLEAN, Z_BIG, S_SHOUT, I_NORMAL, 3},
 
@@ -1329,7 +1329,7 @@ Darkness, by Hugh Cook */
 {1,3,5,0}, 2, 13, 10, 7, 250, C_CLEAN, Z_SMALL, S_SHOUT, I_NORMAL, 1},
 
 
-{385, 'G', YELLOW, "eye of devastation", M_NO_SKELETON|M_LEVITATE|M_SPELLCASTER,
+{385, 'G', YELLOW, "camera of devastation", M_NO_SKELETON|M_LEVITATE|M_SPELLCASTER,
 0, 11, 385, H_NORMAL, 5000, {0,0,0,0},
 {10,3,5,0}, 12, 1, 7, 7, 125, C_POISON, Z_NOZOMBIE, S_SILENT, I_PLANT, 0},
 
@@ -1409,19 +1409,19 @@ hp_dice[4], AC, ev, speed, speed_inc, sec (spell), corpse_thingy, zombie_size, s
 */
 
 
-{MLAVA0, 'w', RED, "lava worm", M_RES_FIRE|M_ED_COLD,
+{MLAVA0, 'w', RED, "radioactive waste worm", M_RES_FIRE|M_ED_COLD,
 0, 10, MLAVA0, H_NORMAL, -3, {15,0,0,0},
 {6,3,5,0}, 1, 10, 10, 7, 250, C_NOCORPSE, Z_SMALL, S_SILENT, I_ANIMAL, 0},
 
-{MLAVA1, ';', RED, "lava fish", M_RES_FIRE|M_ED_COLD,
+{MLAVA1, ';', RED, "radioactive waste fish", M_RES_FIRE|M_ED_COLD,
 0, 10, MLAVA1, H_NORMAL, -3, {10,0,0,0},
 {4,3,5,0}, 4, 15, 10, 7, 250, C_NOCORPSE, Z_SMALL, S_SILENT, I_ANIMAL, 0},
 
-{MLAVA2, 'S', RED, "lava snake", M_RES_FIRE|M_ED_COLD,
+{MLAVA2, 'S', RED, "radioactive waste snake", M_RES_FIRE|M_ED_COLD,
 0, 10, MLAVA2, H_NORMAL, -3, {7,0,0,0},
 {3,3,5,0}, 2, 17, 10, 7, 250, C_NOCORPSE, Z_SMALL, S_SILENT, I_ANIMAL, 0},
 
-{MLAVA3, 0, 0, "another lava thing", M_NO_FLAGS,
+{MLAVA3, 0, 0, "another radioactive waste thing", M_NO_FLAGS,
 0, 10, MLAVA3, H_NORMAL, -3, {0,0,0,0},
 {0,0,0,0}, 0, 0, 0, 0, 250, C_NOCORPSE, Z_SMALL, S_SILENT, I_PLANT, 0},
 
@@ -1441,7 +1441,7 @@ hp_dice[4], AC, ev, speed, speed_inc, sec (spell), corpse_thingy, zombie_size, s
 0, 10, MWATER3, H_NORMAL, -3, {1,1,0,0},
 {4,3,5,0}, 0, 5, 10, 7, 250, C_NOCORPSE, Z_SMALL, S_SILENT, I_PLANT, 0},
 
-{MWATER4, 247, LIGHTBLUE, "water elemental", M_RES_POISON|M_ED_FIRE,
+{MWATER4, 247, LIGHTBLUE, "water nanorg", M_RES_POISON|M_ED_FIRE,
 0, 10, MWATER4, H_NORMAL, -3, {25,0,0,0},
 {8,5,3,0}, 0, 7, 10, 7, 250, C_NOCORPSE, Z_NOZOMBIE, S_SILENT, I_PLANT, 1},
 

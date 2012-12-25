@@ -143,7 +143,7 @@ switch(z_type)
 
 	case 4: // magic missile
 	func_pass [0] = 13;//you[0].inv_col [throw_2];//icolour [you[0].inv_class [throw_2]] [you[0].inv_type [throw_2]];
-	strcpy(str_pass, "magic dart");// you[0].inv_name [throw_2]);
+	strcpy(str_pass, "energy dart");// you[0].inv_name [throw_2]);
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 102 + (func_pass [8] / 45) + random2(2);
 	func_pass [3] = 1500;
@@ -953,7 +953,7 @@ switch(pot_eff)
 	break;
 
 	case POT_PORRIDGE: // oatmeal - always gluggy white/grey?
-	strcpy(info, "That potion was really gluggy!");
+	strcpy(info, "That liquid was really gluggy!");
 	mpr(info);
 	you[0].hunger += 6000;
 	you[0].hung_ch = 1;
@@ -994,7 +994,7 @@ switch(pot_eff)
  break; // I'll let this slip past robe of archmagi
 
  case POT_MAGIC: // magic
- strcpy(info, "You feel magical!");
+ strcpy(info, "You feel energetic!");
  mpr(info);
 	you[0].ep += random2(10) + random2(10) + 5;
     if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
@@ -1200,7 +1200,7 @@ if (you[0].duration [DUR_VORPAL_BLADE] != 0 || you[0].duration [DUR_FIRE_BRAND] 
   you[0].duration [DUR_POISON_WEAPON] = 0;
 //  you[0].inv_dam [unw] = (you[0].inv_dam [unw] / 30) * 30;
   you[0].inv_dam [unw] -= you[0].inv_dam [unw] % 30;
-  mpr("Your branding spell evaporates.");
+  mpr("Your branding program is erased.");
 }
 
 
@@ -1394,7 +1394,7 @@ switch(you[0].inv_dam [unw] % 30)
         break;
 
  case SPARM_MAGIC_RESISTANCE:
- strcpy(info, "You feel less resistant to magic.");
+ strcpy(info, "You feel less resistant to cyberbrain hacks.");
  mpr(info);
 /* you[0].res_magic -= 40;*/
  break;

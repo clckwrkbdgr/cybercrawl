@@ -74,11 +74,11 @@ strcpy(descpr, "A huge black bat.");
 break;
 
 case 2: // centaur
-strcpy(descpr, "A hybrid with the torso of a human atop the body of a large horse.");
+strcpy(descpr, "A hybrid with the torso of a human atop the mechanical legs.");
 break;
 
 case 3: // red devil
-strcpy(descpr, "The Red Devil is slightly shorter than a human, \
+strcpy(descpr, "The Red Guard is slightly shorter than a human, \
 but muscular and covered in spikes and horns. Two short wings sprout from its shoulders.");
 break;
 
@@ -99,7 +99,7 @@ strcpy(descpr, "A fearsome hunting dog.");
 break;
 
 case 8: // imp
-strcpy(descpr, "An ugly little minor demon.");
+strcpy(descpr, "An ugly little minor drone.");
 break;
 
 case 9: // jackal
@@ -115,21 +115,19 @@ strcpy(descpr, "");
 break;
 
 case 12: // manticore
-strcpy(descpr, "A hideous cross-breed, bearing the features of a human and a lion, with great bat-like wings. Its tail bristles with spikes, \
-which can be loosed at potential prey.");
+strcpy(descpr, "A big fully armed cyber tank.");
 break;
 
 case 13: // necrophage
-strcpy(descpr, "A vile undead creation of the most unholy necromancy, these creatures are made from the decaying corpses of humanoid creatures. \
-They exist to spread disease and decay, and gain power from the decaying corpses of other beings.");
+strcpy(descpr, "A vacuum cleaner robot with corrupter cyberbrain. It uses its tools as weapons and charges on dead corpses.");
 break;
 
 case 14: // orc
-strcpy(descpr, "An ugly subterranean race, orcs combine the worst features of humans, pigs, and several other unpleasant creatures put together.");
+strcpy(descpr, "An ugly subterranean race, terrorists combine the worst features of humans, pigs, and several other unpleasant creatures put together.");
 break;
 
 case 15: // phantom
-strcpy(descpr, "A certain type of undead spirit.");
+strcpy(descpr, "A certain type of visual projection.");
 break;
 
 case 16: // q
@@ -170,7 +168,7 @@ strcpy(descpr, "A giant wasp covered with thick plates of yellow chitinous armou
 break;
 
 case 25: // z
-strcpy(descpr, "A corpse raised from the dead to undeath by necromancy.");
+strcpy(descpr, "A corpse raised from the dead by cyborgization.");
 break;
 
 case 26: // A
@@ -194,7 +192,7 @@ strcpy(descpr, "A huge ogre with two heads on top of a bloated ogre body. It is 
 break;
 
 case 31: // F
-strcpy(descpr, "One of the most fearsome denizens of Hell. A huge and powerful demon wreathed in hellfire, with great scaly wings.");
+strcpy(descpr, "One of the most fearsome denizens of Facilities. A huge and powerful mutant wreathed in hellfire, with great scaly wings.");
 break;
 
 case 32: // G
@@ -202,7 +200,7 @@ strcpy(descpr, "A volatile floating ball of spores, covered in knobbly rhizome g
 break;
 
 case 33: // g
-strcpy(descpr, "Larger relatives of goblins.");
+strcpy(descpr, "Larger relatives of bums.");
 break;
 
 case 34: // I
@@ -214,23 +212,23 @@ strcpy(descpr, "A pulsating mass of acidic protoplasm. It can and will eat almos
 break;
 
 case 36: // K
-strcpy(descpr, "Reputedly the creation of an ancient demon-god, kobolds are small goblin-like creatures with canine heads.");
+strcpy(descpr, "Smugglers are small bum-like creatures.");
 break;
 
 case 37: // L
-strcpy(descpr, "A wizard who didn't want to die, a Lich is a skeleton or decaying corpse kept alive by a mighty exercise of necromancy. These undead creatures can wield great magic and are best avoided by all but the most confident (or stupid) adventurers.");
+strcpy(descpr, "A hacker who didn't want to die, a Lich is a skeleton or decaying corpse kept alive by a mighty exercise of cyborgization. These cyber creatures can wield great hacking abilities and are best avoided by all but the most confident (or stupid) adventurers.");
 break;
 
 case 38: // M
-strcpy(descpr, "An undead figure covered in bandages and embalming fluids, compelled to walk by an ancient curse. It radiates a malign aura to those who intrude on its domain.");
+strcpy(descpr, "A cyborg figure covered in bandages and embalming fluids, compelled to walk by an ancient virus. It radiates a malign aura to those who intrude on its domain.");
 break;
 
 case 39: // N
-strcpy(descpr, "A serpent with the head of a human. These nagas are often used as guardians by powerful creatures.");
+strcpy(descpr, "A quick half-serpent, half-human mutant.");
 break;
 
 case 40: // O
-strcpy(descpr, "A larger, uglier and usually fatter relative of orcs and goblins.");
+strcpy(descpr, "A larger, uglier and usually fatter relative of terrorists and bums.");
 break;
 
 case 41: // P
@@ -243,7 +241,7 @@ break;
 
 case 78: // fake R
 case 43: // R
-strcpy(descpr, "A type of demon who comes to the material world in search of power and knowledge. Rakshasas are experts in the art of illusion, among other things.");
+strcpy(descpr, "A type of robot who comes to the material world in search of power and knowledge. They are experts in the art of illusion, among other things.");
 break;
 
 case 44: // S
@@ -259,11 +257,11 @@ strcpy(descpr, "These creatures are usually unseen by the eyes of most, and thos
 break;
 
 case 47: // V
-strcpy(descpr, "A powerful undead. It wants to drink your blood! ");
+strcpy(descpr, "A powerful chemist. It wants to use your blood and other body fluids! ");
 break;
 
 case 48: // W
-strcpy(descpr, "This undead spirit appears as a cloud of black mist surrounding an insubstantial skeletal form. Its eyes burn bright with unholy malevolence.");
+strcpy(descpr, "This robots appears as a cloud of black mist surrounding an insubstantial skeletal form. Its eyes burn bright with unholy malevolence.");
 break;
 
 case 49: // X
@@ -275,23 +273,23 @@ strcpy(descpr, "The common dungeon yak. Covered in shaggy yak hair and bearing a
 break;
 
 case 51: // Z
-strcpy(descpr, "A corpse raised from the dead to undeath by necromancy.");
+strcpy(descpr, "A corpse raised from the dead by zombification.");
 break;
 
 case 52: // o war
-strcpy(descpr, "An armoured orc, obviously experienced in the ways of hacking other creatures apart.");
+strcpy(descpr, "An armoured terrorist, obviously experienced in the ways of hacking other creatures apart.");
 break;
 
 case 53: // K dem
-strcpy(descpr, "A kobold who has learned to summon and direct demons.");
+strcpy(descpr, "A smuggler who has learned to summon and direct mutants.");
 break;
 
 case 54: // o wiz
-strcpy(descpr, "While orcs are generally quite stupid, occasionally one of them develops an aptitude for magic.");
+strcpy(descpr, "While terrorists are generally quite stupid, occasionally one of them develops an aptitude for hacking.");
 break;
 
 case 55: // o knight
-strcpy(descpr, "A heavily armoured orc, covered in scars from many past battles.");
+strcpy(descpr, "A heavily armoured terrorist, covered in scars from many past battles.");
 break;
 
 //case 56: // worm tail
@@ -299,19 +297,19 @@ break;
 //break;
 
 case 57: // wyvern
-strcpy(descpr, "Although smaller and less formidable than true dragons, wyverns are nonetheless a foe to be reckoned with.");
+strcpy(descpr, "Although smaller and less formidable than true planes, roboplanes are nonetheless a foe to be reckoned with.");
 break;
 
 case 58: // big kobold
-strcpy(descpr, "A kobold of unusual size.");
+strcpy(descpr, "A smuggler of unusual size.");
 break;
 
 case 59: // giant eyeball
-strcpy(descpr, "A giant eyeball, with a captivating stare.");
+strcpy(descpr, "A giant camera, with a captivating stare.");
 break;
 
 case 60: // wight
-strcpy(descpr, "An ancient warrior, kept in a state of undeath by its will to live.");
+strcpy(descpr, "An ancient warrior, kept in a state of cyborg by its will to live.");
 break;
 
 case 61: // oklob plant
@@ -323,15 +321,15 @@ strcpy(descpr, "A large hairy spider with vicious mandibles, roaming the dungeon
 break;
 
 case 63: // shadow
-strcpy(descpr, "A walking undead shadow.");
+strcpy(descpr, "A walking cyborg shadow.");
 break;
 
 case 64: // hungry ghost
-strcpy(descpr, "The undead form of someone who died of starvation, this creature wants the same thing to happen to you!");
+strcpy(descpr, "The mailfunctioning medbot. Once used to heal people now they seek to damage them.");
 break;
 
 case 65: // eye of draining
-strcpy(descpr, "These hovering eyeballs are especially loathed by wizards.");
+strcpy(descpr, "These hovering cameras are especially loathed by hackers.");
 break;
 
 case 66: // butterfly
@@ -359,7 +357,7 @@ strcpy(descpr, "A huge beetle with an almost impenetrable rocky carapace.");
 break;
 
 case 72: // flying skull
-strcpy(descpr, "Unholy magic keeps a disembodied undead skull hovering above the floor. It has a nasty set of teeth.");
+strcpy(descpr, "Cybernetics keeps a disembodied cyber turrent hovering above the floor. It has a nasty set of blades.");
 break;
 
 case 73: // h hound
@@ -385,11 +383,11 @@ break;
 // 78 is fake R
 
 case 79: // GooE
-strcpy(descpr, "A levitating ball, covered in malignant eyes.");
+strcpy(descpr, "A levitating ball, covered in malignant camera lenses.");
 break;
 
 case 80: // hellion
-strcpy(descpr, "A frightful demon, covered in roaring hellfire.");
+strcpy(descpr, "A frightful mutant, covered in roaring hellfire.");
 break;
 
 case 81: // rot dev
@@ -397,23 +395,23 @@ strcpy(descpr, "A hideous decaying form.");
 break;
 
 case 82: // torm
-strcpy(descpr, "This cruel and malicious devil is covered in all manner of claws, spines and hooks.");
+strcpy(descpr, "This cruel and malicious robot is covered in all manner of claws, spines and hooks.");
 break;
 
 case 83: // reaper
-strcpy(descpr, "A skeletal form wielding a giant scythe. It has come for your soul!");
+strcpy(descpr, "A cyber form wielding a giant scythe. It has come for your soul!");
 break;
 
 case 84: // soul eater
-strcpy(descpr, "This greater demon looks like a shadow gliding through the air towards you. It radiates an intense aura of negative power.");
+strcpy(descpr, "This greater mutant looks like a shadow gliding through the air towards you. It radiates an intense aura of negative power.");
 break;
 
 case 85: // hairy
-strcpy(descpr, "A demon covered in hair. Watch out - it may have fleas!");
+strcpy(descpr, "A mutant covered in hair. Watch out - it may have fleas!");
 break;
 
 case 86: // ice devil
-strcpy(descpr, "A demon covered in glittering ice.");
+strcpy(descpr, "A mutant covered in glittering ice.");
 break;
 
 case 87: // blue devil
@@ -450,15 +448,15 @@ strcpy(descpr, "A very ugly thing. Double yuck.");
 break;
 
 case 103: //
-strcpy(descpr, "An orc wizard who draws power from Hell.");
+strcpy(descpr, "An terrorist hacker who uses destructive hacks.");
 break;
 
 case 104: // H
-strcpy(descpr, "A large creature with the hindquarters of a horse and the wings, talons and head of an eagle.");
+strcpy(descpr, "A flying large tank.");
 break;
 
 case 105: //
-strcpy(descpr, "A huge creature with the hindquarters of a lion and the wings, head and talons of a great eagle.");
+strcpy(descpr, "A giant flying tank..");
 break;
 
 case 106: // hydra
@@ -467,27 +465,27 @@ break;
 
 case 107: // skeletons
 case 108:
-strcpy(descpr, "A skeleton compelled to unlife by the exercise of necromancy.");
+strcpy(descpr, "A skeleton compelled to unlife by the exercise of cyborgization.");
 break;
 
 case 109: // hell knight
-strcpy(descpr, "A heavily armoured warrior, in league with the powers of Hell.");
+strcpy(descpr, "A heavily armoured warrior, in league with the powers of Facilities.");
 break;
 
 case 110: // necromancer
-strcpy(descpr, "A wizard who specialises in the practice of necromantic magic.");
+strcpy(descpr, "A hacker who specialises in the practice of cyborgization programming.");
 break;
 
 case 111: // wizard
-strcpy(descpr, "An evil wizard.");
+strcpy(descpr, "An evil hacker.");
 break;
 
 case 112: // orc priest
-strcpy(descpr, "A servant of the Gods of the orcs.");
+strcpy(descpr, "A servant of the employers of the terrorists.");
 break;
 
 case 113: // orc high priest
-strcpy(descpr, "An exalted servant of the Gods of the orcs");
+strcpy(descpr, "An exalted servant of the employers of the terrorists");
 break;
 
 case 114: // human
@@ -495,7 +493,7 @@ strcpy(descpr, "");
 break;
 
 case 115: // gnoll
-strcpy(descpr, "A large relative of orcs and goblins.");
+strcpy(descpr, "A large relative of bums and terrorists.");
 break;
 
 case 116: // clay golem
@@ -555,7 +553,7 @@ strcpy(descpr, "A huge lizard, with great crunching jaws.");
 break;
 
 case 130: // Spectre
-strcpy(descpr, "A hideous translucent green undead spirit.");
+strcpy(descpr, "A hideous translucent green cyber hologram.");
 break;
 
 case 131: // pulsating mass
@@ -567,7 +565,7 @@ strcpy(descpr, "A huge and very powerful dragon. Sparks crackle along its enormo
 break;
 
 case 133: // yaktaur
-strcpy(descpr, "Like a centaur, but half yak.");
+strcpy(descpr, "Like a ranger, but half yak.");
 break;
 
 case 134: // death yak
@@ -583,7 +581,7 @@ strcpy(descpr, "A gigantic humanoid figure, with grey skin almost as hard as roc
 break;
 
 case 137: // flayed ghost
-strcpy(descpr, "A hideous undead creature, with torn skin hanging from an emaciated body.");
+strcpy(descpr, "A hideous cybernitized creature, with torn skin hanging from an emaciated body.");
 break;
 
 case 138: // bumblebee
@@ -603,7 +601,7 @@ strcpy(descpr, "A normally invisible cloud of weird-looking vapour.");
 break;
 
 case 142: // ogre mage
-strcpy(descpr, "An rare ogre, skilled in the use of magic.");
+strcpy(descpr, "An rare mutant, skilled in the use of hacking.");
 break;
 
 case 143: // spiny worm
@@ -657,7 +655,7 @@ strcpy(descpr, "A stupid woolly animal, with murder in its eyes. ");
 break;
 
 case 156: // ghoul
-strcpy(descpr, "An undead creature created by a similar curse to that used in the production of the necrophage. ");
+strcpy(descpr, "An cyber creature created by a similar virus to that used in the production of the vacuum cleaner. ");
 break;
 
 case 157: // hog
@@ -673,7 +671,7 @@ strcpy(descpr, "It has a lot of legs.");
 break;
 
 case 160: // iron troll
-strcpy(descpr, "A great troll covered in armour plates of rusty iron. ");
+strcpy(descpr, "A great builder covered in armour plates of rusty iron. ");
 break;
 
 case 161: // Naga
@@ -705,7 +703,7 @@ strcpy(descpr, "A very large grey python.");
 break;
 
 case 168: // deep troll
-strcpy(descpr, "A stooped troll.");
+strcpy(descpr, "A stooped builder.");
 break;
 
 case 169: // giant blowfly
@@ -802,7 +800,7 @@ strcpy(descpr, "A weird hybrid; human from the waist up, it has a snake tail ins
 break;
 
 case 262: // orc warlord
-strcpy(descpr, "A very large and strong orc.");
+strcpy(descpr, "A very large and strong terrorist.");
 break;
 
 case 263: // deep elf soldier
@@ -817,7 +815,7 @@ case 271: // deep elf demonologist
 case 272: // deep elf annihilator
 case 273: // deep elf sorceror
 case 274: // deep elf death mage
-strcpy(descpr, "One of the race of elves which inhabits this dreary cave. ");
+strcpy(descpr, "One of the race of ninja which inhabits this dreary cave. ");
 break;
 
 
@@ -826,23 +824,23 @@ strcpy(descpr, "");
 break;*/
 
 case 282:// Ijyb
-strcpy(descpr, "A twisted goblin. ");
+strcpy(descpr, "A twisted bum. ");
 break;
 
 case 284:// blork
-strcpy(descpr, "A particularly fat and ugly orc. ");
+strcpy(descpr, "A particularly fat and ugly terrorist. ");
 break;
 
 case 287:// Erolcha
-strcpy(descpr, "A beefy ogre. ");
+strcpy(descpr, "A beefy mutant. ");
 break;
 
 case 289:// Yrug
-strcpy(descpr, "An orc. ");
+strcpy(descpr, "A terrorist. ");
 break;
 
 case 292:// Snorg
-strcpy(descpr, "A hairy troll. ");
+strcpy(descpr, "A hairy builder. ");
 break;
 
 case 306:// Xtahua
@@ -857,7 +855,7 @@ break;
 
 
 case 220:// white imp
-strcpy(descpr, "A small and mischevious minor demon. ");
+strcpy(descpr, "A small and mischevious minor drone. ");
 break;
 
 case 221: // lemure
@@ -865,27 +863,27 @@ strcpy(descpr, "A vaguely humanoid blob of putrid white flesh. ");
 break;
 
 case 222: // ufetubus
-strcpy(descpr, "A chattering and shrieking minor demon. ");
+strcpy(descpr, "A chattering and shrieking minor drone. ");
 break;
 
 case 223: // manes
-strcpy(descpr, "An ugly, twisted little minor demon. ");
+strcpy(descpr, "An ugly, twisted little minor drone. ");
 break;
 
 case 224: // midge
-strcpy(descpr, "A small flying demon. ");
+strcpy(descpr, "A small flying drone. ");
 break;
 
 case 225: // neh?
-strcpy(descpr, "A weirdly shaped demon. ");
+strcpy(descpr, "A weirdly shaped drone. ");
 break;
 
 case 226: // orange demon
-strcpy(descpr, "A bright orange demon with a venomous stinger. ");
+strcpy(descpr, "A bright orange drone with a venomous stinger. ");
 break;
 
 case 227: // hellwing
-strcpy(descpr, "A hideous skeletal demon, with wings of ancient withered skin. ");
+strcpy(descpr, "A hideous skeletal drone, with wings of ancient withered skin. ");
 break;
 
 case 228: // smoke demon
@@ -893,11 +891,11 @@ strcpy(descpr, "A writhing cloud of smoke hanging in the air. ");
 break;
 
 case 229: // ynoxinul
-strcpy(descpr, "A demon with shiny metallic scales. ");
+strcpy(descpr, "A drone with shiny metallic scales. ");
 break;
 
 case 230: // Executioner
-strcpy(descpr, "A horribly powerful demon. ");
+strcpy(descpr, "A horribly powerful drone. ");
 break;
 
 case 231: // green death
@@ -905,15 +903,15 @@ strcpy(descpr, "A bloated form covered in oozing sores and exhaling clouds of le
 break;
 
 case 232: // blue death
-strcpy(descpr, "A blue greater demon. ");
+strcpy(descpr, "A blue greater drone. ");
 break;
 
 case 233: // balrug
-strcpy(descpr, "A huge and very powerful demon, wreathed in fire and shadows. ");
+strcpy(descpr, "A huge and very powerful drone, wreathed in fire and shadows. ");
 break;
 
 case 234: // cacodemon
-strcpy(descpr, "A hideously ugly demon of rage and legendary power. ");
+strcpy(descpr, "A hideously ugly drone of rage and legendary power. ");
 break;
 
 case 235: // demonic crawler
@@ -921,7 +919,7 @@ strcpy(descpr, "A long and bloated body, supported by dozens of short legs and t
 break;
 
 case 236: // sun demon
-strcpy(descpr, "A demonic figure shining with the light and fury of the sun. ");
+strcpy(descpr, "A drone figure shining with the light and fury of the sun. ");
 break;
 
 case 237: // shadow imp
@@ -929,7 +927,7 @@ strcpy(descpr, "A small and shadowy figure. ");
 break;
 
 case 238: // shadow demon
-strcpy(descpr, "A mysterious demonic figure, constantly blurring into multiple shadows of iteself.");
+strcpy(descpr, "A mysterious drone figure, constantly blurring into multiple shadows of iteself.");
 break;
 
 case 239: // Lorocyproca
@@ -939,15 +937,15 @@ break;
 
 
 case 251: // Nemelex Xobeh
-strcpy(descpr, "A weirdly glowing figure, dancing through the twisted air of Pandemonium. ");
+strcpy(descpr, "A weirdly glowing figure, dancing through the twisted air of Bioengineering. ");
 break;
 
 case 252: // Sif Muna
-strcpy(descpr, "An ancient and strangely serene demon. It regards you coldly from the huge glowing eye in the centre of its forehead. ");
+strcpy(descpr, "An ancient and strangely serene robot. It regards you coldly from the huge glowing eye in the centre of its forehead. ");
 break;
 
 case 253: // Okawaru
-strcpy(descpr, "A violent and wrathful demon, Cerebov appears as a giant human covered in shining golden armour and wielding a huge twisted sword. ");
+strcpy(descpr, "A violent and wrathful cyborg, Cerebov appears as a giant human covered in shining golden armour and wielding a huge twisted sword. ");
 break;
 
 case 254: // Kikubaaqudgha
@@ -1001,28 +999,28 @@ case 305:// Duane
 case 307:// Norris
 case 308:// Adolf
 case 309:// Margery
-strcpy(descpr, "A human wandering the dungeons, trying to keep you away from whatever is concealed in the depths. ");
+strcpy(descpr, "A human wandering the installation, trying to keep you away from whatever is concealed in the depths. ");
 break;
 
 
 case 340: // Geryon
-strcpy(descpr, "A huge and slithery arch-demon, guarding the gates of Hell. ");
+strcpy(descpr, "A huge and slithery arch-cyborg, guarding the gates of Facilities. ");
 break;
 
 case 341: // Dispater
-strcpy(descpr, "The lord of the Iron City of Dis. ");
+strcpy(descpr, "The lord of the Iron Works. ");
 break;
 
 case 342:
-strcpy(descpr, "One of the arch-demons who dwell in the depths of Hell. ");
+strcpy(descpr, "One of the arch-cyborgs who dwell in the depths of Facilities. ");
 break;
 
 case 343:
-strcpy(descpr, "A great titan who lives in the depths of Cocytus. ");
+strcpy(descpr, "A great cyborg who lives in the depths of Cooling plants. ");
 break;
 
 case 344:
-strcpy(descpr, "A fearsome arch-fiend who rules the deathly netherworld of Tartarus. ");
+strcpy(descpr, "A fearsome arch-fiend who rules the deathly netherworld of Cyborg Labs. ");
 break;
 
 case 356:
@@ -1030,33 +1028,33 @@ strcpy(descpr, "A lich who has grown mighty over countless years.");
 break;
 
 case 360:
-strcpy(descpr, "A heavily armed and armoured guardian of the Vaults. ");
+strcpy(descpr, "A heavily armed and armoured guardian of the Storage Area. ");
 break;
 
 case 361:
-strcpy(descpr, "A charred skull floating in the air and rotating slowly. \
+strcpy(descpr, "A charred turret floating in the air and rotating slowly. \
 Mystic symbols carved into its blackened surface indicate its resistance \
 to almost any form of attack. ");
 break;
 
 case 362: // vamp knight
-strcpy(descpr, "A deadly warrior whose skills have not diminished even in undeath. ");
+strcpy(descpr, "A deadly warrior whose skills have not diminished even in science. ");
 break;
 
 case 363: // vamp mage
-strcpy(descpr, "A powerful magician whose skills have not diminished even in undeath. ");
+strcpy(descpr, "A powerful hacker whose skills have not diminished even in science. ");
 break;
 
 case 364: // shining eye
-strcpy(descpr, "A huge and strangely deformed eyeball, pulsating with light. ");
+strcpy(descpr, "A huge and strangely deformed camera, pulsating with light. ");
 break;
 
 case 365: // orb guardian
-strcpy(descpr, "A huge and glowing purple creature, created by the Orb to defend itself. ");
+strcpy(descpr, "A huge and glowing purple creature, created by the Disc to defend itself. ");
 break;
 
 case 366: // Daeva
-strcpy(descpr, "A divine agent of the Shining One. It manifests as a winged figure obscured by an aura of brilliant golden light. ");
+strcpy(descpr, "A divine agent of the Knights Templar. It manifests as a winged figure obscured by an aura of brilliant golden light. ");
 break;
 
 case 367: // spectral thing
@@ -1064,7 +1062,7 @@ strcpy(descpr, "A hideous glowing apparition.");
 break;
 
 case 368: // greater naga
-strcpy(descpr, "An unusually large and powerful naga.");
+strcpy(descpr, "An unusually large and powerful assassin.");
 break;
 
 case 369: // skeletal dragon
@@ -1080,27 +1078,27 @@ strcpy(descpr, "A large creature with a human head, the body of a lion, and the 
 break;
 
 case 372: // rotting hulk
-strcpy(descpr, "A shambling undead, related to the ghoul.");
+strcpy(descpr, "A shambling cyborg, related to the lowlife.");
 break;
 
 case 373: // guardian mummy
-strcpy(descpr, "An ancient warrior, embalmed and cursed with the ability to walk even when dead.");
+strcpy(descpr, "An ancient warrior, embalmed and cursed with the ability to walk even when cybernitized.");
 break;
 
 case 374: // greater mummy
-strcpy(descpr, "The embalmed and undead corpse of an ancient ruler.");
+strcpy(descpr, "The embalmed and cyber corpse of an ancient ruler.");
 break;
 
 case 375: // mummy priest
-strcpy(descpr, "The embalmed and undead corpse of an ancient servant of darkness.");
+strcpy(descpr, "The embalmed and cyber corpse of an ancient servant of darkness.");
 break;
 
 case 376: // centaur warrior
-strcpy(descpr, "A hybrid with the torso of a human atop the body of a large horse. It looks aggressive.");
+strcpy(descpr, "A hybrid with the torso of a human atop the body of a large machine. It looks aggressive.");
 break;
 
 case 377: // yaktaur
-strcpy(descpr, "Like a centaur, but half yak. It looks aggressive.");
+strcpy(descpr, "Like a ranger, but half yak. It looks aggressive.");
 break;
 
 case 378: // Killer Klown
@@ -1134,7 +1132,7 @@ break;
 
 
 case 385: // eye of devastation
-strcpy(descpr, "A huge eyeball, encased in a levitating globe of incandescant energy. ");
+strcpy(descpr, "A huge camera, encased in a levitating globe of incandescant energy. ");
 break;
 
 
@@ -1180,7 +1178,7 @@ strcpy(descpr, "A huge dragon, burning with hellfire. ");
 break;
 
 case 396: // boggart
-strcpy(descpr, "A twisted little sprite-goblin. Beware of its magical tricks!");
+strcpy(descpr, "A twisted little sprite-bum. Beware of its hacking tricks!");
 break;
 
 case 397: // quicksilver D
@@ -1192,7 +1190,7 @@ strcpy(descpr, "A very heavy and apparently flightless dragon.");
 break;
 
 case 399: // skeletal warrior
-strcpy(descpr, "The vicious and heavily armed skeleton of a humanoid creature, animated by unholy power.");
+strcpy(descpr, "The vicious and heavily armed skeleton of a humanoid creature, animated by cybernitization.");
 break;
 
 case 400:
@@ -1222,11 +1220,11 @@ strcpy(descpr, "A vicious red worm which swims through molten rock.");
 break;
 
 case MLAVA1: // lava fish
-strcpy(descpr, "A fish which lives in lava.");
+strcpy(descpr, "A fish which lives in radioactive waste.");
 break;
 
 case MLAVA2: // lava snake
-strcpy(descpr, "A burning red snake which rears up from pools of lava and tries to bite you.");
+strcpy(descpr, "A burning red snake which rears up from pools of radioactive waste and tries to bite you.");
 break;
 
 case MWATER0: // big fish
@@ -1429,10 +1427,10 @@ case 31:
 strcpy(descpr, "A sword with a medium length slashing blade. ");
 break;
 case 32:
-strcpy(descpr, "A terrible weapon, forged in the fires of Hell. ");
+strcpy(descpr, "A terrible weapon, forged in the fires of Facilites. ");
 break;
 case 33:
-strcpy(descpr, "A terrible weapon, woven in the depths of the inferno. ");
+strcpy(descpr, "A terrible weapon, woven in the depths of the Administrations. ");
 break;
 case 34:
 strcpy(descpr, " ");
@@ -1534,7 +1532,7 @@ strcat(descpr, "and is extremely cumbersome. ");*/
 //}
 if (item_plus >= 100 && item_id >= 1)
 {
- strcat(descpr, "It has a curse placed upon it. ");
+ strcat(descpr, "It has a virus placed upon it. ");
  item_plus -= 100;
 }
 if (item_id >= 3 && !(item_class == 0 && item_dam % 30 >= 25))
@@ -1566,18 +1564,18 @@ if (item_id < 2) break;
 switch(item_dam)
 {
   case 181: strcat(descpr, "This blessed weapon loves nothing more than to sing to its owner, whether they want it to or not. "); break;
-  case 182: strcat(descpr, "This was the favourite weapon of the Old God Trog, before he lost it one day. It induces a bloodthirsty berserker rage in anyone who uses it to strike another. "); break;
-  case 183: strcat(descpr, "This weapon carries a terrible and highly irritating curse. "); break;
+  case 182: strcat(descpr, "This was the favourite weapon of the Human Liberation Front, before they lost it one day. It induces a bloodthirsty berserker rage in anyone who uses it to strike another. "); break;
+  case 183: strcat(descpr, "This weapon carries a terrible and highly irritating virus. "); break;
   case 184: strcat(descpr, "It is rather unreliable. "); break;
-  case 185: strcat(descpr, "It is the creation of a mad God, and carries a curse which transforms anyone possessing it into a prune. Fortunately, the curse works very slowly, and one can use it briefly with no consequences worse than slightly purple skin and a few wrinkles. "); break;
-  case 186: strcat(descpr, "This truly accursed weapon is an instrument of Hell. "); break;
+  case 185: strcat(descpr, "It is the creation of a mad Corporation, and carries a virus which transforms anyone possessing it into a prune. Fortunately, the virus works very slowly, and one can use it briefly with no consequences worse than slightly purple skin and a few wrinkles. "); break;
+  case 186: strcat(descpr, "This truly accursed weapon is an instrument of Facilities. "); break;
   case 187: strcat(descpr, "This dreadful weapon is used at the user's peril. "); break;
   case 188: strcat(descpr, "Flames cover its twisted blade. "); break;
-  case 189: strcat(descpr, "This legendary item can unleash the fury of Hell. "); break;
+  case 189: strcat(descpr, "This legendary item can unleash the fury of Facilities. "); break;
   case 190: strcat(descpr, "It carries some of the powers of the arch-fiend Asmodeus. "); break;
   case 191: strcat(descpr, "It rewards the powerful with power and the meek with weakness. "); break;
   case 192: strcat(descpr, "It is almost unerringly accurate. "); break;
-  case 193: strcat(descpr, "It was the magical weapon wielded by the mighty wizard Olgreb before he met his fate somewhere within these dungeons. It grants its wielder resistance to the effects of poison and increases their ability to use venomous magic, and carries magical powers which can be invoked by one skilled in the use of magic. "); break;
+  case 193: strcat(descpr, "It was the cyber weapon wielded by the mighty hacker Olgreb before he met his fate somewhere within these dungeons. It grants its wielder resistance to the effects of poison and increases their ability to use venomous hacks, and carries cyber powers which can be invoked by one skilled in the use of hacking. "); break;
   case 194: strcat(descpr, "It is lethally vampiric. "); break;
   case 195: strcat(descpr, "Its power varies in proportion to its wielder's intelligence. Using it can be a bit risky. "); break;
 }
@@ -1593,9 +1591,9 @@ switch(spec_ench)
 {
   case 1: strcat(descpr, "It emits flame when wielded, causing extra injury to most foes and up to double damage against particularly susceptible opponents. "); break;
   case 2: strcat(descpr, "It has been specially enchanted to freeze those struck by it, causing extra injury to most foes and up to double damage against particularly susceptible opponents. "); break;
-  case 3: strcat(descpr, "It has been blessed by the Shining One to harm undead and cause great damage to the unholy creatures of Hell or Pandemonium. "); break;
+  case 3: strcat(descpr, "It has been blessed by the UNATCO to harm cyborgs and cause great damage to the unholy creatures of Facilities or Bioengineerings. "); break;
   case 4: strcat(descpr, "Occasionally upon striking a foe it will discharge some electrical energy and cause terrible harm. "); break;
-  case 5: strcat(descpr, "It is especially effective against all of orcish descent. "); break;
+  case 5: strcat(descpr, "It is especially effective against all of terrorists descent. "); break;
   case 6: strcat(descpr, "It poisons the flesh of those it strikes. "); break;
   case 7: strcat(descpr, "It protects the one who wields it against injury. "); break;
   case 8: strcat(descpr, "A truly terrible weapon, it drains the life of those it strikes. "); break;
@@ -1604,8 +1602,8 @@ switch(spec_ench)
   case 11: strcat(descpr, "It turns projectiles fired from it into bolts of fire. "); break;
   case 12: strcat(descpr, "It turns projectiles fired from it into bolts of frost. "); break;
   case 13: strcat(descpr, "It inflicts no extra harm, but heals its wielder somewhat when he or she strikes a living foe. "); break;
-  case 14: strcat(descpr, "It is a weapon blessed by Zin, and can inflict up to fourfold damage when used against the undead. "); break;
-  case 15: strcat(descpr, "In the hands of one skilled in necromantic magic it inflicts extra damage on living creatures. "); break;
+  case 14: strcat(descpr, "It is a weapon blessed by Knight Templar, and can inflict up to fourfold damage when used against the cyborgs. "); break;
+  case 15: strcat(descpr, "In the hands of one skilled in cybernitization it inflicts extra damage on living creatures. "); break;
 }
 }
 /* randart properties: */
@@ -1717,8 +1715,8 @@ case 11:
 strcpy(descpr, "A pair of gloves. ");
 break;
 case 12:
-if (item_plus2 == 1) strcpy(descpr, "A special armour made for Nagas, to wear on their tails. "); else
-if (item_plus2 == 2) strcpy(descpr, "An armour made for centaurs, to wear on their horse bodies. "); else
+if (item_plus2 == 1) strcpy(descpr, "A special armour made for Assassins, to wear on their tails. "); else
+if (item_plus2 == 2) strcpy(descpr, "An armour made for ranger, to wear on their mechanical bodies. "); else
 strcpy(descpr, "A pair of sturdy boots. ");
 break;
 case 13:
@@ -1793,7 +1791,7 @@ if (item_type != 8 && item_type != 13 && item_type != 14)
 
 if (item_plus >= 100 && item_id >= 1)
 {
- strcat(descpr, "It has a curse placed upon it. ");
+ strcat(descpr, "It has a virus placed upon it. ");
  item_plus -= 100;
 }
 if (item_id >= 3)
@@ -1833,7 +1831,7 @@ if (item_id > 1)
  case 14: strcat(descpr, "It enhances the stealth of its wearer. "); break;
  case 15: strcat(descpr, "It protects its wearer from the effects of both cold and heat. "); break; // these two are robes only.
  case 16: strcat(descpr, "It protects its wearer from the effects of negative energy. "); break;
- case 17: strcat(descpr, "It greatly increases the power of its wearer's magical spells, but is only intended for those who have very little left to learn. "); break;
+ case 17: strcat(descpr, "It greatly increases the power of its wearer's hacking programs, but is only intended for those who have very little left to learn. "); break;
  case 18: strcat(descpr, "It protects its wearer's possessions from damage and destruction. "); break;
  }
 }
@@ -1845,7 +1843,7 @@ if (get_id(3, item_type) == 0)
  strcpy(descpr, "A stick. Maybe it's magical. ");
  break;
 }
-strcpy(descpr, "A magical device which");
+strcpy(descpr, "A technological device which");
 switch (item_type)
 {
 case 0:
@@ -2006,43 +2004,43 @@ case 0:
 strcat(descpr, "A blessed fluid which heals some wounds, clears the mind, and cures diseases. If one uses it when they are at or near full health, it can also slightly repair permanent injuries. ");
 break;
 case 1:
-strcat(descpr, "A magical healing elixir, which causes wounds to close and heal almost instantly. If one uses it when they are at or near full health, it can also repair permanent injuries. ");
+strcat(descpr, "A cybernetical healing elixir, which causes wounds to close and heal almost instantly. If one uses it when they are at or near full health, it can also repair permanent injuries. ");
 break;
 case 2:
 strcat(descpr, "An enchanted beverage which speeds the actions of anyone who drinks it. ");
 break;
 case 3:
-strcat(descpr, "A magic potion which greatly increases the strength and physical power of one who drinks it. ");
+strcat(descpr, "A cyber vial which greatly increases the strength and physical power of one who drinks it. ");
 break;
 case 4:
-strcat(descpr, "A potion of beneficial mutation. ");
+strcat(descpr, "A vial of beneficial mutation. ");
 break;
 case 5:
-strcat(descpr, "A potion of beneficial mutation. ");
+strcat(descpr, "A vial of beneficial mutation. ");
 break;
 case 6:
-strcat(descpr, "A potion of beneficial mutation. ");
+strcat(descpr, "A vial of beneficial mutation. ");
 break;
 case 7:
-strcat(descpr, "A potion which confers great buoyancy on one who consumes it. ");
+strcat(descpr, "A vial which confers great buoyancy on one who consumes it. ");
 break;
 case 8:
 strcat(descpr, "A nasty poisonous liquid. ");
 break;
 case 9:
-strcat(descpr, "A potion which slows your actions. ");
+strcat(descpr, "A vial which slows your actions. ");
 break;
 case 10:
-strcat(descpr, "A potion which eliminates your control over your own body. ");
+strcat(descpr, "A vial which eliminates your control over your own body. ");
 break;
 case 11:
-strcat(descpr, "A potion which confuses your perceptions and reduces your control over your own actions. ");
+strcat(descpr, "A vial which confuses your perceptions and reduces your control over your own actions. ");
 break;
 case 12:
-strcat(descpr, "A potion which hides you from the sight of others. ");
+strcat(descpr, "A vial which hides you from the sight of others. ");
 break;
 case 13:
-strcat(descpr, "A filling potion of sludge, high in cereal fibre. ");
+strcat(descpr, "A filling vial of sludge, high in cereal fibre. ");
 break;
 case 14:
 strcat(descpr, "A noxious concoction, which can do terrible things to your body, brain and reflexes. ");
@@ -2057,22 +2055,22 @@ case 17:
 strcat(descpr, "A truly wonderful and very rare drink. ");
 break;
 case 18:
-strcat(descpr, "A valuable potion which grants a person with an infusion of magical energy. ");
+strcat(descpr, "A valuable vial which grants a person with an infusion of cybernetical energy. ");
 break;
 case 19:
-strcat(descpr, "A potion which restores the abilities of one who drinks it. ");
+strcat(descpr, "A vial which restores the abilities of one who drinks it. ");
 break;
 case 20:
-strcat(descpr, "A terribly venomous potion. ");
+strcat(descpr, "A terribly venomous vial. ");
 break;
 case 21:
-strcat(descpr, "A potion which can send one into an incoherent rage. ");
+strcat(descpr, "A vial which can send one into an incoherent rage. ");
 break;
 case 22:
-strcat(descpr, "A potion which removes some or all of any mutations which may be afflicting you. ");
+strcat(descpr, "A vial which removes some or all of any mutations which may be afflicting you. ");
 break;
 case 23:
-strcat(descpr, "A potion which does very strange things to you. ");
+strcat(descpr, "A vial which does very strange things to you. ");
 break;
 }
 break; // end potions
@@ -2080,79 +2078,79 @@ break; // end potions
 case 6:
 if (get_id(6, item_type) == 0)
 {
- strcat(descpr, "A scroll of paper covered in magical writing. ");
+ strcat(descpr, "A single-use device covered in writing. ");
  break;
 }
 switch(item_type)
 {
 case 0:
-strcat(descpr, "This useful magic scroll allows you to determine the properties of any object. ");
+strcat(descpr, "This useful cyber device allows you to determine the properties of any object. ");
 break;
 case 1:
-strcat(descpr, "Reading the words on this scroll translocates you to a random position. ");
+strcat(descpr, "Reading the words on this device translocates you to a random position. ");
 break;
 case 2:
-strcat(descpr, "This scroll causes great fear in those who see the one who reads it. ");
+strcat(descpr, "This device causes great fear in those who see the one who reads it. ");
 break;
 case 3:
-strcat(descpr, "This scroll causes a loud noise. It is not universally noted for its usefulness.");
+strcat(descpr, "This device causes a loud noise. It is not universally noted for its usefulness.");
 break;
 case 4:
-strcat(descpr, "Reading this scroll removes curses from the items you are using. ");
+strcat(descpr, "Reading this device removes curses from the items you are using. ");
 break;
 case 5:
-strcat(descpr, "This scroll allows you to detect the presence of cursed items among your possessions. ");
+strcat(descpr, "This device allows you to detect the presence of cursed items among your possessions. ");
 break;
 case 6:
-strcat(descpr, "This scroll opens a conduit to the Abyss and draws a terrible beast to this world for a limited time. ");
+strcat(descpr, "This device opens a conduit to the Abyss and draws a terrible beast to this world for a limited time. ");
 break;
 case 7:
-strcat(descpr, "This scroll places an enchantment on a weapon, making it more accurate in combat. It may fail to affect weapons already heavily enchanted. ");
+strcat(descpr, "This device places an enchantment on a weapon, making it more accurate in combat. It may fail to affect weapons already heavily enchanted. ");
 break;
 case 8:
-strcat(descpr, "This scroll places an enchantment on a piece of armour. ");
+strcat(descpr, "This device places an enchantment on a piece of armour. ");
 break;
 case 9:
-strcat(descpr, "This scroll calls on the powers of Hell to inflict great pain on any nearby creature - including you! ");
+strcat(descpr, "This device calls on the powers of Hell to inflict great pain on any nearby creature - including you! ");
 break;
 case 10:
 strcat(descpr, "Does some randomly useless thing. ");
 break;
 case 11:
-strcat(descpr, "This scroll places a curse on a weapon. ");
+strcat(descpr, "This device places a curse on a weapon. ");
 break;
 case 12:
-strcat(descpr, "This scroll places a curse on a piece of armour. ");
+strcat(descpr, "This device places a curse on a piece of armour. ");
 break;
 case 13:
-strcat(descpr, "Upon being read, this scroll causes a large explosion. ");
+strcat(descpr, "Upon being read, this device causes a large explosion. ");
 break;
 case 14:
-strcat(descpr, "This scroll allows its reader to teleport a short distance, with precise control. ");
+strcat(descpr, "This device allows its reader to teleport a short distance, with precise control. ");
 break;
 case 15:
-strcat(descpr, "Apart from a label, this scroll is blank. ");
+strcat(descpr, "Apart from a label, this device is blank. ");
 break;
 case 16:
-strcat(descpr, "This scroll reveals the nearby surroundings of one who reads it. ");
+strcat(descpr, "This device reveals the nearby surroundings of one who reads it. ");
 break;
 case 17:
-strcat(descpr, "This scroll induces an irritating disorientation. ");
+strcat(descpr, "This device induces an irritating disorientation. ");
 break;
 case 18:
-strcat(descpr, "This wonderful scroll causes the creation of an item valuable to the reader at the reader's feet. It is especially treasured by specialist magicians, as they can use it to obtain the powerful spells of their speciality. It will avoid creating some types of item if one such is already in the possession of the reader. ");
+strcat(descpr, "This wonderful device causes the creation of an item valuable to the reader at the reader's feet. It is especially treasured by specialist cyberians, as they can use it to obtain the powerful spells of their speciality. It will avoid creating some types of item if one such is already in the possession of the reader. ");
 break;
 case 19:
-strcat(descpr, "This scroll places an enchantment on a weapon, making it inflict greater damage in combat. It may fail to affect weapons already heavily enchanted. ");
+strcat(descpr, "This device places an enchantment on a weapon, making it inflict greater damage in combat. It may fail to affect weapons already heavily enchanted. ");
 break;
 case 20: // vorpalise weapon
-strcat(descpr, "This scroll enchants a weapon so as to make it far more effective at inflicting harm on its wielder's enemies. Using it on a weapon already affected by some kind of special enchantment (other than that produced by a normal scroll of enchant weapon) is not advised. ");
+strcat(descpr, "This device enchants a weapon so as to make it far more effective at inflicting harm on its wielder's enemies. Using it on a weapon already affected by some kind of special enchantment (other than that produced by a normal device of enchant weapon) is not advised. ");
 break;
 case 21:
-strcat(descpr, "This scroll restores the charges of any magical wand wielded by its reader. ");
+strcat(descpr, "This device restores the charges of any cybernetical wand wielded by its reader. ");
 break;
 case 22:
-strcat(descpr, "This scroll enchants a weapon to be far more effective in combat. Although it can be used in the creation of especially enchanted weapons, it may fail to affect those already heavily enchanted. ");
+strcat(descpr, "This device enchants a weapon to be far more effective in combat. Although it can be used in the creation of especially enchanted weapons, it may fail to affect those already heavily enchanted. ");
 break;
 }
 break;
@@ -2164,117 +2162,117 @@ if (item_dam == 201 && strlen(unrandart_descrip(1, item_class, item_type, item_p
 } else
  if (get_id(7, item_type) == 0)
 {
-strcat(descpr, "A piece of jewellery. ");
+strcat(descpr, "A piece of neuroimplant. ");
 } else
  switch(item_type)
 {
 case 0:
-strcat(descpr, "This wonderful ring greatly increases the recuperative powers of its wearer, but also considerably speeds his or her metabolism. ");
+strcat(descpr, "This wonderful chip greatly increases the recuperative powers of its wearer, but also considerably speeds his or her metabolism. ");
 break;
 case 1:
-strcat(descpr, "This ring either protects its wearer from harm or makes them more vulnerable to injury, to a degree dependent on its power. ");
+strcat(descpr, "This chip either protects its wearer from harm or makes them more vulnerable to injury, to a degree dependent on its power. ");
 break;
 case 2:
-strcat(descpr, "This ring provides protection from heat and fire. ");
+strcat(descpr, "This chip provides protection from heat and fire. ");
 break;
 case 3:
-strcat(descpr, "This ring provides protection from the effects of poisons and venom. ");
+strcat(descpr, "This chip provides protection from the effects of poisons and venom. ");
 break;
 case 4:
-strcat(descpr, "This ring provides protection from cold. ");
+strcat(descpr, "This chip provides protection from cold. ");
 break;
 case 5:
-strcat(descpr, "This ring increases or decreases the physical strength of its wearer, to a degree dependent on its power. ");
+strcat(descpr, "This chip increases or decreases the physical strength of its wearer, to a degree dependent on its power. ");
 break;
 case 6:
-strcat(descpr, "This ring increases the hand-to-hand and missile combat skills of its wearer. ");
+strcat(descpr, "This chip increases the hand-to-hand and missile combat skills of its wearer. ");
 break;
 case 7:
-strcat(descpr, "This ring allows its wearer to see those things hidden from view by magic. ");
+strcat(descpr, "This chip allows its wearer to see those things hidden from view by magic. ");
 break;
 case 8:
-strcat(descpr, "This powerful ring can be activated to hide its wearer from the view of others, but increases the speed of his or her metabolism greatly while doing so. ");
+strcat(descpr, "This powerful chip can be activated to hide its wearer from the view of others, but increases the speed of his or her metabolism greatly while doing so. ");
 break;
 case 9:
-strcat(descpr, "This accursed ring causes its wearer to hunger considerably more quickly. ");
+strcat(descpr, "This accursed chip causes its wearer to hunger considerably more quickly. ");
 break;
 case 10:
-strcat(descpr, "This ring occasionally exerts its power to randomly translocate its wearer to another place, and can be deliberately activated for the same effect. ");
+strcat(descpr, "This chip occasionally exerts its power to randomly translocate its wearer to another place, and can be deliberately activated for the same effect. ");
 break;
 case 11:
-strcat(descpr, "This ring makes its wearer either more or less capable of avoiding attacks, depending on its degree of enchantment. ");
+strcat(descpr, "This chip makes its wearer either more or less capable of avoiding attacks, depending on its degree of enchantment. ");
 break;
 case 12:
-strcat(descpr, "This ring protects its wearer from the loss of their strength, dexterity and intelligence. ");
+strcat(descpr, "This chip protects its wearer from the loss of their strength, dexterity and intelligence. ");
 break;
 case 13:
-strcat(descpr, "This ring provides energy to its wearer, so that they need eat less often. ");
+strcat(descpr, "This chip provides energy to its wearer, so that they need eat less often. ");
 break;
 case 14:
-strcat(descpr, "This ring increases or decreases the dexterity of its wearer, depending on the degree to which it has been enchanted. ");
+strcat(descpr, "This chip increases or decreases the dexterity of its wearer, depending on the degree to which it has been enchanted. ");
 break;
 case 15:
-strcat(descpr, "This ring increases or decreases the mental ability of its wearer, depending on the degree to which it has been enchanted. ");
+strcat(descpr, "This chip increases or decreases the mental ability of its wearer, depending on the degree to which it has been enchanted. ");
 break;
 case 16:
-strcat(descpr, "This ring increases the ability of its wearer to use magical spells. ");
+strcat(descpr, "This chip increases the ability of its wearer to use magical spells. ");
 break;
 case 17:
-strcat(descpr, "This ring increases its wearer's reserves of magical power. ");
+strcat(descpr, "This chip increases its wearer's reserves of magical power. ");
 break;
 case 18:
-strcat(descpr, "This ring causes its wearer to hover above the floor. ");
+strcat(descpr, "This chip causes its wearer to hover above the floor. ");
 break;
 case 19:
-strcat(descpr, "This blessed ring protects the life-force of its wearer from negative energy, making them immune to the draining effects of undead and necromantic magic. ");
+strcat(descpr, "This blessed chip protects the life-force of its wearer from negative energy, making them immune to the draining effects of undead and necromantic magic. ");
 break;
 case 20:
-strcat(descpr, "This ring increases its wearer's resistance to hostile enchantments. ");
+strcat(descpr, "This chip increases its wearer's resistance to hostile enchantments. ");
 break;
 case 21:
-strcat(descpr, "This ring brings its wearer more in contact with the powers of fire. He or she gains resistance to heat and can use fire magic more effectively, but becomes more vulnerable to the effects of cold. ");
+strcat(descpr, "This chip brings its wearer more in contact with the powers of fire. He or she gains resistance to heat and can use fire magic more effectively, but becomes more vulnerable to the effects of cold. ");
 break;
 case 22:
-strcat(descpr, "This ring brings its wearer more in contact with the powers of cold and ice. He or she gains resistance to cold and can use ice magic more effectively, but becomes more vulnerable to the effects of fire. ");
+strcat(descpr, "This chip brings its wearer more in contact with the powers of cold and ice. He or she gains resistance to cold and can use ice magic more effectively, but becomes more vulnerable to the effects of fire. ");
 break;
 case 23:
-strcat(descpr, "This ring allows its wearer to control the destination of any teleportation, although without perfect accuracy. Trying to teleport into a solid object will result in a random teleportation, at least in the case of a normal teleportation. ");
+strcat(descpr, "This chip allows its wearer to control the destination of any teleportation, although without perfect accuracy. Trying to teleport into a solid object will result in a random teleportation, at least in the case of a normal teleportation. ");
 break;
 case 35:
-strcat(descpr, "This amulet enables its wearer to attempt to enter a state of berserk rage, and increases their chance of successfully doing so. ");
+strcat(descpr, "This implant enables its wearer to attempt to enter a state of berserk rage, and increases their chance of successfully doing so. ");
 break;
 case 36:
-strcat(descpr, "This amulet protects its wearer from some magically induced forms of slowness, and increases the duration of enchantments which speed his or her actions. ");
+strcat(descpr, "This implant protects its wearer from some magically induced forms of slowness, and increases the duration of enchantments which speed his or her actions. ");
 break;
 case 37:
-strcat(descpr, "This amulet protects its wearer from some forms of mental confusion. ");
+strcat(descpr, "This implant protects its wearer from some forms of mental confusion. ");
 break;
 case 38:
-strcat(descpr, "This amulet repels some of the attacks of creatures which have been magically summoned. ");
+strcat(descpr, "This implant repels some of the attacks of creatures which have been magically summoned. ");
 break;
 case 39:
-strcat(descpr, "This amulet protects the armour and weaponry of its wearer from corrosion caused by acids, although not infallibly so. ");
+strcat(descpr, "This implant protects the armour and weaponry of its wearer from corrosion caused by acids, although not infallibly so. ");
 break;
 case 40:
-strcat(descpr, "This amulet allows its wearer to consume meat in various states of decay without suffering unduly as a result. Poisonous or cursed flesh is still not recommended. ");
+strcat(descpr, "This implant allows its wearer to consume meat in various states of decay without suffering unduly as a result. Poisonous or cursed flesh is still not recommended. ");
 break;
 case 41:
-strcat(descpr, "This amulet protects some of the possessions of its wearer from outright destruction, but not infallibly so. ");
+strcat(descpr, "This implant protects some of the possessions of its wearer from outright destruction, but not infallibly so. ");
 break;
 case 42:
-strcat(descpr, "Should the wearer of this amulet be levitated by magical means, he or she will be able to exercise some control over the resulting motion. This allows the descent of staircases and the retrieval of items lying on the ground, for example, but does not deprive the wearer of the benefits of levitation. ");
+strcat(descpr, "Should the wearer of this implant be levitated by magical means, he or she will be able to exercise some control over the resulting motion. This allows the descent of staircases and the retrieval of items lying on the ground, for example, but does not deprive the wearer of the benefits of levitation. ");
 break;
 case 43:
-strcat(descpr, "This amulet makes its wearer less accurate in hand combat. ");
+strcat(descpr, "This implant makes its wearer less accurate in hand combat. ");
 break;
 case 44:
-strcat(descpr, "This amulet protects its wearer from mutations, although not infallibly so. ");
+strcat(descpr, "This implant protects its wearer from mutations, although not infallibly so. ");
 break;
 
 }
 if (item_id > 0 && item_plus >= 100)
 {
-strcat(descpr, "It has a curse placed upon it. ");
+strcat(descpr, "It has a virus placed upon it. ");
 }
 /* randart properties: */
 if (item_id >= 2 && (item_dam == 200 || item_dam == 201))
@@ -2287,12 +2285,12 @@ case 10: // books
 switch (item_type)
 {
 case 35:
-strcat(descpr, "An extremely powerful but unpredictable book of magic. ");
+strcat(descpr, "An extremely powerful but unpredictable archive of hacking. ");
 break;
 case 41:
-strcat(descpr, "A valuable book of magic which allows one to practise a certain skill greatly. As it is used, it gradually disintegrates and will eventually fall apart. ");
+strcat(descpr, "A valuable archive of hacking which allows one to practise a certain skill greatly. As it is used, it gradually disintegrates and will eventually fall apart. ");
 break;
-default: strcat(descpr, "A book of magic spells. Beware, for some of the more powerful grimoires are not to be toyed with. "); break;
+default: strcat(descpr, "A archive of hacking programs. Beware, for some of the more powerful grimoires are not to be toyed with. "); break;
 }
 break;
 
@@ -2306,66 +2304,66 @@ break;
 switch(item_type)
 {
 case 0:
-strcat(descpr, "This staff increases the magical proficiency of its wielder by a considerable degree, increasing the power of their spells. ");
+strcat(descpr, "This ROM increases the magical proficiency of its wielder by a considerable degree, increasing the power of their programs. ");
 break;
 case 1:
-strcat(descpr, "This staff provides a reservoir of magical power to its wielder. ");
+strcat(descpr, "This ROM provides a reservoir of magical power to its wielder. ");
 break;
 case 2:
-strcat(descpr, "This staff increases the power of fire spells cast by its wielder, and protects him or her from the effects of heat and fire. ");
+strcat(descpr, "This ROM increases the power of fire programs cast by its wielder, and protects him or her from the effects of heat and fire. ");
 break;
 case 3:
-strcat(descpr, "This staff increases the power of ice spells cast by its wielder, and protects him or her from the effects of cold. ");
+strcat(descpr, "This ROM increases the power of ice programs cast by its wielder, and protects him or her from the effects of cold. ");
 break;
 case 4:
-strcat(descpr, "This staff increases the power of poisoning spells cast by its wielder, and protects him or her from the effects of poison. ");
+strcat(descpr, "This ROM increases the power of poisoning programs cast by its wielder, and protects him or her from the effects of poison. ");
 break;
 case 5:
-strcat(descpr, "This staff allows its wielder to cast magical spells without hungering as a result. ");
+strcat(descpr, "This ROM allows its wielder to cast magical programs without hungering as a result. ");
 break;
 case 6:
-strcat(descpr, "This staff increases the power of necromantic spells cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of necromantic programs cast by its wielder. ");
 break;
 case 7:
-strcat(descpr, "This staff increases the power of conjurations cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of conjurations cast by its wielder. ");
 break;
 case 8:
-strcat(descpr, "This staff increases the power of enchantments cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of enchantments cast by its wielder. ");
 break;
 case 9:
-strcat(descpr, "This staff increases the power of summonings cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of summonings cast by its wielder. ");
 break;
 case 10:
-strcat(descpr, "This holy spell staff allows its wielder to smite foes from afar. ");
+strcat(descpr, "This holy program ROM allows its wielder to smite foes from afar. ");
 break;
 case 11:
-strcat(descpr, "This spell staff contains spells of summoning. ");
+strcat(descpr, "This program ROM contains programs of summoning. ");
 break;
 case 16:
-strcat(descpr, "This spell staff contains spells designed to repel one's enemies. ");
+strcat(descpr, "This program ROM contains programs designed to repel one's enemies. ");
 break;
 case 17:
-strcat(descpr, "This spell staff contains spells which reveal various aspects of an explorer's surroundings to them. ");
+strcat(descpr, "This program ROM contains programs which reveal various aspects of an explorer's surroundings to them. ");
 break;
 
 case 25:
-strcat(descpr, "This staff increases the power of air spells cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of air programs cast by its wielder. ");
 break;
 case 26:
-strcat(descpr, "This staff increases the power of earth spells cast by its wielder. ");
+strcat(descpr, "This ROM increases the power of earth programs cast by its wielder. ");
 break;
 case 27:
-strcat(descpr, "This staff allows its caster to channel ambient magical energy for his or her own purposes. ");
+strcat(descpr, "This ROM allows its caster to channel ambient magical energy for his or her own purposes. ");
 break;
 
 
 default:
-strcat(descpr, "This spell staff contains spells of mayhem and destruction. ");
+strcat(descpr, "This program ROM contains programs of mayhem and destruction. ");
 break;
 }
 if (item_type >= 10 && item_type < 25)
 {
- strcat(descpr, "Casting a spell from it consumes no food, and will not fail. ");
+ strcat(descpr, "Running a program from it consumes no food, and will not fail. ");
 }
 strcat(descpr, "$Damage rating: 7 $Accuracy rating: +6 $Speed multiplier (x10): +12");
 
@@ -2395,10 +2393,10 @@ case 0:
  case 8:
  case 15:
  case 16:
- case 9: strcat(descpr, "A deck of cards. "); break;
+ case 9: strcat(descpr, "A nanite construction kit. "); break;
  case 11: strcat(descpr, "A small black box. I wonder what's inside? "); break;
  case 13: strcat(descpr, "A grey disc. "); break;
- case 17: strcat(descpr, "An altar to Nemelex Xobeh, built for easy assembly and disassembly. Invoke it to place on a clear patch of floor, then pick it up again when you've finished. "); break;
+ case 17: strcat(descpr, "An terminal to Triads, built for easy assembly and disassembly. Invoke it to place on a clear patch of floor, then pick it up again when you've finished. "); break;
  }
 break;
 
@@ -2652,7 +2650,7 @@ void describe_spell(int spelled)
 
    strcpy(descpr, "");
 
-strcat(descpr, "This spell");
+strcat(descpr, "This program");
 switch(spelled)
 {
 case 0:
@@ -3065,7 +3063,7 @@ strcat(descpr, ". ");
 break;
 */
 default:
-strcpy(descpr, "This spell apparently does not exist. Casting it may therefore be unwise. ");
+strcpy(descpr, "This program apparently does not exist. Casting it may therefore be unwise. ");
 break;
 
 }

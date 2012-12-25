@@ -51,7 +51,7 @@ char dump_char(char show_prices, char fname [30])
  		strcpy(dmp [i], "");
 	}
 
-	strcpy(dmp [lin], " Dungeon Crawl version "VERSION" character file.");
+	strcpy(dmp [lin], " Cybercrawl version "VERSION" character file.");
     lin += 2;
 
 
@@ -130,7 +130,7 @@ char dump_char(char show_prices, char fname [30])
  		}
 
 	}
-	strcat(dmp [lin], "          Magic Points : ");
+	strcat(dmp [lin], "         Energy Points : ");
 	itoa(you[0].ep, st_prn, 10);
 	strcat(dmp [lin], st_prn);
 	if (you[0].ep < you[0].ep_max)
@@ -161,11 +161,11 @@ char dump_char(char show_prices, char fname [30])
 
 	if (you[0].level_type == 3)
  	{
-  		strcat(dmp [lin], "in Pandemonium");
+  		strcat(dmp [lin], "in Bioengineerings");
  	}
  	else if (you[0].level_type == 2)
  	{
-  		strcat(dmp [lin], "in the Abyss");
+  		strcat(dmp [lin], "in the Dump");
  	}
 	else if (you[0].level_type == 1)
  	{
@@ -173,27 +173,27 @@ char dump_char(char show_prices, char fname [30])
  	}
  	else if (you[0].where_are_you == 1)
  	{
- 		strcat(dmp [lin], "in Dis");
+ 		strcat(dmp [lin], "in Iron works");
  	}
  	else if (you[0].where_are_you == 2)
  	{
-   		strcat(dmp [lin], "in Gehenna");
+   		strcat(dmp [lin], "in Refuelings");
  	}
 	else if (you[0].where_are_you == 3)
  	{
-   		strcat(dmp [lin], "in the Vestibule of Hell");
+   		strcat(dmp [lin], "in the Lobby");
  	}
  	else if (you[0].where_are_you == 4)
  	{
- 	  	strcat(dmp [lin], "in Cocytus");
+ 	  	strcat(dmp [lin], "in Cooling plants");
  	}
  	else if (you[0].where_are_you == 5)
  	{
-   		strcat(dmp [lin], "in Tartarus");
+   		strcat(dmp [lin], "in Cyborg research labs");
  	}
 	else if (you[0].where_are_you == 6)
  	{
-   		strcat(dmp [lin], "in the Inferno");
+   		strcat(dmp [lin], "in the Administrations");
  	}
  	else if (you[0].where_are_you == 7)
  	{
@@ -201,7 +201,7 @@ char dump_char(char show_prices, char fname [30])
  	}
  	else if (you[0].where_are_you == 10)
  	{
-   		strcat(dmp [lin], "in the Mines");
+   		strcat(dmp [lin], "in the Terrorist centre");
  	}
  	else if (you[0].where_are_you == 11)
  	{
@@ -209,31 +209,31 @@ char dump_char(char show_prices, char fname [30])
  	}
  	else if (you[0].where_are_you == 12)
  	{
-   		strcat(dmp [lin], "in the Lair");
+   		strcat(dmp [lin], "in the Biodome");
  	}
  	else if (you[0].where_are_you == 13)
  	{
-   		strcat(dmp [lin], "in the Slime Pits");
+   		strcat(dmp [lin], "in the Waste Pits");
  	}
  	else if (you[0].where_are_you == 14)
  	{
-   		strcat(dmp [lin], "in the Vaults");
+   		strcat(dmp [lin], "in the Storage Area");
  	}
  	else if (you[0].where_are_you == 15)
  	{
-   		strcat(dmp [lin], "in the Crypt");
+   		strcat(dmp [lin], "in the Cyborg Manufactory");
  	}
  	else if (you[0].where_are_you == 16)
  	{
-   		strcat(dmp [lin], "in the Hall of Blades");
+   		strcat(dmp [lin], "in the Armory");
  	}
  	else if (you[0].where_are_you == 17)
  	{
-   		strcat(dmp [lin], "in the Hall of Zot");
+   		strcat(dmp [lin], "in the Hall of Alice");
  	}
  	else if (you[0].where_are_you == 18)
  	{
-   		strcat(dmp [lin], "in the Ecumenical Temple");
+   		strcat(dmp [lin], "in the Terminal Hub");
  	}
  	else if (you[0].where_are_you == 19)
  	{
@@ -241,15 +241,15 @@ char dump_char(char show_prices, char fname [30])
  	}
  	else if (you[0].where_are_you == 20)
  	{
-   		strcat(dmp [lin], "in the Elven Halls");
+   		strcat(dmp [lin], "in the Ninja Palace");
  	}
  	else if (you[0].where_are_you == 21)
  	{
-   		strcat(dmp [lin], "in the Tomb");
+   		strcat(dmp [lin], "in the Cyborg Hub");
  	}
  	else if (you[0].where_are_you == 22)
  	{
-   		strcat(dmp [lin], "in the Swamp");
+   		strcat(dmp [lin], "in the Greenhouse");
  	}
   	else
   	{
@@ -267,7 +267,7 @@ char dump_char(char show_prices, char fname [30])
 
 	if (you[0].religion != GOD_NO_GOD)
 	{
- 		strcpy(dmp [lin], "You worship ");
+ 		strcpy(dmp [lin], "You work for ");
  		strcat(dmp [lin], god_name(you[0].religion));
  		strcat(dmp [lin], ".");
  		lin ++;
@@ -300,7 +300,7 @@ char dump_char(char show_prices, char fname [30])
   				strcat(dmp [lin], " is extremely pleased with you.");
   			} else
   			{
-	  			strcat(dmp [lin], " is exalted by your worship.");
+	  			strcat(dmp [lin], " is exalted by your work.");
 			}
 	  		lin ++;
  		}
@@ -408,16 +408,16 @@ char dump_char(char show_prices, char fname [30])
 				case 0: strcpy(dmp [lin], "Hand weapons"); break;
 				case 1: strcpy(dmp [lin], "Missiles"); break;
 				case 2: strcpy(dmp [lin], "Armour"); break;
-				case 3: strcpy(dmp [lin], "Magical devices"); break;
+				case 3: strcpy(dmp [lin], "Technological devices"); break;
 				case 4: strcpy(dmp [lin], "Comestibles"); break;
-		      	case 5: strcpy(dmp [lin], "Books"); break;
-				case 6: strcpy(dmp [lin], "Scrolls"); break;
-				case 7: strcpy(dmp [lin], "Jewellery"); break;
-				case 8: strcpy(dmp [lin], "Potions"); break;
+		      	case 5: strcpy(dmp [lin], "Program archives"); break;
+				case 6: strcpy(dmp [lin], "Single-use devices"); break;
+				case 7: strcpy(dmp [lin], "Brain implants"); break;
+				case 8: strcpy(dmp [lin], "Vials"); break;
 				case 9: strcpy(dmp [lin], "Gems"); break;
-			   	case 10: strcpy(dmp [lin], "Books"); break;
-			   	case 11: strcpy(dmp [lin], "Magical staves"); break;
-	   			case 12: strcpy(dmp [lin], "Orbs of Power"); break;
+			   	case 10: strcpy(dmp [lin], "Program archives"); break;
+			   	case 11: strcpy(dmp [lin], "ROM units"); break;
+	   			case 12: strcpy(dmp [lin], "Discs of Power"); break;
 	   			case 13: strcpy(dmp [lin], "Miscellaneous"); break;
    				case 14: strcpy(dmp [lin], "Carrion"); break;
 			}
@@ -453,9 +453,9 @@ char dump_char(char show_prices, char fname [30])
 
 					if (j == you[0].equip [EQ_WEAPON]) strcat(dmp [lin], " (weapon)");
 					if (j == you[0].equip [EQ_BODY_ARMOUR] || j == you[0].equip [EQ_CLOAK] || j == you[0].equip [EQ_HELMET] || j == you[0].equip [EQ_GLOVES] || j == you[0].equip [EQ_BOOTS] || j == you[0].equip [EQ_SHIELD]) strcat(dmp [lin], " (worn)");
-					if (j == you[0].equip [EQ_LEFT_RING]) strcat(dmp [lin], " (left hand)");
-					if (j == you[0].equip [EQ_RIGHT_RING]) strcat(dmp [lin], " (right hand)");
-					if (j == you[0].equip [EQ_AMULET]) strcat(dmp [lin], " (neck)");
+					if (j == you[0].equip [EQ_LEFT_RING]) strcat(dmp [lin], " (left hemisphere)");
+					if (j == you[0].equip [EQ_RIGHT_RING]) strcat(dmp [lin], " (right hemisphere)");
+					if (j == you[0].equip [EQ_AMULET]) strcat(dmp [lin], " (vertebra)");
 
 					if (show_prices == 1)
 					{
@@ -505,16 +505,16 @@ char dump_char(char show_prices, char fname [30])
 
 	if (you[0].spell_levels == 1)
 	{
-		strcpy(dmp [lin], "You have one spell level left.");
+		strcpy(dmp [lin], "You have one program slot left.");
 	} else if (you[0].spell_levels == 0)
 	{
-		strcpy(dmp [lin], "You cannot memorise any spells.");
+		strcpy(dmp [lin], "You cannot install any programs.");
 	} else
 	{
 		strcpy(dmp [lin], "You have ");
  		itoa(you[0].spell_levels, strng, 10);
  		strcat(dmp [lin], strng);
- 		strcat(dmp [lin], " spell levels left.");
+ 		strcat(dmp [lin], " program slots left.");
 	}
 
 	lin += 1;
@@ -522,12 +522,12 @@ char dump_char(char show_prices, char fname [30])
 
 	if (you[0].spell_no == 0)
 	{
- 		strcpy(dmp [lin], "You don't know any spells.");
+ 		strcpy(dmp [lin], "You don't have any program installed.");
  		lin ++;
  		goto finished_spells;
 	}
 
-	strcpy(dmp [lin], "You know the following spells:");
+	strcpy(dmp [lin], "You have the following programs:");
 	lin++;
 
 	for (j = 0; j < 25; j ++)

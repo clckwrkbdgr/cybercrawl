@@ -54,18 +54,18 @@ char *mutation_descrip [] [3] =
 {"You are dopey (Int -", "", ""},
 // 20
 {"You are clumsy (Dex -", "", ""},
-{"You can control translocations.", "You can control translocations.", "You can control translocations."},
+{"You can control maintenance equipment.", "You can control maintenance equipment.", "You can control maintenance equipment."},
 {"Space occasionally distorts in your vicinity.", "Space sometimes distorts in your vicinity.", "Space frequently distorts in your vicinity."},
-{"You are resistant to magic.", "You are highly resistant to magic.", "You are extremely resistant to the effects of magic."},
+{"You are resistant to hacking.", "You are highly resistant to hacking.", "You are extremely resistant to the effects of hacking."},
 {"You cover the ground very quickly.", "You cover the ground very quickly.", "You cover the ground very quickly."},
 {"You have supernaturally acute eyesight.", "You have supernaturally acute eyesight.", "You have supernaturally acute eyesight."},
 {"Armour fits poorly on your deformed body.", "Armour fits poorly on your badly deformed body.", "Armour fits poorly on your hideously deformed body."},
-{"You can teleport at will.", "You are good at teleporting at will.", "You can teleport instantly at will."},
-{"You can spit poison.", "You can spit poison.", "You can spit poison."},
+{"You can crawl through ventilation at will.", "You are good at ventilation crawling at will.", "You can crawl through ventilation instantly at will."},
+{"You can shot poison.", "You can shot poison.", "You can shot poison."},
 {"You can sense your immediate surroundings.", "You can sense your surroundings.", "You can sense a large area of your surroundings."},
 // 30
-{"You can breathe flames.", "You can breathe fire.", "You can breathe blasts of fire."},
-{"You can translocate small distances instantaneously.", "You can translocate small distances instantaneously.", "You can translocate small distances instantaneously."},
+{"You can shot flames.", "You can shot fire.", "You can shot blasts of fire."},
+{"You can jump small distances instantaneously.", "You can jump small distances instantaneously.", "You can jump small distances instantaneously."},
 {"You have a pair of small horns on your head.", "You have a pair of horns on your head.", "You have a pair of large horns on your head."},
 {"Your muscles are strong (Str +1), but stiff (Dex -1).", "Your muscles are very strong (Str +2), but stiff (Dex -2).", "Your muscles are extremely strong (Str +3), but stiff (Dex -3)."},
 {"Your muscles are flexible (Dex +1), but weak (Str -1).", "Your muscles are very flexible (Dex +2), but weak (Str -2).", "Your muscles are extremely flexible (Dex +3), but weak (Str -3)."},
@@ -79,22 +79,22 @@ char *mutation_descrip [] [3] =
 {"You are frail (-10 percent hp).", "You are very frail (-20 percent hp).", "You are extremely frail (-30 percent hp)."},
 {"You are robust (+10 percent hp).", "You are very robust (+20 percent hp).", "You are extremely robust (+30 percent hp)."},
 
-{"You are immune to unholy pain and torment.", "", ""},
-{"You are immune to negative energy.", "", ""},
-{"You can summon minor demons to your aid.", "", ""}, /* Use find_spell in files.cc to avoid duplication */
-{"You can summon demons to your aid.", "", ""},
-{"You can hurl blasts of hellfire.", "", ""},
+{"You are immune to neurogical damage.", "", ""},
+{"You are immune to corrupt data flows.", "", ""},
+{"You can summon minor cyborgs to your aid.", "", ""}, /* Use find_spell in files.cc to avoid duplication */
+{"You can summon biomutants to your aid.", "", ""},
+{"You can shot blasts of hellfire.", "", ""},
 {"You can call on the torments of Hell.", "", ""},
-{"You can raise the dead to walk for you.", "", ""},
+{"You can cybernitize the dead to walk for you.", "", ""},
 // 50
-{"You can control demons.", "", ""},
-{"You can travel to (but not from) Pandemonium at will.", "", ""},
+{"You can control mutants.", "", ""},
+{"You can travel to (but not from) Bioengineerings at will.", "", ""},
 {"You can draw strength from death and destruction.", "", ""},
-{"You can channel magical energy from Hell.", "", ""}, /* Not worshippers of Vehumet */
+{"You can channel energy from Facilities.", "", ""}, /* Not worshippers of Vehumet */
 {"You can drain life in unarmed combat.", "", ""},
-{"You can throw forth the flames of Gehenna.", "", ""}, /* Not conjurers/worshippers of Makhleb */
-{"You can throw forth the frost of Cocytus.", "", ""},
-{"You can invoke the powers of Tartarus to smite your living foes.", "", ""},
+{"You can throw forth the flames of Refuelings.", "", ""}, /* Not conjurers/worshippers of Makhleb */
+{"You can throw forth the frost of Cooling Plants.", "", ""},
+{"You can invoke the powers of Cyborg Researchs to smite your living foes.", "", ""},
 {"", "", ""},
 {"", "", ""},
 // 60
@@ -174,13 +174,13 @@ char *gain_mutation [] [3] =
 {"You feel a terrifying power at your call.", "", ""},
 {"You feel an affinity for the dead.", "", ""},
 // 50
-{"You feel an affinity for all demonkind.", "", ""},
+{"You feel an affinity for all biomutants.", "", ""},
 {"You feel something pulling you to a strange and terrible place.", "", ""},
 {"You feel hungry for death.", "", ""},
-{"You feel a flux of magical energy.", "", ""},
+{"You feel a flux of energy.", "", ""},
 {"Your skin tingles in a strangely unpleasant way.", "", ""},
-{"You smell the fires of Gehenna.", "", ""},
-{"You feel the icy cold of Cocytus chill your soul.", "", ""},
+{"You smell the fires of fuel.", "", ""},
+{"You feel the icy cold of coolings chill your soul.", "", ""},
 {"A shadow passes over the world around you.", "", ""},
 {"", "", ""},
 {"", "", ""},
@@ -227,7 +227,7 @@ char *lose_mutation [] [3] =
 {"You feel agile.", "You feel agile.", "You feel agile."},
 {"You feel random.", "You feel uncontrolled.", "You feel uncontrolled."},
 {"You feel stable.", "You feel stable.", "You feel stable."},
-{"You feel less resistant to magic.", "You feel less resistant to magic.", "You feel vulnerable to magic again."},
+{"You feel less resistant to hacking.", "You feel less resistant to hacking.", "You feel vulnerable to magic hacking."},
 {"You feel sluggish.", "You feel sluggish.", "You feel sluggish."},
 {"Your vision seems duller.", "Your vision seems duller.", "Your vision seems duller."},
 {"Your body's shape seems more normal.", "Your body's shape seems slightly more normal.", "Your body's shape seems slightly more normal."},
@@ -918,7 +918,7 @@ void demonspawn(void)
 
  you[0].attribute [ATTR_NUM_DEMONIC_POWERS] ++;
 
- mpr("Your demonic ancestry asserts itself...");
+ mpr("Your genetical engineering ancestry asserts itself...");
 
  if (you[0].xl <= 9)
  {

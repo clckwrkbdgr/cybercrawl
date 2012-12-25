@@ -142,7 +142,7 @@ switch(which_trans)
  return 1;
 
  case TRAN_DRAGON: /* also AC + 7, ev - 3, -1 * res_cold, 2 * res_fire */
- mpr("You turn into a fearsome dragon!");
+ mpr("You turn into a fearsome dragon lizard!");
  remove_equipment(rem_stuff);
  you[0].attribute [ATTR_TRANSFORMATION] = TRAN_DRAGON;
  you[0].duration [DUR_TRANSFORMATION] = 20 + random2(pow) + random2(pow);
@@ -157,10 +157,10 @@ switch(which_trans)
  case TRAN_LICH: /* also AC + 3, 1 * res_cold, prot_life, res_poison, is_undead, res_magic, drain attack (if empty-handed) */
  if (you[0].deaths_door != 0)
  {
-  mpr("The transformation conflicts with an enchantment already in effect.");
+  mpr("The transformation conflicts with an program already in effect.");
   return 0;
  }
- mpr("Your body is suffused with negative energy!");
+ mpr("Your cyberbrain is suffused with corrupted data!");
  /* no remove_equip */
  you[0].attribute [ATTR_TRANSFORMATION] = TRAN_LICH;
  you[0].duration [DUR_TRANSFORMATION] = 20 + random2(pow) + random2(pow);

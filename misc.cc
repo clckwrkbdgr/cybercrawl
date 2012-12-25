@@ -448,7 +448,7 @@ if (you[0].burden_state == 5)
 
 if (you[0].your_level == 0)
 {
- mpr("Are you sure you want to leave the Dungeon?");
+ mpr("Are you sure you want to leave the Installation?");
  char kein = get_ch();
  if (kein != 'y' && kein != 'Y')
  {
@@ -481,7 +481,7 @@ you[0].prev_targ = MHITNOT;
 
 if (you[0].where_are_you == 3)
 {
- mpr("Thank you for visiting Hell. Please come again soon.");
+ mpr("Thank you for visiting Facilities. Please come again soon.");
  you[0].where_are_you = 0;
  stair_find = 69;
 }
@@ -503,26 +503,26 @@ switch(stair_find)
  case 134:
  case 137:
  case 138:
- mpr("Welcome back to the Dungeon!");
+ mpr("Welcome back to the Installation!");
  you[0].where_are_you = 0;
  break;
  case 133:
  case 139:
  case 142:
- mpr("Welcome back to the Lair of Beasts!");
+ mpr("Welcome back to the Biodome!");
  you[0].where_are_you = 12;
  break;
  case 135:
- mpr("Welcome back to the Vaults!");
+ mpr("Welcome back to the Storage Area!");
  you[0].where_are_you = 14;
  break;
  case 141:
  case 136:
- mpr("Welcome back to the Crypt!");
+ mpr("Welcome back to the Cyborg Manufactory!");
  you[0].where_are_you = 15;
  break;
  case 140:
- mpr("Welcome back to the Orcish Mines!");
+ mpr("Welcome back to the Terrorists Lair!");
  you[0].where_are_you = 10;
  break;
 }
@@ -637,7 +637,7 @@ if (stair_find == 117)
  {
   if (you[0].inv_class [i] == OBJ_MISCELLANY && you[0].inv_type [i] == MISC_RUNE_OF_ZOT) goto out_of_rune;
  }
- mpr("You need a Rune to enter this staircase.");
+ mpr("You need a keycard to enter this staircase.");
  return;
 }
 
@@ -656,7 +656,7 @@ you[0].prev_targ = MHITNOT;
 if (grd [you[0].x_pos] [you[0].y_pos] == 69)
 {
  you[0].where_are_you = 3; /* go to hell! */
- strcpy(info, "Welcome to Hell!");
+ strcpy(info, "Welcome to Facilities!");
  mpr(info);
  strcpy(info, "Please enjoy your stay.");
  mpr(info);
@@ -668,59 +668,59 @@ if ((grd [you[0].x_pos] [you[0].y_pos] >= 92 && grd [you[0].x_pos] [you[0].y_pos
 {
  switch(grd [you[0].x_pos] [you[0].y_pos])
  {
-  case 92: strcpy(info, "Welcome to the Iron City of Dis!");
+  case 92: strcpy(info, "Welcome to the Iron Works!");
   you[0].where_are_you = 1;
   you[0].your_level = 26;
   break;
-  case 93: strcpy(info, "Welcome to Gehenna!");
+  case 93: strcpy(info, "Welcome to Refueling Base!");
   you[0].where_are_you = 2;
   you[0].your_level = 26;
   break;
-  case 94: strcpy(info, "Welcome to Cocytus!");
+  case 94: strcpy(info, "Welcome to Cooling Plants!");
   you[0].where_are_you = 4;
   you[0].your_level = 26;
   break;
-  case 95: strcpy(info, "Welcome to Tartarus!");
+  case 95: strcpy(info, "Welcome to Cyborg Research Labs!");
   you[0].where_are_you = 5;
   you[0].your_level = 26;
   break;
-  case 110: strcpy(info, "Welcome to the Orcish Mines!");
+  case 110: strcpy(info, "Welcome to the Terrorists Lair!");
   you[0].where_are_you = 10;
   break;
   case 111: strcpy(info, "You hear a buzzing sound coming from all directions.");
   you[0].where_are_you = 11;
   break;
-  case 112: strcpy(info, "Welcome to the Lair of Beasts!");
+  case 112: strcpy(info, "Welcome to the Biodome!");
   you[0].where_are_you = 12;
   break;
-  case 113: strcpy(info, "Welcome to the Pits of Slime!");
+  case 113: strcpy(info, "Welcome to the Pits of Waste!");
   you[0].where_are_you = 13;
   break;
-  case 114: strcpy(info, "Welcome to the Vaults!");
+  case 114: strcpy(info, "Welcome to the Storage Area!");
   you[0].where_are_you = 14;
   break;
-  case 115: strcpy(info, "Welcome to the Crypt!");
+  case 115: strcpy(info, "Welcome to the Cyborg Manufactory!");
   you[0].where_are_you = 15;
   break;
-  case 116: strcpy(info, "Welcome to the Hall of Blades!");
+  case 116: strcpy(info, "Welcome to the Armory!");
   you[0].where_are_you = 16;
   break;
-  case 117: strcpy(info, "Welcome to the Hall of Zot!");
+  case 117: strcpy(info, "Welcome to the Hall of Alice!");
   you[0].where_are_you = 17;
   break;
-  case 118: strcpy(info, "Welcome to the Ecumenical Temple!");
+  case 118: strcpy(info, "Welcome to the Terminal Hub!");
   you[0].where_are_you = 18;
   break;
   case 119: strcpy(info, "Welcome to the Snake Pit!");
   you[0].where_are_you = 19;
   break;
-  case 120: strcpy(info, "Welcome to the Elven Halls!");
+  case 120: strcpy(info, "Welcome to the Ninja Palace!");
   you[0].where_are_you = 20;
   break;
-  case 121: strcpy(info, "Welcome to the Tomb!");
+  case 121: strcpy(info, "Welcome to the Cyborg Hub!");
   you[0].where_are_you = 21;
   break;
-  case 122: strcpy(info, "Welcome to the Swamp!");
+  case 122: strcpy(info, "Welcome to the Greenhouse!");
   you[0].where_are_you = 22;
   break;
  }
@@ -836,7 +836,7 @@ if (you[0].level_type == 1)
 } else
 if (you[0].level_type == 2)
 {
- strcpy(info, "You enter the Abyss!");
+ strcpy(info, "You enter the Dump!");
  mpr(info);
  strcpy(info, "To return, you must find a gate leading back.");
  grd [you[0].x_pos] [you[0].y_pos] = 67;
@@ -847,13 +847,13 @@ if (you[0].level_type == 3)
 {
 if (old_level_type == 3)
 {
- strcpy(info, "You pass into a different region of Pandemonium.");
+ strcpy(info, "You pass into a different region of Bioengineerings.");
  init_pandemonium();
  for (pc = 0; pc < pt; pc ++)
   pandemonium_mons();
 } else
 {
- strcpy(info, "You enter the halls of Pandemonium!");
+ strcpy(info, "You enter the halls of Bioengineerings!");
  mpr(info);
  strcpy(info, "To return, you must find a gate leading back.");
  init_pandemonium();
@@ -918,7 +918,7 @@ void new_level(void)
  env[0].rock_colour = BROWN;
  if (you[0].level_type == 3)
  {
-  cprintf("- Pandemonium            ");
+  cprintf("- Bioengineerings            ");
   unsigned char pcol = 0;
   pcol = mcolour [env[0].mons_alloc [9]];
   if (pcol == 0) pcol = LIGHTGREY;
@@ -929,7 +929,7 @@ void new_level(void)
  }
  else if (you[0].level_type == 2)
  {
-  cprintf("- The Abyss               ");
+  cprintf("- The Dump               ");
   unsigned char pcol = 0;
   pcol = mcolour [env[0].mons_alloc [9]];
   if (pcol == 0) pcol = LIGHTGREY;
@@ -950,37 +950,37 @@ void new_level(void)
  switch(you[0].where_are_you)
  {
  case 0:
- cprintf(" of the Dungeon           ");
+ cprintf(" of the Installation           ");
  break;
  case 1:
   env[0].floor_colour = CYAN;
   env[0].rock_colour = CYAN;
-  cprintf(" of Dis                   ");
+  cprintf(" of Iron Works                   ");
  break;
  case 2:
    env[0].floor_colour = DARKGREY;
    env[0].rock_colour = RED;
-   cprintf(" of Gehenna               ");
+   cprintf(" of Refuelings               ");
  break;
  case 3:
    env[0].floor_colour = LIGHTGREY;
    env[0].rock_colour = LIGHTGREY;
-   cprintf("- the Vestibule of Hell            ");
+   cprintf("- the Lobby             ");
  break;
  case 4:
    env[0].floor_colour = LIGHTBLUE;
    env[0].rock_colour = LIGHTCYAN;
-   cprintf(" of Cocytus                   ");
+   cprintf(" of Cooling Plants                   ");
  break;
  case 5:
    env[0].floor_colour = DARKGREY;
    env[0].rock_colour = DARKGREY;
-   cprintf(" of Tartarus                ");
+   cprintf(" of Cyborg Labs                ");
  break;
  case 6:
    env[0].floor_colour = LIGHTRED;
    env[0].rock_colour = RED;
-   cprintf(" of the Inferno               ");
+   cprintf(" of the Administrations               ");
  break;
  case 7:
    env[0].floor_colour = RED;
@@ -990,7 +990,7 @@ void new_level(void)
  case 10:
    env[0].floor_colour = BROWN;
    env[0].rock_colour = BROWN;
-   cprintf(" of the Orcish Mines          ");
+   cprintf(" of the Terrorist Lair          ");
  break;
  case 11:
    env[0].floor_colour = YELLOW;
@@ -1000,27 +1000,27 @@ void new_level(void)
  case 12:
    env[0].floor_colour = GREEN;
    env[0].rock_colour = BROWN;
-   cprintf(" of the Lair                  ");
+   cprintf(" of the Biodome                  ");
  break;
  case 13:
    env[0].floor_colour = GREEN;
    env[0].rock_colour = LIGHTGREEN;
-   cprintf(" of the Slime Pits            ");
+   cprintf(" of the Waste Pits            ");
  break;
  case 14:
    env[0].floor_colour = LIGHTGREY;
    env[0].rock_colour = BROWN;
-   cprintf(" of the Vaults                ");
+   cprintf(" of the Storage Area                ");
  break;
  case 15:
    env[0].floor_colour = LIGHTGREY;
    env[0].rock_colour = LIGHTGREY;
-   cprintf(" of the Crypt                 ");
+   cprintf(" of the Cyborg Manufactory                 ");
  break;
  case 16:
    env[0].floor_colour = LIGHTGREY;
    env[0].rock_colour = LIGHTGREY;
-   cprintf(" of the Hall of Blades        ");
+   cprintf(" of the Armory        ");
  break;
  case 17:
  if (you[0].your_level - you[0].branch_stairs [7] <= 1)
@@ -1039,12 +1039,12 @@ void new_level(void)
       case 5: env[0].rock_colour = MAGENTA;
               env[0].floor_colour = LIGHTMAGENTA; break;
      }
-   cprintf(" of the Realm of Zot          ");
+   cprintf(" of the Vaults of Alice          ");
  break;
  case 18:
    env[0].floor_colour = LIGHTGREY;
    env[0].rock_colour = LIGHTGREY;
-   cprintf(" of the Temple                ");
+   cprintf(" of the Terminal Hub                ");
  break;
  case 19:
    env[0].floor_colour = LIGHTGREEN;
@@ -1054,17 +1054,17 @@ void new_level(void)
  case 20:
    env[0].floor_colour = DARKGREY;
    env[0].rock_colour = LIGHTGREY;
-   cprintf(" of the Elven Halls           ");
+   cprintf(" of the Ninja Palace           ");
  break;
  case 21:
    env[0].floor_colour = YELLOW;
    env[0].rock_colour = LIGHTGREY;
-   cprintf(" of the Tomb                  ");
+   cprintf(" of the Cyborg Hub                  ");
  break;
  case 22:
    env[0].floor_colour = BROWN;
    env[0].rock_colour = BROWN;
-   cprintf(" of the Swamp                 ");
+   cprintf(" of the Greenhouse                 ");
  break;
  }
  } // end else
@@ -1199,7 +1199,7 @@ if (county < 400) destr = 1;
 strcpy(info, "The floor is straining under the weight of all the items on this level!");
 mpr(info);
 more();
-strcpy(info, "The dungeon's self-correcting mechanism removes a few of them.");
+strcpy(info, "The installation's self-cleaning mechanism removes a few of them.");
 mpr(info);
 
 for (cull = 0; cull < ITEMS; cull ++)
@@ -1241,8 +1241,8 @@ switch (trt)
  case 8: /* Zot trap! */
  if (trap_known == 1)
  {
-  mpr("You enter the Zot trap.");
- } else mpr("Oh no! You have blundered into a Zot trap!");
+  mpr("You enter the Alice trap.");
+ } else mpr("Oh no! You have blundered into a Alice trap!");
  miscast_effect(10 + random2(15), random2(30) + 10, 75 + random2(100), 3);
  break;
 
@@ -1302,7 +1302,7 @@ if (grd [you[0].x_pos + disa[0].move_x] [you[0].y_pos + disa[0].move_y] < 75 || 
 
 if (you[0].berserker != 0)
 {
- mpr("You're too berserk!");
+ mpr("You're in battle mode!");
  return;
 }
 
@@ -1483,7 +1483,7 @@ char empty [2];
 
 switch(grype)
 {
- case 61: strcpy(info, "You fall into the lava!"); mpr(info); break;
+ case 61: strcpy(info, "You fall into the radioactive waste!"); mpr(info); break;
  case 62: strcpy(info, "You fall into the water!"); mpr(info); break;
 }
 
@@ -1500,7 +1500,7 @@ if (grype == 61 && player_res_fire() <= 100)
 
 if (grype == 61)
 {
-  mpr("The lava burns you!");
+  mpr("The waste burns you!");
   ouch((10 + random2(20) + random2(20) + random2(20)) / (player_res_fire() - 99), 0, 5);
 }
 
@@ -1626,7 +1626,7 @@ char go_berserk(void)
 {
   if (you[0].berserker != 0 || you[0].slow != 0) return 0;
   if (you[0].is_undead == 2 || you[0].species == SP_GHOUL) return 0;
-  strcpy(info, "A red film seems to cover your vision as you go berserk!");
+  strcpy(info, "A red film seems to cover your vision as you go in battle mode!");
   mpr(info);
   strcpy(info, "You feel yourself moving faster!");
   mpr(info);

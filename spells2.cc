@@ -362,7 +362,7 @@ total_mass += random2(power) * 3 + random2(power) + random2(power) + random2(pow
 
 if (total_mass <= 400 + random2(500) + random2(500) || number_raised < 2 + random2(2))
 {
- strcpy(info, "The spell fails.");
+ strcpy(info, "The program fails.");
  mpr(info);
  strcpy(info, "The corpses disintegrate into a pulpy mess.");
  mpr(info);
@@ -433,7 +433,7 @@ switch(which_brand)
 
  case 7: // draining
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 8;
- strcat(info, " crackles with unholy energy.");
+ strcat(info, " crackles with corrupted data.");
  duration_affected = 8;
  break;
 
@@ -534,7 +534,7 @@ void turn_undead(int pow)
 int tu = 0, p;
 char brek = 0;
 
-mpr("You attempt to repel the undead.");
+mpr("You attempt to repel the cyborgs.");
 
 for (tu = 0; tu < MNST; tu ++)
 {
@@ -792,14 +792,14 @@ direction(0, vmove);
 
 if (vmove[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles!");
+	strcpy(info, "The program fizzles!");
 	mpr(info);
 	return -1;
 }
 
 if (vmove[0].move_x > 1 || vmove[0].move_y > 1)
 {
-	strcpy(info, "This spell doesn't reach that far.");
+	strcpy(info, "This program doesn't reach that far.");
 	mpr(info);
  goto dirc;
 }
@@ -877,7 +877,7 @@ mgr = mgrd [you[0].x_pos + bmove[0].move_x] [you[0].y_pos + bmove[0].move_y];
 
 if (bmove[0].nothing == -1)
 {
-	strcpy(info, "The spell fizzles!");
+	strcpy(info, "The program fizzles!");
 	mpr(info);
         bmove[0].move_x = 0;
 	bmove[0].move_y = 0;
@@ -886,7 +886,7 @@ if (bmove[0].nothing == -1)
 
 if (bmove[0].move_x > 1 || bmove[0].move_y > 1)
 {
-	strcpy(info, "This spell doesn't reach that far.");
+	strcpy(info, "This program doesn't reach that far.");
 	mpr(info);
  goto dirc;
 }
@@ -951,7 +951,7 @@ struct dist smove [1];
 if (numsc > 25) numsc = 25;
 
 dirc :
-strcpy(info, "Summon from what material?");
+strcpy(info, "Create from what material?");
 // cannot summon earth elemental if you are floating in the air.
 // problem: what if you're floating over water/lava and are surrounded by it and a wall, and summon an earth elemental? hmmm...
 //strcat(info, ", < for air)");
@@ -976,14 +976,14 @@ if (mgrd [you[0].x_pos + smove[0].move_x] [you[0].y_pos + smove[0].move_y] != MN
 
 if (smove[0].move_x > 1 || smove[0].move_y > 1)
 {
-	strcpy(info, "This spell doesn't reach that far.");
+	strcpy(info, "This program doesn't reach that far.");
 	mpr(info);
      goto dirc;
 }
 
 if (smove[0].move_x == 0 && smove[0].move_y == 0)
 {
-	strcpy(info, "You can't summon an elemental from yourself!");
+	strcpy(info, "You can't create a nano organism from yourself!");
 	mpr(info);
  goto dirc;
 }
@@ -1034,7 +1034,7 @@ if (restricted_type != 0 && type_summoned != restricted_type)
 }
 if (random2(100) <= unfriendly || (type_summoned == 124 && random2(5) >= you[0].skills [SK_FIRE_MAGIC]) || (type_summoned == MWATER4 && random2(5) >= you[0].skills [SK_ICE_MAGIC]) || (type_summoned == 125 && random2(5) >= you[0].skills [SK_AIR_MAGIC]) || (type_summoned == 123 && random2(5) >= you[0].skills [SK_EARTH_MAGIC]))
 {
- strcpy(info, "The elemental doesn't seem to appreciate being summoned.");
+ strcpy(info, "The nanorg doesn't seem to appreciate being created.");
  mpr(info);
  summ_success = create_monster(type_summoned, numsc, 0, you[0].x_pos + smove[0].move_x, you[0].y_pos + smove[0].move_y, MHITYOU, 250);
 } else summ_success = create_monster(type_summoned, numsc, 7, you[0].x_pos + smove[0].move_x, you[0].y_pos + smove[0].move_y, MHITNOT, 250);
@@ -1104,11 +1104,11 @@ switch(ibc)
  break;
 
  case 8:
- mpr("A beastly little devil appears in a puff of flame.");
+ mpr("A beastly little guard appears in a puff of flame.");
  break;
 
  case 220:
- mpr("A beastly little devil appears in a puff of frigid air.");
+ mpr("A beastly little guard appears in a puff of frigid air.");
  break;
 
  case 237:
@@ -1116,7 +1116,7 @@ switch(ibc)
  break;
 
  case 26:
- mpr("You open a gate to the realm of Zin!");
+ mpr("You open a gate to the realm of Knights Templar!");
  break;
 
  case 366:
@@ -1129,7 +1129,7 @@ switch(ibc)
  case 228:
  case 229:*/
  default:
- mpr("A demon appears!");
+ mpr("A mutant appears!");
  if (random2(pow) <= 3)
  {
   beha = 1;
@@ -1194,7 +1194,7 @@ if (numsc > 6) numsc = (numsc - 6) / 2 + 6;
 
 if (numsc > 8) numsc = 8;
 
- strcpy(info, "You call on the undead to aid you!");
+ strcpy(info, "You call on the cyborgs to aid you!");
  mpr(info);
 
 

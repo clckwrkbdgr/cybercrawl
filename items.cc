@@ -63,69 +63,69 @@ if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 69 && env[0].grid [you[0].x_pos
  } else
 switch(env[0].grid [you[0].x_pos] [you[0].y_pos])
 {
-  case 69: mpr("There is a gateway to hell here."); break;
-  case 80: mpr("There is an entrance to a shop here."); break;
+  case 69: mpr("There is a gateway to Facilities here."); break;
+  case 80: mpr("There is an entrance to a store here."); break;
   case 81: mpr("There is an entrance to a labyrinth here.");
   mpr("Beware, for starvation awaits!"); break;
-  case 92: mpr("There is a gateway to the Iron City of Dis here."); break;
-  case 93: mpr("There is a gateway to Gehenna here."); break;
-  case 94: mpr("There is a gateway to the frozen wastes of Cocytus here."); break;
-  case 95: mpr("There is a gateway to Tartarus here."); break;
-  case 96: mpr("There is a one-way gate to the infinite horrors of the Abyss here."); break;
-  case 97: mpr("There is a gateway leading out of the Abyss here."); break;
-  case 98: mpr("There is an empty stone archway here."); break;
-  case 99: mpr("There is a gate leading to the halls of Pandemonium here."); break;
-  case 100: mpr("There is a gate leading out of Pandemonium here."); break;
-  case 101: mpr("There is a gate leading to another region of Pandemonium here."); break;
+  case 92: mpr("There is a gateway to the Iron Works here."); break;
+  case 93: mpr("There is a gateway to Refueling Base here."); break;
+  case 94: mpr("There is a gateway to the frozen wastes of Cooling Plants here."); break;
+  case 95: mpr("There is a gateway to Cyborg Researchs here."); break;
+  case 96: mpr("There is a one-way gate to the infinite horrors of the Dump here."); break;
+  case 97: mpr("There is a gateway leading out of the Dump here."); break;
+  case 98: mpr("There is an opened blast door here."); break;
+  case 99: mpr("There is a gate leading to the halls of Bioengineerings here."); break;
+  case 100: mpr("There is a gate leading out of Bioengineerings here."); break;
+  case 101: mpr("There is a gate leading to another region of Bioengineerings here."); break;
 
-  case 110: mpr("There is a staircase to the orcish mines here."); break;
+  case 110: mpr("There is a staircase to the Terrorists Lair here."); break;
   case 111: mpr("There is a staircase to the Hive here."); break;
-  case 112: mpr("There is a staircase to the Lair here."); break;
-  case 113: mpr("There is a staircase to the Slime Pits here."); break;
-  case 114: mpr("There is a staircase to the Vaults here."); break;
-  case 115: mpr("There is a staircase to the Crypt here."); break;
-  case 116: mpr("There is a staircase to the Hall of Blades here."); break;
-  case 117: mpr("There is a gate to the Realm of Zot here."); break;
-  case 118: mpr("There is a staircase to the Ecumenical Temple here."); break;
+  case 112: mpr("There is a staircase to the Biodome here."); break;
+  case 113: mpr("There is a staircase to the Waste Pits here."); break;
+  case 114: mpr("There is a staircase to the Storage Area here."); break;
+  case 115: mpr("There is a staircase to the Cyborg Manufactory here."); break;
+  case 116: mpr("There is a staircase to the Armory here."); break;
+  case 117: mpr("There is a gate to the Vault of Alice here."); break;
+  case 118: mpr("There is a staircase to the Terminal Hub here."); break;
   case 119: mpr("There is a staircase to the Snake Pit here."); break;
-  case 120: mpr("There is a staircase to the Elven Halls here."); break;
-  case 121: mpr("There is a staircase to the Tomb here."); break;
-  case 122: mpr("There is a staircase to the Swamp here."); break;
+  case 120: mpr("There is a staircase to the Ninja Palace here."); break;
+  case 121: mpr("There is a staircase to the Cyborg Hub here."); break;
+  case 122: mpr("There is a staircase to the Greenhouse here."); break;
   case 130:
   case 131:
   case 134:
   case 138:
-  case 132: mpr("There is a staircase back to the Dungeon here."); break;
-  case 142: mpr("There is a staircase back to the Lair here."); break;
-  case 133: mpr("There is a staircase back to the Lair here."); break;
-  case 135: mpr("There is a staircase back to the Vaults here."); break;
+  case 132: mpr("There is a staircase back to the Installation here."); break;
+  case 142: mpr("There is a staircase back to the Biodome here."); break;
+  case 133: mpr("There is a staircase back to the Biodome here."); break;
+  case 135: mpr("There is a staircase back to the Storage Area here."); break;
   case 141:
-  case 136: mpr("There is a staircase back to the Crypt here."); break;
-  case 139: mpr("There is a staircase back to the Lair here."); break;
-  case 140: mpr("There is a staircase back to the Mines here."); break;
+  case 136: mpr("There is a staircase back to the Cyborg Manufactory here."); break;
+  case 139: mpr("There is a staircase back to the Biodome here."); break;
+  case 140: mpr("There is a staircase back to the Terrorists here."); break;
   case 137: mpr("There is a gate leading back out of this place here."); break;
 
-  case 180: mpr("There is a glowing white marble altar of Zin here."); break;
-  case 181: mpr("There is a glowing golden altar of the Shining One here."); break;
-  case 182: mpr("There is an ancient bone altar of Kikubaaqudgha here."); break;
-  case 183: mpr("There is a basalt altar of Yredelemnul here."); break;
-  case 184: mpr("There is a shimmering altar of Xom here."); break;
-  case 185: mpr("There is a shining altar of Vehumet here."); break;
-  case 186: mpr("There is an iron altar of Okawaru here."); break;
-  case 187: mpr("There is a burning altar of Makhleb here."); break;
-  case 188: mpr("There is a deep blue altar of Sif Muna here."); break;
-  case 189: mpr("There is a bloodstained altar of Trog here."); break;
-  case 190: mpr("There is a sparkling altar of Nemelex Xobeh here."); break;
-  case 191: mpr("There is a silver altar of Elyvilon here."); break;
+  case 180: mpr("There is a glowing white marble terminal of Knights Templar here."); break;
+  case 181: mpr("There is a glowing golden terminal of the UNATCO here."); break;
+  case 182: mpr("There is an ancient bone terminal of Manticore here."); break;
+  case 183: mpr("There is a basalt terminal of NSF here."); break;
+  case 184: mpr("There is a shimmering terminal of The Anonimous here."); break;
+  case 185: mpr("There is a shining terminal of Digicorp here."); break;
+  case 186: mpr("There is an iron terminal of S.T.A.R.S. here."); break;
+  case 187: mpr("There is a burning terminal of Netchaos Order here."); break;
+  case 188: mpr("There is a deep blue terminal of Black Mesa Research Facilities here."); break;
+  case 189: mpr("There is a bloodstained terminal of Human Liberation Front here."); break;
+  case 190: mpr("There is a sparkling terminal of Triads here."); break;
+  case 191: mpr("There is a silver terminal of Aperture Labs here."); break;
 
-  case 200: mpr("There is a fountain here."); break;
-  case 202: mpr("There is a sparkling fountain here."); break;
+  case 200: mpr("There is a water conduit here."); break;
+  case 202: mpr("There is a sparkling water conduit here."); break;
   case 201:
   case 203:
   case 205:
   case 207:
   case 209:
-  case 210: mpr("There is a dry fountain here."); break;
+  case 210: mpr("There is a dry water conduit here."); break;
 
  }
 }
@@ -154,8 +154,8 @@ while(objl != 501)
 			{
 			 itoa(mitm.iquant [objl], temp_quant, 10);
 			 strcpy(item_show [counter], temp_quant);
-			 if (mitm.iquant [objl] > 1) strcat(item_show [counter], " gold pieces");
-			  else strcat(item_show [counter], " gold piece");
+			 if (mitm.iquant [objl] > 1) strcat(item_show [counter], " credit chips");
+			  else strcat(item_show [counter], " credit chip");
 			 goto linking; //continue;
 			}
 		it_name(objl, 3, str_pass);
@@ -224,10 +224,10 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 190 && you[0].where_are_you != 18)
 {
 	if (you[0].inv_no >= 52)
     {
-     mpr("There is a portable altar here, but you can't carry anything else.");
+     mpr("There is a portable terminal here, but you can't carry anything else.");
      return;
     }
-	mpr("There is a portable altar here. Pick it up?");
+	mpr("There is a portable terminal here. Pick it up?");
 	keyin = get_ch();
     if (keyin == 'y' || keyin == 'Y')
     {
@@ -328,7 +328,7 @@ if (items_here > 1)
 			 {
 				itoa(mitm.iquant [o], st_prn, 10);
 				strcat(info, st_prn);
-				strcat(info, " gold piece");
+				strcat(info, " credit chip");
 				if (mitm.iquant [o] > 1) strcat(info, "s");
 			 } else
 			 {
@@ -482,7 +482,7 @@ if (mitm.iclass [item_got] == 15)
 	strcpy(info, "You pick up ");
 	itoa(quant_got, st_prn, 10);
 	strcat(info, st_prn);
-	strcat(info, " gold pieces.");
+	strcat(info, " credit chips.");
 	mpr(info);
 	you[0].turnover = 1;
 	alert();
@@ -552,7 +552,7 @@ for (m = 0; m < 52; m++)
 
 if (mitm.iclass [item_got] == 12 && you[0].char_direction == 0)
 {
- mpr("Now all you have to do is get back out of the dungeon!");
+ mpr("Now all you have to do is get back out of the installation!");
  you[0].char_direction = 1;
 // env[0].grid [you[0].x_pos] [you[0].y_pos] = 137;
   // not in the abyss or pandemonium
@@ -647,7 +647,7 @@ for (i = 0; i < ITEMS; i++)
 {
  if (i >= 480)
  {
-  strcpy(info, "The demon of the infinite void grins at you.");
+  strcpy(info, "The demon of the infinite cyberspace grins at you.");
   mpr(info);
   return;
  }
@@ -708,7 +708,7 @@ quant_drop = you[0].gp; /* needs quantity selection. */
 
 if (you[0].gp == 0)
 {
-	strcpy(info, "You don't have any money.");
+	strcpy(info, "You don't have any credits.");
 	mpr(info);
 	return;
 }
@@ -717,8 +717,8 @@ strcpy(info, "You drop ");
 itoa(you[0].gp, temp_quant, 10);
 strcat(info, temp_quant);
 
-if (you[0].gp > 1) strcat(info, " gold pieces.");
-	    else strcat(info, " gold piece.");
+if (you[0].gp > 1) strcat(info, " credit chips.");
+	    else strcat(info, " credit chip.");
 
 mpr(info);
 
@@ -964,7 +964,7 @@ if (you[0].mpower > 0 && random2(2) == 0)
 {
  if (you[0].mpower > 4 && random2(150) <= you[0].mpower)
  {
-  mpr("You've accumulated too much magical radiation!");
+  mpr("You've accumulated too much energy radiation!");
   if (random2(2) == 0) mutate(100); else give_bad_mutation();
  }
  you[0].mpower --;

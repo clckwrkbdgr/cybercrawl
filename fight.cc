@@ -1441,7 +1441,7 @@ if (player_res_poison() == 0)
         {
 /*        if (you[0].duration [DUR_PRAYER] != 0 && you[0].religion == GOD_ZIN && random2(150) < you[0].piety)
         {
-         strcpy(info, "Zin protects your life force!");
+         strcpy(info, "Knights Templar protects your life force!");
          mpr(info);
          brek = 0;
          break;

@@ -198,16 +198,16 @@ for (i = 0; i < 15; i ++)
 	case 0: cprintf("Hand weapons"); break;
 	case 1: cprintf("Missiles"); break;
 	case 2: cprintf("Armour"); break;
-	case 3: cprintf("Magical devices"); break;
+	case 3: cprintf("Technological devices"); break;
 	case 4: cprintf("Comestibles"); break;
-      	case 5: cprintf("Books"); break;
-	case 6: cprintf("Scrolls"); break;
-	case 7: cprintf("Jewellery"); break;
-	case 8: cprintf("Potions"); break;
+      	case 5: cprintf("Program archives"); break;
+	case 6: cprintf("Single-use devices"); break;
+	case 7: cprintf("Implants and chips"); break;
+	case 8: cprintf("Vials"); break;
 	case 9: cprintf("Gems"); break;
-   case 10: cprintf("Books"); break;
-   case 11: cprintf("Magical staves"); break;
-   case 12: cprintf("Orbs of Power"); break;
+   case 10: cprintf("Program archives"); break;
+   case 11: cprintf("ROM devices"); break;
+   case 12: cprintf("Discs of Power"); break;
    case 13: cprintf("Miscellaneous"); break;
    case 14: cprintf("Carrion"); break;
 //   case 16: cprintf("Miscellaneous"); break;
@@ -281,9 +281,9 @@ for (i = 0; i < 15; i ++)
 
 			if (j == you[0].equip [EQ_WEAPON]) cprintf(" (weapon)");
 			if (j == you[0].equip [EQ_CLOAK] || j == you[0].equip [EQ_HELMET] || j == you[0].equip [EQ_GLOVES] || j == you[0].equip [EQ_BOOTS] || j == you[0].equip [EQ_SHIELD] || j == you[0].equip [EQ_BODY_ARMOUR]) cprintf(" (worn)");
-			if (j == you[0].equip [EQ_LEFT_RING]) cprintf(" (left hand)");
-			if (j == you[0].equip [EQ_RIGHT_RING]) cprintf(" (right hand)");
-			if (j == you[0].equip [EQ_AMULET]) cprintf(" (around neck)");
+			if (j == you[0].equip [EQ_LEFT_RING]) cprintf(" (left hemispehere)");
+			if (j == you[0].equip [EQ_RIGHT_RING]) cprintf(" (right hemispehere)");
+			if (j == you[0].equip [EQ_AMULET]) cprintf(" (vertebral)");
 
 if (show_price == 1)
 {
@@ -434,36 +434,36 @@ switch(i)
 {
 // case 1: strcpy(comm, "a - adijsd"); break;
 // case 10: strcpy(comm, "c - close a door"); break;
- case 10: strcpy(comm, "a - use special ability"); break;
+ case 10: strcpy(comm, "a - use special augmentation"); break;
  case 20: strcpy(comm, "d(#) - drop (#) item(s)"); break;
  case 30: strcpy(comm, "e - eat"); break;
  case 40: strcpy(comm, "f - fire an appropriate thing"); break;
  case 50: strcpy(comm, "i - inventory"); break;
  case 55: strcpy(comm, "m - check skills"); break;
  case 60: strcpy(comm, "o/c - open/close a door"); break;
- case 65: strcpy(comm, "p - pray"); break;
- case 70: strcpy(comm, "q - quaff a potion"); break;
- case 80: strcpy(comm, "r - read a scroll or a book"); break;
+ case 65: strcpy(comm, "p - communicate"); break;
+ case 70: strcpy(comm, "q - quaff a vial"); break;
+ case 80: strcpy(comm, "r - execute a device or an archive"); break;
  case 90: strcpy(comm, "s/./del - wait"); break;
  case 100: strcpy(comm, "t - throw or shoot something"); break;
  case 110: strcpy(comm, "v - get version number"); break;
  case 120: strcpy(comm, "w - wield a weapon"); break;
  case 130: strcpy(comm, "x - look around you"); break;
- case 135: strcpy(comm, "z - zap a wand"); break;
+ case 135: strcpy(comm, "z - shoot a gun"); break;
  case 140: strcpy(comm, "A - check mutations"); break;
  case 141: strcpy(comm, "C - check experience"); break;
  case 142: strcpy(comm, "D - butcher (dissect) a corpse"); break;
  case 145: strcpy(comm, "I - Invoke power of wielded item"); break;
- case 150: strcpy(comm, "M - Memorise a spell"); break;
- case 160: strcpy(comm, "P/R - Put on/Remove a ring"); break;
+ case 150: strcpy(comm, "M - Install a program"); break;
+ case 160: strcpy(comm, "P/R - Put on/Remove an implant"); break;
  case 165: strcpy(comm, "Q - commit suicide (quit)"); break;
-// case 170: strcpy(comm, "R - Remove a ring"); break;
+// case 170: strcpy(comm, "R - Remove an implant"); break;
  case 180: strcpy(comm, "S - Save your game and quit"); break;
 // case 190: strcpy(comm, "T - Take off armour"); break;
  case 209: strcpy(comm, "V - Examine an identified item"); break;
  case 200: strcpy(comm, "W/T - Wear/Take off armour"); break;
  case 210: strcpy(comm, "X - show map of level"); break;
- case 220: strcpy(comm, "Z - cast a spell"); break;
+ case 220: strcpy(comm, "Z - execute a program"); break;
 // case 230: strcpy(comm, ". - wait"); break;
  case 240: strcpy(comm, ", or g - pick something up"); break;
  case 250: strcpy(comm, "<> - go up/down a staircase"); break;
@@ -478,10 +478,10 @@ switch(i)
  case 340: strcpy(comm, "+ & - on map screen - fast scroll"); break;
  case 350: strcpy(comm, "! - shout/command allies"); break;
  case 360: strcpy(comm, "Ctrl & dir - door; untrap; attack"); break;
- case 365: strcpy(comm, "^ - describe your religion"); break;
+ case 365: strcpy(comm, "^ - describe your employment"); break;
  case 367: strcpy(comm, "@ - character status"); break;
  case 370: strcpy(comm, "# - dump character to file <name>.txt"); break;
- case 380: strcpy(comm, "= - adjust inventory/spell letters"); break;
+ case 380: strcpy(comm, "= - adjust inventory/program letters"); break;
  case 390: strcpy(comm, "\' - wield item a, or switch to b"); break;
  case 400: strcpy(comm, "` - add macro"); break;
  case 410: strcpy(comm, "~ - save macros"); break;

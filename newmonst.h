@@ -805,7 +805,7 @@ switch(mons [i].m_class)
 case 59:
 if (random2(2) == 0 && (mons [i].m_ench [2] != 6 | you[0].see_invis != 0))
 {
-  strcpy(info, "The giant eyeball stares at you!");
+  strcpy(info, "The camera stares at you!");
   incrl();
   if (you[0].paralysis < 10) you[0].paralysis += 2 + random2(3);
 }
@@ -814,7 +814,7 @@ break;
 case 65:
 if (random2(2) == 0 && (mons [i].m_ench [2] != 6 | you[0].see_invis != 0))
 {
-  strcpy(info, "The eye of draining stares at you!");
+  strcpy(info, "The camera of draining stares at you!");
   incrl();
   you[0].ep -= random2(5) + random2(5) + random2(5) + 2;
   if (you[0].ep < 0) you[0].ep = 1;
@@ -929,14 +929,14 @@ aim_down = 1;
 	beam_range = random2(10) + 5;
 	beam_source_x = mons [i].m_x; beam_source_y = mons [i].m_y;
 //		strcpy(beam_name, monam (mons [i].m_sec, mons [i].m_class, mons [i].m_ench [2], 4)); //gmon_name [mons_class [i]]);
-		strcpy(beam_name, "glob of lava");
+		strcpy(beam_name, "glob of radioactive waste");
 		beam_damage = 108;
 		beam_colour = RED;
 		beam_type = '#'; // hash #
 		beam_flavour = 20; // lava
   beam_hit = 20;
 		strcpy(info, monam (mons [i].m_sec, mons [i].m_class, mons [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-		strcat(info, " spits lava!");
+		strcat(info, " spits radioactive waste!");
 		incrl();
 	thing_thrown = 4;
 	missile();
@@ -1217,7 +1217,7 @@ if (spell_cast == 27 && you[0].your_level < 50)
 {
   if (mons [i].m_ench [2] != 6)
 			{
-   		if (you[0].your_level < 50) strcat(info, " opens a gate to Hell!");
+   		if (you[0].your_level < 50) strcat(info, " opens a gate to Facilities!");
                    else strcat(info, " calls for assistance.");
    		incrl();
 			}
@@ -1263,7 +1263,7 @@ if (mons [i].m_class == 101 | mons [i].m_class == 122 | mons [i].m_class == 132 
 		incrl();
 	} else
       	{
-       		strcat(info, " casts a spell.");
+       		strcat(info, " executes a program.");
        		incrl();
         }
 } // end of if mons_near
@@ -1279,7 +1279,7 @@ if (spell_cast == 16)
  if (mons_near(i) == 1)
 	{
 //		strcpy(info, monam (mons [i].m_sec, mons [i].m_class, mons [i].m_ench [2], 0)); //gmon_name [mons [i].m_class]);
-//		strcat(info, " casts a spell!");
+//		strcat(info, " executes a program!");
 //		incrl();
 		strcpy(info, monam (mons [i].m_sec, mons [i].m_class, mons [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
 		strcat(info, " blinks!");
