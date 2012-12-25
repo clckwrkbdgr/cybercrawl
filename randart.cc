@@ -19,7 +19,7 @@ in dungeon.cc and consists of giving it a few random things - plus & plus2
 mainly.
 */
 
-char *rand_wpn_names[] = {
+const char *rand_wpn_names[] = {
 " of Blood",
 " of Death",
 " of Bloody Death",
@@ -517,7 +517,7 @@ char *rand_wpn_names[] = {
 };
 
 
-char *rand_armour_names[] = {
+const char *rand_armour_names[] = {
 /* 0: */
 " of Shielding",
 " of Grace",
@@ -628,17 +628,17 @@ int unranddatasize;
 
 struct unrandart_entry {
 
-	char *name/*[32]*/PACKED; // true name of unrandart (max 31 chars)
-	char *unid_name/*[32]*/PACKED; // un-id'd name of unrandart (max 31 chars)
-	unsigned char ura_cl PACKED; // class of ura
-	unsigned char ura_ty PACKED; // type of ura
-	unsigned char ura_pl PACKED; // plus of ura
-	unsigned char ura_pl2 PACKED; // plus2 of ura
-	unsigned char ura_col PACKED; // colour of ura
-	short prpty [RA_PROPERTIES] PACKED;
-	char *spec_descrip1/*[32]*/PACKED; // A special description which is added to the 'V' command output (max 31 chars)
-	char *spec_descrip2/*[32]*/PACKED; // A special description which is added to the 'V' command output (max 31 chars)
-	char *spec_descrip3/*[32]*/PACKED; // A special description which is added to the 'V' command output (max 31 chars)
+	const char *name/*[32]*/; // true name of unrandart (max 31 chars)
+	const char *unid_name/*[32]*/; // un-id'd name of unrandart (max 31 chars)
+	unsigned char ura_cl ; // class of ura
+	unsigned char ura_ty ; // type of ura
+	unsigned char ura_pl ; // plus of ura
+	unsigned char ura_pl2 ; // plus2 of ura
+	unsigned char ura_col ; // colour of ura
+	short prpty [RA_PROPERTIES] ;
+	const char *spec_descrip1/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
+	const char *spec_descrip2/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
+	const char *spec_descrip3/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
 };// unranddata[];
 
 
@@ -680,7 +680,7 @@ int randart_wpn_properties(unsigned char aclass, unsigned char atype, unsigned c
 if ((aclass == OBJ_JEWELLERY && adam == 201) || (aclass != OBJ_JEWELLERY && adam == 25))
 {
  struct unrandart_entry *search_unrandarts = sura;
- return search_unrandarts->prpty [prop];
+ return search_unrandarts->prpty [int(prop)];
 }
 
 long globby = aclass * adam + acol + atype * (aplus % 100) + aplus2 * 100;
@@ -967,13 +967,13 @@ finished_curses :
 
 srandom(randstore);
 
-return proprt [prop];
+return proprt [int(prop)];
 
 }
 
 
 
-char *randart_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
 {
 
 if (adam == 25)
@@ -1066,7 +1066,7 @@ return art_n;
 
 
 
-char *randart_armour_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_armour_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
 {
 
 if (adam == 25)
@@ -1158,7 +1158,7 @@ return art_n;
 }
 
 
-char *randart_ring_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_ring_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
 {
 
 if (adam == 201)
@@ -1305,7 +1305,7 @@ void make_item_unrandart(int x, int ura_item)
 
 }
 
-char *unrandart_descrip(char which_descrip, unsigned char aclass, unsigned char atype, unsigned char aplus, unsigned char aplus2)
+const char *unrandart_descrip(char which_descrip, unsigned char aclass, unsigned char atype, unsigned char aplus, unsigned char aplus2)
 {
  switch(which_descrip)
  {

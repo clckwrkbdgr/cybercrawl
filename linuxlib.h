@@ -10,7 +10,7 @@ int itoa(int value, char *strptr, int radix);
 
 char * strlwr(char *str);
 
-int cprintf (char *format, ... );
+int cprintf (const char *format, ... );
 
 int putch(unsigned char chr);
 
@@ -30,7 +30,7 @@ int wherex();
 
 int wherey();
 
-int stricmp(char *str1, char *str2);
+int stricmp(const char *str1, const char *str2);
 
 void delay(long time);
 

@@ -88,7 +88,7 @@ you[0].your_level = 1;
 you[0].ep_incr_regen = 0;
 
 
-char j = 0;
+unsigned char j = 0;
 char char_name [30];
 
 for (i = 0; i < 30; i ++)

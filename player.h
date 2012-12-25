@@ -20,7 +20,7 @@ void how_hungered(int hunge);
 void gain_exp(unsigned int exp_gained);
 void display_char_status(void);
 void redraw_skill(char your_name [30], char clasnam [40]);
-char *species_name(char speci);
+const char *species_name(char speci);
 char wearing_amulet(char which_am);
 unsigned long exp_needed(int lev, char species);
 int check_stealth(void);

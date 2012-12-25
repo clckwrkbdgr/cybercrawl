@@ -1069,8 +1069,9 @@ switch(pot_eff)
 
 
 
-void unwield_item(char unw)
+void unwield_item(char unw_char)
 {
+	int unw = unw_char;
 
  you[0].special_wield = 0;
  wield_change = 1;
@@ -1274,8 +1275,9 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == 11)
 
 
 
-void unwear_armour(char unw) /* This does *not* call ev_mod! */
+void unwear_armour(char unw_char) /* This does *not* call ev_mod! */
 {
+	int unw = unw_char;
 
 you[0].AC_ch = 1;
 you[0].evasion_ch = 1;

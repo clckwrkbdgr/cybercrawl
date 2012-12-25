@@ -21,7 +21,7 @@ void place_cloud(unsigned char cl_type, unsigned char ctarget_x, unsigned char c
 void tracer_f(int i, struct bolt beem [1]);
 
 /* chardump.cc */
-char dump_char(char show_prices, char fname [30]);
+char dump_char(char show_prices, const char fname [30]);
 
 /* command.cc */
 void stethoscope(int mwh);
@@ -355,7 +355,7 @@ void show_skills(void);
 
 char *skill_title(char best_skill, char skill_lev, char char_class, char char_lev);
 
-char best_skill(char min_skill, char max_skill, char excl_skill);
+int best_skill(char min_skill, char max_skill, char excl_skill);
 
 int species_skills(char skill, char species);
 
@@ -374,7 +374,7 @@ void show_skills(void);
 
 char *skill_title(char best_skill, char skill_lev, char char_class, char char_lev);
 
-char best_skill(char min_skill, char max_skill, char excl_skill);
+int best_skill(char min_skill, char max_skill, char excl_skill);
 
 int species_skills(char skill, char species);
 

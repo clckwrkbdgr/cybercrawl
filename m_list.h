@@ -2,7 +2,7 @@
 // note: the order of the list doesn't matter
 
 //#include "colours.h"
-#include "defines.h"
+//#include "defines.h"
 
 /*
 This whole file was very generously condensed from its initial ugly form

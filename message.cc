@@ -17,10 +17,10 @@ void more(void);
 char scrloc = 1; /* Line of next (previous?) message */
 
 char store_message [30] [200]; /* buffer of old messages */
-char store_count = 0; /* current position in store_message */
+unsigned char store_count = 0; /* current position in store_message */
 
 
-void mpr(char inf [200])
+void mpr(const char inf [200])
 {
 char inf_screens = 0;
 

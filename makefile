@@ -1,7 +1,7 @@
 # Make file for Dungeon Crawl (linux port only for now)
 
 C_COMP = g++
-C_ARGS = -Wall
+C_ARGS = -Wall -Werror
 L_ARGS = -static
 MCHMOD = 711
 INSTALLDIR = /usr/games

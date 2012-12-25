@@ -13,10 +13,10 @@ extern unsigned char show_green;
 
 struct dist
 {
- char move_x;
- char move_y;
- char target_x;
- char target_y;
+ int move_x;
+ int move_y;
+ int target_x;
+ int target_y;
  char prev_targ;
  long nothing;
 };
@@ -31,7 +31,7 @@ struct bolt
  char aim_down;
  char thing_thrown;
 /*, beam_type;*/
- char move_x, move_y;
+ int move_x, move_y;
  int trac_targ;
  int tracer_mons;
  int trac_hit_tamed;
@@ -101,7 +101,7 @@ int y_pos;
 
 int hunger;
 char hunger_inc;
-char equip [NO_EQUIP];
+int equip [NO_EQUIP];
 /* list in player.cc */
 
 int hp;
@@ -285,7 +285,7 @@ struct environ
  unsigned char mgrid [GXM] [GYM];
  int igrid [GXM] [GYM];
  unsigned char map [GXM] [GYM];
- char cgrid [GXM] [GYM];
+ unsigned char cgrid [GXM] [GYM];
  unsigned int show [19] [19];
  unsigned char show_col [19] [19];
  unsigned char rock_colour;

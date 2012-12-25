@@ -11,7 +11,7 @@
 //#include "estruct.h"
 //#include "colours.h"
 #include "mstruct.h"
-#include <ctype.h>
+//#include <cctype>
 #include "externs.h"
 #include "enum.h"
 #include "player.h"
@@ -19,6 +19,10 @@
 char mcolour [1000];
 char *gmo_n; /* used in monam - could possibly be static to that function */
 
+int local_toupper(int c) {
+	if(c<='z' && c>='a') return (c-32);
+	return (c);
+}
 
 struct monsterentry mondata[]={
 #include "m_list.h"
@@ -226,7 +230,7 @@ int mons_flag(int mc,int bf)
 
 // These are easy to implement here. The difficult (dull!) work of converting 
 // the data structures is finally finished now!
-char *mons_name(int mc) { return smc->name; }
+const char *mons_name(int mc) { return smc->name; }
 int mons_intel(int mc) { return smc->intel; }
 int mons_holiness(int mc) { return smc->holiness; }
 int mons_zombie_size(int mc) { return smc->zombie_size; }
@@ -540,7 +544,7 @@ int x; //char temp[2]={0,0};
 
 
 /* Note: the arguments to this function are very messed up */
-char *monam(int mons_cla, int mons_e, char desc, char see_invis)
+const char *monam(int mons_cla, int mons_e, char desc, char see_invis)
 {
 
  char gmo_n2 [40];
@@ -630,7 +634,7 @@ case 3: strcpy(glog, "a"); break;
 }
 
 if ((descrip == 2 || descrip == 3 || descrip == 99) && (mcl < 250 || mcl > 355 || (mcl >= 260 && mcl < 280))) // 99 from ouch(...)
-	switch(toupper(gmon_name[0])) {
+	switch(local_toupper(gmon_name[0])) {
 		case 'A': case 'E': case 'I': case 'O': case 'U': // case 'Y':
 			strcat(glog, "n "); break;
 		default: strcat(glog, " "); break;

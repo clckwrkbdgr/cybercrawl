@@ -1414,8 +1414,9 @@ return 1;
 
 }
 
-void read_book(char book_read)
+void read_book(char book_read_char)
 {
+	int book_read = book_read_char;
 char key2 = 0;
 
 /* remember that this function is called from staff spells as well. */

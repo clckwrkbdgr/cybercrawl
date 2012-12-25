@@ -76,7 +76,7 @@ you[0].hung_ch = 1;
 
 if (food_eat_3 == 21)
 {
- if (you[0].inv_dam [food_eat_2] < 100 && (mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 1 || mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 2) || (mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 3 && player_res_poison() != 0)) eat_meat(50);
+ if (you[0].inv_dam [food_eat_2] < 100 && ((mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 1 || mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 2) || (mons_corpse_thingy(you[0].inv_plus [food_eat_2]) == 3 && player_res_poison() != 0))) eat_meat(50);
   else eat_meat(mons_corpse_thingy(you[0].inv_plus [food_eat_2]));
  you[0].hung_ch = 1;
  return;
@@ -209,7 +209,7 @@ if (items_here == 1)
     mpr(info);*/
 
 //   if ((mitm.idam [item_got] < 100 && mons_corpse_thingy(mitm.iplus [item_got]) == 1) || mons_corpse_thingy(mitm.iplus [item_got]) == 2 || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0)) eat_meat(50);
-   if (mitm.idam [item_got] < 100 && (mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0)) eat_meat(50);
+   if (mitm.idam [item_got] < 100 && ((mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0))) eat_meat(50);
     else eat_meat(mons_corpse_thingy(mitm.iplus [item_got]));
 //    eat_meat(mons_corpse_thingy(mitm.iplus [item_got]));
     goto out_of_eating3;
@@ -299,7 +299,7 @@ if (items_here > 1)
      mpr(info);
 					return 0;
     }
-   if (mitm.idam [item_got] < 100 && (mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0)) eat_meat(50);
+   if (mitm.idam [item_got] < 100 && ((mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0))) eat_meat(50);
     else eat_meat(mons_corpse_thingy(mitm.iplus [item_got]));
 //    eat_meat(mons_corpse_thingy(mitm.iplus [item_got]));
     goto out_of_eating2;

@@ -418,8 +418,9 @@ switch(ufdg)
 
 
 
-void monster_teleport(char monstel, char instan)
+void monster_teleport(char monstel_char, char instan)
 {
+	int monstel = monstel_char;
 int p = 0;
 
 if (instan == 0)

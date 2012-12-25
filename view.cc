@@ -475,7 +475,7 @@ return 0;
 void item(void)
 {
 
-char count_x, count_y;
+unsigned char count_x, count_y;
 
 for (count_y = (you[0].y_pos - 8); (count_y < you[0].y_pos + 9); count_y++)
 {
@@ -673,13 +673,13 @@ void losight(unsigned int sh [19] [19], unsigned char gr [80] [70], int x_p, int
 
 char shad;
 char see_section;
-char startPoint_x = 0; // = 8;
-char startPoint_y = 0; // = 7;
+unsigned char startPoint_x = 0; // = 8;
+unsigned char startPoint_y = 0; // = 7;
 char behind = 0;
 char xs = 0; // the multiplier of the x addition thing
 char ys = 0;
-char cx = 0;
-char cy = 0;
+unsigned char cx = 0;
+unsigned char cy = 0;
 
 short int see; // see = 1 means 'visible'
 
@@ -1500,7 +1500,7 @@ void show_map(int spec_place [2])
    char move_x = 0;
    char move_y = 0;
    char getty = 0;
-char buffer[4800];
+//char buffer[4800];
 char buffer2[4800];
 
 char min_y = 0;

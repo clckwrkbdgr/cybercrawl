@@ -115,7 +115,7 @@ void move(char move_x, char move_y);
 //void beam(struct player you [1], struct environ env [1], struct bolt beam [1]);
 
 
-void mpr(char inf [200]);
+void mpr(const char inf [200]);
 void more(void);
 void initialise(void);
 

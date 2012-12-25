@@ -30,7 +30,7 @@ void cast_selective_amnesia(void)
 {
 
 char spc = 0;
-char spc2 = 0;
+unsigned char spc2 = 0;
 char ep_gain = 0;
 int keyin = 0;
 
@@ -535,8 +535,8 @@ if (you[0].level_type == 2)
 void entomb(void)
 {
 
-char srx = 0;
-char sry = 0;
+unsigned char srx = 0;
+unsigned char sry = 0;
 
 char chance_found = 4;
 
@@ -685,7 +685,7 @@ for (i = j; i != l; i += k)
 
  if (type_recalled == 1)
  {
-  if (!((menv [i].m_class == 23 || menv [i].m_class == 49) && menv [i].m_sec == BROWN || menv [i].m_sec == RED || menv [i].m_sec == LIGHTRED)) /* abominations created by twisted res, although it gets others too */
+  if (!((menv [i].m_class == 23 || menv [i].m_class == 49) && (menv [i].m_sec == BROWN || menv [i].m_sec == RED || menv [i].m_sec == LIGHTRED))) /* abominations created by twisted res, although it gets others too */
    if (!(menv [i].m_class == 83)) /* reapers */
     if (mons_holiness(menv [i].m_class) != 1) continue;
  }

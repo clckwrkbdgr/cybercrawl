@@ -66,7 +66,7 @@ unsigned int item_value(unsigned char item_clas, unsigned char item_typ, unsigne
 
 char in_a_shop(char shoppy, char id [4] [50]);
 
-void shop_print(char *shoppy, char sh_line);
+void shop_print(const char *shoppy, char sh_line);
 
 
 char more3(void);
@@ -84,8 +84,9 @@ void shop_set_id(int i, int shop_id [4] [50], unsigned char iclass, unsigned cha
 
 char book_rarity(char which_book);
 
-char in_a_shop(char shoppy, char id [4] [50])
+char in_a_shop(char shoppy_char, char id [4] [50])
 {
+	int shoppy = shoppy_char;
    unsigned int greedy = env[0].sh_greed [shoppy];
    int shop_id [4] [50];
    int shop_items [20];
@@ -96,7 +97,7 @@ char in_a_shop(char shoppy, char id [4] [50])
 
    int gp_value = 0;
    char i;
-   char ft;
+   unsigned char ft;
 
 #ifdef DOS_TERM
    char buffer[4800];
@@ -384,7 +385,7 @@ void shop_set_id(int i, int shop_id [4] [50], unsigned char iclass, unsigned cha
 }
 
 
-void shop_print(char *shoppy, char sh_lines)
+void shop_print(const char *shoppy, char sh_lines)
 {
  int i;
  gotoxy(1, sh_lines);
@@ -990,7 +991,7 @@ if (item_da / 30 == DARM_ORCISH) // orc
    if (id [2] [item_typ] > 0)
 	{
 
-	if (ident_lev > 1 && item_typ == RING_PROTECTION || item_typ == RING_STRENGTH || item_typ == RING_EVASION || item_typ == RING_DEXTERITY || item_typ == RING_INTELLIGENCE)
+	if (ident_lev > 1 && (item_typ == RING_PROTECTION || item_typ == RING_STRENGTH || item_typ == RING_EVASION || item_typ == RING_DEXTERITY || item_typ == RING_INTELLIGENCE))
 	{
 		if (it_plus >= 50 && (it_plus <= 130 || it_plus >= 150)) valued += 10 * (it_plus % 50);
 	}

@@ -133,7 +133,7 @@ char * strlwr(char *str)
 }
 
 
-int cprintf (char *format, ... )
+int cprintf (const char *format, ... )
 {
    int i;
    char buffer[2048]; // One full screen if no control seq...
@@ -260,7 +260,7 @@ int wherey()
 }
 
 
-int stricmp(char *str1, char *str2)
+int stricmp(const char *str1, const char *str2)
 {
         return(strcmp(str1, str2));
 }

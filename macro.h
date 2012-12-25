@@ -1,7 +1,8 @@
-#ifndef MACRO_C
-# undef getch()
-# define getch() getchm()
-#endif
+// TODO WTF?
+//#ifndef MACRO_C
+//# undef getch()
+//# define getch() getchm()
+//#endif
 
 #ifndef MACRO_H
 # define MACRO_H

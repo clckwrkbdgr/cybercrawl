@@ -428,7 +428,7 @@ void load (unsigned char stair_taken, char moving_level, char was_a_labyrinth, c
     }
 
     if (just_made_new_lev == 0) {
-      if (stair_taken == 69 | stair_taken == 81) stair_taken = 86;
+      if (stair_taken == 69 || stair_taken == 81) stair_taken = 86;
       else if (stair_taken < 86) stair_taken += 4;
       else if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
       else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
@@ -714,7 +714,7 @@ out_of_foll :
 
   for (i = 0; i < GXM; i ++) {
     for (j = 0; j < GYM; j ++) {
-      if (igrd [i] [j] < 0 | igrd [i] [j] > 501) igrd [i] [j] = 501;
+      if (igrd [i] [j] < 0 || igrd [i] [j] > 501) igrd [i] [j] = 501;
     }
   }
   for (i = 0; i < MNST; i ++) {
@@ -830,7 +830,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
 
       int count_out = 0;
 
-      if (igrd [count_x] [count_y] < 0 | igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
+      if (igrd [count_x] [count_y] < 0 || igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
       if (igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
       if (igrd [count_x] [count_y] == 501) continue;
 
@@ -840,7 +840,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
         mitm.ix [frx] = count_x;
         mitm.iy [frx] = count_y;
 
-        if (frx > 501 | frx < 0) {
+        if (frx > 501 || frx < 0) {
           cprintf("Error! Item out of bounds: ");
           itoa(frx, st_prn, 10);
           cprintf(st_prn);

@@ -705,7 +705,7 @@ char old_burden = you[0].burden_state;
 
 you[0].burden = 0;
 
-char bu = 0;
+unsigned char bu = 0;
 
 int max_carried = 1000 + you[0].strength * 200;
 
@@ -812,8 +812,8 @@ return 0;
 
 void forget_map(char chance_forgotten)
 {
-char xcount = 0;
-char ycount = 0;
+unsigned char xcount = 0;
+unsigned char ycount = 0;
 
 for (xcount = 0; xcount < 80; xcount ++)
 {
@@ -2050,7 +2050,7 @@ cprintf(print_it2);
 }
 
 
-char *species_name(char speci)
+const char *species_name(char speci)
 {
 
 if (you[0].species >= SP_RED_DRACONIAN && you[0].species <= SP_UNK2_DRACONIAN && you[0].xl < 7)

@@ -580,8 +580,9 @@ do
 
 
 
-void staff_spell(char zap_device_2)
+void staff_spell(char zap_device_2_char)
 {
+	int zap_device_2 = zap_device_2_char;
 
 if (you[0].inv_plus [zap_device_2] == 64 || you[0].inv_type [zap_device_2] < STAFF_SMITING || you[0].inv_type [zap_device_2] >= STAFF_AIR)
 {
@@ -665,8 +666,9 @@ mpr(info);
 
 
 
-void tome_of_power(char sc_read_2)
+void tome_of_power(char sc_read_2_char)
 {
+	int sc_read_2 = sc_read_2_char;
 
 int powc = 0;
 int spell_casted = 0;
@@ -825,9 +827,10 @@ your_spells(spell_casted, powc, 0);
 }
 
 
-void skill_manual(char sc_read_2)
+void skill_manual(char sc_read_2_char)
 {
 
+	int sc_read_2 = sc_read_2_char;
 char skname [30];
 char keyin;
 

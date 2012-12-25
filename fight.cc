@@ -2,7 +2,7 @@
 
 #ifdef DOS
 #include <conio.h>
-#endif DOS
+#endif //DOS
 
 #include <string.h>
 #include <stdlib.h>
@@ -313,7 +313,7 @@ if ((your_to_hit >= menv [monster_attacked].m_ev || random2(15) == 0) || ((menv 
         damage_done = (int) random2(damage);
 
 
-if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS || you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_STAVES)
+if (you[0].equip [EQ_WEAPON] != -1 && (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS || you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_STAVES))
 {
  damage_done *= 25 + (random2(you[0].skills [weapon_skill(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]])] + 1));
  damage_done /= 25;
@@ -446,7 +446,7 @@ damage_done /= 30;
          mpr(info);
         }
 
-if (hit == 1 && damage_done >= 1 || (hit == 1 && damage_done < 1 && menv [monster_attacked].m_ench [2] == 6))
+if ((hit == 1 && damage_done >= 1) || (hit == 1 && damage_done < 1 && menv [monster_attacked].m_ench [2] == 6))
         {
         strcpy(info, "You hit ");
         strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
@@ -1548,7 +1548,7 @@ if (player_res_poison() == 0)
 
  case MONS_HUNGRY_GHOST: // hungry ghost
  if (you[0].is_undead == 2) break;
-      if (damage_taken >= 1 && random2(2) == 0 || random2(20) == 0)
+      if ((damage_taken >= 1 && random2(2) == 0) || random2(20) == 0)
       {
         strcpy(info, "You feel hungry.");
         mpr(info);
@@ -1728,7 +1728,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
 //   if (menv [monster_attacking].m_class == 400) break;
    specdam = 0;
 
-   if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150) break;
+   if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150)) break;
    if (random2(3) == 0)
    {
     strcpy(info, "You are electrocuted!");
@@ -2521,7 +2521,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    if (mons_res_elec(menv [monster_attacked].m_class) != 0) break;
    specdam = 0;
 
-   if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150) break;
+   if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150)) break;
    if (random2(3) == 0)
    {
     strcpy(info, "There is a sudden explosion of sparks!");

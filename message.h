@@ -1,5 +1,5 @@
 
-void mpr(char inf [200]);
+void mpr(const char inf [200]);
 void mesclr(void);
 void more(void);
 void mesclr(void);

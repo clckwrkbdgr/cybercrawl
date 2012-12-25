@@ -6,7 +6,7 @@
 
 #define NO_RUMOURS 30
 
-char *rumour[] = {
+const char *rumour[] = {
 "They say Dispater's truename is Kenneth.",
 "They say Ereshkigal's truename is Mabel.",
 "Lose weight fast - drink a potion of decay!",
@@ -44,7 +44,7 @@ char *rumour[] = {
 };
 
 
-char *rumours(void)
+const char *rumours(void)
 {
  return rumour [random() % NO_RUMOURS];
 }

@@ -105,8 +105,8 @@ return traps_found;
 int corpse_rot(int power)
 {
 
-char adx = 0;
-char ady = 0;
+unsigned char adx = 0;
+unsigned char ady = 0;
 
 char minx = you[0].x_pos - 6;
 char maxx = you[0].x_pos + 7;
@@ -183,8 +183,8 @@ return 0;
 int animate_dead(int power, int corps_beh, int corps_hit, int actual)
 {
 
-char adx = 0;
-char ady = 0;
+unsigned char adx = 0;
+unsigned char ady = 0;
 
 char minx = you[0].x_pos - 6;
 char maxx = you[0].x_pos + 7;
@@ -263,8 +263,9 @@ return number_raised;
 
 }
 
-int animate_a_corpse(char axps, char ayps, int corps_beh, int corps_hit, char class_allowed)
+int animate_a_corpse(char axps_char, char ayps_char, int corps_beh, int corps_hit, char class_allowed)
 {
+	int axps = axps_char, ayps = ayps_char;
 
 if (igrd [axps] [ayps] == 501) return 0;
 
@@ -387,7 +388,7 @@ create_monster(type_resurr, 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target,
 char brand_weapon(char which_brand, int power)
 {
 
-char duration_affected = 0;
+unsigned char duration_affected = 0;
 
 if (you[0].duration [DUR_VORPAL_BLADE] != 0 || you[0].duration [DUR_FIRE_BRAND] != 0 || you[0].duration [DUR_ICE_BRAND] != 0 || you[0].duration [DUR_LETHAL_INFUSION] != 0)
         return 0;

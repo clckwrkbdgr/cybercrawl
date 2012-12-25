@@ -29,7 +29,7 @@ void perma_mutate(int which_mut, char how_much);
 
 char mut_string [80];
 
-char *mutation_descrip [] [3] =
+const char *mutation_descrip [] [3] =
 {
 {"You have tough skin (AC +1).", "You have very tough skin (AC +2).", "You have extremely tough skin (AC +3)."},
 {"Your muscles are strong (Str +", "", ""},
@@ -117,7 +117,7 @@ to the "resist mutation" mutation thing.
 */
 
 
-char *gain_mutation [] [3] =
+const char *gain_mutation [] [3] =
 {
 {"Your skin toughens.", "Your skin toughens.", "Your skin toughens."},
 {"You feel stronger.", "You feel stronger.", "You feel stronger."},
@@ -201,7 +201,7 @@ char *gain_mutation [] [3] =
 };
 
 
-char *lose_mutation [] [3] =
+const char *lose_mutation [] [3] =
 {
 {"Your skin feels delicate.", "Your skin feels delicate.", "Your skin feels delicate."},
 {"You feel weaker.", "You feel weaker.", "You feel weaker."},
@@ -388,7 +388,7 @@ return;
 
 char mutate(int which_mutation)
 {
-char mutat = which_mutation;
+int mutat = which_mutation;
 
 char force = 0;
 
@@ -433,7 +433,7 @@ if (which_mutation == 100)
 
 if (you[0].mutation [mutat] >= 3 && mutat != MUT_STRONG && mutat != MUT_CLEVER && mutat != MUT_AGILE && mutat != MUT_WEAK && mutat != MUT_DOPEY && mutat != MUT_CLUMSY) return 0;
 if (you[0].mutation [mutat] > 13 && force == 0) return 0;
-if (mutat == MUT_TOUGH_SKIN || (mutat >= MUT_GREEN_SCALES && mutat <= MUT_BONEY_PLATES) && body_covered() > 2) return 0;
+if (mutat == MUT_TOUGH_SKIN || ((mutat >= MUT_GREEN_SCALES && mutat <= MUT_BONEY_PLATES) && body_covered() > 2)) return 0;
 
 if ((mutat == MUT_ACUTE_VISION || mutat == MUT_POISON_RESISTANCE || mutat == MUT_SPIT_POISON) && you[0].species == SP_NAGA) return 0; // nagas have see invis and res poison and can spit poison
 if (you[0].species == SP_GNOME && mutat == MUT_MAPPING) return 0; /* gnomes can't sense surroundings */
@@ -682,7 +682,7 @@ return j;
 
 char delete_mutation(char which_mutation)
 {
-char mutat = which_mutation;
+int mutat = which_mutation;
 
 if (you[0].mutation [MUT_MUTATION_RESISTANCE] > 1 && (you[0].mutation [MUT_MUTATION_RESISTANCE] == 3 || random2(2) == 0))
 {
@@ -891,8 +891,9 @@ return covered;
 }
 
 
-char *mutation_name(char which_mutat)
+const char *mutation_name(char which_mutat_char)
 {
+	int which_mutat = which_mutat_char;
  char st_prn [5];
 
  if (which_mutat == MUT_STRONG || which_mutat == MUT_CLEVER || which_mutat == MUT_AGILE || which_mutat == MUT_WEAK || which_mutat == MUT_DOPEY || which_mutat == MUT_CLUMSY)

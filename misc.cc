@@ -251,8 +251,8 @@ if ((mcls == MONS_DRAGON || mcls == MONS_TROLL || mcls == MONS_ICE_DRAGON || mcl
 
 char search_around(void)
 {
-char srx = 0;
-char sry = 0;
+unsigned char srx = 0;
+unsigned char sry = 0;
 int i;
 
 //if (you[0].clas == 3) chance_found = 2;
@@ -1651,8 +1651,10 @@ char go_berserk(void)
 
 
 
-int trap_item(char iclass, char itype, char beam_x, char beam_y)
+int trap_item(char iclass, char itype, char beam_x_char, char beam_y_char)
 {
+	int beam_x = beam_x_char;
+	int beam_y = beam_y_char;
 
 if (igrd [beam_x] [beam_y] != 501)
 	{

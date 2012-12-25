@@ -39,12 +39,12 @@ char curse_an_item(char which, char power)
 
 /* I think this is wrong??? */
 
-char possib [52];
-char cu = power;
+unsigned char possib [52];
+unsigned char cu = power;
 cu = 0;
-char cu1 = 0;
-char cu2 = 0;
-char cu3 = 0;
+unsigned char cu1 = 0;
+unsigned char cu2 = 0;
+unsigned char cu3 = 0;
 
 
 for (cu = 0; cu < 52; cu++)
@@ -418,7 +418,7 @@ if (menv [i].m_hit != MHITNOT && ((mons_near(i) == 1 && mons_near(menv [i].m_hit
   menv [i].m_targ_1_y = menv [menv [i].m_hit].m_y;
 }
  else
-    if (mons_near(i) == 1 && (menv [i].m_targ_1_x == menv [i].m_x && menv [i].m_targ_1_y == menv [i].m_y) || random2(3) == 0)
+    if (mons_near(i) == 1 && ((menv [i].m_targ_1_x == menv [i].m_x && menv [i].m_targ_1_y == menv [i].m_y) || random2(3) == 0))
     {
      if (random2(7) == 0)
       {
@@ -1416,72 +1416,75 @@ casted : if (spell_cast == 100) goto end_switch;
 if (mons_near(i) == 1)
 {
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-if (menv [i].m_class != MONS_BRAIN_WORM) /* brain worm */
-
-if (menv [i].m_class == MONS_STEAM_DRAGON || menv [i].m_class == MONS_MOTTLED_DRAGON || menv [i].m_class == MONS_STORM_DRAGON || menv [i].m_class == MONS_GOLDEN_DRAGON || menv [i].m_class == MONS_SHADOW_DRAGON || menv [i].m_class == MONS_SWAMP_DRAGON || menv [i].m_class == MONS_SWAMP_DRAKE || menv [i].m_class == MONS_HELL_HOG || menv [i].m_class == MONS_SERPENT_OF_HELL || menv [i].m_class == MONS_QUICKSILVER_DRAGON || menv [i].m_class == MONS_IRON_DRAGON) /* steam, mottled, storm and golden dragons, etc */
- {
-  if (menv [i].m_ench [2] != 6)
-			{
-   		strcat(info, " breathes.");
-   		mpr(info);
-			}
- } else
-
- if (menv [i].m_class == MONS_GREAT_ORB_OF_EYES || menv [i].m_class == MONS_SHINING_EYE || menv [i].m_class == MONS_EYE_OF_DEVASTATION) // great orb of eyes etc
- {
-  if (menv [i].m_ench [2] != 6)
-			{
-   		strcat(info, " gazes.");
-   		mpr(info);
-			}
- } else
- if (menv [i].m_class == MONS_VAPOUR) // vapour
- {
-  menv [i].m_ench [2] = 6;
- }
- else
- if (menv [i].m_class == MONS_GIANT_ORANGE_BRAIN) // giant orange brain
- {
-  if (menv [i].m_ench [2] != 6)
-			{
-   		strcat(info, " pulsates.");
-   		mpr(info);
-			}
- } else
- if (menv [i].m_class == MONS_GERYON)
- {
-   strcat(info, " winds a great silver horn.");
-   mpr(info);
- } else
- if (menv [i].m_class == MONS_NAGA || menv [i].m_class == MONS_NAGA_WARRIOR)
- {
-   strcat(info, " spits poison.");
-   mpr(info);
- } else
- if ((menv [i].m_class >= MONS_HELLION && menv [i].m_class <= 90) || menv [i].m_class == MONS_EFREET || (menv [i].m_class >= MONS_WHITE_IMP && menv [i].m_class <= MONS_CACODEMON))
+	if (menv [i].m_class != MONS_BRAIN_WORM) /* brain worm */
 	{
-		strcat(info, " gestures.");
-		mpr(info);
-	} else
-	 if (menv [i].m_class == MONS_DORGI || menv [i].m_class == MONS_GUARDIAN_ROBOT)
-	 {
-		strcat(info, " fires!");
-		mpr(info);
- 	 } else
-	 if (menv [i].m_class == MONS_SWORD) /* Sword */
-	 {
-		strcat(info, " burns!");
-		mpr(info);
- 	 } else
-     if (strstr(monam (menv [i].m_sec, menv [i].m_class, 0, 0), "priest") != NULL) /* various priestly types - assumes they're called 'something priest' */
-	 {
-		strcat(info, " utters an invocation.");
-		mpr(info);
- 	 } else
-      	       {
-       		    strcat(info, " executes a program.");
-       		    mpr(info);
-               }
+
+		if (menv [i].m_class == MONS_STEAM_DRAGON || menv [i].m_class == MONS_MOTTLED_DRAGON || menv [i].m_class == MONS_STORM_DRAGON || menv [i].m_class == MONS_GOLDEN_DRAGON || menv [i].m_class == MONS_SHADOW_DRAGON || menv [i].m_class == MONS_SWAMP_DRAGON || menv [i].m_class == MONS_SWAMP_DRAKE || menv [i].m_class == MONS_HELL_HOG || menv [i].m_class == MONS_SERPENT_OF_HELL || menv [i].m_class == MONS_QUICKSILVER_DRAGON || menv [i].m_class == MONS_IRON_DRAGON) /* steam, mottled, storm and golden dragons, etc */
+		{
+			if (menv [i].m_ench [2] != 6)
+			{
+				strcat(info, " breathes.");
+				mpr(info);
+			}
+		} else
+
+			if (menv [i].m_class == MONS_GREAT_ORB_OF_EYES || menv [i].m_class == MONS_SHINING_EYE || menv [i].m_class == MONS_EYE_OF_DEVASTATION) // great orb of eyes etc
+			{
+				if (menv [i].m_ench [2] != 6)
+				{
+					strcat(info, " gazes.");
+					mpr(info);
+				}
+			} else
+				if (menv [i].m_class == MONS_VAPOUR) // vapour
+				{
+					menv [i].m_ench [2] = 6;
+				}
+				else
+					if (menv [i].m_class == MONS_GIANT_ORANGE_BRAIN) // giant orange brain
+					{
+						if (menv [i].m_ench [2] != 6)
+						{
+							strcat(info, " pulsates.");
+							mpr(info);
+						}
+					} else
+						if (menv [i].m_class == MONS_GERYON)
+						{
+							strcat(info, " winds a great silver horn.");
+							mpr(info);
+						} else
+							if (menv [i].m_class == MONS_NAGA || menv [i].m_class == MONS_NAGA_WARRIOR)
+							{
+								strcat(info, " spits poison.");
+								mpr(info);
+							} else
+								if ((menv [i].m_class >= MONS_HELLION && menv [i].m_class <= 90) || menv [i].m_class == MONS_EFREET || (menv [i].m_class >= MONS_WHITE_IMP && menv [i].m_class <= MONS_CACODEMON))
+								{
+									strcat(info, " gestures.");
+									mpr(info);
+								} else
+									if (menv [i].m_class == MONS_DORGI || menv [i].m_class == MONS_GUARDIAN_ROBOT)
+									{
+										strcat(info, " fires!");
+										mpr(info);
+									} else
+										if (menv [i].m_class == MONS_SWORD) /* Sword */
+										{
+											strcat(info, " burns!");
+											mpr(info);
+										} else {
+											if (strstr(monam (menv [i].m_sec, menv [i].m_class, 0, 0), "priest") != NULL) /* various priestly types - assumes they're called 'something priest' */
+											{
+												strcat(info, " utters an invocation.");
+												mpr(info);
+											} else
+											{
+												strcat(info, " executes a program.");
+												mpr(info);
+											}
+										}
+	}
 /*
 itoa(spell_cast, st_prn, 10);
 strcpy(info, st_prn);
@@ -1872,7 +1875,7 @@ for (count_x = 0; count_x < 3; count_x ++)
   }
   tunnel : if (mgrd [menv [i].m_x + count_x - 1] [menv [i].m_y + count_y - 1] != MNG)
   {
-    if (!(menv [mgrd [menv [i].m_x + count_x - 1] [menv [i].m_y + count_y - 1]].m_beh == BEH_ENSLAVED || menv [i].m_beh == BEH_ENSLAVED && menv [mgrd [menv [i].m_x + count_x - 1] [menv [i].m_y + count_y - 1]].m_beh != menv [i].m_beh))
+    if (!((menv [mgrd [menv [i].m_x + count_x - 1] [menv [i].m_y + count_y - 1]].m_beh == BEH_ENSLAVED || menv [i].m_beh == BEH_ENSLAVED) && menv [mgrd [menv [i].m_x + count_x - 1] [menv [i].m_y + count_y - 1]].m_beh != menv [i].m_beh))
     {
      good_move [count_x] [count_y] = 0;
      continue;
@@ -2014,7 +2017,7 @@ if (which_first == 1)
 } else /* end of: if (mmov_x !=0 etc */
 {
 
-	if (mmov_x != 0 ^ mmov_y != 0) /* ^ = XOR, || = OR(inc) */
+	if ((mmov_x != 0) ^ (mmov_y != 0)) /* ^ = XOR, || = OR(inc) */
 	{
 	if (mmov_x != 0 && (good_move [mmov_x + 1] [1] == 0))
 	{

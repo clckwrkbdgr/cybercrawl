@@ -690,6 +690,7 @@ if (
             || you[0].inv_type [armour_wear_2] == ARM_LARGE_SHIELD
           ) 
        && (    /* you are wielding a weapon */
+		   (
                you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS 
             && (
                  /* and it's two handed */
@@ -702,6 +703,7 @@ if (
                  || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_GIANT_CLUB 
                  || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_GIANT_SPIKED_CLUB
                )
+		  )
        || /* you are wielding a staff */
           you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_STAVES
           )
@@ -803,7 +805,7 @@ if (you[0].inv_type [armour_wear_2] == ARM_CRYSTAL_PLATE_MAIL && (you[0].skills 
 
 if ((you[0].species >= SP_OGRE && you[0].species <= SP_UNK2_DRACONIAN) || you[0].species == SP_SPRIGGAN)
 {
- if (you[0].inv_type [armour_wear_2] >= ARM_LEATHER_ARMOUR && you[0].inv_type [armour_wear_2] <= ARM_PLATE_MAIL || you[0].inv_type [armour_wear_2] >= ARM_HELMET && you[0].inv_type [armour_wear_2] <= ARM_BUCKLER || you[0].inv_type [armour_wear_2] == ARM_CRYSTAL_PLATE_MAIL)
+ if ((you[0].inv_type [armour_wear_2] >= ARM_LEATHER_ARMOUR && you[0].inv_type [armour_wear_2] <= ARM_PLATE_MAIL) || (you[0].inv_type [armour_wear_2] >= ARM_HELMET && you[0].inv_type [armour_wear_2] <= ARM_BUCKLER) || (you[0].inv_type [armour_wear_2] == ARM_CRYSTAL_PLATE_MAIL))
  {
   strcpy(info, "This armour doesn't fit on your body.");
   mpr(info);
@@ -820,7 +822,7 @@ if (you[0].inv_type [armour_wear_2] == ARM_PLATE_MAIL && (you[0].skills [SK_ARMO
  } else*/ mpr("This armour is uncomfortably cumbersome.");
 }
 
-if (you[0].inv_type [armour_wear_2] == ARM_BANDED_MAIL || you[0].inv_type [armour_wear_2] == ARM_SPLINT_MAIL && (you[0].skills [SK_ARMOUR] < 3 || you[0].species == SP_GNOME || you[0].species == SP_HALFLING))
+if ((you[0].inv_type [armour_wear_2] == ARM_BANDED_MAIL || you[0].inv_type [armour_wear_2] == ARM_SPLINT_MAIL) && (you[0].skills [SK_ARMOUR] < 3 || you[0].species == SP_GNOME || you[0].species == SP_HALFLING))
 {
 /* if (you[0].species == SP_GNOME || you[0].species == SP_HALFLING)
  {
@@ -1516,6 +1518,7 @@ strcpy(info, "Which direction? (* to target)");
 mpr(info);
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+ {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -1523,6 +1526,7 @@ mpr(info);
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+ }
 
 //direction(1);
 direction(1, thr);
@@ -2459,6 +2463,7 @@ if (you[0].inv_class [zap_device_2] != OBJ_WANDS || you[0].inv_plus [zap_device_
 strcpy(info, "Which direction? (* to target)");
 mpr(info);
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+{
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -2466,6 +2471,7 @@ mpr(info);
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+}
 
 direction(1, zap_wand);
 
@@ -2837,7 +2843,7 @@ int sc_read_2;
 int id_used = 0;
 unsigned char nthing = 0;
 
-char affected = 0;
+unsigned char affected = 0;
 
 int i;
 struct bolt beam [1];
@@ -3546,8 +3552,8 @@ return;
 void original_name(void)
 {
 char drink_1;
-char drink_2;
-char inn = 0;
+unsigned char drink_2;
+unsigned char inn = 0;
 unsigned char nthing = 0;
 
 query : strcpy(info, "Examine which item?");

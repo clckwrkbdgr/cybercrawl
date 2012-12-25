@@ -62,7 +62,7 @@ void species_ability(void) /* Now handles all special abilities */
 
 	int ability [120];
 	int ability_fail [120];
-	char abil_c = 0;
+	unsigned char abil_c = 0;
 	unsigned char abil_used;
 	unsigned char spc, spc2;
 	char keyi;
@@ -281,7 +281,11 @@ always changing around */
 		abil_c ++;
 	}
 
-	if ((you[0].equip [EQ_LEFT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_LEFT_RING]] == RING_LEVITATION) || (you[0].equip [EQ_RIGHT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_RIGHT_RING]] == RING_LEVITATION) || (you[0].equip [EQ_BOOTS] != -1 && you[0].inv_dam [you[0].equip [EQ_BOOTS]] % 30 == SPARM_LEVITATION) || (scan_randarts(RAP_LEVITATE) > 0) && you[0].lev == 0)
+	int ring_lev_on_left = ( you[0].equip [EQ_LEFT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_LEFT_RING]] == RING_LEVITATION);
+	int ring_lev_on_right = ( you[0].equip [EQ_RIGHT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_RIGHT_RING]] == RING_LEVITATION);
+	int boot_lev = ( you[0].equip [EQ_BOOTS] != -1 && you[0].inv_dam [you[0].equip [EQ_BOOTS]] % 30 == SPARM_LEVITATION);
+	int randart_lev = ( ( scan_randarts ( RAP_LEVITATE) > 0) && you[0].lev == 0 );
+	if (ring_lev_on_left || ring_lev_on_right || boot_lev || randart_lev)
 	{
  		ability [abil_c] = ABIL_LEVITATE;
  		ability_fail [abil_c] = 50 - you[0].xl * 2;

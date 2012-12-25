@@ -104,7 +104,7 @@ void banished(unsigned char gate_type)
 
 char forget_spell(void)
 {
-char spc2;
+unsigned char spc2;
 if (you[0].spell_no <= 0) return 0;
 
 do

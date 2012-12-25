@@ -1815,7 +1815,7 @@ int place_monster(
 	if (menv [bk].m_class == 19)
 	{
  		if (bk >= 170) menv [bk].m_class = 22;
-  		else if (menv [bk + 1].m_class != -1 || menv [bk + 2].m_class != -1 |
+  		else if (menv [bk + 1].m_class != -1 || menv [bk + 2].m_class != -1 ||
   			menv [bk + 3].m_class != -1 || menv [bk + 4].m_class != -1)
   			menv [bk].m_class = 22;
 	}
@@ -2067,13 +2067,13 @@ int place_monster(
 
 	if (plus_seventy != 250) menv [bk].m_sec = plus_seventy;
 
-	if ((menv [bk].m_class == 25 || menv [bk].m_class == 107 |
-		menv [bk].m_class == 51 || menv [bk].m_class == 108 |
+	if ((menv [bk].m_class == 25 || menv [bk].m_class == 107 ||
+		menv [bk].m_class == 51 || menv [bk].m_class == 108 ||
 		menv [bk].m_class == 367) && plus_seventy != 250)
 	{
 	    define_zombie(3, plus_seventy, menv [bk].m_class);
-	} else if (menv [bk].m_class == 25 || menv [bk].m_class == 51 |
-		menv [bk].m_class == 107 || menv [bk].m_class == 108 |
+	} else if (menv [bk].m_class == 25 || menv [bk].m_class == 51 ||
+		menv [bk].m_class == 107 || menv [bk].m_class == 108 ||
 		menv [bk].m_class == 367)
     define_zombie(3, 250, 250);
 
@@ -2134,8 +2134,8 @@ int place_monster(
    						menv [bk].m_x = 10 + random3(70);
    						menv [bk].m_y = 10 + random3(60);
 //   if (passed [1] == 0 && menv [bk].m_x < you[0].x_pos + 7 && menv [bk].m_x > you[0].x_pos - 7 && menv [bk].m_y < you[0].y_pos + 7 && menv [bk].m_y > you[0].y_pos - 7 && random3(100) != 0) continue; // avoids (hopefully) monsters being generated on the same screen as you
-  					} while ((grd [menv [bk].m_x] [menv [bk].m_y] < 67 |
-  						mgrd [menv [bk].m_x] [menv [bk].m_y] != MNG) |
+  					} while ((grd [menv [bk].m_x] [menv [bk].m_y] < 67 ||
+  						mgrd [menv [bk].m_x] [menv [bk].m_y] != MNG) ||
   						(passed [1] == 0 && menv [bk].m_x < you[0].x_pos +
   						7 && menv [bk].m_x > you[0].x_pos - 7 &&
   						menv [bk].m_y < you[0].y_pos + 7 && menv [bk].m_y >
@@ -2762,7 +2762,9 @@ void big_room(void)
 //		octa_room(grd, 61);
  		type_floor = 61;
  		if (many_many > 7) // stops water on level 1
-  		if (random3(many_many) <= 13) type_floor = 62; else type_floor = 61;
+		{
+			if (random3(many_many) <= 13) type_floor = 62; else type_floor = 61;
+		}
 
   		if (many_many >= 75 && many_many < 80) return; // Dis - Is this even possible?
   		if (many_many >= 80 && many_many < 85) type_floor = 61; // G
@@ -2793,7 +2795,9 @@ void big_room(void)
 	{
  		type_floor = 61;
  		if (many_many > 7) // stops water on level 1
+		{
  		if (random3(many_many) <= 13) type_floor = 62; else type_floor = 61;
+		}
 	}
 
 	if (many_many >= 75 && many_many < 80) return; // Is this even possible?
@@ -3221,7 +3225,7 @@ int items(unsigned char allow_uniques,
    					{
     					if (you[0].unique_items [no_unique] == 1 || (many_many == 51 && you[0].unique_items [no_unique] == 0) || (you[0].unique_items [no_unique] == 2 && many_many != 51)) goto out_of_uniques;
    					} else if (you[0].unique_items [24 + no_unique - 7] == 1
-   						| (many_many == 51 && you[0].unique_items [24 +
+   						|| (many_many == 51 && you[0].unique_items [24 +
    						no_unique - 7] == 0) || (you[0].unique_items [24 +
    						no_unique - 7] == 2 && many_many != 51))
    						goto out_of_uniques;
@@ -3586,7 +3590,7 @@ int items(unsigned char allow_uniques,
 
 			if (random() % 7 == 0 && mitm.itype [bp] >= 1 && mitm.itype [bp] <= 3) mitm.idam [bp] = mitm.idam [bp] % 30 + 1;
 			if (random() % 7 == 0 && mitm.itype [bp] >= 1 && mitm.itype [bp] <= 3) mitm.idam [bp] = mitm.idam [bp] % 30 + 2;
-			if ((random() % 5 == 0 || mitm.idam [bp] == 90 && random() % 3 == 0) && mitm.itype [bp] >= 1 && mitm.itype [bp] <= 3) mitm.idam [bp] = mitm.idam [bp] % 30 + 3;
+			if ((random() % 5 == 0 || (mitm.idam [bp] == 90 && random() % 3 == 0)) && mitm.itype [bp] >= 1 && mitm.itype [bp] <= 3) mitm.idam [bp] = mitm.idam [bp] % 30 + 3;
             quant = random3(9) + random3 (12) + random3 (15) + random3(12) + 1;
             if (10 + many_many >= random3(100)) mitm.iplus [bp] = random3(5);
 			mitm.iplus [bp] += 50;
@@ -4877,7 +4881,7 @@ void give_item(void)
 	int iquan = 1;
 	int bp = 0;
 	int thing_created = 0;
-	char hand_used = 0; // for Ettins etc.
+	unsigned char hand_used = 0; // for Ettins etc.
 	int xitc = 0;
 	int xitt = 0;
 
@@ -6210,12 +6214,12 @@ void roguey_level(void)
 
 // Now, join them together:
 
-	char pos [2];
+	int pos [2];
 	char jpos [2];
 
-	char doing = 0;
+	unsigned char doing = 0;
 
-	char last_room = 0;
+	int last_room = 0;
 
 
 	for (bp = 0; bp < 2; bp ++)
@@ -6339,7 +6343,7 @@ void city_level(void)
 	int x2 = 0;
 	int y1 = 0;
 	int y2 = 0;
-	char pos [2];
+	int pos [2];
 
 	if (random3(4) != 0)
 	{
@@ -7282,8 +7286,8 @@ void place_shops(void)
 
 	int i = 0;
 
-	char shop_place_x = 0;
-	char shop_place_y = 0;
+	unsigned char shop_place_x = 0;
+	unsigned char shop_place_y = 0;
 	char force_stype = 100;
 
 	if (random3(5) == 0) no_shops = 1;
@@ -7358,7 +7362,7 @@ void place_spec_shop(char shop_x, char shop_y, char force_s_type)
 	env[0].sh_x [i] = shop_x;
 	env[0].sh_y [i] = shop_y;
 
- 	grd [shop_x] [shop_y] = 80;
+ 	grd [int(shop_x)] [int(shop_y)] = 80;
 
 }
 
@@ -7427,8 +7431,8 @@ int treasure_area(
 
 void hide_doors(void)
 {
-	char dx = 0;
-	char dy = 0;
+	unsigned char dx = 0;
+	unsigned char dy = 0;
 
 	for (dx = 0; dx < 80; dx ++)
 	{
@@ -7533,7 +7537,7 @@ void bigger_room(void)
 
 	many_pools(62);
 
-	char pos [2];
+	int pos [2];
 
 	for (bj = 0; bj < 3 + random3(2); bj ++)
 	{
@@ -7671,7 +7675,7 @@ void plan_main(char force_plan)
 
 	char do_stairs = 0;
 
-	char pos [2];
+	int pos [2];
 
 	unsigned char special_grid = 2;
 	if (random() % 3 == 0) special_grid = 4;
@@ -7804,7 +7808,7 @@ char plan_3(void)
    Of course, this can easily end up looking just like a make_trail level. */
 
 
-	char cnx, cny;
+	unsigned char cnx, cny;
 	char roomsss = 30 + random() % 90;
 	char exclusive = 1;
 	if (random() % 10 == 0) exclusive = 0;
@@ -7814,7 +7818,7 @@ char plan_3(void)
 
 	char romx1 [30] , romy1 [30], romx2 [30], romy2 [30];
 
-	char which_room = 0;
+	unsigned char which_room = 0;
 
 	for (bi = 0; bi < roomsss; bi ++)
 	{
@@ -7877,7 +7881,7 @@ char plan_4(char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2, unsi
 
 	char b1x, b1y, b2x, b2y;
 
-	char cnx, cny;
+	unsigned char cnx, cny;
 
 	if (random() % 3 == 0) drawing = 2;
 	if (random() % 6 == 0) drawing = 4;
@@ -8031,7 +8035,7 @@ void join_the_dots(unsigned char dotx1, unsigned char doty1, unsigned char dotx2
 
 	if (dotx1 == dotx2 && doty1 == doty2) return;
 
-	char atx = dotx1, aty = doty1;
+	unsigned char atx = dotx1, aty = doty1;
 
 	int join_count = 0;
 
@@ -8082,7 +8086,7 @@ void build_vaults(int force_vault)
 
 	int altar_count = 0;
 	char stair_exist [10];
-	char stx, sty;
+	unsigned char stx, sty;
 
 
 	char acq_item_class [7];
@@ -8102,7 +8106,7 @@ void build_vaults(int force_vault)
 
 	char roomsss = 10 + random() % 90;
 	char exclusive = 1;
-	char which_room = 0;
+	unsigned char which_room = 0;
 
 	char vgrid [81] [81];
 
@@ -8117,8 +8121,8 @@ void build_vaults(int force_vault)
 
 	char dig_dir_x = 0;
 	char dig_dir_y = 0;
-	char dig_place_x = 0;
-	char dig_place_y = 0;
+	unsigned char dig_place_x = 0;
+	unsigned char dig_place_y = 0;
 
 // note: assumes *no* previous item (I think) or monster (definitely) placement
 
@@ -8191,7 +8195,7 @@ void build_vaults(int force_vault)
 	}
 
 
-	char cnx, cny;
+	unsigned char cnx, cny;
 	if (random() % 10 == 0) exclusive = 0;
 
 	if (random() % 2 == 0) exclusive2 = 0;

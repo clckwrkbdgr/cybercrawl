@@ -36,11 +36,12 @@ while (deg > 0)
 
 
 #ifdef CLASSES
-void exercise2(char exsk, char deg, char cutting)
+void exercise2(char exsk_char, char deg, char cutting)
 #else
-void exercise2(char exsk, char deg)
+void exercise2(char exsk_char, char deg)
 #endif
 {
+	int exsk = exsk_char;
 
  int skill_change = deg * (you[0].skills [exsk] + 1);// + 3;
  char title [40];

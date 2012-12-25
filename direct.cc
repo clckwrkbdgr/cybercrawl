@@ -220,6 +220,7 @@ int look_around(struct dist moves [1])
  mpr(info);
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+ {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -227,6 +228,7 @@ int look_around(struct dist moves [1])
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+ }
 
 
 	gotoxy(xps,yps);

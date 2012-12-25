@@ -11,7 +11,7 @@ int property(int pr1, int pr2, int pr3);
 int mass(int pr1, int pr2);
 void init_properties(void);
 unsigned char check_item_knowledge(void);
-char weapon_skill(char wclass, char wtype);
+int weapon_skill(char wclass, char wtype);
 char damage_type(char wclass, char wtype);
 void make_name(unsigned char var1, unsigned char var2, unsigned char var3, char ncase, char str_pass [50]);
 

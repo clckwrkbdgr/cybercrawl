@@ -19,7 +19,7 @@ unsigned int skill_exp_needed(int lev); /* both in skills.cc */
 
 //#define DEBUG
 
-char *skills[50][5] = {
+const char *skills[50][5] = {
 {"Fighting",	   "Grunt", "Fighter", "Warrior", "Slayer"}, // fighter
 {"Short Blades",   "Stabber","Cutter","Slicer","Knifefighter"}, // short blades
 {"Long Swords",	   "Slasher", "Cutter", "Slicer", "Eviscerator"}, // long swords
@@ -1817,7 +1817,7 @@ case 2: // elf
 
 
 
-char *skill_name(char which_skill);
+const char *skill_name(char which_skill);
 
 void show_skills(void)
 {
@@ -1893,8 +1893,9 @@ reprint_stuff:
          	lcount = 0; // toggle skill practise
          	for (i = 0; i < 50; i ++) {
           		if (you[0].skills [i] == 0) continue;
-	  		if (get_thing - 97 == lcount ++)
+	  		if (get_thing - 97 == lcount ++) {
               			if (you[0].practise_skill [i] == 0) you[0].practise_skill [i] = 1; else you[0].practise_skill [i] = 0;
+			}
 		}
 		goto reprint_stuff;
 	}
@@ -1905,13 +1906,13 @@ reprint_stuff:
    	return;
 }
 
-char *skill_name(char which_skill)
+const char *skill_name(char which_skill)
 {
- return skills [which_skill] [0];
+ return skills [int(which_skill)] [0];
 }
 
 
-char *skill_title(char best_skill, char skill_lev, char char_class, char char_lev)
+const char *skill_title(char best_skill, char skill_lev, char char_class, char char_lev)
 {
 
 //char title [40];
@@ -1921,7 +1922,7 @@ char *skill_title(char best_skill, char skill_lev, char char_class, char char_le
 char skill_lev2 = char_class;
 skill_lev2 = 0;
 char char_lev2 = 0;
-char *tempstr=NULL;
+const char *tempstr=NULL;
 
 //if (skill_lev <= 21)
 skill_lev2 = 3;
@@ -1955,7 +1956,7 @@ switch(char_lev2)
  case 3: return "Scourge of Evil";
 }
 } else {*/
-	if(best_skill<50) tempstr=skills[best_skill][skill_lev2+1];
+	if(best_skill<50) tempstr=skills[int(best_skill)][skill_lev2+1];
 //	if(tempstr!=NULL) strcpy(title,tempstr);
 //       }
 
@@ -1966,7 +1967,7 @@ return tempstr;
 }
 
 
-char best_skill(char min_skill, char max_skill, char excl_skill)
+int best_skill(char min_skill, char max_skill, char excl_skill)
 {
 
 char skillb = 0;
@@ -2141,12 +2142,12 @@ return 0;
 int species_skills(char skill, char species)
 {
 
-if (skill == SK_SPELLCASTING) return (spec_skills [species - 1] [skill] * 130) / 100;
+if (skill == SK_SPELLCASTING) return (spec_skills [int(species) - 1] [int(skill)] * 130) / 100;
 /* Spellcasting requires more practice */
-if (skill == SK_INVOCATIONS) return (spec_skills [species - 1] [skill] * 70) / 100;
+if (skill == SK_INVOCATIONS) return (spec_skills [int(species) - 1] [int(skill)] * 70) / 100;
 /* Invocations requires less */
 
-return spec_skills [species - 1] [skill];
+return spec_skills [int(species) - 1] [int(skill)];
 
 }
 

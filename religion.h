@@ -1,5 +1,5 @@
 void pray(void);
-char *god_name(int which_god);
+const char *god_name(int which_god);
 void Xom_acts(char niceness, int sever, char force_sever);
 void naughty(char type_naughty, int naughtiness);
 void done_good(char thing_done, int pgain);

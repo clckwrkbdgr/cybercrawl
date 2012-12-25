@@ -34,7 +34,7 @@ void cast_a_spell(void)
 {
 
 char spc = 0;
-char spc2 = 0;
+unsigned char spc2 = 0;
 int spellh = 0;
 int powc = 0;
 

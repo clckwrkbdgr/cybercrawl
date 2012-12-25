@@ -160,6 +160,7 @@ strcpy(info, "Which direction? (* to target)");
 mpr(info);
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+ {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -167,6 +168,7 @@ mpr(info);
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+ }
 
 
 struct dist fire_ball [1];
@@ -271,6 +273,7 @@ strcpy(info, "Which direction? (* to target)");
 mpr(info);
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+ {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -278,6 +281,7 @@ mpr(info);
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+ }
 
 direction(1, spelld);
 
@@ -446,6 +450,7 @@ strcpy(info, "Which direction? (* to target)");
 mpr(info);
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
+ {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
@@ -453,6 +458,7 @@ mpr(info);
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");
+ }
 
 direction(1, spelld);
 

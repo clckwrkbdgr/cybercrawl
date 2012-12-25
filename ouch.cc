@@ -168,7 +168,7 @@ void splash_with_acid(char acid_strength)
 
 //abort();
 
-char splc = 0;
+unsigned char splc = 0;
 
 for (splc = 1; splc < 7; splc++)
 {
@@ -207,8 +207,9 @@ void weapon_acid(char acid_strength)
 
 
 
-void item_corrode(char itco)
+void item_corrode(char itco_char)
 {
+	int itco = itco_char;
 
         int chance_corr = 0;
         unsigned char rusty = 0;
@@ -335,8 +336,9 @@ if (burn_no > 1)
 
 
 
-void ouch(int dam, char death_source, char death_type)
+void ouch(int dam, char death_source_char, char death_type)
 {
+	int death_source = death_source_char;
 char point_print [10];
 int d = 0;
 int e = 0;
@@ -493,7 +495,7 @@ strcat(death_string, point_print);
 
         case 0: // monster
                 strcat(death_string, ", killed by ");
-                if (menv [death_source].m_class < 250 || menv [death_source].m_class > 310 && menv [death_source].m_class != 400) strcat(death_string, "a");
+                if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
                 strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99));
  break;
 
@@ -508,7 +510,7 @@ strcat(death_string, point_print);
 
         case 3: // beam - beam[0].name is a local variable, so can't access it without horrible hacks
                 strcat(death_string, ", killed from afar by ");
-                if (menv [death_source].m_class < 250 || menv [death_source].m_class > 310 && menv [death_source].m_class != 400) strcat(death_string, "a");
+                if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
                 strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99));
  break;
 

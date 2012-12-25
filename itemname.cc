@@ -90,14 +90,14 @@ switch(descrip)
 		case 0: strcat(glag, "The "); break;
 		case 1: strcat(glag, "the "); break;
 		case 2: strcat(glag, "A");
-			if (itm_name [0] == 97 ^ itm_name [0] == 101 ^ itm_name [0] == 105 ^ itm_name [0] == 111 ^ itm_name [0] == 117)
+			if ((itm_name [0] == 97) ^ (itm_name [0] == 101) ^ (itm_name [0] == 105) ^ (itm_name [0] == 111) ^ (itm_name [0] == 117))
 			{
 				strcat(glag, "n");
 			}
 		strcat(glag, " ");
 		break; // A/An
 		case 3:strcat(glag, "a");
-			if (itm_name [0] == 97 ^ itm_name [0] == 101 ^ itm_name [0] == 105 ^ itm_name [0] == 111 ^ itm_name [0] == 117)
+			if ((itm_name [0] == 97) ^ (itm_name [0] == 101) ^ (itm_name [0] == 105) ^ (itm_name [0] == 111) ^ (itm_name [0] == 117))
 			{
 				strcat(glag, "n");
 			}
@@ -443,7 +443,7 @@ strcat(glog, str_pass2);
 
 
 	case OBJ_WANDS: // devices
-	if (id [0] [item_typ] == 1)
+	if (id [0] [int(item_typ)] == 1)
 	{
 		switch(item_typ)
 		{
@@ -541,7 +541,7 @@ strcat(glog, str_pass2);
 
 	case OBJ_POTIONS: // potions
 
-	if (id [3] [item_typ] == 1)
+	if (id [3] [int(item_typ)] == 1)
 	{
 		if (it_quant == 1)
 		{
@@ -555,7 +555,7 @@ strcat(glog, str_pass2);
 /*
 Remember, potions food and scrolls stack on the basis of class and type only.
 */
-	if (id [3] [item_typ] == 1)
+	if (id [3] [int(item_typ)] == 1)
 	{
 		switch(item_typ)
 		{
@@ -703,7 +703,7 @@ Remember, potions food and scrolls stack on the basis of class and type only.
 		strcat(glog, "devices ");
 	}
 
-	if (id [1] [item_typ] == 1)
+	if (id [1] [int(item_typ)] == 1)
 	{
 
 	switch(item_typ)
@@ -755,7 +755,7 @@ Remember, potions food and scrolls stack on the basis of class and type only.
       }
    }
 
-   if (ident_lev > 1 || id [2] [item_typ] > 0)
+   if (ident_lev > 1 || id [2] [int(item_typ)] > 0)
    {
       if (item_da == 200 || item_da == 201)
       {
@@ -764,7 +764,7 @@ Remember, potions food and scrolls stack on the basis of class and type only.
       }
    }
 
-   if (id [2] [item_typ] > 0)
+   if (id [2] [int(item_typ)] > 0)
 	{
 
 	if (ident_lev > 1 && (item_typ == RING_PROTECTION || item_typ == RING_STRENGTH || item_typ == RING_SLAYING || item_typ == RING_EVASION || item_typ == RING_DEXTERITY || item_typ == RING_INTELLIGENCE))
@@ -1309,8 +1309,8 @@ return 1;
 void save_id(char identy [4] [50])
 {
 
-char ix = 0;
-char jx = 0;
+unsigned char ix = 0;
+unsigned char jx = 0;
 
 for (ix = 0; ix < 4; ix ++)
 {
@@ -1325,8 +1325,8 @@ for (ix = 0; ix < 4; ix ++)
 
 void initial(void)
 {
-char i = 0;
-char j = 0;
+unsigned char i = 0;
+unsigned char j = 0;
 
 for (i = 0; i < 4; i ++)
 {
@@ -1344,23 +1344,24 @@ void set_id(char cla, char ty, char setting)
 	if (cla > 99)
 	{
 		cla -= 100;
-		id [cla] [ty] = setting;
+		id [int(cla)] [int(ty)] = setting;
 		return;
 	}
 
 	switch(cla)
 	{
-	case 3: id [0] [ty] = setting; break;
-	case 6: id [1] [ty] = setting; break;
-	case 7: id [2] [ty] = setting; break;
-	case 8: id [3] [ty] = setting; break;
+	case 3: id [0] [int(ty)] = setting; break;
+	case 6: id [1] [int(ty)] = setting; break;
+	case 7: id [2] [int(ty)] = setting; break;
+	case 8: id [3] [int(ty)] = setting; break;
 	/* if it's none of these, will just return*/
 	}
 } /* end of void set_id */
 
 
-char get_id(char cla, char ty)
+char get_id(char cla_char, char ty_char)
 {
+	int cla = cla_char, ty = ty_char;
 	if (cla > 99)
 	{
 		cla -= 100;
@@ -2044,7 +2045,7 @@ item_name_2(0, ft, j, 0, 0, 1, 0, st_pass);
 
 
 
-char weapon_skill(char wclass, char wtype)
+int weapon_skill(char wclass, char wtype)
 {
 if (wclass == 11) return 7; // staff
 
@@ -2156,9 +2157,9 @@ void make_name(unsigned char var1, unsigned char var2, unsigned char var3, char 
 char name [30] = "";
 unsigned char numb [15];
 char len;
-char i = 0;
+unsigned char i = 0;
 char nexty = 0;
-char j = 0;
+unsigned char j = 0;
 char igo = 0;
 
 int ix = 0;

@@ -76,7 +76,7 @@ void beam(struct bolt beam [1])
 	float bmay = 0;
 	int n, o;
 
-	char clouty = 0;
+	int clouty = 0;
 
 	char crumble = 0;
 	char bounce = 0;
@@ -253,7 +253,7 @@ void beam(struct bolt beam [1])
 				strcat(info, beam[0].beam_name);
 				strcat(info, " bounces.");
 				mpr(info);
-				if (beam[0].move_x == 0 ^ beam[0].move_y == 0) //   ^ XOR
+				if ((beam[0].move_x == 0) ^ (beam[0].move_y == 0)) //   ^ XOR
 				{
 					beam_sign_x *= -1;
 					beam_sign_y *= -1;
@@ -344,7 +344,7 @@ void beam(struct bolt beam [1])
 
 			if (beam[0].beam_name [0] != 48) // ie enchantments always hit
   			{
-				if ((you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < 2 || (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= 22 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= 25) || you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] / 30 == 4) && random() % 2 == 0 && beam[0].move_x != 0 || beam[0].move_y != 0)
+				if ((you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < 2 || (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= 22 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= 25) || you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] / 30 == 4) && random() % 2 == 0 && (beam[0].move_x != 0 || beam[0].move_y != 0))
  				exercise(SK_DODGING, 1);
 
                 if (you[0].duration [DUR_REPEL_MISSILES] != 0 || you[0].mutation [MUT_REPULSION_FIELD] == 3) beam[0].hit -= random2(beam[0].hit / 4);
@@ -1098,7 +1098,7 @@ brek = 0;*/
 			 			break;
 					} // end of block
 
-					if ((you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < 2 || (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= 22 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= 25) || you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] / 30 == 4) && random() % 2 == 0 && beam[0].move_x != 0 || beam[0].move_y != 0)
+					if ((you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < 2 || (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= 22 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= 25) || you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] / 30 == 4) && random() % 2 == 0 && (beam[0].move_x != 0 || beam[0].move_y != 0))
 					 	exercise(SK_DODGING, 1);
 
                     if (you[0].duration [DUR_REPEL_MISSILES] != 0 || you[0].mutation [MUT_REPULSION_FIELD] == 3) beam[0].hit = random2(beam[0].hit);
@@ -1800,7 +1800,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 {
 
 	char brek = 0;
-	char p;
+	unsigned char p;
 
     switch(beam[0].colour) /* put in magic resistance */
     {

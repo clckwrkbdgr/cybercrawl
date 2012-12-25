@@ -31,7 +31,7 @@
 /*
 Creates a disk record of a character.
 */
-char dump_char(char show_prices, char fname [30])
+char dump_char(char show_prices, const char fname [30])
 {
 	char st_prn [15];
 

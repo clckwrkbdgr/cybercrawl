@@ -186,7 +186,7 @@ corners.
 void explosion(char ex_size, struct bolt beam [1])
 {
 
-	char clouty = 0;
+	int clouty = 0;
 	char empty [5] [5];
 	int n = 0;
 	int q = 0;

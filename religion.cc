@@ -26,7 +26,7 @@
 char mutate(int which_mutation);
 
 
-char *sacrifice [] =
+const char *sacrifice [] =
 {
 " glows silver and disappears.",
 " glows a brilliant golden colour and disappears.",
@@ -42,8 +42,8 @@ char *sacrifice [] =
 " evaporates."
 };
 
-char *god_name(int which_god);
-char *god_name_long(int which_god);
+const char *god_name(int which_god);
+const char *god_name_long(int which_god);
 void gain_piety(char pgn);
 void naughty(char type_naughty, int naughtiness);
 void excommunication(void);
@@ -300,7 +300,7 @@ Remember to check for water/lava
 
 }
 
-char *god_name(int which_god)
+const char *god_name(int which_god)
 {
 
 switch(which_god)
@@ -336,7 +336,7 @@ return "Illegal employer!";
 }
 
 
-char *god_name_long(int which_god)
+const char *god_name_long(int which_god)
 {
 
 switch(which_god)
