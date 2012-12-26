@@ -17,17 +17,6 @@ Define plain_term for linux and similar, and dos_term for DOS and EMX.
 
 
 /*
-To compile with EMX for OS/2 define USE_EMX macro with compiler command line
-(already defined in supplied makefile.emx)
-*/
-#ifdef USE_EMX
-  #undef DOS
-  #define DOS_TERM
-  #include "libemx.h"
-#endif
-
-
-/*
 The first EOL should be used for DOS; most other OSs apparently
 use \n
 */

@@ -19,12 +19,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef USE_EMX
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#endif
-
 #include <string.h>
 #include <sys/stat.h>
 #include <stdlib.h>

@@ -13,13 +13,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef USE_EMX
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <time.h>
-#endif
-
 #include <sys/stat.h>
 //#include <fstream.h>
 #include <string.h>

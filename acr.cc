@@ -20,10 +20,6 @@ Sub-Crawl 1.0
 #include <file.h>
 #endif
 
-#ifdef USE_EMX
-#include <sys/types.h>
-#endif
-
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -234,11 +230,6 @@ int main(int argc, char *argv[])
 #ifdef LINUX
     lincurses_shutdown();
 #endif
-
-#ifdef USE_EMX
-  	deinit_emx();
-#endif
-
 
 	return 0;
 }
@@ -1716,10 +1707,6 @@ void initialise(void)
 
 #ifdef DOS
 	directvideo = 1;
-#endif
-
-#ifdef USE_EMX
-  	init_emx();
 #endif
 
 	srandom(time(NULL));

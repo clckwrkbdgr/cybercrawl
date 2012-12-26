@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef USE_EMX
-#include <sys/types.h>
-#endif
-
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
