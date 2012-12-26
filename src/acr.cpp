@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 		input();
 	}
 
-    lincurses_shutdown();
+	lincurses_shutdown();
 	return 0;
 }
 
@@ -1329,7 +1329,6 @@ break;
 
 }
 
-
 /*
 Opens doors and handles some aspects of untrapping. If move_x != 100, it
 carries a specific direction for the door to be opened (eg if you type
@@ -1428,7 +1427,6 @@ move_y = door_y;*/
 
 } // end of void open_door()
 
-
 /*
 Similar to open_door. Can you spot the difference?
 */
@@ -1511,48 +1509,24 @@ void close_door(char door_x, char door_y)
 
 } // end of void open_door()
 
-
-
-
-/*
-Initialises a whole lot of stuff.
-*/
-void initialise(void)
+void init_system()
 {
+	textbackground(0);
+	you[0].your_level = 0;
+	srandom(time(NULL));
+	clrscr();
+}
 
-	int i = 0;
-
+void init_structures()
+{
 	your_sign = '@';
 	your_colour = LIGHTGREY;
 
-/*for (i = 0; i < 10; i ++)
-{
-	func_pass [i] = 0;
-}*/
-
-	for (i = 0; i < NO_EQUIP; i++)
-	{
+	for(int i = 0; i < NO_EQUIP; i++) {
 		you[0].equip [NO_EQUIP] = -1;
 	}
-	/*for (i = 0; i < 20; i++)
-{
-	mons_alloc [i] = 250;
-}*/
 
-
-/* system initialisation stuff */
-	textbackground(0);
-	you[0].your_level = 0;
-
-	srandom(time(NULL));
-	clrscr();
-
-
-
-
-/* init item array */
-	for (i = 1; i < ITEMS; i++)
-	{
+	for(int i = 1; i < ITEMS; i++) {
 		env[0].it[0].iclass [i] = 0;
 		env[0].it[0].itype [i] = 0;
 		env[0].it[0].ix [i] = 1;
@@ -1564,152 +1538,86 @@ void initialise(void)
 		env[0].it[0].ilink [i] = ING;
 	}
 
-
 	strcpy(info, "");
 
-	int j = 0;
-
-
-//env[0].it [0] = &it[0];
-//env[0].elvl [0] = &lvl[0];
-
-	for (i = 0; i < MNST; i++)
-	{
-//        env[0].mons [i] = &mons [i];
+	for(int i = 0; i < MNST; i++) {
 		env[0].mons[i].m_class = -1;
 		env[0].mons[i].m_speed_inc = 10;
 		env[0].mons[i].m_targ_1_x = 155;
 		env[0].mons[i].m_ench_1 = 0;
 		env[0].mons[i].m_beh = 0; // sleeping
 		env[0].mons[i].m_hit = MNG; // nothing
-		for (j = 0; j < 3; j++)
-		{
+		for(int j = 0; j < 3; j++) {
 			env[0].mons[i].m_ench [j] = 0;
 		}
-		for (j = 0; j < 8; j++)
-		{
+		for(int j = 0; j < 8; j++) {
 			env[0].mons[i].m_inv [j] = ING;
 		}
 		env[0].mons[i].m_sec = 0;
 	}
 
-	for (i = 0; i < GXM; i ++)
-	{
-		for (j = 0; j < GYM; j ++)
-		{
+	for(int i = 0; i < GXM; i++) {
+		for(int j = 0; j < GYM; j++) {
 			env[0].igrid [i] [j] = ING;
 			env[0].mgrid [i] [j] = MNG;
 			env[0].map [i] [j] = 0;
 		}
 	}
 
-	for (i = 0; i < 52; i++)
-	{
+	for(int i = 0; i < 52; i++) {
 		you[0].inv_quant [i] = 0;
 	}
 
-/*for (i = 0; i < 50; i++)
-{
-	unique_creatures [i] = 0;
-}*/
-
-
-	for (i = 0; i < 25; i ++)
-	{
+	for(int i = 0; i < 25; i++) {
 		you[0].spells [i] = 210;
 	}
 
-	for (i = 0; i < 10; i ++)
-	{
+	for(int i = 0; i < 10; i ++) {
 		visible [i] = 0;
 	}
-
 	you[0].prev_targ = MHITNOT;
 
-/*for (i = 0; i < 19; i ++)
+}
+
+void setup_game()
 {
- for (j = 0; j < 19; j ++)
- {
- show [i] [j] = 0;
- show_col [i] [j] = LIGHTGRAY;
- }
-}*/
-
-
-/* sets up a new game*/
 	int newc = new_game();
-
-	if (newc == 0) restore_game();
+	if(newc == 0) restore_game();
 
 	calc_hp();
 	calc_ep();
 
-//if (you[0].species == 12) you[0].is_undead = 2; else you[0].is_undead = 0;
-/*switch(you[0].species)
-{
- case 10: your_sign = 'o'; break;
- case 11: your_sign = 'K'; break;
- case 12: your_sign = 'M'; break;
- default: your_sign = '@'; break;
-}*/
-
-/*if (newc == 1) stair_taken = 82;*/
-
 	you[0].inv_no = 0;
-	for (i = 0; i < 52; i ++)
-	{
+	for(int i = 0; i < 52; i ++) {
 	 	if (you[0].inv_quant [i] != 0) you[0].inv_no ++;
 	}
-	char just_made_new_lev;
 
-	if (newc == 0) just_made_new_lev = 1; else just_made_new_lev = 0;
+	char just_made_new_lev = (newc == 0) ? 1 : 0;
+	char moving_level = (newc == 1) ? 1 : 0;
 
-	char moving_level = 0;
-	if (newc == 1) moving_level = 1;
-
-/*load(82, moving_level, level_saved, was_a_labyrinth, old_level, just_made_new_lev);*/
-//load(82, moving_level, 0, 0, 0, 0, just_made_new_lev);
 	load(82, moving_level, 0, 0, 0, just_made_new_lev, you[0].where_are_you);
 
 	moving_level = 0;
 	just_made_new_lev = 0;
 	newc = 0;
 
-//new_level();
-
-
-
-	mon_init(gmon_use, mcolour); //, mcolour);
-//new_level(); // - must come after mon_init
-
-//def_letters(letters);
-
-/*def_properties(property, mass);*/
-
+	mon_init(gmon_use, mcolour);
 	init_properties();
-
-
-	if (newc == 1)
-	{
-
-		for (i = 0; i < GXM; i ++)
-		{
-			for (j = 0; j < GYM; j ++)
-			{
-				if (grd [i] [j] == 68)
-				{
+	if(newc == 1) {
+		for(int i = 0; i < GXM; i ++) {
+			int j;
+			for(j = 0; j < GYM; j ++) {
+				if (grd [i] [j] == 68) {
 					you[0].x_pos = i;
 					you[0].y_pos = j;
 				}
 			}
-			if (grd [i] [j] == 67) break;
+			if(grd [i] [j] == 67) break;
 		}
-
 
 		burden_change();
 		food_change();
 		new_level(); // - must come after mon_init
-
 	} // end if newc
 
 	you[0].hp_ch = 1;
@@ -1729,12 +1637,15 @@ void initialise(void)
 	draw_border(BROWN, you[0].your_name, title, you[0].species);
 
 	new_level();
-
 	viewwindow(1); // This just puts the view up for the first turn.
-
 	item();
+}
 
-
+void initialise()
+{
+	init_system();
+	init_structures();
+	setup_game();
 }
 
 /*
@@ -2001,15 +1912,4 @@ void move(char move_x, char move_y)
 
 
 } // end of void move()
-
-
-
-/*
-TO DO:
-
-Stealth in check_awaken
-
-*/
-
-
 
