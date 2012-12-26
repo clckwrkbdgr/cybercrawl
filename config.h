@@ -6,7 +6,7 @@
 
 
 /*
-Define plain_term for linux and similar, and dos_term for DOS and EMX.
+Define plain_term for linux and similar, and dos_term for DOS.
 */
 #ifdef linux
   #undef DOS
