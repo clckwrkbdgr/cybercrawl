@@ -322,8 +322,3 @@ struct ghost_struct
 
 extern struct ghost_struct ghost;
 
-extern void (*viewwindow)(char);
-
-
-
-

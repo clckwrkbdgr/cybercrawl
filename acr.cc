@@ -1,36 +1,19 @@
-
-#include "linuxlib.h"
-
-//#define DEBUG
-
-/*
-Sub-Crawl 1.0
-*/
-/* contains the player struct: */
-//#include "struct.h"
-
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
-
-#include "externs.h"
-#include "enum.h"
-
-
+#include <time.h>
 #include "ability.h"
-//#include "beam.h"
 #include "chardump.h"
 #include "command.h"
 #include "debug.h"
-//#include "decks.h"
 #include "describe.h"
 #include "direct.h"
 #include "dungeon.h"
 #include "effects.h"
+#include "enum.h"
+#include "externs.h"
 #include "fight.h"
 #include "files.h"
 #include "food.h"
@@ -41,15 +24,13 @@ Sub-Crawl 1.0
 #include "itemname.h"
 #include "items.h"
 #include "levels.h"
-//#include "maps.h"
+#include "linuxlib.h"
 #include "macro.h"
-
 #include "message.h"
 #include "misc.h"
 #include "monplace.h"
 #include "monstuff.h"
 #include "mstruct.h"
-//#include "mstuff2.h"
 #include "mutation.h"
 #include "newgame.h"
 #include "ouch.h"
@@ -58,102 +39,32 @@ Sub-Crawl 1.0
 #include "priest.h"
 #include "randart.h"
 #include "religion.h"
-//#include "shopping.h"
 #include "skills.h"
 #include "skills2.h"
 #include "spell.h"
 #include "spells.h"
-//#include "spells1.h"
 #include "spells2.h"
 #include "spells3.h"
 #include "stuff.h"
 #include "transfor.h"
 #include "view.h"
 
-/*
-#include "player.h"
-#include "message.h"
-#include "output.h"
-#include "view.h"
-#include "newgame.h"
-#include "items.h"
-#include "files.h"
-#include "itemname.h"
-#include "fight.h"
-#include "mstruct.h"
-#include "item_use.h"
-#include "it_use2.h"
-#include "ouch.h"
-#include "spells1.h"
-#include "invent.h"
-#include "direct.h"
-#include "skills.h"
-#include "skills2.h"
-#include "player.h"
-#include "chardump.h"
-#include "misc.h"
-#include "newgame.h"
-*/
 /* Functions in main module */
 void input(void);
 void open_door(char move_x, char move_y);
 void close_door(char move_x, char move_y);
 void move(char move_x, char move_y);
-
-//void missile(struct player you [1], struct environ env [1], struct bolt beam [1], int throw_2);
-//void beam(struct player you [1], struct environ env [1], struct bolt beam [1]);
-
-
-void mpr(const char inf [200]);
-void more(void);
 void initialise(void);
-
-
 
 struct environ env [1];
 struct player you [1];
 char info [200];
 char st_prn [20];
-
 char str_pass [80];
 char gmon_use [1000];
-
 int stealth; /* externed in view.h */
-
 char use_colour = 1;
-
 char visible [10];
-
-/*
-
-Functions needed:
-New:
-int player_speed(player you);
-mpr(char message []);
-hit_player(damage, flavour, then last two ouch values, env);
-
-
-Old:
-print_stats(player you);
-wield(player you);
-show_map
-noisy()
-losight
-
-*/
-
-void (*viewwindow)(char);
-/* these are all defined in view.cc: */
-extern unsigned char (*mapch)(unsigned char);
-extern unsigned char (*mapch2)(unsigned char);
-unsigned char mapchar(unsigned char ldfk);
-unsigned char mapchar2(unsigned char ldfk);
-unsigned char mapchar3(unsigned char ldfk);
-unsigned char mapchar4(unsigned char ldfk);
-/*
-Function pointers are used to make switching between Linux and DOS char sets
-possible as a runtime option (command-line -c)
-*/
 
 extern unsigned char your_sign; /* these two are defined in view.cc. What does the player look like? (changed for shapechanging */
 extern unsigned char your_colour;
@@ -167,60 +78,18 @@ new_game and then input.
 int main(int argc, char *argv[])
 {
 	lincurses_startup();
-
 	macro_init();
-
-	viewwindow = &viewwindow2;
-	mapch = &mapchar;
-	mapch2 = &mapchar2;
-
-	if (argc > 1)
-	{
- 		if (stricmp(argv [1], "-c") == 0 || stricmp(argv [1], "-nc") == 0)
- 		{
-  			viewwindow = &viewwindow3;
-  			mapch = &mapchar3;
-  			mapch2 = &mapchar4;
-  			if (stricmp(argv [1], "-nc") == 0)
-  			{
-   				use_colour = 0; /* this is global to this function, so can either be
-	 		      passed eg to lincurses_startup or defined as an
-			      extern in another module */
-  			}
- 		}
-  		else
-  		{
-   			cprintf(EOL"Crawl accepts the following arguments only:"EOL);
-   			cprintf(" -c   Use non-ibm character set"EOL);
-   			cprintf(" -nc  Use non-ibm character set, but no colour"EOL);
-   			cprintf(EOL"Any others will cause this message to be printed again."EOL);
-   			end(0);
-  		}
-	}
-
-	{ // TODO This block is a workaround to display correct symbols. Works like '-c' arg.
-		viewwindow = &viewwindow3;
-		mapch = &mapchar3;
-		mapch2 = &mapchar4;
-	}
-
-//new_game();
 
 	initial();
 	initialise();
 
-	while (TRUE)
-	{
+	while(true) {
 		input();
-//	cprintf("x");
 	}
-/* Should never reach this stage, right? */
-    lincurses_shutdown();
 
+    lincurses_shutdown();
 	return 0;
 }
-
-
 
 /*
 This function handles the player's input. It's called from main(), from inside
