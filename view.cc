@@ -338,7 +338,6 @@ if (show_green != 0)
 
 
 
-#ifdef PLAIN_TERM
 gotoxy(2,1);
 bufcount = 0;
 
@@ -349,13 +348,10 @@ bufcount = 0;
   textcolor(buffy [count_x + 1]);
   putch(buffy [count_x]);
   if (count_x % 66 == 64 && count_x > 0)
-#ifdef PLAIN_TERM
     gotoxy(2, wherey() + 1);
-#endif
 
  }
 }
-#endif
 
 	} // end of (if brek...)
 
@@ -1509,9 +1505,7 @@ for (j = 0; j < 70; j ++)
    textcolor(DARKGREY);
 
 put_screen : bufcount2 = 0;
-#ifdef PLAIN_TERM
 gotoxy(1, 1);
-#endif
 for (j = 0; j < 25; j ++)
 {
  for (i = 0; i < 80; i ++)
@@ -1521,9 +1515,7 @@ for (j = 0; j < 25; j ++)
    buffer2 [bufcount2 + 1] = DARKGREY;
    buffer2 [bufcount2] = 0;
    bufcount2 += 2;
-#ifdef PLAIN_TERM
 goto print_it;
-#endif
 
   }
 //continue;
@@ -1555,7 +1547,6 @@ goto print_it;
   if (i == you[0].x_pos - 1 && j + screen_y - 11 == you[0].y_pos) buffer2 [bufcount2 + 1] = WHITE;
   buffer2 [bufcount2] = (env[0].map [i] [j + screen_y - 12]);
   bufcount2 += 2;
-#ifdef PLAIN_TERM
 print_it: if (j == 24 && i == 79) continue;
 if (i == 79)
 {
@@ -1564,7 +1555,6 @@ if (i == 79)
 } /* needed for screens >80 width */
 textcolor(buffer2 [bufcount2 - 1]);
 putch(buffer2 [bufcount2 - 2]);
-#endif
 //gotoxy(i, j);
 //  putch(map [i] [j + you[0].y_pos - 12]);
  }
@@ -2257,7 +2247,6 @@ if (show_green != 0)
 
 
 
-#ifdef PLAIN_TERM
 gotoxy(2,1);
 bufcount = 0;
 
@@ -2268,13 +2257,10 @@ if (you[0].running == 0) // this line is purely optional
   textcolor(buffy [count_x + 1]);
   putch(buffy [count_x]);
   if (count_x % 66 == 64 && count_x > 0)
-#ifdef PLAIN_TERM
     gotoxy(2, wherey() + 1);
-#endif
 
  }
 }
-#endif
 
 	} // end of (if brek...)
 

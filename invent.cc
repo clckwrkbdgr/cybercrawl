@@ -27,9 +27,7 @@ nothing = invent(invent_type, 0);
 //you[0].inv_plus2, invent_type, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].item_wielded, you[0].armour [0], you[0].armour [5], you[0].armour [2], you[0].armour [1], you[0].armour [3], you[0].armour [4], you[0].ring, 0);
 
 
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 
 return nothing;
 

@@ -2931,9 +2931,7 @@ if (you[0].inv_type [sc_read_2] == BOOK_MANUAL)
   return;
  }
  describe_spell(which_spell_in_book(you[0].inv_type [sc_read_2], conv_lett(book_thing) + 1));
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
     mesclr();
     return;
 }
@@ -3595,9 +3593,7 @@ if (you[0].inv_quant [drink_2] == 0)
 
 inn = drink_2;
 describe_item(you[0].inv_class [inn], you[0].inv_type [inn], you[0].inv_plus [inn], you[0].inv_plus2 [inn], you[0].inv_dam [inn], you[0].inv_ident [inn]);
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 
 } // end original_name
 

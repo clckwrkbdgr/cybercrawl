@@ -305,9 +305,8 @@ int kbhit()
 
 /*
 
-Now in stuff.cc, as it's a PLAIN_TERM rather than a Linux function
+Now in stuff.cc
 
-#ifdef LINUX
 // this function is used for systems without gettext/puttext to redraw the
 // playing screen after a call to for example inventory.
 void redraw_screen(void)
@@ -341,6 +340,5 @@ viewwindow(1);
 
 }
 
-#endif
 */
 

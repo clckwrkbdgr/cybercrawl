@@ -1,10 +1,8 @@
 #include "config.h"
 
-#ifdef LINUX
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#endif
 
 #include <sys/stat.h>
 //#include <fstream.h>

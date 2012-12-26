@@ -51,9 +51,7 @@ keyin = get_ch();
 if (keyin == '?' || keyin == '*')
 {
 	char unthing = spell_list(); //invent(0, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 
 	if (unthing == 2) return;
 

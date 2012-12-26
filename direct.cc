@@ -259,9 +259,7 @@ do
                 if (menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_ench [2] == 6 && player_see_invis() == 0) continue;
                 if (menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_class >= MLAVA0 && menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_sec == 1) continue;
                 describe_monsters(menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_class, mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]);
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
                 break;
                 case 'p':
                 goto finished_looking;

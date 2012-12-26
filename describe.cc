@@ -3210,18 +3210,12 @@ for (i = 0; i < strlen(descr); i ++)
 //cprintf(kl);
 if (descr [i] == '$')
 {
-#ifdef PLAIN_TERM
   gotoxy(1, wherey() + 1);
-#endif
  j = 0;
 } else putch(descr [i]);
-#ifdef PLAIN_TERM
 if (j % 70 >= 58 && descr [i] == 32 && descr [i + 1] != '$')
-#endif
 {
-#ifdef PLAIN_TERM
   gotoxy(1, wherey() + 1);
-#endif
  j = 0;
 }
 j ++;

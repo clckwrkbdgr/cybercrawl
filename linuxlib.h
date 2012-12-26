@@ -40,8 +40,6 @@ void textbackground(int bg);
 
 void lincurses_shutdown();
 
-//void redraw_screen(void); - now in stuff.cc, as it's a PLAIN_TERM rather than a Linux function
-
 #ifndef _LINUXLIB_IMPLEMENTATION
 /* Some stuff from curses, to remove compiling warnings.. */
 extern "C" {

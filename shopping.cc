@@ -1291,8 +1291,6 @@ save_id(identy);
 in_a_shop(i, identy);
 you[0].gp_ch = 1;
 burden_change();
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 }
 

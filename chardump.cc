@@ -576,10 +576,8 @@ for (xy = 0; xy < 100; xy ++)
 
 	for (i = 0; i < lin; i ++)
 	strcat(dmp [i], EOL);
-	/*#ifdef PLAIN_TERM
+	/*
   strcat(dmp [i], "\n");
-#endif
-
 */
 
 	strcpy(file_name, fname);

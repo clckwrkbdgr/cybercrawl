@@ -165,9 +165,7 @@ new_game and then input.
 */
 int main(int argc, char *argv[])
 {
-#ifdef LINUX
 	lincurses_startup();
-#endif
 
 #ifdef MACROS
 	macro_init();
@@ -219,9 +217,7 @@ int main(int argc, char *argv[])
 //	cprintf("x");
 	}
 /* Should never reach this stage, right? */
-#ifdef LINUX
     lincurses_shutdown();
-#endif
 
 	return 0;
 }
@@ -409,14 +405,10 @@ void input(void)
 		case 'z': zap_wand(); break;
 		case 'e': eat_food(); break;
 		case 'a': species_ability();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
 		case 'A': display_mutations();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
 		case 'V': original_name(); break;
 		case 'p': pray(); break;
@@ -427,9 +419,7 @@ void input(void)
 			 	break;
 			}
 			describe_god(you[0].religion);
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
 		case '.':
 	  		search_around();
@@ -468,24 +458,16 @@ void input(void)
   			}
 			plox [0] = 0;
 			show_map(plox);
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
 		case '\\': check_item_knowledge(); //nothing = check_item_knowledge();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
   		case 16: replay_messages();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
 	  	case '?': list_commands();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
 			break;
   		case 'C':
   			strcpy(info, "You are a level ");
@@ -520,9 +502,7 @@ void input(void)
 
   		case 'm':
   			show_skills();
-#ifdef PLAIN_TERM
 			redraw_screen();
-#endif
   			break;
 
 //  case '^': disarm_trap(); break;

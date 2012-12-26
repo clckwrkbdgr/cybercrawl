@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef LINUX
 #include "linuxlib.h"
-#endif
 
 #include "externs.h"
 #include "enum.h"

@@ -13,11 +13,7 @@
 #include "config.h"
 #undef _LINUXLIB_IMPLEMENTATION
 
-#ifdef LINUX
 # include <curses.h>
-#else
-# include <conio.h>
-#endif
 
 #include "llist.h"
 #include "macro.h"

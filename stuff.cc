@@ -1,8 +1,6 @@
 #include "config.h"
 
-#ifdef LINUX
 #include "linuxlib.h"
-#endif
 
 #include "externs.h"
 #include "enum.h"
@@ -61,9 +59,7 @@ return retv;
 
 void end(int end_arg)
 {
-#ifdef LINUX
 lincurses_shutdown();
-#endif
  exit(end_arg);
 }
 
@@ -77,7 +73,6 @@ void output_value(char string [100], int value)
 
 }
 
-#ifdef PLAIN_TERM
 // this function is used for systems without gettext/puttext to redraw the
 // playing screen after a call to for example inventory.
 void redraw_screen(void)
@@ -112,5 +107,4 @@ viewwindow(1);
 
 }
 
-#endif
 

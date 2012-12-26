@@ -1,10 +1,8 @@
 #include "config.h"
 
-#ifdef LINUX
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -100,21 +98,14 @@ cprintf(EOL"(Copyright 1997, 1998, 1999 Linley Henzell)");
 cprintf(EOL"Please read Crawl.txt for instructions and legal details."EOL EOL);
 name_q : cprintf("What is your name today? ");
 //cin >> your_nam;
-#ifndef LINUX
-gets(your_nam);
-#endif
-
-#ifdef LINUX
 echo();
 getstr(your_nam);
 noecho();
-#endif
 /*
-#ifdef PLAIN_TERM
 echo();
 getstr(your_nam);
 noecho();
-#endif*/
+*/
 
 
 if (strcmp(your_nam, "bones") == 0 || strlen(your_nam) == 0) /* this would cause big probs with ghosts */

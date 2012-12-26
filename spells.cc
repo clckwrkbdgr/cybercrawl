@@ -1435,9 +1435,7 @@ if (you[0].inv_class [book_read] == 10)
  }
 }
 
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 /* Put special book effects in another function which can be called from
    memorise as well */
 you[0].turnover = 1;
@@ -1479,9 +1477,7 @@ sc_read_1 = (int) book_thing;
 if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 {
 	whatt : strcpy(info, "What?");
-#ifdef PLAIN_TERM
         redraw_screen();
-#endif
 	mpr(info);
 	return;
 }
@@ -1533,9 +1529,7 @@ for (i = 0; i < 25; i ++)
 {
 	if (you[0].spells [i] == specspell)
    {
-      #ifdef PLAIN_TERM
       redraw_screen();
-      #endif
       strcpy(info, "You already have that program!");
       mpr(info);
       you[0].turnover = 1;
@@ -1548,9 +1542,7 @@ levels_needed = spell_value(specspell);
 if (you[0].spell_levels < levels_needed)
 {
    too_high :
-   #ifdef PLAIN_TERM
    redraw_screen();
-   #endif
    strcpy(info, "You can't install that many programs yet!");
    mpr(info);
    you[0].turnover = 1;
@@ -1604,9 +1596,7 @@ chance = spell_fail(specspell);
   mpr(info);
  }
 
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 
 strcpy(info, "Install ");
 spell_name(specspell, spell_string);
@@ -1618,9 +1608,7 @@ keyin = getch();
 if (keyin == 0) getch();
 if (keyin != 'y' && keyin != 'Y')
 {
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
  return;
 }
 mesclr();
@@ -1634,9 +1622,7 @@ if (you[0].mutation [MUT_BLURRY_VISION] > 0 && random2(4) < you[0].mutation [MUT
 
 if (random2(40) + random2(40) + random2(40) < chance) //powm <= random2(chance) && spell_value(specspell) > 3)
 {
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
  strcpy(info, "You fail to install the program.");
  mpr(info);
  you[0].turnover = 1;
@@ -1686,9 +1672,7 @@ you[0].delay_doing = 3;
 //scruggle = 0;
 
 you[0].turnover = 1;
-#ifdef PLAIN_TERM
 redraw_screen();
-#endif
 
 naughty(9, 2 + random2(5));
 
