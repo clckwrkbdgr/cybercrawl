@@ -4,10 +4,6 @@ This file was extensively modified by Wladimir van der Laan.
 */
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 
@@ -1828,11 +1824,6 @@ char strng [5] = "";
 char lcount = 0;
 	_setcursortype(_NOCURSOR);
 
-#ifdef DOS_TERM
-   	window(1, 1, 80, 25);
-   	char buffer[4600];
-   	gettext(1, 1, 80, 25, buffer);
-#endif
 	strcpy(st_pass, "");
 	clrscr();
 
@@ -1900,9 +1891,6 @@ reprint_stuff:
 		goto reprint_stuff;
 	}
    	putty:
-#ifdef DOS_TERM
-   	puttext(1, 1, 80, 25, buffer);
-#endif
    	return;
 }
 

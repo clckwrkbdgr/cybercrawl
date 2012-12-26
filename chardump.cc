@@ -6,10 +6,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 #include "player.h"
@@ -584,9 +580,7 @@ for (xy = 0; xy < 100; xy ++)
   strcat(dmp [i], "\n");
 #endif
 
-#ifdef DOS_TERM
- strcat(dmp [i], "\n");
-#endif*/
+*/
 
 	strcpy(file_name, fname);
 	if (strcmp(file_name, "morgue.txt") != 0) strcat(file_name, ".txt");

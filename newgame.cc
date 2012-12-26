@@ -1,12 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
-#ifdef DOS
-#include <file.h>
-#endif
 #ifdef LINUX
 #include <sys/types.h>
 #include <fcntl.h>
@@ -116,10 +109,7 @@ echo();
 getstr(your_nam);
 noecho();
 #endif
-/*#ifdef DOS_TERM
-gets(your_nam);
-#endif
-
+/*
 #ifdef PLAIN_TERM
 echo();
 getstr(your_nam);

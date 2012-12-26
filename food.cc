@@ -1,8 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
 #include <string.h>
 
 //#include <stdlib.h> only needed for itoa

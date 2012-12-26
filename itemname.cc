@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <string.h>
 #include <stdlib.h>
 
@@ -1907,16 +1903,7 @@ unsigned char check_item_knowledge(void)
    char ft = 0;
 
    char yps = 0;
-#ifdef DOS_TERM
-   char buffer[2400];
-   gettext(35, 1, 80, 25, buffer);
-#endif
-
    strcpy(st_pass, "");
-
-#ifdef DOS_TERM
-   window(35, 1, 80, 25);
-#endif
 
    clrscr();
 
@@ -1970,16 +1957,10 @@ switch(i)
 			ki = getch();
 			if (ki == 27)
 			{
-#ifdef DOS_TERM
-				puttext(35, 1, 80, 25, buffer);
-#endif
 				return 27;
 			}
 			if (ki >= 65 && ki < 123)
 			{
-#ifdef DOS_TERM
-				puttext(35, 1, 80, 25, buffer);
-#endif
 				return ki;
 			}
 			if (ki == 0) ki = getch();
@@ -2022,22 +2003,13 @@ item_name_2(0, ft, j, 0, 0, 1, 0, st_pass);
 	   //ki = anything;
 	   if (ki >= 65 && ki < 123)
 	   {
-#ifdef DOS_TERM
-		   puttext(35, 1, 80, 25, buffer);
-#endif
 		   return ki;
 	   }
 	   if (ki == 0) ki = getch();
-#ifdef DOS_TERM
-	   puttext(35, 1, 80, 25, buffer);
-#endif
 	   return anything;
    }
 
    putty :
-#ifdef DOS_TERM
-   puttext(35, 1, 80, 25, buffer);
-#endif
 
    return ki;
 

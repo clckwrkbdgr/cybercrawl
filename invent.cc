@@ -1,7 +1,4 @@
 #include "config.h"
-#ifdef DOS
-#include <conio.h>
-#endif
 
 #include "defines.h"
 #include "externs.h"
@@ -66,18 +63,6 @@ char invent(int item_class_inv, char show_price)
    //clrscr();
 //   for (i = 0; i <= 20; i++)
 //      cprintf("Line #%d\r\n", i);
-
-
-
-
-
-#ifdef DOS_TERM
-   char buffer[4600];
-   gettext(1, 1, 80, 25, buffer);
-   window(1, 1, 80, 25);
-#endif
-
-
 
    strcpy(st_pass, "");
 
@@ -172,16 +157,10 @@ for (i = 0; i < 15; i ++)
 		ki = getch();
 		if (ki == 27)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return 27;
 		}
 		if (ki >= 65 && ki < 123)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return ki;
 		}
 		if (ki == 0) ki = getch();
@@ -226,16 +205,10 @@ for (i = 0; i < 15; i ++)
 			ki = getch();
 			if (ki == 27)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return 27;
 			}
 			if (ki >= 65 && ki < 123)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return ki;
 			}
 			if (ki == 0) ki = getch();
@@ -339,15 +312,9 @@ if (show_price == 1)
 	   //ki = anything;
 	   if (ki >= 65 && ki < 123)
 	   {
-#ifdef DOS_TERM
-		   puttext(1, 1, 80, 25, buffer);
-#endif
 		   return ki;
 	   }
 	   if (ki == 0) ki = getch();
-#ifdef DOS_TERM
-	   puttext(1, 1, 80, 25, buffer);
-#endif
 	   return anything;
    }
 
@@ -361,9 +328,6 @@ if (show_price == 1)
    getch();
    */
    putty :
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
 
    //ki = getch();
 
@@ -388,11 +352,6 @@ void list_commands(void)
 
    int i;
    int j = 0;
-#ifdef DOS_TERM
-   char buffer[4800];
-   window(1, 1, 80, 25);
-   gettext(1, 1, 80, 25, buffer);
-#endif
    strcpy(st_pass, "");
    clrscr();
 
@@ -417,9 +376,6 @@ void list_commands(void)
    }
 //   j ++;
    getch();
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
 
 //   cprintf("xxxxxxxxxxxxx");
 //   last_requested = 0;

@@ -3,10 +3,6 @@
 
 #include <stdlib.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 
@@ -39,15 +35,6 @@ char st_pass [60];
    char ki;
    char already = 0;
 
-#ifdef DOS_TERM
-   char buffer[4800];
-   gettext(1, 1, 80, 25, buffer);
-#endif
-
-#ifdef DOS_TERM
-   window(1, 1, 80, 25);
-#endif
-
    strcpy(st_pass, "");
 
    clrscr();
@@ -62,16 +49,10 @@ lines++;
 		ki = getch();
 		if (ki == 27)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return 27;
 		}
 		if (ki >= 65 && ki < 123)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return ki;
 		}
 		if (ki == 0) ki = getch();
@@ -93,16 +74,10 @@ lines++;
 			ki = getch();
 			if (ki == 27)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return 27;
 			}
 			if (ki >= 65 && ki < 123)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return ki;
 			}
 			if (ki == 0) ki = getch();
@@ -289,21 +264,12 @@ if (spell_f > 0)
 	   ki = getch();
 	   if (ki >= 65 && ki < 123)
 	   {
-#ifdef DOS_TERM
-		   puttext(1, 1, 80, 25, buffer);
-#endif
 		   return ki;
 	   }
 	   if (ki == 0) ki = getch();
-#ifdef DOS_TERM
-	   puttext(1, 1, 80, 25, buffer);
-#endif
 	   return anything;
    }
 
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
        // was 35
    ki = getch();
 
@@ -1383,16 +1349,7 @@ char already = 0;
 
    strcpy(st_pass, "");
 
-#ifdef DOS_TERM
-  char buffer[4800];
-  gettext(1, 1, 80, 25, buffer);
-#endif
-
   strcpy(st_pass, "");
-
-#ifdef DOS_TERM
-  window(1, 1, 80, 25);
-#endif
 
   clrscr();
 
@@ -1557,11 +1514,6 @@ cprintf(" Programs                           Type                      Level"EOL
 
 char keyn = getch();
 if (keyn == 0) getch();
-
-#ifdef DOS_TERM
-puttext(1, 1, 80, 25, buffer);
-window(1, 18, 80, 25);
-#endif
 
 return keyn;
 

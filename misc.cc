@@ -4,10 +4,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "misc.h"
 
 #include "direct.h"
@@ -759,9 +755,6 @@ if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
 
 strcpy(del_file, glorpstr);
 strcat(del_file, ".lab");
-#ifdef DOS
-strupr(del_file);
-#endif
 sysg = unlink(del_file);
 
 #ifdef DEBUG

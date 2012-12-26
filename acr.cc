@@ -8,17 +8,9 @@ Sub-Crawl 1.0
 /* contains the player struct: */
 //#include "struct.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef DOS
-#include <file.h>
-#endif
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -1704,10 +1696,6 @@ void initialise(void)
 /* system initialisation stuff */
 	textbackground(0);
 	you[0].your_level = 0;
-
-#ifdef DOS
-	directvideo = 1;
-#endif
 
 	srandom(time(NULL));
 	clrscr();

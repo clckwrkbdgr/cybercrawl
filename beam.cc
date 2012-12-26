@@ -1,10 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <dos.h>
-#include <conio.h>
-#endif
-
 #include <stdlib.h>
 #include <string.h>
 //#include <time.h>
@@ -1050,9 +1045,6 @@ brek = 0;*/
 			if (beam[0].colour != 200) /* tracer doesn't update the screen */
  			if (beam[0].bx > you[0].x_pos - 9 && beam[0].bx < you[0].x_pos + 9 && beam[0].by > you[0].y_pos - 9 && beam[0].by < you[0].y_pos + 9)
 			{
-#ifdef DOS_TERM
-				viewwindow(1);
-#endif
 				textcolor(beam[0].colour);
 				gotoxy(beam[0].bx - you[0].x_pos + 18, beam[0].by - you[0].y_pos + 9);
 				putch(beam[0].type);

@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 
@@ -99,15 +95,7 @@ char in_a_shop(char shoppy_char, char id [4] [50])
    char i;
    unsigned char ft;
 
-#ifdef DOS_TERM
-   char buffer[4800];
-   gettext(1, 1, 80, 25, buffer);
-#endif
    strcpy(st_pass, "");
-
-#ifdef DOS_TERM
-   window(1, 1, 80, 25);
-#endif
 
    clrscr();
 //   char st_pass [50];
@@ -271,9 +259,6 @@ itty = igrd [0] [5 + shoppy];
        shop_uninit_id(shoppy, shop_id);
        invent(-1, 0);
        shop_init_id(shoppy, shop_id);
-#ifdef DOS_TERM
-       window(1, 1, 80, 25);
-#endif
        goto print_stock;
       }
 
@@ -319,11 +304,6 @@ itty = igrd [0] [5 + shoppy];
       clear_line();
       shop_print("Goodbye!", 20);
       more3();
-#ifdef DOS_TERM
-      puttext(1, 1, 80, 25, buffer);
-      gotoxy(1,1);
-      cprintf(" ");
-#endif
 //      for (i = 0; i < 4; i ++)
 //      {
 //      }

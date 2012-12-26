@@ -260,9 +260,9 @@ int getch_mul(int size, int* buf)
 	int i = 0, b;
 	
 	buf[i++] = b = a = getch();
-#ifndef DOS
+
 	b = -1;
-#endif
+
 	buf[i] = -1;
 	
 	while ( (kbhit() || b == 0 ) && i < size )

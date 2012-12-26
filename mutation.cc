@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef DOS
-#include "conio.h"
-#endif
-
 #ifdef LINUX
 #include "linuxlib.h"
 #endif
@@ -338,12 +334,6 @@ void display_mutations(void)
    int i;
    int j = 0;
    char st_prn [5];
-#ifdef DOS_TERM
-   char buffer[4800];
-   window(1, 1, 80, 25);
-   gettext(1, 1, 80, 25, buffer);
-#endif
-
 
    clrscr();
    textcolor(WHITE);
@@ -374,10 +364,6 @@ void display_mutations(void)
    if (j == 0) cprintf("You aren't a mutant."EOL);
 
    if (getch() == 0) getch();
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
-
 //   cprintf("xxxxxxxxxxxxx");
 //   last_requested = 0;
 return;

@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 

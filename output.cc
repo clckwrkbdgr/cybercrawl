@@ -1,10 +1,6 @@
 #include <string.h>
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <stdlib.h>
 
 #include "externs.h"

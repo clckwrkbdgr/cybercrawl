@@ -2,10 +2,6 @@
 
 #include <string.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #ifdef LINUX
 #include "linuxlib.h"
 #endif
@@ -1798,12 +1794,6 @@ char show_abilities(int ability [120], int ability_fail [120])
    	}
 
 
-#ifdef DOS_TERM
-   	char buffer[4800];
-   	gettext(1, 1, 80, 25, buffer);
-   	window(1, 1, 80, 25);
-#endif
-
    	clrscr();
 
 	cprintf("  Augmentation                      Cost                    Success");
@@ -1816,16 +1806,10 @@ char show_abilities(int ability [120], int ability_fail [120])
 		ki = getch();
 		if (ki == 27)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return 27;
 		}
 		if (ki >= 65 && ki < 123)
 		{
-#ifdef DOS_TERM
-			puttext(1, 1, 80, 25, buffer);
-#endif
 			return ki;
 		}
 		if (ki == 0) ki = getch();
@@ -1847,16 +1831,10 @@ char show_abilities(int ability [120], int ability_fail [120])
 			ki = getch();
 			if (ki == 27)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return 27;
 			}
 			if (ki >= 65 && ki < 123)
 			{
-#ifdef DOS_TERM
-				puttext(1, 1, 80, 25, buffer);
-#endif
 				return ki;
 			}
 			if (ki == 0) ki = getch();
@@ -2169,21 +2147,12 @@ char show_abilities(int ability [120], int ability_fail [120])
 	   	ki = getch();
 	   	if (ki >= 65 && ki < 123)
 	   	{
-#ifdef DOS_TERM
-		   	puttext(1, 1, 80, 25, buffer);
-#endif
 		   	return ki;
 	   	}
 	   	if (ki == 0) ki = getch();
-#ifdef DOS_TERM
-	   	puttext(1, 1, 80, 25, buffer);
-#endif
 	   	return anything;
    	}
 
-#ifdef DOS_TERM
-   	puttext(1, 1, 80, 25, buffer);
-#endif
        // was 35
    	ki = getch();
 

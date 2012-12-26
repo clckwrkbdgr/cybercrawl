@@ -14,9 +14,6 @@
 #define MWATER4 234
 #define MWATER5 235
 */
-#ifdef DOS
-#include <conio.h>
-#endif
 
 #include "externs.h"
 #include "enum.h"
@@ -47,16 +44,9 @@ void describe_monsters(int class_described, unsigned char which_mons)
    which_mons = useless;
 
    char descpr [1000];
-#ifdef DOS_TERM
-   char buffer[3400];
-   gettext(25, 1, 80, 25, buffer);
-#endif
 
 //   strcpy(st_pass, "");
 
-#ifdef DOS_TERM
-   window(25, 1, 80, 25);
-#endif
 
    clrscr();
 
@@ -1284,10 +1274,6 @@ print_description(descpr);
 
 if (getch() == 0) getch();
 
-#ifdef DOS_TERM
-puttext(25, 1, 80, 25, buffer);
-window(1, 1, 80, 25);
-#endif
 
 
 } // end void describe_monsters
@@ -1306,12 +1292,6 @@ void describe_item(int item_class, int item_type, int item_plus, int item_plus2,
 
    char descpr [1000];
 
-#ifdef DOS_TERM
-   char buffer[3400];
-   gettext(25, 1, 80, 25, buffer);
-
-   window(25, 1, 80, 25);
-#endif
 //   strcpy(st_pass, "");
 
    clrscr();
@@ -2457,10 +2437,6 @@ print_description(descpr);
 
 if (getch() == 0) getch();
 
-#ifdef DOS_TERM
-puttext(25, 1, 80, 25, buffer);
-window(1, 1, 80, 25);
-#endif
 
 } // end void describe_item
 
@@ -2638,12 +2614,6 @@ void describe_spell(int spelled)
 
    char descpr [1000];
 
-#ifdef DOS_TERM
-   char buffer[3400];
-   gettext(25, 1, 80, 25, buffer);
-
-   window(25, 1, 80, 25);
-#endif
 //   strcpy(st_pass, "");
 
    clrscr();
@@ -3073,10 +3043,6 @@ print_description(descpr);
 
 if (getch() == 0) getch();
 
-#ifdef DOS_TERM
-puttext(25, 1, 80, 25, buffer);
-window(1, 1, 80, 25);
-#endif
 
 } // end void describe_item
 
@@ -3089,12 +3055,6 @@ void describe_god(int which_god)
 
    char descpr [1000];
 
-#ifdef DOS_TERM
-   char buffer[3400];
-   gettext(25, 1, 80, 25, buffer);
-
-   window(25, 1, 80, 25);
-#endif
 //   strcpy(st_pass, "");
 
    clrscr();
@@ -3207,10 +3167,6 @@ print_description(descpr);
 
 if (getch() == 0) getch();
 
-#ifdef DOS_TERM
-puttext(25, 1, 80, 25, buffer);
-window(1, 1, 80, 25);
-#endif
 
 
 }
@@ -3254,24 +3210,15 @@ for (i = 0; i < strlen(descr); i ++)
 //cprintf(kl);
 if (descr [i] == '$')
 {
-#ifdef DOS_TERM
-  cprintf(EOL);
-#endif
 #ifdef PLAIN_TERM
   gotoxy(1, wherey() + 1);
 #endif
  j = 0;
 } else putch(descr [i]);
-#ifdef DOS_TERM
-if (j % 55 >= 43 && descr [i] == 32 && descr [i + 1] != '$')
-#endif
 #ifdef PLAIN_TERM
 if (j % 70 >= 58 && descr [i] == 32 && descr [i + 1] != '$')
 #endif
 {
-#ifdef DOS_TERM
-  cprintf(EOL);
-#endif
 #ifdef PLAIN_TERM
   gotoxy(1, wherey() + 1);
 #endif

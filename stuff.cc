@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #ifdef LINUX
 #include "linuxlib.h"
 #endif

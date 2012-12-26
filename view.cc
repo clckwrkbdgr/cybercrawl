@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <string.h>
 
 #include "externs.h"
@@ -342,10 +338,6 @@ if (show_green != 0)
 
 
 
-#ifdef DOS_TERM
-puttext(2,1,34,17, buffy);
-#endif
-
 #ifdef PLAIN_TERM
 gotoxy(2,1);
 bufcount = 0;
@@ -357,9 +349,6 @@ bufcount = 0;
   textcolor(buffy [count_x + 1]);
   putch(buffy [count_x]);
   if (count_x % 66 == 64 && count_x > 0)
-#ifdef DOS_TERM
-    cprintf(EOL" ");
-#endif
 #ifdef PLAIN_TERM
     gotoxy(2, wherey() + 1);
 #endif
@@ -1420,10 +1409,6 @@ void draw_border(int bord_col, char your_name [30], char clasnam [40], char tspe
 
 textcolor(bord_col);
 // this bit draws the borders:
-#ifdef DOS_TERM
-window(1,1,80,25);
-#endif
-
 clrscr();
 gotoxy(40,1);
 textcolor(7);
@@ -1453,9 +1438,6 @@ for (i = 0; i < 40; i ++)
 print_it2 [39] = 0;
 
 textcolor(LIGHTGREY);
-#ifdef DOS_TERM
-window(1,1,80,25);
-#endif
 gotoxy(40,1);
 textcolor(7);
 cprintf(print_it2);
@@ -1523,11 +1505,6 @@ for (j = 0; j < 70; j ++)
  }
 }
 
-#ifdef DOS_TERM
-  gettext(1, 1, 80, 25, buffer);
-   window(1, 1, 80, 25);
-#endif
-
    clrscr();
    textcolor(DARKGREY);
 
@@ -1548,9 +1525,6 @@ for (j = 0; j < 25; j ++)
 goto print_it;
 #endif
 
-#ifdef DOS_TERM
-   continue;
-#endif
   }
 //continue;
   buffer2 [bufcount2 + 1] = DARKGREY;
@@ -1595,9 +1569,6 @@ putch(buffer2 [bufcount2 - 2]);
 //  putch(map [i] [j + you[0].y_pos - 12]);
  }
 }
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer2);
-#endif
    gotoxy(curs_x, curs_y);
    gettything : getty = getch();
    if (spec_place [0] == 0 && getty != 0 && getty != '+' && getty != '-' && getty != 'h' && getty != 'j' && getty != 'k' && getty != 'l' && getty != 'y' && getty != 'u' && getty != 'b' && getty != 'n') goto putty;
@@ -1669,10 +1640,6 @@ putch(buffer2 [bufcount2 - 2]);
     goto put_screen;
 
    putty :
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
-
 return;
 
 
@@ -2290,10 +2257,6 @@ if (show_green != 0)
 
 
 
-#ifdef DOS_TERM
-puttext(2,1,34,17, buffy);
-#endif
-
 #ifdef PLAIN_TERM
 gotoxy(2,1);
 bufcount = 0;
@@ -2305,9 +2268,6 @@ if (you[0].running == 0) // this line is purely optional
   textcolor(buffy [count_x + 1]);
   putch(buffy [count_x]);
   if (count_x % 66 == 64 && count_x > 0)
-#ifdef DOS_TERM
-    cprintf(EOL" ");
-#endif
 #ifdef PLAIN_TERM
     gotoxy(2, wherey() + 1);
 #endif

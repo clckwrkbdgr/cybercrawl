@@ -1,12 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
-#ifdef DOS
-#include <file.h>
-#endif
 #ifdef LINUX
 #include <sys/types.h>
 #include <fcntl.h>
@@ -691,10 +684,6 @@ for (i = 0; i < 6; i ++)
 }
 del_file [6] = 0;
 
-#ifdef DOS
-strupr(del_file);
-#endif
-
 char glorpstr [40];
 strncpy(glorpstr, you[0].your_name, 6);
 
@@ -753,17 +742,11 @@ if (handle != -1)
 strcpy(del_file, glorpstr);
 
         strcat(del_file, ".lab");
-#ifdef DOS
-strupr(del_file);
-#endif
         sysg = unlink(del_file);
 
 strcpy(del_file, glorpstr);
 
         strcat(del_file, ".sav");
-#ifdef DOS
-strupr(del_file);
-#endif
         sysg = unlink(del_file);
 
 status2 = set_status(100);
@@ -832,9 +815,6 @@ for (i = 0; i < ITEMS; i++)
 
 
         clrscr();
-#ifdef DOS_TERM
-        window(1,1,80,25);
-#endif
         clrscr();
         cprintf("Goodbye, ");
         cprintf(you[0].your_name);

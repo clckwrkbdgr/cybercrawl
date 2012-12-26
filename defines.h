@@ -73,8 +73,3 @@
 #define YELLOW 14
 #define WHITE 15
 
-
-
-//#define DOS
-//#define LINUX
-// This is now in config.h

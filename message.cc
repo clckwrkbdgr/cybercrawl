@@ -1,10 +1,6 @@
 #include "config.h"
 /* Message File */
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
 
@@ -27,10 +23,6 @@ char inf_screens = 0;
 char info2 [80];
 you[0].running = 0;
 
-
-#ifdef DOS_TERM
-window(1, 1, 80, 25);
-#endif
 
 
 textcolor(7);
@@ -59,11 +51,6 @@ for (del_line_no = 0; del_line_no < 7; del_line_no ++)
 }
 #endif
 
-#ifdef DOS_TERM
- window(1, 18, 78, 25);
- more();
- window(1, 1, 80, 25);
-#endif
  scrloc = 0;
 }
 
@@ -88,11 +75,6 @@ scrloc ++;
 void mesclr(void)
 {
  _setcursortype(_NOCURSOR);
-#ifdef DOS_TERM
- window(1,18,78,25);
- clrscr();
- window(1, 1, 80, 25);
-#endif
 
 #ifdef PLAIN_TERM
 char del_line_no = 0;
@@ -116,10 +98,6 @@ char keypress = 0;
 #ifdef PLAIN_TERM
  gotoxy(2,25);
 #endif
-#ifdef DOS_TERM
- window(1, 18, 80, 25);
- gotoxy(2, 8);
-#endif
  _setcursortype(_NORMALCURSOR);
  textcolor(7);
  cprintf("\r--more--");
@@ -130,10 +108,6 @@ char keypress = 0;
 
 /* Juho Snellman rewrote this part of the function: */
  keypress = 0;
- #ifdef DOS_TERM
-  window(1, 18, 80, 25);
-  clrscr();
- #endif
  /* clrscr() should be inside the DOS-define, and the message
   * buffer cleared in a different way for Linux to fix annoying
   * redraw bug whenever the more-prompt showed up. -- jsnell */
@@ -154,9 +128,6 @@ char keypress = 0;
 
 /*
  keypress = 0;
-#ifdef DOS_TERM
- window(1, 18, 80, 25);
-#endif
  clrscr();
  scrloc = 0;
 
@@ -174,11 +145,6 @@ void replay_messages(void)
    int i = 0;
    int j= 0;
    int line = 0;
-#ifdef DOS_TERM
-   char buffer[4800];
-   window(1, 1, 80, 25);
-   gettext(1, 1, 80, 25, buffer);
-#endif
 
    clrscr();
 
@@ -217,9 +183,6 @@ do
    if (getch() == 0) getch();
 
 
-#ifdef DOS_TERM
-   puttext(1, 1, 80, 25, buffer);
-#endif
 
  _setcursortype(_NORMALCURSOR);
 

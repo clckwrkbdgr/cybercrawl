@@ -2,16 +2,8 @@
 
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include "externs.h"
 #include "enum.h"
-
-#ifdef DOS
-#include <file.h>
-#endif
 
 #ifdef LINUX
 #include <sys/types.h>
@@ -208,10 +200,6 @@ void load (unsigned char stair_taken, char moving_level, char was_a_labyrinth, c
   int itmf = 0;
   int ic = 0;
 
-#ifdef DOS_TERM
-  window(1,1,80,25);
-#endif
-
   char hbjh [5];
 
   strcpy(corr_level, "");
@@ -310,10 +298,6 @@ void load (unsigned char stair_taken, char moving_level, char was_a_labyrinth, c
 
   strcpy(ghost.gname, "");
   for (ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
-
-#ifdef DOS
-  strupr(cha_fil);
-#endif
 
   FILE *handle;
   int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
@@ -800,10 +784,6 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
 
   you[0].prev_targ=MHITNOT;
 
-#ifdef DOS
-  strupr(cha_fil);
-#endif
-
   int fry;
   int frx;
 
@@ -977,10 +957,6 @@ void save_game (char leave_game) {
   strncpy(char_f, you[0].your_name, 6);
   char_f [6] = 0;
   strcat(char_f, ".sav");
-#ifdef DOS
-  strupr(char_f);
-#endif
-
   int datalen=30+35+10+69+6+5+25+2+30+5+25+12*52+50*5+50*4+50+50+6*50+50+50+30+30+30+100+50+100+NO_UNRANDARTS;
   char *buf=(char*)malloc(datalen);
   char *p=buf;
@@ -1190,10 +1166,6 @@ void save_game (char leave_game) {
 
 /* was_a_labyrinth = 0;*/
 
-#ifdef DOS_TERM
-  window(1, 1, 80, 25);
-#endif
-
   clrscr();
   cprintf("See you soon!");
 
@@ -1209,9 +1181,6 @@ void restore_game () {
   strncpy(char_f, you[0].your_name, 6);
   char_f [6] = 0;
   strcat(char_f, ".sav");
-#ifdef DOS
-  strupr(char_f);
-#endif
 //  int handle = open(char_f, O_RDONLY, S_IWRITE, S_IREAD);
   FILE *handle=//open(char_f, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
    fopen(char_f, "rb");

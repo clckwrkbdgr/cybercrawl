@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <string.h>
 #include <stdlib.h>
 
@@ -2041,9 +2037,6 @@ for (i = 0; i < 40; i ++)
 print_it2 [39] = 0;
 
 textcolor(LIGHTGREY);
-#ifdef DOS_TERM
-window(1,1,80,25);
-#endif
 gotoxy(40,1);
 textcolor(7);
 cprintf(print_it2);

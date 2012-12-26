@@ -7,18 +7,9 @@
 
 #include <stdio.h>
 
-#ifdef DOS
-#include <conio.h>
-#endif
-
 #include <string.h>
 #include <time.h>
 #include <fcntl.h>
-
-#ifdef DOS
-#include <io.h>
-#include <SYS\STAT.H>
-#endif
 
 #include <assert.h>
 
