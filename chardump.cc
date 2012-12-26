@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include <string.h>
 #include <fcntl.h>
@@ -17,7 +18,6 @@
 #include "skills.h"
 #include "spells0.h"
 #include "shopping.h"
-#include "version.h"
 
 
 /*

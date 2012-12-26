@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 //#include "defines.h"
 /*#define MLAVA0 220

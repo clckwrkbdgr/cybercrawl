@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include "defines.h"
 //#include "estruct.h"

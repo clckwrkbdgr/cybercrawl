@@ -1,5 +1,9 @@
 /* Some replacement routines missing in gcc */
 
+// This defines were in now non-existent files. Moved here as it is most basic and must-have header file.
+#define VERSION "3.30"
+#define EOL "\n"
+
 #define _NORMALCURSOR 1
 #define _NOCURSOR 0
 #define O_BINARY O_RDWR

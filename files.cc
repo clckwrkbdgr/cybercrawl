@@ -1,6 +1,7 @@
 /* This file was optimized & heavily rewritten by Alexey Guzeev */
 
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include "externs.h"
 #include "enum.h"

@@ -1,5 +1,6 @@
 #include <string.h>
-#include "config.h"
+#include "linuxlib.h"
+
 
 #include <stdlib.h>
 

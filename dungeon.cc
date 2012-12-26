@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 //#include <iostream.h>
 //#include <graphics.h>

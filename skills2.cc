@@ -2,7 +2,8 @@
 /*
 This file was extensively modified by Wladimir van der Laan.
 */
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include "externs.h"
 #include "enum.h"

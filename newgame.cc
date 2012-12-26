@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include <sys/types.h>
 #include <fcntl.h>
@@ -17,7 +18,6 @@
 #include "randart.h"
 #include "skills2.h"
 #include "stuff.h"
-#include "version.h"
 
 char class_allowed(char speci, char clas);
 void init_player(void);

@@ -317,7 +317,7 @@ void how_hungered(int hunge);
 void gain_exp(unsigned int exp_gained);
 void display_char_status(void);
 void redraw_skill(char your_name [30], char clasnam [40]);
-char *species_name(char speci);
+const char *species_name(char speci);
 char wearing_amulet(char which_am);
 unsigned long exp_needed(int lev, char species);
 int check_stealth(void);
@@ -504,7 +504,7 @@ void noisy(char loudness, char nois_x, char nois_y);
 
 int check_awaken(int mons_aw);
 
-void viewwindow(char draw_it);
+//void viewwindow(char draw_it);
 void magic_mapping(int map_radius, int proportion);
 void show_map(int spec_place [2]);
 char mons_near(unsigned char monst);

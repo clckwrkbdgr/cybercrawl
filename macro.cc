@@ -10,9 +10,10 @@
 #include <ctype.h>
 
 #define _LINUXLIB_IMPLEMENTATION
-#include "config.h"
+
 #undef _LINUXLIB_IMPLEMENTATION
 
+#include "linuxlib.h"
 # include <curses.h>
 
 #include "llist.h"

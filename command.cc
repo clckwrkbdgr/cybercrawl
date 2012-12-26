@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include <string.h>
 
@@ -11,7 +12,6 @@
 #include "itemname.h"
 #include "invent.h"
 #include "spells0.h"
-#include "version.h"
 
 void adjust_item(void);
 void adjust_spells(void);

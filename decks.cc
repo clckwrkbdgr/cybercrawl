@@ -1,11 +1,23 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include <string.h>
 
 #include "externs.h"
 #include "enum.h"
 
-#include "dot_h.h"
+#include "effects.h"
+#include "food.h"
+#include "it_use2.h"
+#include "misc.h"
+#include "monplace.h"
+#include "ouch.h"
+#include "player.h"
+#include "spells.h"
+#include "spells1.h"
+#include "spells3.h"
+#include "stuff.h"
+
 #include "mutation.h"
 #include "religion.h"
 

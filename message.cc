@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 /* Message File */
 
 #include "externs.h"

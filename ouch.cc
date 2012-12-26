@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 #include <sys/types.h>
 #include <fcntl.h>

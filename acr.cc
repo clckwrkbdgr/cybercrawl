@@ -1,4 +1,5 @@
-#include "config.h"
+
+#include "linuxlib.h"
 
 //#define DEBUG
 
@@ -167,10 +168,7 @@ int main(int argc, char *argv[])
 {
 	lincurses_startup();
 
-#ifdef MACROS
 	macro_init();
-#endif
-	
 
 	viewwindow = &viewwindow2;
 	mapch = &mapchar;
