@@ -29,7 +29,6 @@ void direction(char rnge, struct dist moves [1])
 char ink = 0;
 char looked = 0;
 moves[0].nothing = dir_cursor(rnge);
-char info [200];
 
 if (moves[0].nothing == -9999)
 {
