@@ -1336,95 +1336,70 @@ ctrl - dir).
 */
 void open_door(char move_x, char move_y)
 {
-/*move_x = door_x;
-move_y = door_y;*/
-//int nothing = 0;
 	struct dist door_move [1];
 
 	door_move[0].move_x = move_x;
 	door_move[0].move_y = move_y;
 
-	if (move_x != 100 && env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != MNG && (menv[env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y]].m_class < MLAVA0 || menv [env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y]].m_sec == 0))
-	{
-/* if (menv [env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y]].m_ench [2] == 6 && player_see_invis() == 0)
- {
-  strcpy(info, "Something seems to be in the way.");
-  mpr(info);
-  you[0].turnover = 1;
-  return;
- }
- strcpy(info, "You might want to wait for the creature standing in your way to move.");
- mpr(info);
- return;*/
- 		you_attack(mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]);
- 		you[0].turnover = 1;
- 		return;
+
+	if(move_x != 100) {
+		int new_pos_x = you[0].x_pos + door_move[0].move_x;
+		int new_pos_y = you[0].y_pos + door_move[0].move_y;
+		int dest_cell = env[0].mgrid [new_pos_x] [new_pos_y];
+
+		if (dest_cell != MNG && (menv[dest_cell].m_class < MLAVA0 || menv [dest_cell].m_sec == 0)) {
+			you_attack(mgrd [new_pos_x] [new_pos_y]);
+			you[0].turnover = 1;
+			return;
+		}
+		if (grd [new_pos_x] [new_pos_y] >= 75 && grd [new_pos_x] [new_pos_y] <= 77) {
+			if (env[0].cgrid [new_pos_x] [new_pos_y] != CNG) {
+			 mpr("You can't get to that trap right now.");
+			 return;
+			}
+			disarm_trap(door_move);
+			return;
+		}
 	}
 
-	if (move_x != 100 && grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] >= 75 && grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] <= 77)
-	{
- 	    if (env[0].cgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != CNG)
- 	    {
- 		 mpr("You can't get to that trap right now.");
- 		 return;
-	    }
- 		disarm_trap(door_move);
- 		return;
-	}
-
-	if (move_x == 100)
-	{
+	if (move_x == 100) {
  		door_move[0].move_x = 0;
  		door_move[0].move_y = 0;
- 		strcpy(info, "Which direction?");
- 		mpr(info);
+ 		mpr("Which direction?");
  		direction(0, door_move);
-	}/* else
- {
-  if (grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] == 70)
-  {
-   close_door(door_move[0].move_x, door_move[0].move_x);
-   return;
-  }
- }*/
-
+	}
 	if (door_move[0].nothing == -1) return;
 
-	if (door_move[0].move_x > 1 || door_move[0].move_y > 1 || door_move[0].move_x < -1 || door_move[0].move_y < -1)
-	{
+	if (door_move[0].move_x > 1 || door_move[0].move_y > 1 || door_move[0].move_x < -1 || door_move[0].move_y < -1) {
 		strcpy(info, "I'm afraid your arm isn't that long.");
 		mpr(info);
 		return;
 	}
 
-	if (grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] == 3)
-	{
-		if (you[0].lev != 0)
-		{
+	int new_pos_x = you[0].x_pos + door_move[0].move_x;
+	int new_pos_y = you[0].y_pos + door_move[0].move_y;
+
+	if (grd [new_pos_x] [new_pos_y] == 3) {
+		if (you[0].lev != 0) {
 			strcpy(info, "You reach down and open the door.");
 			mpr(info);
-			grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 70;
-			you[0].turnover = 1;
-		} else
-	    {
-			if (random2(25) == 0)
-			{
+		} else {
+			if (random2(25) == 0) {
 				strcpy(info, "As you open the door, it creaks loudly!");
                 noisy(15, you[0].x_pos, you[0].y_pos);
-			} else strcpy(info, "You open the door.");
+			} else {
+				strcpy(info, "You open the door.");
+			}
 
 			mpr(info);
-			grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 70;
-			you[0].turnover = 1;
 		}
-	} else
-	{
+		grd [new_pos_x] [new_pos_y] = 70;
+	} else {
 		strcpy(info, "You swing at nothing.");
 	 	mpr(info);
- 	 	you[0].turnover = 1;
 	 	if (you[0].is_undead != 2) you[0].hunger -= 3;
 	}
-
+	you[0].turnover = 1;
 } // end of void open_door()
 
 /*
