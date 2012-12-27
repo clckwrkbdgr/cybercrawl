@@ -1,8 +1,6 @@
+#pragma once
 
 void mpr(const char * inf);
-void mesclr(void);
-void more(void);
-void mesclr(void);
-void replay_messages(void);
-
-
+void more();
+void mesclr();
+void replay_messages();
