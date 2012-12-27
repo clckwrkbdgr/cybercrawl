@@ -73,15 +73,13 @@ unsigned char keyin;
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
@@ -96,8 +94,7 @@ if (you[0].attribute [ATTR_TRANSFORMATION] != TRAN_NONE)
 
 if ((you[0].equip [EQ_WEAPON] != -1) && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && you[0].inv_plus [you[0].equip [EQ_WEAPON]] > 80)
 {
-	strcpy(info, "You can't unwield your weapon to draw a new one!");
-	mpr(info);
+	mpr("You can't unwield your weapon to draw a new one!");
 	return;
 }
 
@@ -109,8 +106,7 @@ if (auto_wield == 1)
 } else
 {
 
-query : strcpy(info, "Wield which item (- for none)?");
-mpr(info);
+query : mpr("Wield which item (- for none)?");
 
 // test relay_message();
 
@@ -144,7 +140,7 @@ if (keyin == '*')
 		keyin = nthing;
 	} else
 	{
-		strcpy(info, "Wield which item?"); mpr(info);
+		mpr("Wield which item?");
 		// test relay_message();
 		keyin = get_ch();
 	}
@@ -162,8 +158,7 @@ if (keyin == '-')
   you[0].turnover = 1;
  }
  you[0].equip [EQ_WEAPON] = -1;
- strcpy(info, "You are empty handed.");
- mpr(info);
+ mpr("You are empty handed.");
  you[0].time_taken *= 3;
  you[0].time_taken /= 10;
  return;
@@ -171,8 +166,7 @@ if (keyin == '-')
 
 if (item_wield_1 < 65 || (item_wield_1 > 90 && item_wield_1 < 97) || item_wield_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -180,23 +174,20 @@ int item_wield_2 = conv_lett(item_wield_1);
 
 if (item_wield_2 == you[0].equip [EQ_WEAPON])
 {
-	strcpy(info, "You are already wielding that!");
-	mpr(info);
+	mpr("You are already wielding that!");
 	return;
 }
 
 if (item_wield_2 == you[0].equip [EQ_BODY_ARMOUR] || item_wield_2 == you[0].equip [EQ_SHIELD] || item_wield_2 == you[0].equip [EQ_HELMET] || item_wield_2 == you[0].equip [EQ_CLOAK] || item_wield_2 == you[0].equip [EQ_BOOTS] || item_wield_2 == you[0].equip [EQ_GLOVES]) // later add:   || == helmet etc
 {
-	strcpy(info, "You are wearing that object!");
-	mpr(info);
+	mpr("You are wearing that object!");
 	return;
 }
 
 
 if (you[0].inv_quant [item_wield_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }                                // 2-hands 7,10,12, {20,21}
 
@@ -204,8 +195,7 @@ if (you[0].inv_class [item_wield_2] != OBJ_WEAPONS)
 {
  if (you[0].inv_class [item_wield_2] == OBJ_STAVES && you[0].equip [EQ_SHIELD] != -1)
  {
-      strcpy(info, "You can't wield that with a shield.");
-      mpr(info);
+      mpr("You can't wield that with a shield.");
       return;
  }
 
@@ -216,30 +206,26 @@ if (you[0].inv_class [item_wield_2] != OBJ_WEAPONS)
 
    if ((you[0].species < SP_OGRE || you[0].species > SP_OGRE_MAGE) && mass(you[0].inv_class [item_wield_2], you[0].inv_type [item_wield_2]) >= 500)
    {
-      strcpy(info, "That's too large and heavy for you to wield.");
-      mpr(info);
+      mpr("That's too large and heavy for you to wield.");
       return;
    }
 
    if ((you[0].species == SP_HALFLING || you[0].species == SP_GNOME || you[0].species == SP_KOBOLD) && (you[0].inv_type [item_wield_2] == WPN_GREAT_SWORD || you[0].inv_type [item_wield_2] == WPN_BATTLEAXE || you[0].inv_type [item_wield_2] == WPN_HALBERD || you[0].inv_type [item_wield_2] == WPN_GLAIVE || you[0].inv_type [item_wield_2] == WPN_SCYTHE))
    {
-      strcpy(info, "That's too large for you to wield.");
-      mpr(info);
+      mpr("That's too large for you to wield.");
       return; // halflings or kobolds
    }
 
 
    if ((you[0].inv_type [item_wield_2] == WPN_GREAT_SWORD || you[0].inv_type [item_wield_2] == WPN_BATTLEAXE || you[0].inv_type [item_wield_2] == WPN_HALBERD || you[0].inv_type [item_wield_2] == WPN_GLAIVE || you[0].inv_type [item_wield_2] == WPN_QUARTERSTAFF || you[0].inv_type [item_wield_2] == WPN_SCYTHE || you[0].inv_type [item_wield_2] == WPN_GIANT_CLUB || you[0].inv_type [item_wield_2] == WPN_GIANT_SPIKED_CLUB || you[0].inv_type [item_wield_2] == WPN_EXECUTIONERS_AXE || you[0].inv_type [item_wield_2] == WPN_TRIPLE_SWORD) && you[0].equip [EQ_SHIELD] != -1)
    {
-      strcpy(info, "You can't wield that with a shield.");
-      mpr(info);
+      mpr("You can't wield that with a shield.");
       return;
    }
 
    if ((you[0].is_undead != 0 || you[0].species == SP_DEMONSPAWN) && (you[0].inv_dam [item_wield_2] % 30 == SPWPN_HOLY_WRATH || you[0].inv_dam [item_wield_2] % 30 == SPWPN_DISRUPTION))
    {
-      strcpy(info, "This weapon will not allow you to wield it.");
-      mpr(info);
+      mpr("This weapon will not allow you to wield it.");
       you[0].turnover = 1;
       return; // Mummies can't wield holy weapons
    }
@@ -270,15 +256,13 @@ wield_change = 1;
 
 if (you[0].inv_plus [item_wield_2] > 80 && you[0].inv_class [item_wield_2] == OBJ_WEAPONS)
 {
-	strcpy(info, "It sticks to your hand!");
 // if (you[0].inv_ident [item_wield_2] == 0)	you[0].inv_ident [item_wield_2] = 2;
-	mpr(info);
+	mpr("It sticks to your hand!");
 }
 
  if (you[0].inv_class [item_wield_2] == OBJ_MISCELLANY && you[0].inv_type [item_wield_2] == MISC_LANTERN_OF_SHADOWS)
  {
-  strcpy(info, "The area is filled with flickering shadows.");
-  mpr(info);
+  mpr("The area is filled with flickering shadows.");
   you[0].special_wield = SPWLD_SHADOW;
  }
 
@@ -305,77 +289,66 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
 {
 
   case SPWPN_FLAMING:
-  strcpy(info, "It bursts into flame!");
-  mpr(info);
+  mpr("It bursts into flame!");
   break;
 
   case SPWPN_FREEZING:
-  strcpy(info, "It glows with a cold blue light!");
-  mpr(info);
+  mpr("It glows with a cold blue light!");
   break;
 
   case SPWPN_HOLY_WRATH:
-  strcpy(info, "It softly glows with a divine radiance!");
-  mpr(info);
+  mpr("It softly glows with a divine radiance!");
   break;
 
   case SPWPN_ELECTROCUTION:
-  strcpy(info, "You hear the crackle of electricity.");
-  mpr(info);
+  mpr("You hear the crackle of electricity.");
   break;
 
   case SPWPN_ORC_SLAYING:
-  strcpy(info, "You feel a sudden desire to kill terrorists!");
-  if (you[0].species == SP_HILL_ORC) strcpy(info, "You feel a sudden desire to commit suicide.");
-  mpr(info);
+  if (you[0].species == SP_HILL_ORC) {
+	  mpr("You feel a sudden desire to commit suicide.");
+  } else {
+  mpr("You feel a sudden desire to kill terrorists!");
+  }
   break;
 
   case SPWPN_VENOM:
-  strcpy(info, "It begins to drip with poison!");
-  mpr(info);
+  mpr("It begins to drip with poison!");
   break;
 
   case SPWPN_PROTECTION:
-  strcpy(info, "You feel protected!");
-  mpr(info);
+  mpr("You feel protected!");
 /*  player_AC() += 5;*/
   you[0].AC_ch = 1;
   break;
 
   case SPWPN_DRAINING:
-  strcpy(info, "You sense an unholy aura.");
-		mpr(info);
+  mpr("You sense an unholy aura.");
 		break;
 
   case SPWPN_SPEED:
-  strcpy(info, "Your hands tingle!");
-		mpr(info);
+  mpr("Your hands tingle!");
 		break;
 
   case SPWPN_FLAME:
-  strcpy(info, "It glows red for a moment.");
-		mpr(info);
+  mpr("It glows red for a moment.");
 		break;
 
   case SPWPN_FROST:
-  strcpy(info, "It is covered in frost.");
-		mpr(info);
+  mpr("It is covered in frost.");
 		break;
 
   case SPWPN_VAMPIRICISM:
-  strcpy(info, "You feel a strange hunger.");
   you[0].hunger_inc += 6;
-		mpr(info);
+  mpr("You feel a strange hunger.");
 		break;
 
   case SPWPN_DISRUPTION:
-  strcpy(info, "You sense a holy aura.");
-		mpr(info);
+  mpr("You sense a holy aura.");
 		break;
 
   case SPWPN_PAIN:
-  strcpy(info, "A searing pain shoots up your arm!");
-		mpr(info);
+  mpr("A searing pain shoots up your arm!");
 		break;
 
   case SPWPN_DISTORTION:
@@ -383,20 +356,17 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
   break;
 
   case NWPN_SINGING_SWORD:
-  strcpy(info, "The Singing Sword hums in delight!");
-		mpr(info);
+  mpr("The Singing Sword hums in delight!");
   you[0].special_wield = SPWLD_SING;
 		break;
 
   case NWPN_WRATH_OF_TROG:
-  strcpy(info, "You feel bloodthirsty!");
-		mpr(info);
+  mpr("You feel bloodthirsty!");
   you[0].special_wield = SPWLD_TROG;
 		break;
 
   case NWPN_SCYTHE_OF_CURSES:
-  strcpy(info, "A shiver runs down your spine.");
-		mpr(info);
+  mpr("A shiver runs down your spine.");
   you[0].special_wield = SPWLD_CURSE;
 		break;
 
@@ -407,32 +377,27 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
 		break;
 
   case NWPN_GLAIVE_OF_PRUNE:
-  strcpy(info, "You feel pruney.");
-		mpr(info);
+  mpr("You feel pruney.");
   you[0].special_wield = SPWLD_NONE;
 		break;
 
   case NWPN_SCEPTRE_OF_TORMENT:
-  strcpy(info, "A terribly searing pain shoots up your arm!");
-		mpr(info);
+  mpr("A terribly searing pain shoots up your arm!");
   you[0].special_wield = SPWLD_TORMENT;
 		break;
 
   case NWPN_SWORD_OF_ZONGULDROK:
-  strcpy(info, "You sense an extremely unholy aura.");
-		mpr(info);
+  mpr("You sense an extremely unholy aura.");
   you[0].special_wield = SPWLD_ZONGULDROK;
 		break;
 
   case NWPN_SWORD_OF_POWER:
-  strcpy(info, "You sense an aura of extreme power.");
-		mpr(info);
+  mpr("You sense an aura of extreme power.");
   you[0].special_wield = SPWLD_POWER;
 		break;
 
   case NWPN_STAFF_OF_OLGREB:
-  strcpy(info, "You smell chlorine.");
-		mpr(info);
+  mpr("You smell chlorine.");
 /*                you[0].res_poison ++;
                 you[0].spec_poison ++;
                 you[0].mag_abil ++;*/
@@ -440,9 +405,8 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
 		break;
 
   case NWPN_VAMPIRE_S_TOOTH:
-  strcpy(info, "You feel a strange hunger, and smell blood on the air...");
   you[0].hunger_inc += 9;
-		mpr(info);
+  mpr("You feel a strange hunger, and smell blood on the air...");
 		break;
 
   case NWPN_STAFF_OF_WUCAD_MU:
@@ -553,20 +517,17 @@ char wh_equip = 0;
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
-query : strcpy(info, "Wear which item?");
-mpr(info);
+query : mpr("Wear which item?");
 
 // test relay_message();
 
@@ -598,7 +559,7 @@ if (keyin == '*')
 		keyin = nthing;
 	} else
 	{
-		strcpy(info, "Wear which item?"); mpr(info);
+		mpr("Wear which item?");
 		// test relay_message();
 		keyin = get_ch();
 	}
@@ -619,8 +580,7 @@ return;
 
 if (armour_wear_1 < 65 || (armour_wear_1 > 90 && armour_wear_1 < 97) || armour_wear_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -710,8 +670,7 @@ if (
           )
      )
   {
-     strcpy(info, "You can't wear a shield with a two-handed weapon.");
-     mpr(info);
+     mpr("You can't wear a shield with a two-handed weapon.");
      return;
   }
 
@@ -786,8 +745,7 @@ if (you[0].species != SP_CENTAUR && you[0].inv_type [armour_wear_2] == ARM_BOOTS
 
 fits_on_body : if (you[0].inv_type [armour_wear_2] == ARM_BOOTS && you[0].equip [EQ_BOOTS] != -1)
 {
-	strcpy(info, "You can't wear that.");
-	mpr(info);
+	mpr("You can't wear that.");
 	return;
 }
 
@@ -808,8 +766,7 @@ if ((you[0].species >= SP_OGRE && you[0].species <= SP_UNK2_DRACONIAN) || you[0]
 {
  if ((you[0].inv_type [armour_wear_2] >= ARM_LEATHER_ARMOUR && you[0].inv_type [armour_wear_2] <= ARM_PLATE_MAIL) || (you[0].inv_type [armour_wear_2] >= ARM_HELMET && you[0].inv_type [armour_wear_2] <= ARM_BUCKLER) || (you[0].inv_type [armour_wear_2] == ARM_CRYSTAL_PLATE_MAIL))
  {
-  strcpy(info, "This armour doesn't fit on your body.");
-  mpr(info);
+  mpr("This armour doesn't fit on your body.");
   return;
  }
 }
@@ -942,8 +899,7 @@ if (you[0].inv_type [armour_wear_2] < ARM_SHIELD || you[0].inv_type [armour_wear
 /* player_evasion() += ev_mod(); */
  if (you[0].duration [DUR_ICY_ARMOUR] != 0)
  {
-  strcpy(info, "Your icy armour melts away.");
-  mpr(info);
+  mpr("Your icy armour melts away.");
 /*  player_AC() -= 6; */
   you[0].AC_ch = 1;
   you[0].duration [DUR_ICY_ARMOUR] = 0;
@@ -1031,34 +987,29 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
 {
 
   case SPARM_RUNNING:
-  if (you[0].species != SP_NAGA) strcpy(info, "You feel quick on your feet.");
-   else strcpy(info, "You feel quick.");
-  mpr(info);
+  if (you[0].species != SP_NAGA) mpr("You feel quick on your feet.");
+   else mpr("You feel quick.");
 /*  if (you[0].fast_run > 0) you[0].fast_run = 0;
   you[0].fast_run ++;*/
   break;
 
   case SPARM_FIRE_RESISTANCE:
-  strcpy(info, "You feel resistant to fire."); // What a boring message
-  mpr(info);
+  mpr("You feel resistant to fire."); // What a boring message
 /*  player_res_fire() ++;*/
   break;
 
   case SPARM_COLD_RESISTANCE:
-  strcpy(info, "You feel resistant to cold.");
-  mpr(info);
+  mpr("You feel resistant to cold.");
 /*  player_res_cold() ++;*/
   break;
 
   case SPARM_POISON_RESISTANCE:
-  strcpy(info, "You feel healthy.");
-  mpr(info);
+  mpr("You feel healthy.");
 /*  you[0].res_poison ++;*/
   break;
 
   case SPARM_SEE_INVISIBLE:
-  strcpy(info, "You feel perceptive.");
-  mpr(info);
+  mpr("You feel perceptive.");
 /*  if (you[0].see_invis > 0) you[0].see_invis = 0;
   you[0].see_invis --;*/
   break;
@@ -1071,24 +1022,21 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
   break;
 
  case SPARM_STRENGTH:
- strcpy(info, "You feel stronger.");
- mpr(info);
+ mpr("You feel stronger.");
  you[0].strength += 3;
  you[0].max_strength += 3;
  you[0].strength_ch = 1;
  break;
 
  case SPARM_DEXTERITY:
- strcpy(info, "You feel dextrous.");
- mpr(info);
+ mpr("You feel dextrous.");
  you[0].dex += 3;
  you[0].max_dex += 3;
  you[0].dex_ch = 1;
  break;
 
  case SPARM_INTELLIGENCE:
- strcpy(info, "You feel intelligent."); // inspired messages, aren't they?
- mpr(info);
+ mpr("You feel intelligent."); // inspired messages, aren't they?
  you[0].intel += 3;
  you[0].max_intel += 3;
  you[0].intel_ch = 1;
@@ -1116,32 +1064,27 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
 	break;
 
  case SPARM_MAGIC_RESISTANCE:
- strcpy(info, "You feel resistant to hacking.");
- mpr(info);
+ mpr("You feel resistant to hacking.");
 /* you[0].res_magic += 40;*/
  break;
 
  case SPARM_PROTECTION:
- strcpy(info, "You feel protected.");
- mpr(info);
+ mpr("You feel protected.");
 /* player_AC() += 3;*/
  break;
 
  case SPARM_STEALTH:
- strcpy(info, "You feel stealthy.");
- mpr(info);
+ mpr("You feel stealthy.");
  break;
 
   case SPARM_RESISTANCE:
-  strcpy(info, "You feel resistant to extremes of temperature.");
-  mpr(info);
+  mpr("You feel resistant to extremes of temperature.");
 /*  player_res_cold() ++;
   player_res_fire() ++;*/
   break;
 
   case SPARM_POSITIVE_ENERGY:
-  strcpy(info, "Your life-force is being protected.");
-  mpr(info);
+  mpr("Your life-force is being protected.");
 /*  player_prot_life() ++;*/
   break;
 
@@ -1150,8 +1093,7 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
   {
    strcpy(info, "You feel strangely numb.");
   } else
-  strcpy(info, "You feel extremely powerful.");
-  mpr(info);
+  mpr("You feel extremely powerful.");
 /*  you[0].mag_abil += 2;
   you[0].spec_conj ++;
   you[0].spec_ench ++;
@@ -1195,13 +1137,11 @@ unsigned char nthing = 0;
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
-query : strcpy(info, "Take off which item?");
-mpr(info);
+query : mpr("Take off which item?");
 
 // test relay_message();
 
@@ -1239,8 +1179,7 @@ int armour_wear_1 = (int) keyin;
 
 if (armour_wear_1 < 65 || (armour_wear_1 > 90 && armour_wear_1 < 97) || armour_wear_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -1260,15 +1199,13 @@ int armour_wear_2 = conv_lett(armour_wear_1); //you[0].equip [6]; // may as well
 
 if (you[0].inv_class [armour_wear_2] != OBJ_ARMOUR)
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 }
 
 if (you[0].inv_plus [armour_wear_2] > 130 && (armour_wear_2 == you[0].equip [EQ_BODY_ARMOUR] || armour_wear_2 == you[0].equip [EQ_SHIELD] || armour_wear_2 == you[0].equip [EQ_HELMET] || armour_wear_2 == you[0].equip [EQ_GLOVES] || armour_wear_2 == you[0].equip [EQ_CLOAK] || armour_wear_2 == you[0].equip [EQ_BOOTS]))
 {
-	strcpy(info, "That piece of armour seems to be stuck to your body!");
-	mpr(info);
+	mpr("That piece of armour seems to be stuck to your body!");
 	return;
 }
 
@@ -1276,15 +1213,13 @@ if (you[0].inv_type [armour_wear_2] < ARM_SHIELD || you[0].inv_type [armour_wear
 {
 	if (armour_wear_2 != you[0].equip [EQ_BODY_ARMOUR])
 	{
-		strcpy(info, "You aren't wearing that!");
-		mpr(info);
+		mpr("You aren't wearing that!");
 		return;
 	}
 
 	if (you[0].equip [EQ_CLOAK] != -1)
 	{
-	strcpy(info, "You'll have to take your cloak off first.");
-	mpr(info);
+	mpr("You'll have to take your cloak off first.");
 	return;
 	}
 
@@ -1303,8 +1238,7 @@ case ARM_LARGE_SHIELD:
 case ARM_SHIELD:
 if (armour_wear_2 != you[0].equip [EQ_SHIELD])
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 } else you[0].equip [EQ_SHIELD] = -1; break;
 
@@ -1312,8 +1246,7 @@ if (armour_wear_2 != you[0].equip [EQ_SHIELD])
 case ARM_CLOAK:
 if (armour_wear_2 != you[0].equip [EQ_CLOAK])
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 } else you[0].equip [EQ_CLOAK] = -1; break;
 
@@ -1322,8 +1255,7 @@ if (armour_wear_2 != you[0].equip [EQ_CLOAK])
 case ARM_HELMET:
 if (armour_wear_2 != you[0].equip [EQ_HELMET])
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 } else you[0].equip [EQ_HELMET] = -1; break;
 
@@ -1332,8 +1264,7 @@ if (armour_wear_2 != you[0].equip [EQ_HELMET])
 case ARM_GLOVES:
 if (armour_wear_2 != you[0].equip [EQ_GLOVES])
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 } else you[0].equip [EQ_GLOVES] = -1; break;
 
@@ -1343,8 +1274,7 @@ if (armour_wear_2 != you[0].equip [EQ_GLOVES])
 case ARM_BOOTS:
 if (armour_wear_2 != you[0].equip [EQ_BOOTS])
 {
-	strcpy(info, "You aren't wearing that!");
-	mpr(info);
+	mpr("You aren't wearing that!");
 	return;
 } else you[0].equip [EQ_BOOTS] = -1; break;
 
@@ -1387,20 +1317,17 @@ struct bolt beam [1];
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
-query : strcpy(info, "Throw which item?");
-mpr(info);
+query : mpr("Throw which item?");
 
 unsigned char keyin = get_ch();
 
@@ -1425,8 +1352,7 @@ int throw_1 = (int) keyin;
 
 if (throw_1 < 65 || (throw_1 > 90 && throw_1 < 97) || throw_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -1434,22 +1360,19 @@ int throw_2 = conv_lett(throw_1);
 
 if (throw_2 == you[0].equip [EQ_LEFT_RING] || throw_2 == you[0].equip [EQ_RIGHT_RING] || throw_2 == you[0].equip [EQ_AMULET] || throw_2 == you[0].equip [EQ_BODY_ARMOUR] || throw_2 == you[0].equip [EQ_SHIELD] || throw_2 == you[0].equip [EQ_HELMET] || throw_2 == you[0].equip [EQ_CLOAK] || throw_2 == you[0].equip [EQ_BOOTS] || throw_2 == you[0].equip [EQ_GLOVES])
 {
-	strcpy(info, "You are wearing that object!");
-	mpr(info);
+	mpr("You are wearing that object!");
 	return;
 }
 
 if (throw_2 == you[0].equip [EQ_WEAPON] && you[0].inv_plus [you[0].equip [EQ_WEAPON]] > 80)
 {
-	strcpy(info, "That thing is stuck to your hand!");
-	mpr(info);
+	mpr("That thing is stuck to your hand!");
 	return;
 }
 
 if (you[0].inv_quant [throw_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -1472,8 +1395,7 @@ int throw_2 = 0;
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
@@ -1490,8 +1412,7 @@ find: for (i = 0; i < 53; i ++)
 {
   if (i == 52)
 		{
-   strcpy(info, "You have nothing suitable.");
-			mpr(info);
+   mpr("You have nothing suitable.");
 			return;
 		}
   if (you[0].inv_quant [i] == 0) continue;
@@ -1515,8 +1436,7 @@ struct dist thr [1];
 
 char shoot_skill = 0;
 
-strcpy(info, "Which direction? (* to target)");
-mpr(info);
+	mpr("Which direction? (* to target)");
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
  {
@@ -1765,8 +1685,7 @@ if (you[0].inv_quant [throw_2] == 0)
 	if (you[0].equip [EQ_WEAPON] == throw_2)
 	{
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
 	}
 }
 
@@ -1789,20 +1708,17 @@ unsigned char nthing = 0;
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
-query : strcpy(info, "Put on which item?");
-mpr(info);
+query : mpr("Put on which item?");
 
 unsigned char keyin = get_ch();
 
@@ -1824,8 +1740,7 @@ int ring_wear_1 = (int) keyin;
 
 if (ring_wear_1 < 65 || (ring_wear_1 > 90 && ring_wear_1 < 97) || ring_wear_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -1833,29 +1748,25 @@ int ring_wear_2 = conv_lett(ring_wear_1);
 
 if (ring_wear_2 == you[0].equip [EQ_LEFT_RING] || ring_wear_2 == you[0].equip [EQ_RIGHT_RING] || ring_wear_2 == you[0].equip [EQ_AMULET])
 {
-	strcpy(info, "You are already wearing that!");
-	mpr(info);
+	mpr("You are already wearing that!");
 	return;
 }
 
 if (you[0].inv_quant [ring_wear_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
 if (ring_wear_2 == you[0].equip [EQ_WEAPON])
 {
-	strcpy(info, "You are wielding that object.");
-	mpr(info);
+	mpr("You are wielding that object.");
 	return;
 }
 
 if (you[0].inv_class [ring_wear_2] != OBJ_JEWELLERY)
 {
-	strcpy(info, "I think there's some kind of mistake here.");
-	mpr(info);
+	mpr("I think there's some kind of mistake here.");
 	return;
 }
 
@@ -1864,15 +1775,13 @@ if (you[0].inv_type [ring_wear_2] < AMU_RAGE)
 {
  if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80)
  {
-	strcpy(info, "You can't take your gloves off to wear a chip!"); // FIXME Sounds weird.
-	mpr(info);
+	mpr("You can't take your gloves off to wear a chip!"); // FIXME Sounds weird.
 	return;
  }
 
  if (you[0].inv_class [ring_wear_2] == OBJ_JEWELLERY && you[0].equip [EQ_LEFT_RING] != -1 && you[0].equip [EQ_RIGHT_RING] != -1) // and you are trying to wear body you[0].equip.
  {
-	strcpy(info, "You are already have a chip installed on each hemisphere.");
-	mpr(info);
+	mpr("You are already have a chip installed on each hemisphere.");
 	return;
  }
 } else
@@ -1897,15 +1806,13 @@ if (you[0].inv_type [ring_wear_2] >= AMU_RAGE)
   else
 if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1)
 {
-	strcpy(info, "Put on which hemisphere (l or r)?");
-	mpr(info);
+	mpr("Put on which hemisphere (l or r)?");
 
 	keyin = get_ch();
 
 	if (keyin != 'r' && keyin != 'l')
 	{
-		strcpy(info, "You don't have such a hemisphere!");
-		mpr(info);
+		mpr("You don't have such a hemisphere!");
 		return;
 	}
 
@@ -2147,22 +2054,19 @@ int ring_wear_2;
 
 if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1 && you[0].equip [EQ_AMULET] == -1)
 {
-	strcpy(info, "You aren't wearing any chips or implants.");
-	mpr(info);
+	mpr("You aren't wearing any chips or implants.");
 	return;
 }
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
 if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80 && you[0].equip [EQ_AMULET] == -1)
 {
-	strcpy(info, "You can't take your gloves off to remove any chips!"); // FIXME Weird. Must be helmet.
-	mpr(info);
+	mpr("You can't take your gloves off to remove any chips!"); // FIXME Weird. Must be helmet.
 	return;
 }
 
@@ -2173,8 +2077,7 @@ if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1 && y
 
 if (hand_used == 10)
 {
-	query : strcpy(info, "Remove from where (l or r hemispere, or n for vertebra)?");
-	mpr(info);
+	query : mpr("Remove from where (l or r hemispere, or n for vertebra)?");
 
 	keyin = get_ch();
 
@@ -2194,8 +2097,7 @@ if (hand_used == 10)
 
 	if (keyin != 'r' && keyin != 'l' && keyin != 'n')
 	{
-		strcpy(info, "You don't have such a hemisphere or vertebra.");
-		mpr(info);
+		mpr("You don't have such a hemisphere or vertebra.");
 		return;
 	}
 
@@ -2207,22 +2109,19 @@ if (hand_used == 10)
 
 if (you[0].equip [EQ_GLOVES] != -1 && you[0].inv_plus [you[0].equip [EQ_GLOVES]] > 80 && hand_used < 2)
 {
-	strcpy(info, "You can't take your gloves off to remove any chips!"); // FIXME Weird again.
-	mpr(info);
+	mpr("You can't take your gloves off to remove any chips!"); // FIXME Weird again.
 	return;
 }
 
 if (you[0].equip [hand_used + 7] == -1)
 {
-	strcpy(info, "I don't think you really meant that.");
-	mpr(info);
+	mpr("I don't think you really meant that.");
 	return;
 }
 
 if (you[0].inv_plus [you[0].equip [hand_used + 7]] > 80) // cursed
 {
-	strcpy(info, "It's stuck to you!");
-	mpr(info);
+	mpr("It's stuck to you!");
   if (you[0].inv_ident [you[0].equip [hand_used + 7]] == 0) you[0].inv_ident [you[0].equip [hand_used + 7]] = 1;
   return;
 }
@@ -2404,21 +2303,18 @@ beam[0].wand_id = 0;
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
 
-query : strcpy(info, "Shoot which item?");
-mpr(info);
+query : mpr("Shoot which item?");
 
 unsigned char keyin = get_ch();
 
@@ -2441,8 +2337,7 @@ zap_device_1 = (int) keyin;
 
 if (zap_device_1 < 65 || (zap_device_1 > 90 && zap_device_1 < 97) || zap_device_1 > 122)
 {
-	Dont_have : strcpy(info, "You don't have any such object.");
-	mpr(info);
+	Dont_have : mpr("You don't have any such object.");
 	return;
 }
 
@@ -2455,14 +2350,12 @@ if (you[0].inv_quant [zap_device_2] == 0)
 
 if (you[0].inv_class [zap_device_2] != OBJ_WANDS || you[0].inv_plus [zap_device_2] <= 0)
 {
-	strcpy(info, "Nothing appears to happen.");
-	mpr(info);
+	mpr("Nothing appears to happen.");
 	you[0].turnover = 1;
 	return;
 }
 
-strcpy(info, "Which direction? (* to target)");
-mpr(info);
+	mpr("Which direction? (* to target)");
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
 {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
@@ -2541,8 +2434,7 @@ unsigned char nthing = 0;
 
 if (you[0].is_undead == 2)
 {
- strcpy(info, "You can't eat.");
- mpr(info);
+ mpr("You can't eat.");
  return;
 }
 
@@ -2561,13 +2453,11 @@ if (igrd [you[0].x_pos] [you[0].y_pos] != 501)
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
-query : strcpy(info, "Eat which item?");
-mpr(info);
+query : mpr("Eat which item?");
 
 unsigned char keyin = get_ch();
 
@@ -2591,8 +2481,7 @@ food_eat_1 = (int) keyin;
 
 if (food_eat_1 < 65 || (food_eat_1 > 90 && food_eat_1 < 97) || food_eat_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -2600,16 +2489,14 @@ food_eat_2 = conv_lett(food_eat_1);
 
 if (you[0].inv_quant [food_eat_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
 
 if (you[0].inv_class [food_eat_2] != OBJ_FOOD)
 {
-	strcpy(info, "You can't eat that!");
-	mpr(info);
+	mpr("You can't eat that!");
 	return;
 }
 
@@ -2617,8 +2504,7 @@ if (you[0].species == SP_GHOUL || you[0].species == SP_KOBOLD || you[0].mutation
 {
  if ((you[0].inv_type [food_eat_2] >= FOOD_BREAD_RATION && you[0].inv_type [food_eat_2] <= FOOD_CHOKO) || (you[0].inv_type [food_eat_2] >= FOOD_SNOZZCUMBER && you[0].inv_type [food_eat_2] <= FOOD_LYCHEE))
  {
-  strcpy(info, "Sorry, you're a carnivore.");
-  mpr(info);
+  mpr("Sorry, you're a carnivore.");
   return;
  }
 }
@@ -2632,8 +2518,7 @@ if (you[0].species == SP_GHOUL || you[0].species == SP_KOBOLD || you[0].mutation
 
 if (you[0].inv_type [food_eat_2] == FOOD_CHUNK && you[0].hung_state > 2 && wearing_amulet(AMU_THE_GOURMAND) == 0 && you[0].species != SP_KOBOLD && you[0].species != SP_OGRE && you[0].species != SP_TROLL && you[0].species != SP_GHOUL && you[0].mutation [MUT_CARNIVOROUS] == 0)
 {
- strcpy(info, "You aren't quite hungry enough to eat that!");
- mpr(info);
+ mpr("You aren't quite hungry enough to eat that!");
  return;
 }
 
@@ -2645,8 +2530,7 @@ if (you[0].inv_quant [food_eat_2] == 0)
 	if (you[0].equip [EQ_WEAPON] == food_eat_2)
 	{
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
                 wield_change = 1;
 	}
 }
@@ -2674,8 +2558,7 @@ unsigned char keyin;
 
 if (you[0].is_undead == 2)
 {
- strcpy(info, "You can't drink.");
- mpr(info);
+ mpr("You can't drink.");
  return;
 }
 
@@ -2686,20 +2569,17 @@ if (grd [you[0].x_pos] [you[0].y_pos] >= 200 && grd [you[0].x_pos] [you[0].y_pos
 
 if (you[0].inv_no == 0)
 	{
-	 strcpy(info, "You aren't carrying anything.");
-	 mpr(info);
+	 mpr("You aren't carrying anything.");
 	 return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
-query : strcpy(info, "Drink which item?");
-mpr(info);
+query : mpr("Drink which item?");
 
 keyin = get_ch();
 
@@ -2721,8 +2601,7 @@ drink_1 = (int) keyin;
 
 if (drink_1 < 65 || (drink_1 > 90 && drink_1 < 97) || drink_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -2730,16 +2609,14 @@ drink_2 = conv_lett(drink_1);
 
 if (you[0].inv_quant [drink_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
 
 if (you[0].inv_class [drink_2] != OBJ_POTIONS)
 {
-	strcpy(info, "You can't drink that!");
-	mpr(info);
+	mpr("You can't drink that!");
 	return;
 }
 
@@ -2751,8 +2628,7 @@ if (you[0].inv_quant [drink_2] == 0)
 	if (you[0].equip [EQ_WEAPON] == drink_2)
 	{
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
 	}
 }
 
@@ -2851,21 +2727,18 @@ struct bolt beam [1];
 
 if (you[0].inv_no == 0)
 	{
-	 strcpy(info, "You aren't carrying anything.");
-	 mpr(info);
+	 mpr("You aren't carrying anything.");
 	 return;
 	}
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You in battle mode!");
- mpr(info);
+ mpr("You in battle mode!");
  return;
 }
 
 
-query : strcpy(info, "Execute which item?");
-mpr(info);
+query : mpr("Execute which item?");
 
 unsigned char keyin = get_ch();
 
@@ -2888,8 +2761,7 @@ sc_read_1 = (int) keyin;
 
 if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -2897,8 +2769,7 @@ sc_read_2 = conv_lett(sc_read_1);
 
 if (you[0].inv_quant [sc_read_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -2939,15 +2810,13 @@ redraw_screen();
 
 if (you[0].inv_class [sc_read_2] != OBJ_SCROLLS)
 {
-	strcpy(info, "You can't execute that!");
-	mpr(info);
+	mpr("You can't execute that!");
 	return;
 }
 
 if (you[0].inv_type [sc_read_2] == SCR_PAPER)
 {
-  strcpy(info, "This device appears to be empty.");
-  mpr(info);
+  mpr("This device appears to be empty.");
   you[0].turnover = 1;
   set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
   return;
@@ -2970,8 +2839,7 @@ if (you[0].inv_quant [sc_read_2] == 0)
 	if (you[0].equip [EQ_WEAPON] == sc_read_2)
 	{
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
 	}
 }
 
@@ -2981,8 +2849,7 @@ unsigned char scroll = 0;
 
 scroll = sc_read_2;
 
-strcpy(info, "As you execute the device, it crumbles to dust.");
-mpr(info);
+	mpr("As you execute the device, it crumbles to dust.");
 burden_change();
 
 if (you[0].conf != 0)
@@ -3010,15 +2877,13 @@ case SCR_TELEPORTATION: // teleport
 return;
 
 case SCR_FEAR: // fear
-strcpy(info, "You feel scary!");
-mpr(info);
+	mpr("You feel scary!");
 set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
  mass_enchantment(4, 1000);
 break;
 
 case SCR_NOISE: // noise
-strcpy(info, "You hear a loud clanging noise!");
-mpr(info);
+ mpr("You hear a loud clanging noise!");
 noisy(25, you[0].x_pos, you[0].y_pos);
 set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 return;
@@ -3034,8 +2899,7 @@ set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 break;
 
 case SCR_SUMMONING: // summoning
-strcpy(info, "A horrible Thing appears!");
-mpr(info);
+ mpr("A horrible Thing appears!");
 create_monster(MONS_LARGE_ABOMINATION, 25, 7, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
 set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 break;
@@ -3046,8 +2910,7 @@ case SCR_ENCHANT_WEAPON_II: // II
 case SCR_ENCHANT_WEAPON_III: // III
 weapon_enchant : if (you[0].equip [EQ_WEAPON] == -1)
 {
-	strcpy(info, "Nothing appears to happen.");
-	mpr(info);
+	mpr("Nothing appears to happen.");
 	return;
 }
 
@@ -3208,15 +3071,13 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && (you[0].inv_da
 //        strcat(info,
 }
 
-nothing_happened: strcpy(info, "Nothing appears to happen.");
-mpr(info);
+nothing_happened: mpr("Nothing appears to happen.");
 return; // end of case 7: enc weapon
 
 case SCR_VORPALISE_WEAPON: // vorpalise weapon
 if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]] != OBJ_WEAPONS || (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && (you[0].inv_dam [you[0].equip [EQ_WEAPON]] > 180 || you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 >= 25 || (you[0].inv_type [you[0].equip [EQ_WEAPON]] >= WPN_SLING && you[0].inv_type [you[0].equip [EQ_WEAPON]] <= WPN_HAND_CROSSBOW))))
 {
-	strcpy(info, "Nothing appears to happen.");
-	mpr(info);
+	mpr("Nothing appears to happen.");
 	return;
 }
 
@@ -3261,8 +3122,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 if (recharge_wand() == 0)
 {
- strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ mpr("Nothing appears to happen.");
 } else set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 return;
 
@@ -3272,8 +3132,7 @@ for (i = EQ_CLOAK; i < EQ_RIGHT_RING; i ++)
 {
 	if (i == EQ_LEFT_RING)
 	{
-		strcpy(info, "Nothing appears to happen.");
-		mpr(info);
+		mpr("Nothing appears to happen.");
 		return;
 	}
 
@@ -3456,8 +3315,7 @@ for (i = EQ_CLOAK; i < EQ_RIGHT_RING; i ++)
 {
 	if (i == EQ_LEFT_RING)
 	{
-		strcpy(info, "Nothing appears to happen.");
-		mpr(info);
+		mpr("Nothing appears to happen.");
 		return;
 	}
 	if (you[0].equip [i] != -1 && you[0].inv_plus [you[0].equip [i]] < 130) break;
@@ -3480,8 +3338,7 @@ do
 
 
 case SCR_IMMOLATION: // immolation
-strcpy(info, "The device explodes in your hands!");
-mpr(info);
+	mpr("The device explodes in your hands!");
 
 	beam[0].type = 43;
 	beam[0].damage = 110;
@@ -3510,20 +3367,17 @@ break;
 case SCR_MAGIC_MAPPING: // magic mapping
 if (you[0].level_type == 1 || you[0].level_type == 2)
 {
- strcpy(info, "You feel momentarily disoriented.");
- mpr(info);
+ mpr("You feel momentarily disoriented.");
  set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
  break;
 }
-strcpy(info, "You feel aware of your surroundings.");
-mpr(info);
+	mpr("You feel aware of your surroundings.");
 magic_mapping(21, 95 + random2(10));
 set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 break;
 
 case SCR_FORGETFULNESS: // forgetting
-strcpy(info, "You feel momentarily disoriented.");
-mpr(info);
+	mpr("You feel momentarily disoriented.");
 forget_map(50 + random2(50));
 set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 break;
@@ -3539,8 +3393,7 @@ break;
 
 return;
 
-nothing_happened_2: strcpy(info, "Nothing appears to happen.");
-mpr(info);
+nothing_happened_2: mpr("Nothing appears to happen.");
 return;
 
 
@@ -3555,8 +3408,7 @@ unsigned char drink_2;
 unsigned char inn = 0;
 unsigned char nthing = 0;
 
-query : strcpy(info, "Examine which item?");
-mpr(info);
+query : mpr("Examine which item?");
 
 int keyin = get_ch();
 
@@ -3578,8 +3430,7 @@ drink_1 = (int) keyin;
 
 if (drink_1 < 65 || (drink_1 > 90 && drink_1 < 97) || drink_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -3587,8 +3438,7 @@ drink_2 = conv_lett(drink_1);
 
 if (you[0].inv_quant [drink_2] == 0)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 

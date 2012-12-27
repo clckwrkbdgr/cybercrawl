@@ -16,59 +16,47 @@ char scrloc = 1; /* Line of next (previous?) message */
 char store_message [30] [200]; /* buffer of old messages */
 unsigned char store_count = 0; /* current position in store_message */
 
-
-void mpr(const char inf [200])
+void mpr(const char * inf)
 {
-char inf_screens = 0;
+	you[0].running = 0;
 
-char info2 [80];
-you[0].running = 0;
+	textcolor(7);
 
+	if (scrloc == 7) {
+		gotoxy(2,25);
+		_setcursortype(_NORMALCURSOR);
+		textcolor(7);
+		cprintf("\r--more--");
+		char keypress = 0;
+		while (keypress != 32 && keypress != 13) {
+			keypress = getch();
+		}
+		gotoxy(1, 18);
+		for(int del_line_no = 0; del_line_no < 7; del_line_no ++) {
+			cprintf("                                                                               ");
+			if (del_line_no != 6) { 
+				cprintf(EOL);
+			}
+		}
 
+		scrloc = 0;
+	}
 
-textcolor(7);
+	char info2 [80];
+	gotoxy(1, scrloc + 18);
+	strncpy(info2, inf, 78);
+	info2 [78] = 0;
+	cprintf(info2);
 
-//if (scrloc == 8)
-if (scrloc == 7)
-{
-gotoxy(2,25);
-_setcursortype(_NORMALCURSOR);
-textcolor(7);
-cprintf("\r--more--");
-char keypress = 0;
-do
-{
-	keypress = getch();
-} while (keypress != 32 && keypress != 13);
-char del_line_no = 0;
-gotoxy(1, 18);
-//for (del_line_no = 0; del_line_no < 8; del_line_no ++)
-for (del_line_no = 0; del_line_no < 7; del_line_no ++)
-{
- cprintf("                                                                               ");
-// if (del_line_no != 7) cprintf("\n\r");
- if (del_line_no != 6) cprintf(EOL);
-}
+	/* Put the message into store_message, and move the '---' line forward */
+	strncpy(store_message [store_count], inf, 78);
+	store_count ++;
+	if (store_count > 23) {
+		store_count -= 24;
+	}
+	strcpy(store_message [store_count], "------------------------------------------------------------------------------");
 
- scrloc = 0;
-}
-
-//gotoxy(1, scrloc + 17);
-gotoxy(1, scrloc + 18);
-strncpy(info2, inf, 78);
-info2 [78] = 0;
-cprintf(info2);
-
-/* Put the message into store_message, and move the '---' line forward */
-strncpy(store_message [store_count], inf, 78);
-store_count ++;
-if (store_count > 23) store_count -= 24;
-strcpy(store_message [store_count], "------------------------------------------------------------------------------");
-
-inf_screens = 0;
-
-scrloc ++;
-
+	scrloc ++;
 } // end of message function
 
 void mesclr(void)

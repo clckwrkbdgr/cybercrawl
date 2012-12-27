@@ -261,8 +261,7 @@ for (srx = you[0].x_pos - 1; srx < you[0].x_pos + 2; srx ++)
   if (grd [srx] [sry] == 5 && random2(17) <= you[0].skills [SK_TRAPS_DOORS] + 1) //) >= chance_found)
   {
    grd [srx] [sry] = 3;
-   strcpy(info, "You found a secret door!");
-   mpr(info);
+   mpr("You found a secret door!");
    exercise(SK_TRAPS_DOORS, 1 + random2(2));
   }
   if (grd [srx] [sry] == 78 && random2(17) <= you[0].skills [SK_TRAPS_DOORS] + 1)
@@ -273,8 +272,7 @@ for (srx = you[0].x_pos - 1; srx < you[0].x_pos + 2; srx ++)
                         }
                         if (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7) grd [srx] [sry] = 75;
                         if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8) grd [srx] [sry] = 76;
-   strcpy(info, "You found a trap!");
-   mpr(info);
+   mpr("You found a trap!");
   }
  }
 }
@@ -292,8 +290,7 @@ int hurted = 0;
 switch(env[0].cloud_type [cl] % 100)
 {
         case 1:
-        strcpy(info, "You are engulfed in roaring flames!");
-        mpr(info);
+        mpr("You are engulfed in roaring flames!");
         if (player_res_fire() <= 100)
         {
                 hurted += ((random2(10) + random2(10) + random2(5) + 10) * you[0].time_taken) / 10;
@@ -303,8 +300,7 @@ switch(env[0].cloud_type [cl] % 100)
                 ouch(hurted, cl, 2);
         } else
         {
-                strcpy(info, "You resist.");
-                mpr(info);
+                mpr("You resist.");
                 hurted += ((random2(10) + random2(10) + random2(5) + 10) * you[0].time_taken) / 10;
                 hurted /= 2 + (player_res_fire() - 100) * (player_res_fire() - 100);
                 ouch(hurted, cl, 2);
@@ -314,8 +310,7 @@ switch(env[0].cloud_type [cl] % 100)
 
    case 2:
    // If you don't have to breathe, unaffected
-   strcpy(info, "You are engulfed in noxious fumes!");
-   mpr(info);
+   mpr("You are engulfed in noxious fumes!");
    if (player_res_poison() != 0) break;
    hurted += (random2(3) * you[0].time_taken) / 10;
    if (hurted <= 0) hurted = 0;
@@ -328,8 +323,7 @@ switch(env[0].cloud_type [cl] % 100)
    break;
 
         case 3:
-        strcpy(info, "You are engulfed in freezing vapours!");
-        mpr(info);
+        mpr("You are engulfed in freezing vapours!");
         if (player_res_cold() <= 100)
         {
                 hurted += ((random2(10) + random2(10) + random2(5) + 10) * you[0].time_taken) / 10;
@@ -339,8 +333,7 @@ switch(env[0].cloud_type [cl] % 100)
                 ouch((hurted * you[0].time_taken) / 10, cl, 2);
         } else
         {
-                strcpy(info, "You resist.");
-                mpr(info);
+                mpr("You resist.");
                 hurted += ((random2(10) + random2(10) + random2(5) + 10) * you[0].time_taken) / 10;
                 hurted /= 2 + (player_res_cold() - 100) * (player_res_cold() - 100);
                 ouch(hurted, cl, 2);
@@ -350,8 +343,7 @@ switch(env[0].cloud_type [cl] % 100)
 
    case 4: // you[0].poison
    // If you don't have to breathe, unaffected
-   strcpy(info, "You are engulfed in poison gas!");
-   mpr(info);
+   mpr("You are engulfed in poison gas!");
    if (player_res_poison() != 0) break;
    ouch((random2(10) * you[0].time_taken) / 10, cl, 2);
    you[0].poison ++;
@@ -365,8 +357,7 @@ switch(env[0].cloud_type [cl] % 100)
    break;
 
    case 8:
-   strcpy(info, "You are engulfed in a cloud of scalding steam!");
-   mpr(info);
+   mpr("You are engulfed in a cloud of scalding steam!");
    if (you[0].species == SP_PALE_DRACONIAN && you[0].xl >= 6)
    {
     mpr("It doesn't seem to affect you.");
@@ -383,8 +374,7 @@ switch(env[0].cloud_type [cl] % 100)
    break;
 
   case 9: // dark miasma
-   strcpy(info, "You are engulfed in a dark miasma.");
-   mpr(info);
+   mpr("You are engulfed in a dark miasma.");
    if (player_prot_life() != 0) return;
 /*   beam_colour = 4; */
    if (player_res_poison() <= 0) you[0].poison ++;
@@ -429,15 +419,13 @@ if (stair_find == 80)
 
 if ((stair_find < 86 || stair_find > 89) && (stair_find < 130 || stair_find > 150))
 {
-	strcpy(info, "You can't go up here.");
-	mpr(info);
+	mpr("You can't go up here.");
 	return;
 }
 
 if (you[0].burden_state == 5)
 {
-	strcpy(info, "You are carrying too much to climb upwards.");
- mpr(info);
+	mpr("You are carrying too much to climb upwards.");
 	you[0].turnover = 1;
 	return;
 }
@@ -462,8 +450,7 @@ int i = 0;
 
 if (you[0].your_level == -1)
 {
- strcpy(info, "You have escaped!");
- mpr(info);
+ mpr("You have escaped!");
  for (i = 0; i < 52; i++)
  {
   if (you[0].inv_quant [i] > 0 && you[0].inv_class [i] == 12) ouch(-9999, 0, 12);
@@ -602,8 +589,7 @@ char old_where = you[0].where_are_you;
 
 if ((stair_find < 81 || stair_find > 85) && stair_find != 69 && ((stair_find < 92 || stair_find > 101) && stair_find != 98) && !(stair_find >= 110 && stair_find < 130))
 {
-	strcpy(info, "You can't go down here!");
- mpr(info);
+	mpr("You can't go down here!");
  return;
 }
 
@@ -615,16 +601,14 @@ if (stair_find >= 81 && stair_find <= 85 && you[0].where_are_you == 3)
 
 if (stair_find == 98)
 {
- strcpy(info, "You can't go down here!");
- mpr(info);
+ mpr("You can't go down here!");
  return;
 }
 
 
 if (you[0].lev != 0 && wearing_amulet(AMU_CONTROLLED_FLIGHT) == 0)
 {
-	strcpy(info, "You're floating high up above the floor!");
-	mpr(info);
+	mpr("You're floating high up above the floor!");
 	return;
 }
 
@@ -653,10 +637,8 @@ you[0].prev_targ = MHITNOT;
 if (grd [you[0].x_pos] [you[0].y_pos] == 69)
 {
  you[0].where_are_you = 3; /* go to hell! */
- strcpy(info, "Welcome to Facilities!");
- mpr(info);
- strcpy(info, "Please enjoy your stay.");
- mpr(info);
+ mpr("Welcome to Facilities!");
+ mpr("Please enjoy your stay.");
  more();
 // you[0].your_level = 59;
 }
@@ -771,8 +753,7 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 97 || grd [you[0].x_pos] [you[0].y_pos]
 {
  leaving_abyss = 1; /* or pan */
 // you[0].your_level --;
- strcpy(info, "You pass through the gate, and find yourself at the top of a staircase.");
- mpr(info);
+ mpr("You pass through the gate, and find yourself at the top of a staircase.");
  more();
 }
 
@@ -830,8 +811,7 @@ if (you[0].level_type == 1)
 } else
 if (you[0].level_type == 2)
 {
- strcpy(info, "You enter the Dump!");
- mpr(info);
+ mpr("You enter the Dump!");
  strcpy(info, "To return, you must find a gate leading back.");
  grd [you[0].x_pos] [you[0].y_pos] = 67;
  you[0].your_level --;
@@ -847,16 +827,14 @@ if (old_level_type == 3)
   pandemonium_mons();
 } else
 {
- strcpy(info, "You enter the halls of Bioengineerings!");
- mpr(info);
+ mpr("You enter the halls of Bioengineerings!");
  strcpy(info, "To return, you must find a gate leading back.");
  init_pandemonium();
  for (pc = 0; pc < pt; pc ++)
   pandemonium_mons();
 }
 } else
-strcpy(info, "You climb downwards.");
-mpr(info);
+ mpr("You climb downwards.");
 
 new_level();
 
@@ -1190,11 +1168,9 @@ if (county < 350) return;
 destr = 3;
 if (county < 450) destr = 2;
 if (county < 400) destr = 1;
-strcpy(info, "The floor is straining under the weight of all the items on this level!");
-mpr(info);
+ mpr("The floor is straining under the weight of all the items on this level!");
 more();
-strcpy(info, "The installation's self-cleaning mechanism removes a few of them.");
-mpr(info);
+ mpr("The installation's self-cleaning mechanism removes a few of them.");
 
 for (cull = 0; cull < ITEMS; cull ++)
 {
@@ -1217,18 +1193,15 @@ switch (trt)
  case 6:
  if (trap_known == 1 && random2(3) == 0)
  {
-  strcpy(info, "You avoid triggering a blade trap.");
-  mpr(info);
+  mpr("You avoid triggering a blade trap.");
   return;
  }
  if (random2(player_evasion()) + random2(you[0].dex) / 3 + env[0].trap_known * 3 > 8)
  {
-  strcpy(info, "A huge blade swings just past you!");
-  mpr(info);
+  mpr("A huge blade swings just past you!");
   return;
  }
-  strcpy(info, "A huge blade swings out and slices into you!");
-  mpr(info);
+  mpr("A huge blade swings out and slices into you!");
   ouch(10 + random2(15) + random2(15) - random2(player_AC() + 1), 0, 10);
  break;
 
@@ -1307,23 +1280,20 @@ for (i = 0; i < NTRAPS; i ++)
  if (env[0].trap_x [i] == you[0].x_pos + disa[0].move_x && env[0].trap_y [i] == you[0].y_pos + disa[0].move_y) break;
  if (i == NTRAPS - 1)
  {
-	strcpy(info, "Error - couldn't find that trap.");
-	mpr(info);
+	mpr("Error - couldn't find that trap.");
         return;
  }
 }
 
 if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8)
 {
-	strcpy(info, "You can't disarm that trap.");
-	mpr(info);
+	mpr("You can't disarm that trap.");
         return;
 }
 
 if (random2(you[0].skills [SK_TRAPS_DOORS] + 5) <= 3) // && you[0].clas != 3)
 {
-	strcpy(info, "You failed to disarm the trap.");
-	mpr(info);
+	mpr("You failed to disarm the trap.");
         you[0].turnover = 1;
 /*        if (random2(2) == 0)
         {
@@ -1333,8 +1303,7 @@ if (random2(you[0].skills [SK_TRAPS_DOORS] + 5) <= 3) // && you[0].clas != 3)
         return;
 }
 
-strcpy(info, "You have disarmed the trap.");
-mpr(info);
+	mpr("You have disarmed the trap.");
 
 //int trapped = i;
 
@@ -1477,8 +1446,8 @@ char empty [2];
 
 switch(grype)
 {
- case 61: strcpy(info, "You fall into the radioactive waste!"); mpr(info); break;
- case 62: strcpy(info, "You fall into the water!"); mpr(info); break;
+ case 61: mpr("You fall into the radioactive waste!");break;
+ case 62: mpr("You fall into the water!");break;
 }
 
 //mpr(info);
@@ -1487,8 +1456,7 @@ mesclr();
 
 if (grype == 61 && player_res_fire() <= 100)
 {
-  strcpy(info, "You burn to a cinder!");
-  mpr(info);
+  mpr("You burn to a cinder!");
   ouch(-9999, 0, 5);
 }
 
@@ -1517,20 +1485,17 @@ if (place == 0 && scramble() == 1)
 
 if (escape == 1)
 {
- strcpy(info, "You manage to scramble free!");
- mpr(info);
+ mpr("You manage to scramble free!");
  if (grype == 61) scrolls_burn(10, 6);
  return;
 }
 
 if (place == 0) // don't display this if you fall in from levitating
 {
- strcpy(info, "You try to escape, but your burden drags you down!");
- mpr(info);
+ mpr("You try to escape, but your burden drags you down!");
 }
 
-drowning: strcpy(info, "You drown...");
-mpr(info);
+drowning: mpr("You drown...");
 if (grype == 61) ouch(-9999, 0, 5);
 if (grype == 62) ouch(-9999, 0, 6);
 // Okay, so you don't trigger a trap when you scramble onto it. I really can't be bothered right now.
@@ -1620,12 +1585,9 @@ char go_berserk(void)
 {
   if (you[0].berserker != 0 || you[0].slow != 0) return 0;
   if (you[0].is_undead == 2 || you[0].species == SP_GHOUL) return 0;
-  strcpy(info, "A red film seems to cover your vision as you go in battle mode!");
-  mpr(info);
-  strcpy(info, "You feel yourself moving faster!");
-  mpr(info);
-  strcpy(info, "You feel mighty!");
-  mpr(info);
+  mpr("A red film seems to cover your vision as you go in battle mode!");
+  mpr("You feel yourself moving faster!");
+  mpr("You feel mighty!");
   you[0].berserker += 20 + random2(10) + random2(10);
   calc_hp();
   you[0].hp *= 15;

@@ -214,8 +214,7 @@ void item_corrode(char itco_char)
  if (wearing_amulet(AMU_RESIST_CORROSION) == 1 && random() % 10 != 0)
  {
 #ifdef DEBUG
-strcpy(info, "Implant protects.");
-mpr(info);
+ mpr("Implant protects.");
 #endif
  return; /* amulet of resist corrosion/cloak of preservation */
  }
@@ -268,8 +267,7 @@ unsigned char burn_no = 0;
 if (wearing_amulet(AMU_CONSERVATION) == 1 && random() % 10 != 0)
 {
 #ifdef DEBUG
-strcpy(info, "Implant conserves.");
-mpr(info);
+ mpr("Implant conserves.");
 #endif
  return;
 }
@@ -291,8 +289,7 @@ for (burnc = 0; burnc < 52; burnc++)
                                 if (burnc == you[0].equip [EQ_WEAPON]) // I can't assume any level of intelligence on the player's behalf.
                                 {
                                         you[0].equip [EQ_WEAPON] = -1;
-                                        strcpy(info, "You are now empty handed.");
-                                        mpr(info);
+                                        mpr("You are now empty handed.");
                                 }
                                 break;
                         }
@@ -302,18 +299,16 @@ for (burnc = 0; burnc < 52; burnc++)
 
 if (burn_no == 1)
 {
-        if (target_class == 6) strcpy(info, "A device you are carrying catches fire!");
-        if (target_class == 8) strcpy(info, "A vial you are carrying freezes and shatters!");
- if (target_class == 4) strcpy(info, "Some of your food is covered with spores!");
- mpr(info);
+        if (target_class == 6) mpr("A device you are carrying catches fire!");
+        if (target_class == 8) mpr("A vial you are carrying freezes and shatters!");
+ if (target_class == 4) mpr("Some of your food is covered with spores!");
 }
 
 if (burn_no > 1)
 {
-        if (target_class == 6) strcpy(info, "Some of the devices you are carrying catch fire!");
-        if (target_class == 8) strcpy(info, "Some of the vials you are carrying freeze and shatter!");
- if (target_class == 4) strcpy(info, "Some of your food is covered with spores!");
- mpr(info);
+        if (target_class == 6) mpr( "Some of the devices you are carrying catch fire!");
+        if (target_class == 8) mpr( "Some of the vials you are carrying freeze and shatter!");
+ if (target_class == 4) mpr( "Some of your food is covered with spores!");
 }
 /* burn_no could be 0 */
 
@@ -377,10 +372,8 @@ if (dam > 300) return; /* assume it's a bug */
 #ifdef DEBUG
 if (death_type != 13 && death_type != 12 && death_type != 11) // quit or escaped
 {
- strcpy(info, "Since you're a debugger, I'll let you live.");
- mpr(info);
- strcpy(info, "Be more careful next time, okay?");
- mpr(info);
+ mpr("Since you're a debugger, I'll let you live.");
+ mpr("Be more careful next time, okay?");
 // more2();
  you[0].hp = you[0].hp_max;
  you[0].hp_ch = 1;
@@ -753,8 +746,7 @@ status2 = set_status(100);
 
 if (status2 == 1)
 {
-        strcpy(info, "You die...");
-        mpr(info);
+        mpr("You die...");
 }
 
         viewwindow(1);
@@ -779,9 +771,8 @@ if (status2 == 0) /* invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_d
   else /* invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [EQ_WEAPON], you[0].equip [EQ_BODY_ARMOUR], you[0].equip [EQ_SHIELD], you[0].equip [EQ_HELMET], you[0].equip [EQ_CLOAK], you[0].equip [EQ_GLOVES], you[0].equip [EQ_BOOTS], you[0].ring, 0); */
         invent(-1, 0);
   if (dump_char((status2 == 0), "morgue.txt") == 1)
-   strcpy(info, "Char dumped successfully (morgue.txt).");
-    else strcpy(info, "Char dump unsuccessful! Sorry about that.");
-    mpr(info);
+   mpr("Char dumped successfully (morgue.txt).");
+    else mpr("Char dump unsuccessful! Sorry about that.");
     more();
 int p = 0;
 for (p = 0; p < 52; p ++)

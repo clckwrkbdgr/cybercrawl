@@ -133,8 +133,7 @@ int card [50];
 unsigned char max_card = 0;
 int i = 0;
 
-strcpy(info, "You execute a nanite program...");
-mpr(info);
+mpr("You execute a nanite program...");
 
 switch(which_deck)
 {
@@ -181,16 +180,14 @@ cards(i);
 you[0].inv_plus [you[0].equip [EQ_WEAPON]] --;
 if (you[0].inv_plus [you[0].equip [EQ_WEAPON]] == 0)
 {
- strcpy(info, "You throw away the empty kit of nanite programs.");
- mpr(info);
+ mpr("You throw away the empty kit of nanite programs.");
  unwield_item(you[0].equip [EQ_WEAPON]);
  you[0].inv_quant [you[0].equip [EQ_WEAPON]] --;
  if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 0) // can this be false?
  {
 		you[0].inv_no --;
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
  }
  done_good(11, 1 + random2(2));
  if (which_deck == 0) done_good(11, 2);
@@ -213,8 +210,7 @@ switch(which_card)
 {
 default:
 case 0:
-strcpy(info, "It is blank.");
-mpr(info);
+ mpr("It is blank.");
 break;
 case 1:
 mpr("You have execute the Butterfly.");
@@ -371,31 +367,23 @@ mpr("You have execute Haste.");
 potion_effect(POT_SPEED, 150);
 break;
 case 20:
-strcpy(info, "On the program is a picture of a little demon.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a little demon.");
+	mpr("The picture comes to life!");
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 21:
-strcpy(info, "On the program is a picture of a demon.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a demon.");
+	mpr("The picture comes to life!");
 create_monster(MONS_NEQOXEC + random2(5), 21 + random2(3), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 22:
-strcpy(info, "On the program is a picture of a huge demon.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a huge demon.");
+	mpr("The picture comes to life!");
 create_monster(MONS_NEQOXEC + random2(5), 20 + random2(3), 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 23:
-strcpy(info, "On the program is a picture of a swarm of little demons.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a swarm of little demons.");
+	mpr("The picture comes to life!");
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
@@ -405,60 +393,45 @@ create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, yo
 create_monster(MONS_WHITE_IMP + random2(5), 21 + random2(4), 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 24:
-strcpy(info, "On the program is a picture of a huge shaggy yak.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a huge shaggy yak.");
+	mpr("The picture comes to life!");
 create_monster(MONS_DEATH_YAK, 25, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 25:
-strcpy(info, "On the program is a picture of a huge scaly devil.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a huge scaly devil.");
+	mpr("The picture comes to life!");
 create_monster(MONS_FIEND, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 26:
-strcpy(info, "On the program is a picture of a huge scaly dragon.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a huge scaly dragon.");
+	mpr("The picture comes to life!");
 if (random2(2) == 0)
  create_monster(MONS_DRAGON, 22, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
   else create_monster(MONS_ICE_DRAGON, 22, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 27:
-strcpy(info, "On the program is a picture of a statue.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a statue.");
+	mpr("The picture comes to life!");
 create_monster(MONS_CLAY_GOLEM + random2(6), 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 28:
-strcpy(info, "On the program is a picture of a very ugly thing.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a very ugly thing.");
+	mpr("The picture comes to life!");
 create_monster(MONS_VERY_UGLY_THING, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 29:
-strcpy(info, "On the program is a picture of a very irritated-looking skeletal thing.");
-mpr(info);
-strcpy(info, "The picture comes to life!");
-mpr(info);
+	mpr("On the program is a picture of a very irritated-looking skeletal thing.");
+	mpr("The picture comes to life!");
 create_monster(MONS_LICH, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
 case 30: // unseen horror
 if (player_see_invis() == 0)
 {
- strcat(info, "It is blank");
- mpr(info);
+ mpr("It is blank");
 } else
 {
- strcpy(info, "On the program is a picture of a hideous abomination.");
- mpr(info);
- strcpy(info, "The picture comes to life!");
- mpr(info);
+ mpr("On the program is a picture of a hideous abomination.");
+ mpr("The picture comes to life!");
 }
 create_monster(MONS_UNSEEN_HORROR, 21, 7, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 break;
@@ -502,12 +475,10 @@ case 39:
 mpr("You have execute Decay.");
 if (you[0].is_undead != 0)
 {
-   strcpy(info, "You feel terrible.");
-   mpr(info);
+   mpr("You feel terrible.");
    break;
 }
-strcpy(info, "You feel your flesh start to rot away!");
-mpr(info);
+	mpr("You feel your flesh start to rot away!");
 you[0].rotting += random2(5) + 4;
 break;
 case 40:

@@ -30,8 +30,7 @@ void stethoscope(int mwh)
 	if (mwh == 250)
 	{
 
-		strcpy(info, "Which monster?");
-		mpr(info);
+		mpr("Which monster?");
 
 		struct dist stmove [1];
 
@@ -54,9 +53,7 @@ void stethoscope(int mwh)
 		{
 
 			itoa((int) igrd [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y], st_prn, 10);
-			strcpy(info, st_prn);
-			mpr(info);
-
+			mpr(st_prn);
 
 /*	move_x = 0;
 	move_y = 0;*/
@@ -138,8 +135,7 @@ mpr(info);
 void quit_game(void)
 {
 
-	strcpy(info, "Really quit?");
-	mpr(info);
+	mpr("Really quit?");
 
 	char keyin = get_ch();
 
@@ -156,16 +152,14 @@ void quit_game(void)
 
 void version(void)
 {
- 	strcpy(info, "This is Cybercrawl v"VERSION". (Last build 26/3/99)");
- 	mpr(info);
+ 	mpr("This is Cybercrawl v"VERSION". (Last build 26/3/99)");
 }
 
 
 void adjust(void)
 {
 
-	strcpy(info, "Adjust (i)tems or program(s)?");
-	mpr(info);
+	mpr("Adjust (i)tems or program(s)?");
 
 	unsigned char keyin = get_ch();
 
@@ -195,13 +189,11 @@ void adjust_item(void)
 
 	if (you[0].inv_no == 0)
 	{
-		strcpy(info, "You aren't carrying anything.");
-		mpr(info);
+		mpr("You aren't carrying anything.");
 		return;
 	}
 
-	query : strcpy(info, "Adjust which item?");
-	mpr(info);
+	query : mpr("Adjust which item?");
 
 	unsigned char keyin = get_ch();
 
@@ -222,8 +214,7 @@ void adjust_item(void)
 
 	if (throw_1 < 65 || (throw_1 > 90 && throw_1 < 97) || throw_1 > 122)
 	{
-		strcpy(info, "You don't have any such object.");
-		mpr(info);
+		mpr("You don't have any such object.");
 		return;
 	}
 
@@ -231,8 +222,7 @@ void adjust_item(void)
 
 	if (you[0].inv_quant [throw_2] == 0)
 	{
-		strcpy(info, "You don't have any such object.");
-		mpr(info);
+		mpr("You don't have any such object.");
 		return;
 	}
 
@@ -247,8 +237,7 @@ void adjust_item(void)
 	strcat(info, str_pass);
 	mpr(info);
 
-	strcpy(info, "Adjust to which letter?");
-	mpr(info);
+	mpr("Adjust to which letter?");
 
 	keyin = get_ch();
 
@@ -269,8 +258,7 @@ void adjust_item(void)
 
 	if (throw_1 < 65 || (throw_1 > 90 && throw_1 < 97) || throw_1 > 122)
 	{
-		strcpy(info, "What?");
-		mpr(info);
+		mpr("What?");
 		return;
 	}
 
@@ -278,8 +266,7 @@ void adjust_item(void)
 
 	if (you[0].inv_quant [throw_3] != 0)
 	{
-		strcpy(info, "Sorry, that inventory letter is already in use.");
-		mpr(info);
+		mpr("Sorry, that inventory letter is already in use.");
 		return;
 	}
 
@@ -328,13 +315,11 @@ void adjust_spells(void)
 
 	if (you[0].spell_no == 0)
 	{
-		strcpy(info, "You don't have any program installed.");
-		mpr(info);
+		mpr("You don't have any program installed.");
 		return;
 	}
 
-	query : strcpy(info, "Adjust which program?");
-	mpr(info);
+	query : mpr("Adjust which program?");
 
 	unsigned char keyin = get_ch();
 
@@ -355,8 +340,7 @@ void adjust_spells(void)
 
 	if (throw_1 < 97 || throw_1 > 119)
 	{
-		strcpy(info, "You don't have that program.");
-		mpr(info);
+		mpr("You don't have that program.");
 		return;
 	}
 
@@ -364,8 +348,7 @@ void adjust_spells(void)
 
 	if (you[0].spells [throw_2] == 210)
 	{
-		strcpy(info, "You don't have that program.");
-		mpr(info);
+		mpr("You don't have that program.");
 		return;
 	}
 
@@ -377,8 +360,7 @@ void adjust_spells(void)
 	strcat(info, str_pass);
 	mpr(info);
 
-	strcpy(info, "Adjust to which letter?");
-	mpr(info);
+	mpr("Adjust to which letter?");
 
 	keyin = get_ch();
 
@@ -400,8 +382,7 @@ void adjust_spells(void)
 	//if (throw_1 < 97 || throw_1 > 122)
 	if (throw_1 < 97 || throw_1 > 118)
 	{
-		strcpy(info, "What?");
-		mpr(info);
+		mpr("What?");
 		return;
 	}
 

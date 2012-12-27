@@ -41,20 +41,17 @@ int powc = 0;
 
 if (you[0].spell_no == 0)
 {
-	strcpy(info, "You don't have any program installed.");
-	mpr(info);
+	mpr("You don't have any program installed.");
 	return;
 }
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
-query : strcpy(info, "Execute which program? (? or * to list)");
-mpr(info);
+query : mpr("Execute which program? (? or * to list)");
 
 int keyin = get_ch();
 
@@ -79,8 +76,7 @@ spc = (int) keyin;
 
 if (spc < 97 || spc > 121)
 {
-	unknown : strcpy(info, "You don't have that program.");
-	mpr(info);
+	unknown : mpr("You don't have that program.");
 	return;
 }
 
@@ -93,15 +89,13 @@ if (you[0].spells [spc2] == 210)
 
 if (spell_value(you[0].spells [spc2]) > you[0].ep)
 {
-	strcpy(info, "You don't have enough energy to execute that program.");
-	mpr(info);
+	mpr("You don't have enough energy to execute that program.");
 	return;
 }
 
 if (you[0].hunger <= spell_hunger(spell_value(you[0].spells [spc2]), you[0].spells [spc2]) || you[0].hung_state <= 1)
 {
- strcpy(info, "You are too hungry to execute that program.");
- mpr(info);
+ mpr("You are too hungry to execute that program.");
  you[0].turnover = 1; // ??
  return;
 }
@@ -203,8 +197,7 @@ int spfl = random2(33) + random2(34) + random2(35);
 
 if (you[0].species == SP_MUMMY && spell_type(spc2, 17) == 1)
 {
-  strcpy(info, "You can't use this type of programs!");
-  mpr(info);
+  mpr("You can't use this type of programs!");
   return -1;
 }
 
@@ -226,8 +219,7 @@ switch(spc2)
 	case 1: you_teleport(); return 1;
 	case 2: mass_enchantment(4, powc); return 1; // fear
 	case 3:
-		strcpy(info, "You hear a voice call your name!");
-		mpr(info);
+		mpr("You hear a voice call your name!");
 		noisy(25, you[0].x_pos, you[0].y_pos);
 		break;
 	case 4: remove_curse(); return 1;
@@ -246,8 +238,7 @@ switch(spc2)
    if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Why would you want to do that?");
-    mpr(info);
+    mpr("Why would you want to do that?");
     return 1;
    }
    zapping(ZAP_DIGGING, powc, beam);
@@ -270,8 +261,7 @@ switch(spc2)
    case 20: if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Sorry, it doesn't work like that.");
-    mpr(info);
+    mpr("Sorry, it doesn't work like that.");
     return 1;
    }
    zapping(ZAP_POLYMORPH_OTHER, powc, beam);
@@ -344,8 +334,7 @@ switch(spc2)
    case 37: if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Sorry, it doesn't work like that.");
-    mpr(info);
+    mpr("Sorry, it doesn't work like that.");
     return 1;
    }
    zapping(ZAP_TELEPORTATION, powc, beam);
@@ -435,9 +424,8 @@ switch(spc2)
    case 58: // detect_traps
    if (detect_traps() > 0)
    {
-   	strcpy(info, "You detect some traps!");
-   } else strcpy(info, "You detect nothing.");
-   mpr(info);
+   	mpr("You detect some traps!");
+   } else mpr("You detect nothing.");
    return 1;
 
    case 59: // random blink
@@ -456,8 +444,7 @@ switch(spc2)
    case 62: // Summon Things
    if (player_sust_abil() != 0 || you[0].intel == 3)
    {
-   	strcpy(info, "Your call goes unanswered.");
-	mpr(info);
+   	mpr("Your call goes unanswered.");
         return 1;
    }
    summon_things(powc);
@@ -470,8 +457,7 @@ switch(spc2)
    case 64: // magic mapping
    if (you[0].level_type == 1 || you[0].level_type == 2)
    {
-    strcpy(info, "You feel momentarily disoriented.");
-    mpr(info);
+    mpr("You feel momentarily disoriented.");
     return 1;
    }
    if (you[0].level_type == 3)
@@ -479,8 +465,7 @@ switch(spc2)
     mpr("Your Earth programming lacks the power to map Bioengineering.");
     return 1;
    }
-   strcpy(info, "You feel aware of your surroundings.");
-   mpr(info);
+   mpr("You feel aware of your surroundings.");
    magic_mapping((powc * 2 + 5), 40 + powc * 2);
    return 1;
 
@@ -488,16 +473,14 @@ switch(spc2)
    if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Sorry, it doesn't work like that.");
-    mpr(info);
+    mpr("Sorry, it doesn't work like that.");
     return 1;
    }
    zapping(ZAP_HEALING, powc, beam);
    return 1;
 
    case 66: // Animate Dead
-   strcpy(info, "You call on the dead to be cybernetisized for you.");
-   mpr(info);
+   mpr("You call on the dead to be cybernetisized for you.");
    animate_dead(powc + 1, 7, you[0].pet_target, 1);
    return 1;
 
@@ -516,8 +499,7 @@ switch(spc2)
    return 1;
 
    case 70: // animate skeleton
-   strcpy(info, "You attempt to cybernitize the dead...");
-   mpr(info);
+   mpr("You attempt to cybernitize the dead...");
    animate_a_corpse(you[0].x_pos, you[0].y_pos, 7, you[0].pet_target, 1);
    return 1;
 
@@ -638,8 +620,7 @@ switch(spc2)
    if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Why would you want to do that?");
-    mpr(info);
+    mpr("Why would you want to do that?");
     return 1;
    }
    zapping(ZAP_DEGENERATION, powc, beam);
@@ -664,14 +645,12 @@ switch(spc2)
    return 1;
 
    case 119: // summon demon
-   strcpy(info, "You open a gate to Bioengineerings!");
-   mpr(info);
+   mpr("You open a gate to Bioengineerings!");
    summon_ice_beast_etc(powc, summon_any_demon(1));
    return 1;
 
    case 120: // demonic horde
-   strcpy(info, "You open a gate to Bioengineerings!");
-   mpr(info);
+   mpr("You open a gate to Bioengineerings!");
    dem_hor2 = 3 + random2(5);
    for (dem_hor = 0; dem_hor < 4 + dem_hor2; dem_hor ++)
    {
@@ -682,8 +661,7 @@ switch(spc2)
    return 1;
 
    case 121: // greater demon
-   strcpy(info, "You open a gate to Bioengineerings!");
-   mpr(info);
+   mpr("You open a gate to Bioengineerings!");
    dem_hor = 100;
    if (random2(powc) <= 5)
    {
@@ -700,32 +678,28 @@ switch(spc2)
    case 123: // takumi's vorpal blade
    if (brand_weapon(10, powc) == 0)
    {
-    strcpy(info, "The program fizzles.");
-    mpr(info);
+    mpr("The program fizzles.");
    }
    return 1;
 
    case 124: // Fire brand
    if (brand_weapon(1, powc) == 0)
    {
-    strcpy(info, "The program fizzles.");
-    mpr(info);
+    mpr("The program fizzles.");
    }
    return 1;
 
    case 125: // Ice Aura
    if (brand_weapon(2, powc) == 0)
    {
-    strcpy(info, "The program fizzles.");
-    mpr(info);
+    mpr("The program fizzles.");
    }
    return 1;
 
    case 126: // lethal infusion
    if (brand_weapon(7, powc) == 0)
    {
-    strcpy(info, "The program fizzles.");
-    mpr(info);
+    mpr("The program fizzles.");
    }
    return 1;
 
@@ -793,8 +767,7 @@ switch(spc2)
    case 141: // poison blade
    if (brand_weapon(6, powc) == 0)
    {
-    strcpy(info, "Your current weapon is inappropriate for this program.");
-    mpr(info);
+    mpr("Your current weapon is inappropriate for this program.");
    }
    return 1;
 
@@ -856,8 +829,7 @@ switch(spc2)
    case 151: if (spell_direction(spd, beam) == -1) return 1;
    if (beam[0].move_x == 0 && beam[0].move_y == 0)
    {
-    strcpy(info, "Why would you want to do that?");
-    mpr(info);
+    mpr("Why would you want to do that?");
     return 1;
    }
    zapping(ZAP_DISINTEGRATION, powc, beam);
@@ -995,8 +967,7 @@ switch(spc2)
    return 1;
 */
 default:
-strcpy(info, "Invalid program!");
-mpr(info);
+ mpr("Invalid program!");
 break;
 
 } // end switch
@@ -1065,33 +1036,27 @@ if (spell_type(spell, 23) == 1)
 
 if (enhanced == 1)
 {
- strcpy(info, "You feel a surge of power.");
- mpr(info);
+ mpr("You feel a surge of power.");
 }
 if (enhanced == 2)
 {
- strcpy(info, "You feel a strong surge of power.");
- mpr(info);
+ mpr("You feel a strong surge of power.");
 }
 if (enhanced >= 3) // how would you get this???
 {
- strcpy(info, "You feel a huge surge of power!");
- mpr(info);
+ mpr("You feel a huge surge of power!");
 }
 if (enhanced == -1)
 {
- strcpy(info, "You feel a numb sensation.");
- mpr(info);
+ mpr("You feel a numb sensation.");
 }
 if (enhanced == -2)
 {
- strcpy(info, "You feel an extremely numb sensation.");
- mpr(info);
+ mpr("You feel an extremely numb sensation.");
 }
 if (enhanced <= -3)
 {
- strcpy(info, "You feel an extraordinarily numb sensation.");
- mpr(info);
+ mpr("You feel an extraordinarily numb sensation.");
 }
 
 

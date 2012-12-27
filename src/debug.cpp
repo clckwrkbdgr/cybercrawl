@@ -32,8 +32,7 @@ void cast_spec_spell(void)
 
 	char specs [3];
 
-	strcpy(info, "Cast which spell? ");
-	mpr(info);
+	mpr("Cast which spell? ");
 
 	specs [0] = getche();
 	specs [1] = getche();
@@ -51,8 +50,7 @@ void create_spec_monster(void)
 
 	char specs [3];
 
-	strcpy(info, "Create which monster? ");
-	mpr(info);
+	mpr("Create which monster? ");
 
 	specs [0] = getche();
 	specs [1] = getche();
@@ -68,8 +66,7 @@ void level_travel(void)
 
 	char specs [3];
 
-	strcpy(info, "Travel to which level? ");
-	mpr(info);
+	mpr("Travel to which level? ");
 
 	specs [0] = getche();
 	specs [1] = getche();
@@ -86,8 +83,7 @@ void create_spec_object(void)
 	int class_wanted = 0;
 	int type_wanted = 0;
 
-	strcpy(info, "Create which item (class then type)? ");
-	mpr(info);
+	mpr("Create which item (class then type)? ");
 
 	class_wanted = (getche() - 48) * 10;
 	class_wanted += getche() - 48;
@@ -96,14 +92,12 @@ void create_spec_object(void)
 	type_wanted += getche() - 48;
 
 	itoa(property(class_wanted, type_wanted, 2), st_prn, 10);
-	strcpy(info, st_prn);
-	mpr(info);
+	mpr(st_prn);
 
 	int thing_created = items(1, class_wanted, type_wanted, 1, you[0].your_level, 250);
 
-	if (you[0].species != SP_NAGA) strcpy(info, "Something appears at your feet!");
-	else strcpy(info, "Something appears before you!");
-	mpr(info);
+	if (you[0].species != SP_NAGA) mpr("Something appears at your feet!");
+	else mpr("Something appears before you!");
 
 	int what_was_there = igrd [you[0].x_pos] [you[0].y_pos];
 	mitm.ilink [thing_created] = what_was_there;
@@ -119,8 +113,7 @@ void create_spec_object2(void)
 	int type_wanted = 0;
 	int dam_wanted = 0;
 
-	strcpy(info, "Create which item (class, type, then dam)? ");
-	mpr(info);
+	mpr("Create which item (class, type, then dam)? ");
 
 	class_wanted = (getche() - 48) * 10;
 	class_wanted += getche() - 48;
@@ -143,9 +136,8 @@ void create_spec_object2(void)
 
 	mitm.idam [thing_created] = dam_wanted;
 
-	if (you[0].species != SP_NAGA) strcpy(info, "Something appears at your feet!");
-	else strcpy(info, "Something appears before you!");
-	mpr(info);
+	if (you[0].species != SP_NAGA) mpr("Something appears at your feet!");
+	else mpr("Something appears before you!");
 
 	int what_was_there = igrd [you[0].x_pos] [you[0].y_pos];
 	mitm.ilink [thing_created] = what_was_there;
@@ -169,8 +161,7 @@ void stethoscope(int mwh)
 	if (mwh == 250)
 	{
 
-		strcpy(info, "Which monster?");
-		mpr(info);
+		mpr("Which monster?");
 
 		direction(1, stth);
 
@@ -287,8 +278,7 @@ void debug_add_skills(void)
 
 	char specs [2];
 
-	strcpy(info, "Practice which skill? ");
-	mpr(info);
+	mpr("Practice which skill? ");
 
 	specs [0] = getche();
 	specs [1] = getche();

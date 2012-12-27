@@ -1278,8 +1278,7 @@ for (i = 0; i < 6; i ++)
 {
  if (i == 5)
  {
-  strcpy(info, "Help! Non-existent shop.");
-  mpr(info);
+  mpr("Help! Non-existent shop.");
   return;
  }
  if (env[0].sh_x [i] == you[0].x_pos && env[0].sh_y [i] == you[0].y_pos)

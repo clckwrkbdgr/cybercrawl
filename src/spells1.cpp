@@ -73,29 +73,25 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 if (you[0].conf != 0) random_blink();
 
-start_blink: strcpy(info, "Jump to where?");
-mpr(info);
+start_blink: mpr("Jump to where?");
 
 direction(100, beam);
 
 if (beam[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
 if (see_grid(beam[0].target_x, beam[0].target_y) == 0)
 {
-	strcpy(info, "You can't jump there!");
-	mpr(info);
+	mpr("You can't jump there!");
 	goto start_blink;
 }
 
 if (grd [beam[0].target_x] [beam[0].target_y] <= 10 || mgrd [beam[0].target_x] [beam[0].target_y] != MNG)
 {
-  strcpy(info, "Oops! Maybe something was there already.");
-  mpr(info);
+  mpr("Oops! Maybe something was there already.");
   random_blink();
   return;
 }
@@ -133,13 +129,11 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
  if (random_near_space(passed) == 0 || (you[0].x_pos == passed [0] && you[0].y_pos == passed [1]))
 	{
-		strcpy(info, "You feel rather strange for a moment.");
-		mpr(info);
+		mpr("You feel rather strange for a moment.");
 		return;
 	}
 
-	strcpy(info, "You jump.");
-	mpr(info);
+	mpr("You jump.");
 
 	you[0].x_pos = passed [0];
 	you[0].y_pos = passed [1];
@@ -157,8 +151,7 @@ if (you[0].level_type == 2)
 void fireball(int power)
 {
 
-strcpy(info, "Which direction? (* to target)");
-mpr(info);
+ mpr("Which direction? (* to target)");
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
  {
@@ -178,8 +171,7 @@ direction(1, fire_ball);
 
 if (fire_ball[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -204,8 +196,7 @@ void cast_fire_storm(int powc)
 			char cl_y = 0;
    int summd = 0;
 
-strcpy(info, "Where?");
-mpr(info);
+ mpr("Where?");
 
 struct dist fire_storm [1];
 struct bolt beam [1];
@@ -218,16 +209,14 @@ beam[0].target_y = fire_storm[0].target_y;
 
 if (fire_storm[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
 cl_x = beam[0].target_x;
 cl_y = beam[0].target_y;
 
-strcpy(info, "A raging storm of fire appears!");
-mpr(info);
+ mpr("A raging storm of fire appears!");
 
 beam[0].colour = RED;
 
@@ -270,8 +259,7 @@ viewwindow(1);
 char spell_direction(struct dist spelld [1], struct bolt beam [1])
 {
 
-strcpy(info, "Which direction? (* to target)");
-mpr(info);
+ mpr("Which direction? (* to target)");
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
  {
@@ -288,8 +276,7 @@ direction(1, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return -1;
 }
 beam[0].move_x = spelld[0].move_x;
@@ -314,8 +301,7 @@ void identify(char pow)
 
 	do
 	{
-	query : strcpy(info, "Identify which item?");
-	mpr(info);
+	query : mpr("Identify which item?");
 
 	unsigned char keyin = get_ch();
 
@@ -339,8 +325,7 @@ void identify(char pow)
 
 	if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 	{
-		strcpy(info, "You don't have any such object.");
-		mpr(info);
+		mpr("You don't have any such object.");
 		continue;
 	}
 
@@ -348,8 +333,7 @@ void identify(char pow)
 
 	if (you[0].inv_quant [sc_read_2] == 0)
 	{
-		strcpy(info, "You don't have any such object.");
-		mpr(info);
+		mpr("You don't have any such object.");
 		continue;
 	}
 
@@ -391,19 +375,16 @@ void conjure_flame(int pow)
 
 struct dist spelld [1];
 
-strcpy(info, "You execute a flaming cloud program!");
-mpr(info);
+ mpr("You execute a flaming cloud program!");
 
-strcpy(info, "Where?");
-mpr(info);
+ mpr("Where?");
 
 direc:
 direction(100, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -411,16 +392,14 @@ char ig = grd [spelld[0].target_x] [spelld[0].target_y];
 
 if (see_grid(spelld[0].target_x, spelld[0].target_y) == 0)
 {
-   strcpy(info, "You can't see that place!");
-   mpr(info);
+   mpr("You can't see that place!");
    goto direc;
 }
 
 
 if (ig <= 10 || mgrd [spelld[0].target_x] [spelld[0].target_y] != MNG || env[0].cgrid [spelld[0].target_x] [spelld[0].target_y] != CNG)
 {
-   strcpy(info, "There's already something there!");
-   mpr(info);
+   mpr("There's already something there!");
    goto direc;
 }
 
@@ -447,8 +426,7 @@ void stinking_cloud(void)
 struct dist spelld [1];
 struct bolt beam [1];
 
-strcpy(info, "Which direction? (* to target)");
-mpr(info);
+ mpr("Which direction? (* to target)");
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
  {
@@ -465,8 +443,7 @@ direction(1, spelld);
 
 if (spelld[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -534,8 +511,7 @@ void stinkcl(char cl_x, char cl_y, struct bolt beam [1])
 void cast_big_c(int pow, char cty)
 {
 
-strcpy(info, "Where do you want to put it?");
-mpr(info);
+ mpr("Where do you want to put it?");
 
 struct dist cdis [1];
 
@@ -543,8 +519,7 @@ direction(100, cdis);
 
 if (cdis[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -617,23 +592,20 @@ char healing_spell(int healed)
 int mgr = 0;
 struct dist bmove [1];
 
-dirc : strcpy(info, "Which direction?");
-mpr(info);
+dirc : mpr("Which direction?");
 direction(0, bmove);
 
 mgr = mgrd [you[0].x_pos + bmove[0].move_x] [you[0].y_pos + bmove[0].move_y];
 
 if (bmove[0].nothing == -1)
 {
-	strcpy(info, "Huh?!");
-	mpr(info);
+	mpr("Huh?!");
 	return 0;
 }
 
 if (bmove[0].move_x > 1 || bmove[0].move_y > 1)
 {
-	strcpy(info, "This program doesn't reach that far.");
-	mpr(info);
+	mpr("This program doesn't reach that far.");
         goto dirc;
 }
 
@@ -648,8 +620,7 @@ if (bmove[0].move_x == 0 && bmove[0].move_y == 0)
 
 if (mgr == MNG)
 {
-	strcpy(info, "There isn't anything there!");
-	mpr(info);
+	mpr("There isn't anything there!");
 	return -1;
 }
 
@@ -680,15 +651,13 @@ void cast_revivification(int mabil)
 
 if (you[0].hp == you[0].hp_max)
 {
- strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ mpr("Nothing appears to happen.");
  return;
 }
 
 if (you[0].hp_max <= 20)
 {
- strcpy(info, "You lack the resilience to execute this program.");
- mpr(info);
+ mpr("You lack the resilience to execute this program.");
  return;
 }
 
@@ -717,8 +686,7 @@ calc_hp();
  you[0].hp_ch = 1;
  return;
 }*/
-strcpy(info, "Your body is healed in an amazingly painful way.");
-mpr(info);
+ mpr("Your body is healed in an amazingly painful way.");
 
 you[0].hp = you[0].hp_max;
 you[0].hp_ch = 1;
@@ -730,8 +698,7 @@ void cast_cure_poison(int mabil)
 
 if (you[0].poison == 0)
 {
- strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ mpr("Nothing appears to happen.");
  return;
 }
 
@@ -739,22 +706,19 @@ you[0].poison -= 2 + random2(mabil) + random2(3);
 
 if (you[0].poison <= 0)
 {
- strcpy(info, "You feel the poison leave your system.");
- mpr(info);
+ mpr("You feel the poison leave your system.");
  you[0].poison = 0;
  return;
 }
 
-strcpy(info, "You feel most of the poison leave your system.");
-mpr(info);
+ mpr("You feel most of the poison leave your system.");
 
 } // end of cast_cure_poison
 
 void purification(void)
 {
 
-strcpy(info, "You feel purified!");
-mpr(info);
+ mpr("You feel purified!");
 
 you[0].poison = 0;
 you[0].rotting = 0;
@@ -771,22 +735,18 @@ void cast_deaths_door(int pow)
 
 if (you[0].is_undead != 0)
 {
- strcpy(info, "You're already cyborg!");
- mpr(info);
+ mpr("You're already cyborg!");
  return;
 }
 
 if (you[0].deaths_door > 0)
 {
- strcpy(info, "Your appeal for an extension has been denied.");
- mpr(info);
+ mpr("Your appeal for an extension has been denied.");
  return;
 }
 
-strcpy(info, "You feel invincible!");
-mpr(info);
-strcpy(info, "You seem to hear sand running through an hourglass...");
-mpr(info);
+ mpr("You feel invincible!");
+ mpr("You seem to hear sand running through an hourglass...");
 
 you[0].deaths_door = 8 + random2(5) + random2(5) + random2(5) + random2(pow) / 10;
 you[0].hp = you[0].skills [SK_NECROMANCY] + (you[0].religion == GOD_KIKUBAAQUDGHA) * 13;
@@ -801,8 +761,7 @@ void abjuration(int pow)
 
 int ab = 0;
 
-strcpy(info, "Send 'em back where they came from!");
-mpr(info);
+ mpr("Send 'em back where they came from!");
 
 for (ab = 0; ab < MNST; ab ++)
 {
@@ -875,8 +834,7 @@ if (you[0].shock_shield > 0)
 {
  you[0].shock_shield += random2(pow) + 4;
  if (you[0].shock_shield > 25) you[0].shock_shield = 25;
- strcpy(info, "Your ring of flames program is extended.");
- mpr(info);
+ mpr("Your ring of flames program is extended.");
 }
 
 if (you[0].duration [DUR_VORPAL_BLADE] > 0 && you[0].duration [DUR_VORPAL_BLADE] < 80) you[0].duration [DUR_VORPAL_BLADE] += 10 + random() % 10;
@@ -913,26 +871,23 @@ if (you[0].equip [EQ_BODY_ARMOUR] != -1 && extending == 0)
 {
  if (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] > 1 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] != 16 && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] != 19 && (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < 22 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] > 25))
  {
-  strcpy(info, "You are wearing too much armour.");
-  mpr(info);
+  mpr("You are wearing too much armour.");
   return;
  }
 }
 
 if (you[0].duration [DUR_STONEMAIL] != 0)
 {
- strcpy(info, "The program conflicts with another program still running.");
- mpr(info);
+ mpr("The program conflicts with another program still running.");
  return;
 }
 
 if (you[0].duration [DUR_ICY_ARMOUR] == 0)
 {
- strcpy(info, "A film of ice covers your body!");
+ mpr("A film of ice covers your body!");
 /* player_AC(you) += 6;*/
  you[0].AC_ch = 1;
-} else strcpy(info, "Your icy armour thickens.");
-mpr(info);
+} else mpr("Your icy armour thickens.");
 
 
  dur_change = 20 + random2(pow) + random2(pow);
@@ -955,20 +910,18 @@ int dur_change = 0;
 
 if (you[0].duration [DUR_ICY_ARMOUR] != 0)
 {
- strcpy(info, "The program conflicts with another program still running.");
- mpr(info);
+ mpr("The program conflicts with another program still running.");
  return;
 }
 
 if (you[0].duration [DUR_STONEMAIL] == 0)
 {
- strcpy(info, "A set of stone scales covers your body!");
+ mpr("A set of stone scales covers your body!");
 /* player_AC(you) += 7;
  player_evasion(you) -= 2;*/
  you[0].evasion_ch = 1;
  you[0].AC_ch = 1;
-} else strcpy(info, "Your scaly armour looks firmer.");
-mpr(info);
+} else mpr("Your scaly armour looks firmer.");
 
 
  dur_change = 20 + random2(pow) + random2(pow);
@@ -986,8 +939,7 @@ void missile_prot(int pow)
 
 if (pow > 100) pow = 100;
 
-strcpy(info, "You feel protected from missiles.");
-mpr(info);
+ mpr("You feel protected from missiles.");
 
  you[0].duration [DUR_REPEL_MISSILES] += 10 + random2(pow) + random2(pow);
 
@@ -1000,8 +952,7 @@ void deflection(int pow)
 
 if (pow > 100) pow = 100;
 
-strcpy(info, "You feel very safe from missiles.");
-mpr(info);
+ mpr("You feel very safe from missiles.");
 
  you[0].duration [DUR_DEFLECT_MISSILES] += 15 + random2(pow);
 
@@ -1016,8 +967,7 @@ int dur_change = 0;
 
 //if (pow > 150) pow = 150;
 
-strcpy(info, "Your skin crawls.");
-mpr(info);
+ mpr("Your skin crawls.");
 
 if (you[0].duration [DUR_REGENERATION] == 0)
 {
@@ -1038,8 +988,7 @@ void cast_berserk(void)
 {
   if (go_berserk() == 0)
   {
-     strcpy(info, "You fail to go in battle mode.");
-     mpr(info);
+     mpr("You fail to go in battle mode.");
   }
 }
 
@@ -1059,9 +1008,8 @@ int dur_incr = 0;
 //  you[0].fast_run ++;
  }
 
- if (you[0].species != SP_NAGA) strcpy(info, "You feel quick on your feet.");
-   else strcpy(info, "You feel quick.");
- mpr(info);
+ if (you[0].species != SP_NAGA) mpr("You feel quick on your feet.");
+   else mpr("You feel quick.");
 
  dur_incr = random2(power) + random2(power) + 20;
 
@@ -1079,12 +1027,10 @@ int dur_change = 0;
 
 	if (you[0].lev == 0)
 	{
-		strcpy(info, "You fly up into the air.");
-		mpr(info);
+		mpr("You fly up into the air.");
 	} else
 	      {
-	       strcpy(info, "You feel more buoyant.");
-	       mpr(info);
+	       mpr("You feel more buoyant.");
 	      }
    dur_change =	random2 (power) + random2(power) + 25;
  if (you[0].lev + dur_change > 100) you[0].lev = 100;
@@ -1108,8 +1054,7 @@ int dur_incr = 0;
   you[0].attribute [ATTR_RESIST_LIGHTNING] ++;
  }
 
- strcpy(info, "You feel insulated.");
- mpr(info);
+ mpr("You feel insulated.");
 
  dur_incr = random2(power) + 10;
 
@@ -1123,8 +1068,7 @@ void cast_resist_poison(int power)
 
 int dur_incr = 0;
 
- strcpy(info, "You feel resistant to poison.");
- mpr(info);
+ mpr("You feel resistant to poison.");
 
  dur_incr = random2(power) + 10;
 
@@ -1143,8 +1087,7 @@ int dur_incr = 0;
   you[0].attribute [ATTR_CONTROL_TELEPORT] ++;
  }
 
- strcpy(info, "You feel controlled.");
- mpr(info);
+ mpr("You feel controlled.");
 
  dur_incr = random2(power) + 10;
 
@@ -1158,8 +1101,7 @@ void cast_ring_of_flames(int power)
 {
  you[0].shock_shield += random2(power) / 10 + 4;
  if (you[0].shock_shield > 25) you[0].shock_shield = 25;
- strcpy(info, "The air around you leaps into flame!");
- mpr(info);
+ mpr("The air around you leaps into flame!");
  manage_shock_shield();
 }
 

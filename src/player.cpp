@@ -609,8 +609,7 @@ if (emod > 0) ev += emod;
 
 #ifdef DEBUG
 itoa(emod, st_prn, 10);
-strcpy(info, st_prn);
-mpr(info);
+ mpr(st_prn);
 #endif
 
  /* repulsion field */
@@ -737,8 +736,7 @@ if (you[0].burden < max_carried - 500)
  you[0].burden_state = 2; /* encumbered */
  if (old_burden != you[0].burden_state)
  {
-  strcpy(info, "You are being weighed down by all of your possessions.");
-  mpr(info);
+  mpr("You are being weighed down by all of your possessions.");
  }
  return you[0].burden;
 }
@@ -746,8 +744,7 @@ if (you[0].burden < max_carried - 500)
 you[0].burden_state = 5;
 if (old_burden != you[0].burden_state)
 {
- strcpy(info, "You are being crushed by all of your possessions.");
- mpr(info);
+ mpr("You are being crushed by all of your possessions.");
 }
 
 return you[0].burden;
@@ -1396,8 +1393,7 @@ case SP_MUMMY: // Mummy
 if (you[0].xl == 13 || you[0].xl == 23)
 {
 /* you[0].spec_death ++;*/
- strcpy(info, "You feel more in touch with the powers of death.");
- mpr(info);
+ mpr("You feel more in touch with the powers of death.");
 }
 break;
 case SP_NAGA: // Naga
@@ -1412,8 +1408,7 @@ you[0].hp_max ++;
 if (you[0].xl % 4 == 0) increase_stats(random2(3));
 if (you[0].xl % 3 == 0)
 {
- strcpy(info, "Your skin feels tougher.");
- mpr(info);
+ mpr("Your skin feels tougher.");
 /* player_AC(you) ++;*/
  you[0].AC_ch = 1;
 }
@@ -1730,22 +1725,19 @@ switch(which_stat)
  you[0].strength ++;
  you[0].max_strength ++;
  you[0].strength_ch = 1;
- strcpy(info, "You feel stronger.");
- mpr(info);
+ mpr("You feel stronger.");
  break;
  case STAT_DEXTERITY:
  you[0].dex ++;
  you[0].max_dex ++;
  you[0].dex_ch = 1;
- strcpy(info, "You feel agile.");
- mpr(info);
+ mpr("You feel agile.");
  break;
  case STAT_INTELLIGENCE:
  you[0].intel ++;
  you[0].max_intel ++;
  you[0].intel_ch = 1;
- strcpy(info, "You feel clever.");
- mpr(info);
+ mpr("You feel clever.");
  break;
 }
 
@@ -1802,12 +1794,10 @@ unsigned char keyin;
 return; // that prompt was irritating when gaining levels via '$'
 #endif
 
-strcpy(info, "Your experience leads to an increase in your attributes!");
-mpr(info);
+ mpr("Your experience leads to an increase in your attributes!");
 more();
 mesclr();
-strcpy(info, "Increase Strength, Intelligence, or Dexterity? ");
-mpr(info);
+ mpr("Increase Strength, Intelligence, or Dexterity? ");
 
 get_key:
 keyin = getch();
@@ -1848,9 +1838,8 @@ void display_char_status(void)
 {
 
 if (you[0].is_undead == 0)
- strcpy(info, "You are alive.");
-  else strcpy(info, "You are cyborg.");
-mpr(info);
+ mpr("You are alive.");
+  else mpr("You are cyborg.");
 
 switch(you[0].attribute [ATTR_TRANSFORMATION])
 {
@@ -1864,135 +1853,113 @@ switch(you[0].attribute [ATTR_TRANSFORMATION])
 
 if (you[0].duration [DUR_LIQUID_FLAMES] != 0)
 {
- strcpy(info, "You are covered in liquid flames.");
- mpr(info);
+ mpr("You are covered in liquid flames.");
 }
 if (you[0].duration [DUR_ICY_ARMOUR] != 0)
 {
- strcpy(info, "You are protected by an icy shield.");
- mpr(info);
+ mpr("You are protected by an icy shield.");
 }
 if (you[0].duration [DUR_REPEL_MISSILES] != 0)
 {
- strcpy(info, "You are protected from missiles.");
- mpr(info);
+ mpr("You are protected from missiles.");
 }
 
 if (you[0].duration [DUR_PRAYER] != 0)
 {
- strcpy(info, "You are communicating."); // not yet implemented
- mpr(info);
+ mpr("You are communicating."); // not yet implemented
 }
 
 if (you[0].duration [DUR_REGENERATION] != 0)
 {
- strcpy(info, "You are regenerating.");
- mpr(info);
+ mpr("You are regenerating.");
 }
 
 if (you[0].duration [DUR_SWIFTNESS] != 0)
 {
- strcpy(info, "You can move swiftly.");
- mpr(info);
+ mpr("You can move swiftly.");
 }
 
 if (you[0].duration [DUR_INSULATION] != 0)
 {
- strcpy(info, "You are insulated.");
- mpr(info);
+ mpr("You are insulated.");
 }
 
 if (you[0].duration [DUR_STONEMAIL] != 0)
 {
- strcpy(info, "You are covered in scales of stone.");
- mpr(info);
+ mpr("You are covered in scales of stone.");
 }
 
 if (you[0].duration [DUR_CONTROLLED_FLIGHT] != 0)
 {
- strcpy(info, "You can control your flight.");
- mpr(info);
+ mpr("You can control your flight.");
 }
 
 if (you[0].duration [DUR_TELEPORT] != 0)
 {
- strcpy(info, "You are about to be sucked into ventilation.");
- mpr(info);
+ mpr("You are about to be sucked into ventilation.");
 }
 
 if (you[0].duration [DUR_CONTROL_TELEPORT] != 0)
 {
- strcpy(info, "You can control ventilation.");
- mpr(info);
+ mpr("You can control ventilation.");
 }
 
 if (you[0].duration [DUR_DEATH_CHANNEL] != 0)
 {
- strcpy(info, "You are channeling the cyborgs.");
- mpr(info);
+ mpr("You are channeling the cyborgs.");
 }
 
 
 if (you[0].invis != 0)
 {
-	strcpy(info, "You are invisible.");
-	mpr(info);
+	mpr("You are invisible.");
 }
 
 if (you[0].conf != 0)
 {
-	strcpy(info, "You are confused.");
-	mpr(info);
+	mpr("You are confused.");
 }
 
 if (you[0].paralysis != 0)
 {
-	strcpy(info, "You are paralysed.");
-	mpr(info);
+	mpr("You are paralysed.");
 }
 
 if (you[0].slow != 0)
 {
-	strcpy(info, "You are moving very slowly.");
-	mpr(info);
+	mpr("You are moving very slowly.");
 }
 
 if (you[0].haste != 0)
 {
-	strcpy(info, "You are moving very quickly.");
-	mpr(info);
+	mpr("You are moving very quickly.");
 }
 
 if (you[0].might != 0)
 {
-	strcpy(info, "You are mighty.");
-	mpr(info);
+	mpr("You are mighty.");
 }
 
 if (you[0].berserker != 0)
 {
-	strcpy(info, "You are in battle mode.");
-	mpr(info);
+	mpr("You are in battle mode.");
 }
 
 
 if (you[0].lev != 0)
 {
-	strcpy(info, "You are hovering above the floor.");
-	mpr(info);
+	mpr("You are hovering above the floor.");
 }
 
 
 if (you[0].poison != 0)
 {
-	strcpy(info, "You are poisoned.");
-	mpr(info);
+	mpr("You are poisoned.");
 }
 
 if (you[0].deaths_door != 0)
 {
-	strcpy(info, "You are standing in death's doorway.");
-	mpr(info);
+	mpr("You are standing in death's doorway.");
 }
 
 if (you[0].disease != 0)

@@ -268,8 +268,7 @@ if (you[0].equip [EQ_WEAPON] != -1)
                 you[0].time_taken /= 10;
 #ifdef DEBUG
                 itoa(you[0].time_taken, st_prn, 10);
-                strcpy(info, st_prn);
-                mpr(info);
+                mpr(st_prn);
 #endif
         }
 } else
@@ -416,8 +415,7 @@ damage_done /= 30;
                 monster_die(monster_attacked, 1, 0);
                 if (menv [monster_attacked].m_class == MONS_GIANT_SPORE)
                 {
-                        strcpy(info, "You hit the giant spore.");
-                        mpr(info);
+                        mpr("You hit the giant spore.");
                 }
                 return;
         }
@@ -588,8 +586,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 /*   if (you[0].inv_plus2 [you[0].equip [EQ_WEAPON]] <= 50 || you[0].inv_plus2 [you[0].equip [EQ_WEAPON]] > 130 && you[0].inv_plus2 [you[0].equip [EQ_WEAPON]] <= 150) break;*/
    if (random2(3) == 0)
    {
-    strcpy(info, "There is a sudden explosion of sparks!");
-    mpr(info);
+    mpr("There is a sudden explosion of sparks!");
     specdam += random2(10) + random2(10) + random2(10);
 /*    you[0].inv_plus2 [you[0].equip [EQ_WEAPON]] --;
     wield_change = 1;*/
@@ -628,8 +625,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    specdam = random2(damage_done) / 2 + 1;
    if (menv [monster_attacked].m_class == MONS_WORM_TAIL && (damage_type(0, you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 1 || damage_type(0, you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 3))
    {
-     strcpy(info, "You slice the worm tail!");
-     mpr(info);
+     mpr("You slice the worm tail!");
      menv [monster_attacked].m_hp -= 20 + random2(20);
    }
    break;
@@ -644,8 +640,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    you[0].hp_ch = 1;
    if (you[0].hp > you[0].hp_max) you[0].hp = you[0].hp_max;
    if (you[0].hunger <= 11000 && you[0].is_undead < 2) you[0].hunger += random2(30) + random2(30);
-   strcpy(info, "You feel better.");
-   mpr(info);
+   mpr("You feel better.");
    naughty(NAUGHTY_NECROMANCY, 2);
    break;
 
@@ -749,8 +744,7 @@ if (menv [monster_attacked].m_class == MONS_HYDRA) // hydra
   }
   if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 == SPWPN_FLAMING) goto mons_dies; // cauterised
   if (menv [monster_attacked].m_sec >= 18) goto mons_dies;
-  strcpy(info, "It grows two more!");
-  mpr(info);
+  mpr("It grows two more!");
   menv [monster_attacked].m_sec += 2;
  }
 }
@@ -1334,22 +1328,19 @@ if (hit == 1)
         if (you[0].is_undead != 0) break;
                 if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
                 {
-                        strcpy(info, "You feel your flesh start to rot away!");
-                        mpr(info);
+                        mpr("You feel your flesh start to rot away!");
                         you[0].rotting += random2(3) + 1;
                 }
   if (random2(4) == 0)
   {
-   strcpy(info, "You feel ill.");
-   mpr(info);
+   mpr("You feel ill.");
    if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
   }
                 break;
 
  case MONS_GIANT_MOSQUITO: // mosquito
  if (random2(3) != 0)
- strcpy(info, "You feel ill.");
- mpr(info);
+ mpr("You feel ill.");
  if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
  break;
 
@@ -1358,8 +1349,7 @@ if (hit == 1)
  case MONS_FIRE_ELEMENTAL: /* fire elemental */
  case MONS_BALRUG: /* balrug */
  case MONS_SUN_DEMON: /* sun demon */
-        strcpy(info, "You are engulfed in flame!");
-        mpr(info);
+        mpr("You are engulfed in flame!");
    if (player_res_fire() > 100)
    {
     damage_taken += (15 + random2(15)) / 2 + ((player_res_fire() - 100) * (player_res_fire() - 100));
@@ -1443,8 +1433,7 @@ if (player_res_poison() == 0)
          brek = 0;
          break;
         }*/
-        strcpy(info, "You feel drained...");
-        mpr(info);
+        mpr("You feel drained...");
         brek = 1;
         }
         break;
@@ -1462,9 +1451,8 @@ if (player_res_poison() == 0)
         {
         if (you[0].paralysis > 0)
         {
-                strcpy(info, "You still can't move!");
-        } else strcpy(info, "You suddenly lose the ability to move!");
-        mpr(info);
+                mpr("You still can't move!");
+        } else mpr("You suddenly lose the ability to move!");
         you[0].paralysis += random2(3) + 1;
         }
         break;
@@ -1481,8 +1469,7 @@ if (player_res_poison() == 0)
 	case MONS_ACID_BLOB: // acid blob
 	case MONS_ROYAL_JELLY: // royal jelly
         case MONS_JELLY: // Jelly
-        strcpy(info, "You are splashed with acid!");
-        mpr(info);
+        mpr("You are splashed with acid!");
         splash_with_acid(3);
         break;
 
@@ -1536,8 +1523,7 @@ if (player_res_poison() == 0)
  if (player_prot_life() != 0 || you[0].is_undead != 0) break;
       if (((damage_taken >= 1 && random2(3)) == 0 || random2(20) == 0) && you[0].strength > 3 && player_sust_abil() == 0)
       {
-        strcpy(info, "You feel weaker.");
-        mpr(info);
+        mpr("You feel weaker.");
         you[0].strength --;
         you[0].strength_ch = 1;
       }
@@ -1547,8 +1533,7 @@ if (player_res_poison() == 0)
  if (you[0].is_undead == 2) break;
       if ((damage_taken >= 1 && random2(2) == 0) || random2(20) == 0)
       {
-        strcpy(info, "You feel hungry.");
-        mpr(info);
+        mpr("You feel hungry.");
         you[0].hunger -= 400;
         //strength_ch = 1;
       }
@@ -1583,8 +1568,7 @@ if (player_res_poison() == 0)
         you[0].poison++;
  if (player_sust_abil() == 0 && you[0].strength > 3)
  {
-  strcpy(info, "You feel weaker.");
-  mpr(info);
+  mpr("You feel weaker.");
   you[0].strength_ch = 1;
                 you[0].strength --;
  }
@@ -1728,8 +1712,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150)) break;
    if (random2(3) == 0)
    {
-    strcpy(info, "You are electrocuted!");
-    mpr(info);
+    mpr("You are electrocuted!");
     specdam += 10 + random2(15);
 //    mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] --;
    }
@@ -1772,8 +1755,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    break;
 
    case SPWPN_DRAINING: if (player_prot_life() != 0) break;
-   strcpy(info, "You feel drained...");
-   mpr(info);
+   mpr("You feel drained...");
    drained = 1;
    specdam = random2(damage_taken) / 2 + 1;
    break;
@@ -1826,15 +1808,13 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
 //   if (random2(3) != 0) break;
    if (random2(3) == 0)
    {
-    strcpy(info, "Your body is twisted painfully.");
-    mpr(info);
+    mpr("Your body is twisted painfully.");
     specdam += random2(5) + random2(3) + 1;
     break;
    }
    if (random2(3) == 0)
    {
-    strcpy(info, "Your body is terribly warped!");
-    mpr(info);
+    mpr("Your body is terribly warped!");
     specdam += random2(12) + random2(13) + 3;
     break;
    }
@@ -2521,8 +2501,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    if (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 50 || (mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] > 130 && mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] <= 150)) break;
    if (random2(3) == 0)
    {
-    strcpy(info, "There is a sudden explosion of sparks!");
-    if (sees == 1) mpr(info);
+    if (sees == 1) mpr("There is a sudden explosion of sparks!");
     specdam += 10 + random2(15);
 //    mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]] --;
    }
@@ -2859,8 +2838,7 @@ out_of_switch : if (menv [monster_killed].m_class == MONS_MUMMY) /* mummy! */
   {
     if (curse_an_item(1, 0) == 1)
     {
-      strcpy(info, "You feel nervous for a moment...");
-      mpr(info);
+      mpr("You feel nervous for a moment...");
     }
   }
 }
@@ -2882,10 +2860,8 @@ if (menv [monster_killed].m_class == MONS_WORM_TAIL)
           dmi--;
           if ((menv [dmi].m_class != MONS_WORM_TAIL && menv [dmi].m_class != MONS_TUNNELING_WORM) || dmi < 0)
           {
-           strcpy(info, "Error: Worm head not found!");
-           mpr(info);
-           strcpy(info, "Oh well. Carry on.");
-           mpr(info);
+           mpr("Error: Worm head not found!");
+           mpr("Oh well. Carry on.");
            goto out_of_worm;
           }
         }
@@ -3029,12 +3005,10 @@ mgrd [menv [k].m_x] [menv [k].m_y] = k;
 
          if (mons_near(jel) == 1)
          {
-            strcpy(info, "The jelly splits in two!");
-            mpr(info);
+            mpr("The jelly splits in two!");
          } else
            {
-               strcpy(info, "You hear a squelching noise in the distance.");
-               mpr(info);
+               mpr("You hear a squelching noise in the distance.");
            }
 
          return 1;
@@ -3169,8 +3143,7 @@ if (grd [menv [monster_killed].m_x] [menv [monster_killed].m_y] == 61 || grd [me
  }
  if (splashes > 0)
  {
-  strcpy(info, "You hear a splashing sound.");
-  mpr(info);
+  mpr("You hear a splashing sound.");
  }
  return;
 }

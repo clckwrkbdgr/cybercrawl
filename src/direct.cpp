@@ -50,8 +50,7 @@ if (moves[0].nothing > 10000)
 
 if (moves[0].nothing == -1)
 {
-	strcpy(info, "What an unusual direction.");
-	mpr(info);
+	mpr("What an unusual direction.");
 	return;
 }
 
@@ -59,16 +58,14 @@ if (moves[0].nothing == 253)
 {
 	if (you[0].prev_targ == MHITNOT || you[0].prev_targ >= MNST)
 	{
-		strcpy(info, "You haven't got a target.");
-		mpr(info);
+		mpr("You haven't got a target.");
 		moves[0].nothing = -1;
 		return;
 	}
 
 	if (mons_near(you[0].prev_targ) != 1 || (menv [you[0].prev_targ].m_ench [2] == 6 && player_see_invis() == 0))
 	{
-		strcpy(info, "You can't see that creature any more.");
-		mpr(info);
+		mpr("You can't see that creature any more.");
 		moves[0].nothing = -1;
 		return;
 	}
@@ -211,11 +208,9 @@ int look_around(struct dist moves [1])
 	char mve_x, mve_y;
 	int trf = 0;
 
- strcpy(info, "Move the cursor around to observe a square.");
- mpr(info);
+ mpr("Move the cursor around to observe a square.");
 
- strcpy(info, "Press '?' for a monster description.");
- mpr(info);
+ mpr("Press '?' for a monster description.");
 
  if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
  {
@@ -301,8 +296,7 @@ mesclr();
 
 if (env[0].show [xps - 8] [yps] == 0 && (xps != 17 || yps != 9))
 {
- strcpy(info, "You can't see that place.");
- mpr(info);
+ mpr("You can't see that place.");
 /* itoa(see_grid(you[0].x_pos + xps - 17, you[0].y_pos + yps - 9), st_prn, 10);
  strcat(info, st_prn);
  mpr(info);*/
@@ -349,13 +343,11 @@ if (menv [i].m_class == 106)
 
 if (menv [i].m_beh == 7)
 {
- strcpy(info, "It is friendly.");
- mpr(info);
+ mpr("It is friendly.");
 }
 if (menv [i].m_beh == 0)
 {
- strcpy(info, "It doesn't appear to have noticed you.");
- mpr(info);
+ mpr("It doesn't appear to have noticed you.");
 }
 
 #ifdef DEBUG
@@ -369,18 +361,17 @@ if (env[0].cgrid [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9] != CNG)
 {
  switch(env[0].cloud_type [env[0].cgrid [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] % 100)
  {
-  case 1: strcpy(info, "There is a cloud of flame here."); break;
-  case 2: strcpy(info, "There is a cloud of noxious fumes here."); break;
-  case 3: strcpy(info, "There is a cloud of freezing vapour here."); break;
-  case 4: strcpy(info, "There is a cloud of poison gas here."); break;
-  case 5: strcpy(info, "There is a cloud of smoke here."); break;
-  case 6: strcpy(info, "There is a cloud of blue smoke here."); break;
-  case 7: strcpy(info, "There is a cloud of purple smoke here."); break;
-  case 8: strcpy(info, "There is a cloud of steam here."); break;
-  case 9: strcpy(info, "There is an evil black miasma here."); break;
-  case 10: strcpy(info, "There is a cloud of black smoke here."); break;
+  case 1: mpr("There is a cloud of flame here."); break;
+  case 2: mpr("There is a cloud of noxious fumes here."); break;
+  case 3: mpr("There is a cloud of freezing vapour here."); break;
+  case 4: mpr("There is a cloud of poison gas here."); break;
+  case 5: mpr("There is a cloud of smoke here."); break;
+  case 6: mpr("There is a cloud of blue smoke here."); break;
+  case 7: mpr("There is a cloud of purple smoke here."); break;
+  case 8: mpr("There is a cloud of steam here."); break;
+  case 9: mpr("There is an evil black miasma here."); break;
+  case 10: mpr("There is a cloud of black smoke here."); break;
  }
-mpr(info);
 } // end of look_clouds:
 
 if (igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9] != 501)
@@ -468,8 +459,7 @@ switch(grd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9])
    if (env[0].trap_x [trf] == you[0].x_pos + xps - 17 && env[0].trap_y [trf] == you[0].y_pos + yps - 9) break;
    if (trf == NTRAPS - 1)
    {
-  	strcpy(info, "Error - couldn't find that trap.");
-  	mpr(info);
+  	mpr("Error - couldn't find that trap.");
         break;
    }
   }

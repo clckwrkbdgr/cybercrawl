@@ -319,8 +319,7 @@ void input(void)
   		case 'X':
   			if (you[0].level_type == 1 || you[0].level_type == 2)
   			{
-   				strcpy(info, "You have no idea where you are!");
-   				mpr(info);
+   				mpr("You have no idea where you are!");
    				break;
   			}
 			plox [0] = 0;
@@ -349,10 +348,8 @@ void input(void)
 
   			if (you[0].xl == 27)
   			{
- 				strcpy(info, "I'm sorry, level 27 is as high as you can go.");
-                mpr(info);
-				strcpy(info, "With the way you've been playing, I'm surprised you got this far.");
-			   	mpr(info);
+ 				mpr("I'm sorry, level 27 is as high as you can go.");
+				mpr("With the way you've been playing, I'm surprised you got this far.");
 			   	break;
 	  		}
 			strcpy(info, "Your next level is at ");
@@ -379,10 +376,9 @@ void input(void)
   			strncpy(name_your, you[0].your_name, 6);
   			name_your [6] = 0;
   			if (dump_char(0, name_your) == 1)
-   				strcpy(info, "Char dumped successfully.");
+   				mpr("Char dumped successfully.");
     		else
-    			strcpy(info, "Char dump unsuccessful! Sorry about that.");
-		    mpr(info);
+    			mpr("Char dump unsuccessful! Sorry about that.");
 		  	break;
 
   		case '`': macro_add_query(); break;
@@ -528,8 +524,7 @@ break;
 #ifdef DEBUG
 		case '`':
    			itoa(OUTPUT_NO, st_prn, 10);
-			strcpy(info, st_prn);
-   			mpr(info);
+			mpr(st_prn);
 			move_x = 0;
 			move_y = 0;
 			break;
@@ -563,8 +558,7 @@ break;
                 strcat(info, st_prn);
                 mpr(info);
     		}
-            strcpy(info, "igrid:");
-            mpr(info);
+            mpr("igrid:");
             for (i = 0; i < GXM; i ++)
             {
             	for (j = 0; j < GYM; j ++)
@@ -612,8 +606,7 @@ break;
 	    case '}':
 //        Can't use this char
 		break;
-		default: strcpy(info, "Unknown command.");
-			mpr(info); break;
+		default: mpr("Unknown command.");
 
 	}
 
@@ -956,8 +949,7 @@ break;
 	}
 	if (you[0].invis == 1)
 	{
-		strcpy(info, "You flicker back into view.");
-		mpr(info);
+		mpr("You flicker back into view.");
 		you[0].invis = 0;
 	}
 
@@ -966,8 +958,7 @@ break;
 	if (you[0].conf > 1) you[0].conf --;
 	if (you[0].conf == 1)
 	{
-		strcpy(info, "You feel steadier.");
-		mpr(info);
+		mpr("You feel steadier.");
 		you[0].conf = 0;
 	}
 
@@ -975,8 +966,7 @@ break;
 	if (you[0].paralysis > 1) you[0].paralysis--;
 	if (you[0].paralysis == 1)
 	{
-		strcpy(info, "You can move again.");
-		mpr(info);
+		mpr("You can move again.");
 		you[0].paralysis = 0;
 	}
 
@@ -985,8 +975,7 @@ break;
 	if (you[0].slow > 1) you[0].slow--;
 	if (you[0].slow == 1)
 	{
-		strcpy(info, "You feel yourself speed up.");
-		mpr(info);
+		mpr("You feel yourself speed up.");
 		you[0].slow = 0;
 	}
 
@@ -1002,16 +991,14 @@ break;
 
 	if (you[0].haste == 1)
 	{
-		strcpy(info, "You feel yourself slow down.");
-		mpr(info);
+		mpr("You feel yourself slow down.");
 		you[0].haste = 0;
 	}
 
 	if (you[0].might > 1) you[0].might--;
 	if (you[0].might == 1)
 	{
-		strcpy(info, "You feel a little less mighty now.");
-		mpr(info);
+		mpr("You feel a little less mighty now.");
 		you[0].might = 0;
 		you[0].strength -= 5;
 		you[0].max_strength -= 5;
@@ -1021,10 +1008,8 @@ break;
 	if (you[0].berserker > 1) you[0].berserker--;
 	if (you[0].berserker == 1)
 	{
-		strcpy(info, "You went out battle mode.");
-		mpr(info);
-		strcpy(info, "You feel exhausted.");
-		mpr(info);
+		mpr("You went out battle mode.");
+		mpr("You feel exhausted.");
 		you[0].berserker = 0;
  		you[0].slow += 4 + random2(4) + random2(4);
  		you[0].hunger -= 700;
@@ -1039,8 +1024,7 @@ break;
  		 you[0].lev--;
  		if (you[0].lev == 10)
  		{
-  			strcpy(info, "You are starting to lose your buoyancy!");
-  			mpr(info);
+  			mpr("You are starting to lose your buoyancy!");
   			you[0].lev -= random2(6); // so you never know how much time you have left!
   			if (you[0].duration [DUR_CONTROLLED_FLIGHT] > 0) you[0].duration [DUR_CONTROLLED_FLIGHT] = you[0].lev;
  		}
@@ -1048,8 +1032,7 @@ break;
 
 	if (you[0].lev == 1)
 	{
-		strcpy(info, "You float gracefully downwards.");
-		mpr(info);
+		mpr("You float gracefully downwards.");
 		you[0].lev = 0;
 	    burden_change();
         you[0].duration [DUR_CONTROLLED_FLIGHT] = 0;
@@ -1079,8 +1062,7 @@ break;
  		if (you[0].species == SP_KOBOLD && you[0].disease > 5) you[0].disease -= 2;
  		if (you[0].disease == 0)
  		{
-  			strcpy(info, "You feel your health improve.");
-  			mpr(info);
+  			mpr("You feel your health improve.");
  		}
 	}
 
@@ -1092,28 +1074,24 @@ break;
 			{
 	 			ouch(random2(10) + 5, 0, 1);
 	 			you[0].hp_ch = 1;
-	 			strcpy(info, "You feel extremely sick.");
-	 			mpr(info);
+	 			mpr("You feel extremely sick.");
 			} else
 	 		if (you[0].poison > 5 && random2(2) == 0)
 	 		{
 	 			ouch(random2(2) + 2, 0, 1);
 	 			you[0].hp_ch = 1;
-	 			strcpy(info, "You feel very sick.");
-	 			mpr(info);
+	 			mpr("You feel very sick.");
 
 	 		} else
 	      	{
 				ouch(1, 0, 1);
 				you[0].hp_ch = 1;
-				strcpy(info, "You feel sick.");// //the poison running through your veins.");
-				mpr(info);
+				mpr("You feel sick.");// //the poison running through your veins.");
 	      	}
 
 			if (random2(8) == 0 || (you[0].hp == 1 && random2(3) == 0))
 			{
-				strcpy(info, "You feel a little better.");
-				mpr(info);
+				mpr("You feel a little better.");
 				you[0].poison--;
 			}
 
@@ -1125,8 +1103,7 @@ break;
 	{
 	 	if (you[0].hp > you[0].skills [SK_NECROMANCY] + (you[0].religion == GOD_KIKUBAAQUDGHA) * 13)
  		{
-  			strcpy(info, "Your life is in your own hands once again.");
-  			mpr(info);
+  			mpr("Your life is in your own hands once again.");
 	  		you[0].paralysis += 5 + random2(5);
   			you[0].conf += 10 + random2(10);
   			you[0].hp_max --;
@@ -1138,15 +1115,13 @@ break;
 
  		if (you[0].deaths_door == 10)
  		{
-  			strcpy(info, "Your time is quickly running out!");
- 	 		mpr(info);
+  			mpr("Your time is quickly running out!");
   			you[0].deaths_door -= random2(6); // so that you never know how many turns you have left. Evil, huh?
  		}
 
  		if (you[0].deaths_door == 1)
  		{
-  			strcpy(info, "Your life is in your own hands again!");
-  			mpr(info);
+  			mpr("Your life is in your own hands again!");
 //  relay_message();
   			more();
 /*  you[0].hp = 1;*/
@@ -1255,23 +1230,20 @@ break;
 	{
 		if (you[0].paralysis == 0 && random2(40) == 0)
 		{
-	 		strcpy(info, "You lose consciousness!");
-	 		mpr(info);
+	 		mpr("You lose consciousness!");
 			you[0].paralysis += random2(8) + 5;
  			if (you[0].paralysis > 13) you[0].paralysis = 13;
 		}
 		if (you[0].hunger <= 100)
 		{
- 			strcpy(info, "You have starved to death.");
- 			mpr(info);
+ 			mpr("You have starved to death.");
  			ouch(-9999, 0, 15);
 		}
 	}
 
 	if (you[0].hung_state == 3 && you[0].hunger <= 2600) // && you[0].hunger_inc > 0)
 	{
-		strcpy(info, "You are feeling hungry.");
-		mpr(info);
+		mpr("You are feeling hungry.");
 		you[0].hung_state = 2;
 		you[0].hung_ch = 1;
 	}
@@ -1279,8 +1251,7 @@ break;
 
 	if (you[0].hung_state == 2 && you[0].hunger <= 1000) // && you[0].hunger_inc > 0)
 	{
-		strcpy(info, "You are starving!");
-		mpr(info);
+		mpr("You are starving!");
 		you[0].hung_state = 1;
 		you[0].hung_ch = 1;
 	}
@@ -1371,8 +1342,7 @@ void open_door(char move_x, char move_y)
 	if (door_move[0].nothing == -1) return;
 
 	if (door_move[0].move_x > 1 || door_move[0].move_y > 1 || door_move[0].move_x < -1 || door_move[0].move_y < -1) {
-		strcpy(info, "I'm afraid your arm isn't that long.");
-		mpr(info);
+		mpr("I'm afraid your arm isn't that long.");
 		return;
 	}
 
@@ -1381,22 +1351,18 @@ void open_door(char move_x, char move_y)
 
 	if (grd [new_pos_x] [new_pos_y] == 3) {
 		if (you[0].lev != 0) {
-			strcpy(info, "You reach down and open the door.");
-			mpr(info);
+			mpr("You reach down and open the door.");
 		} else {
 			if (random2(25) == 0) {
-				strcpy(info, "As you open the door, it creaks loudly!");
+				mpr("As you open the door, it creaks loudly!");
                 noisy(15, you[0].x_pos, you[0].y_pos);
 			} else {
-				strcpy(info, "You open the door.");
+				mpr("You open the door.");
 			}
-
-			mpr(info);
 		}
 		grd [new_pos_x] [new_pos_y] = 70;
 	} else {
-		strcpy(info, "You swing at nothing.");
-	 	mpr(info);
+		mpr("You swing at nothing.");
 	 	if (you[0].is_undead != 2) you[0].hunger -= 3;
 	}
 	you[0].turnover = 1;
@@ -1415,22 +1381,19 @@ void close_door(char door_x, char door_y)
 	{
  		door_move[0].move_x = 0;
  		door_move[0].move_y = 0;
- 		strcpy(info, "Which direction?");
- 		mpr(info);
+ 		mpr("Which direction?");
  		direction(0, door_move);
 	}
 
 	if (door_move[0].move_x > 1 || door_move[0].move_y > 1)
 	{
-		strcpy(info, "I'm afraid your arm isn't that long.");
-		mpr(info);
+		mpr("I'm afraid your arm isn't that long.");
 		return;
 	}
 
 	if (door_move[0].move_x == 0 && door_move[0].move_y == 0)
 	{
-		strcpy(info, "You can't close doors on yourself!");
-		mpr(info);
+		mpr("You can't close doors on yourself!");
 		return;
 	}
 
@@ -1438,8 +1401,7 @@ void close_door(char door_x, char door_y)
 	if (env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != MNG)
 	{
 	// Need to make sure that turnover = 1 if creature is invisible
-		strcpy(info, "There's a creature in the doorway!");
-		mpr(info);
+		mpr("There's a creature in the doorway!");
 		door_move[0].move_x = 0; door_move[0].move_y = 0;
 		return;
 	}
@@ -1451,8 +1413,7 @@ void close_door(char door_x, char door_y)
 
 		if (env[0].igrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != 501)
 		{
-			strcpy(info, "There's something blocking the doorway.");
-			mpr(info);
+			mpr("There's something blocking the doorway.");
 		 	door_move[0].move_x = 0;
 			door_move[0].move_y = 0;
 		 	return;
@@ -1460,26 +1421,23 @@ void close_door(char door_x, char door_y)
 
 		if (you[0].lev != 0)
 		{
-	 		strcpy(info, "You reach down and close the door.");
-	 		mpr(info);
+	 		mpr("You reach down and close the door.");
 	 		grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 3;
 	 		you[0].turnover = 1;
 		} else
 	    {
 			if (random2(25) == 0)
 			{
-				strcpy(info, "As you close the door, it creaks loudly!");
+				mpr("As you close the door, it creaks loudly!");
                 noisy(15, you[0].x_pos, you[0].y_pos);
-			} else strcpy(info, "You close the door.");
+			} else mpr("You close the door.");
 
-			mpr(info);
 			grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 3;
 			you[0].turnover = 1;
 	  	}
 	} else
 	{
-		strcpy(info, "There isn't anything that you can close there!");
-		mpr(info);
+		mpr("There isn't anything that you can close there!");
 	}
 
 } // end of void open_door()

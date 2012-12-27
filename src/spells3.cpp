@@ -37,13 +37,11 @@ int keyin = 0;
 
 if (you[0].spell_no == 0)
 {
-	strcpy(info, "You don't have any program installed."); // can this happen?
-	mpr(info);
+	mpr("You don't have any program installed."); // can this happen?
 	return;
 }
 
-query : strcpy(info, "Uninstall which program?");
-mpr(info);
+query : mpr("Uninstall which program?");
 
 // test relay_message();
 
@@ -70,8 +68,7 @@ spc = (int) keyin;
 
 if (spc < 65 || (spc > 90 && spc < 97) || spc > 122)
 {
-	unknown : strcpy(info, "You don't have that program.");
-	mpr(info);
+	unknown : mpr("You don't have that program.");
 	return;
 }
 
@@ -84,8 +81,7 @@ if (you[0].spells [spc2] == 210)
 
 if (random2(25) == 0)
 {
- strcpy(info, "Oops! This program sure is a blunt instrument.");
- mpr(info);
+ mpr("Oops! This program sure is a blunt instrument.");
  forget_map(20 + random2(50));
  return;
 }
@@ -139,8 +135,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 	}
 
 
-	strcpy(info, "You feel as if something is helping you.");
-	mpr(info);
+	mpr("You feel as if something is helping you.");
 
 } /* end of remove_curse() */
 
@@ -170,9 +165,7 @@ for (i = 0; i < 52; i ++)
 //{
 // strcpy(info, "You sense a malignant aura.");
 //} else
-strcpy(info, "You sense the presence of viruses on your possessions.");
-
- mpr(info);
+ mpr("You sense the presence of viruses on your possessions.");
 
 }
 
@@ -182,15 +175,13 @@ void cast_smiting(int pow)
 struct dist beam [1];
 int i;
 
-strcpy(info, "Smite whom?");
-mpr(info);
+ mpr("Smite whom?");
 
 direction(100, beam);
 
 if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -216,15 +207,13 @@ struct dist beam [1];
 int i;
 int hurted = 0;
 
-strcpy(info, "Strike whom?");
-mpr(info);
+ mpr("Strike whom?");
 
 direction(100, beam);
 
 if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 {
-	strcpy(info, "The program fizzles.");
-	mpr(info);
+	mpr("The program fizzles.");
 	return;
 }
 
@@ -253,15 +242,13 @@ void cast_bone_shards(int power)
 
 if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]] != 14)//  || you[0].inv_type [you[0].equip [0]] != 1)
 {
- strcpy(info, "The program fails.");
- mpr(info);
+ mpr("The program fails.");
  return;
 }
 
 if (you[0].inv_type [you[0].equip [EQ_WEAPON]] != 1)
 {
- strcpy(info, "The corpse collapses into a mass of pulpy flesh.");
- mpr(info);
+ mpr("The corpse collapses into a mass of pulpy flesh.");
 
  return;
 }
@@ -274,8 +261,7 @@ struct bolt beam [1];
 
 if (spell_direction(spelld, beam) == -1) return;
 
-   strcpy(info, "The skeleton explodes into sharp fragments of bone!");
-   mpr(info);
+   mpr("The skeleton explodes into sharp fragments of bone!");
 
 unwield_item(you[0].equip [EQ_WEAPON]);
 you[0].inv_quant [you[0].equip [EQ_WEAPON]] --;
@@ -283,8 +269,7 @@ if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 0) /* can this be false? */
 {
 		you[0].inv_no --;
 		you[0].equip [EQ_WEAPON] = -1;
-		strcpy(info, "You are now empty handed.");
-		mpr(info);
+		mpr("You are now empty handed.");
 }
 
    zapping(ZAP_BONE_SHARDS, power, beam);
@@ -303,20 +288,17 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
 {
  if (you[0].deaths_door != 0)
  {
-  strcpy(info, "A conflicting plugins prevents the program from executing.");
-  mpr(info);
+  mpr("A conflicting plugins prevents the program from executing.");
   return;
  }
 
  if (you[0].hp <= 1)
  {
-  strcpy(info, "Your attempt to draw power from your own body fails.");
-  mpr(info);
+  mpr("Your attempt to draw power from your own body fails.");
   return;
  }
 
- strcpy(info, "You draw cyber energy from your own body!");
- mpr(info);
+ mpr("You draw cyber energy from your own body!");
 
  while(you[0].ep < you[0].ep_max && you[0].hp > 1)
  {
@@ -334,10 +316,8 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
  return;
 }
 
-strcpy(info, "The chunk of flesh you are holding crumbles to dust.");
-mpr(info);
-strcpy(info, "A flood of energy pours into your cyberbrain!");
-mpr(info);
+ mpr("The chunk of flesh you are holding crumbles to dust.");
+ mpr("A flood of energy pours into your cyberbrain!");
 
 if (pow > 100) pow = 100;
 
@@ -375,8 +355,8 @@ char empty [2];
 
 if (empty_surrounds(you[0].x_pos, you[0].y_pos, 67, 0, empty) == 0)
 {
- failed_spell: strcpy(info, "You hear a popping sound.");
- mpr(info);
+ failed_spell:
+	mpr("You hear a popping sound.");
  return;
 }
 
@@ -395,8 +375,7 @@ for (i = 0; i < ITEMS; i++)
 {
  if (i >= 480)
  {
-  strcpy(info, "The demon of the infinite cyberspace grins at you.");
-  mpr(info);
+  mpr("The demon of the infinite cyberspace grins at you.");
   return;
  }
 	if (mitm.iquant [i] == 0)
@@ -445,14 +424,12 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
 if (you[0].duration [DUR_TELEPORT] != 0)
 {
- strcpy(info, "You feel ventilation shaft opening.");
- mpr(info);
+ mpr("You feel ventilation shaft opening.");
  you[0].duration [DUR_TELEPORT] = 0;
  return;
 }
 
-strcpy(info, "You feel ventilation shaft opening.");
-mpr(info);
+ mpr("You feel ventilation shaft opening.");
 you[0].duration [DUR_TELEPORT] = 4 + random2(3);
 
 }
@@ -502,16 +479,14 @@ mpr(info);
 
  if ((grd [you[0].x_pos] [you[0].y_pos] != 67 && grd [you[0].x_pos] [you[0].y_pos] != 65) || mgrd [you[0].x_pos] [you[0].y_pos] != MNG || env[0].cgrid [you[0].x_pos] [you[0].y_pos] != CNG)
  {
-  strcpy(info, "Oops!");
-  mpr(info);
+  mpr("Oops!");
   goto random_teleport;
  }
 
 } else
 {
 
-	random_teleport : strcpy(info, "Your surroundings suddenly seem different.");
-	mpr(info);
+	random_teleport : mpr("Your surroundings suddenly seem different.");
 
 	do
 	{
@@ -592,9 +567,8 @@ for (srx = you[0].x_pos - 1; srx < you[0].x_pos + 2; srx ++)
 
 if (number_built > 0)
 {
- strcpy(info, "Walls grow out of the floor around you!");
-} else strcpy(info, "Nothing appears to happen.");
-mpr(info);
+ mpr("Walls grow out of the floor around you!");
+} else mpr("Nothing appears to happen.");
 
 }
 
@@ -625,8 +599,7 @@ void create_noise2(void)
 
 int plox [2];
 
- strcpy(info, "Choose the noise's source (press '.' or delete to select).");
- mpr(info);
+ mpr("Choose the noise's source (press '.' or delete to select).");
  more();
  plox [0] = 1;
  show_map(plox);

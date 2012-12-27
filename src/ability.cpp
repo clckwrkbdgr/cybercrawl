@@ -536,8 +536,7 @@ always changing around */
  		if (ability [i] != 0) break;
  		if (i == 119)
 	 	{
-  			strcpy(info, "Sorry, you're not good enough to have a special augmentation.");
-  			mpr(info);
+  			mpr("Sorry, you're not good enough to have a special augmentation.");
   			return;
  		}
 	}
@@ -559,8 +558,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 }
 */
 	query :
-	strcpy(info, "Use which ability? (? or * to list)");
-	mpr(info);
+	mpr("Use which ability? (? or * to list)");
 
 	int keyin = get_ch();
 
@@ -585,8 +583,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 
 	if ((spc < 97 || spc > 121) && (spc < 65 || spc > 90))
 	{
-		unknown : strcpy(info, "You can't do that.");
-		mpr(info);
+		unknown : mpr("You can't do that.");
 		return;
 	}
 
@@ -620,29 +617,24 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  			}
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (spell_direction(abild, beam) == -1)
  			{
-  				strcpy(info, "Okay, then.");
-  				mpr(info);
+  				mpr("Okay, then.");
   				return;
  			}
- 			strcpy(info, "You spit poison.");
- 			mpr(info);
+ 			mpr("You spit poison.");
  			you[0].turnover = 1;
  			you[0].duration [DUR_BREATH_WEAPON] += random2(5) + 3;
  			zapping(ZAP_SPIT_POISON, you[0].xl + you[0].mutation [MUT_SPIT_POISON] * 5, beam);
  			you[0].hunger -= 40 + random2(40) + random2(40);
- 			strcpy(info, "You feel slightly more hungry.");
- 			mpr(info);
+ 			mpr("You feel slightly more hungry.");
  			break;
 
  		case ABIL_MAPPING: // Gnome + sense surrounds mut
- 			strcpy(info, "You sense your surroundings.");
- 			mpr(info);
+ 			mpr("You sense your surroundings.");
 // you[0].duration [17] += 30 - you[0].xl + random2(40 - you[0].xl) + random2(5);
  			magic_mapping(3 + random2(you[0].xl) + random2(you[0].xl) + you[0].mutation [MUT_MAPPING] * 10, 40 + random2(you[0].xl) + random2(you[0].xl) + random2(you[0].xl));
  			you[0].hunger -= 30 + random2(30) + random2(30);
@@ -652,8 +644,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_TELEPORTATION: // ring of teleport, + teleport mut
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-	  			mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (you[0].ep < 3)
@@ -714,15 +705,13 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  			if (ability [abil_used] != ABIL_SPIT_ACID) you[0].duration [DUR_BREATH_WEAPON] += random2(5) + 3 + random2(30 - you[0].xl);
             if (ability [abil_used] == ABIL_BREATHE_STEAM) you[0].duration [DUR_BREATH_WEAPON] /= 2;
  			you[0].hunger -= 200 + random2(100) + random2(100) - you[0].xl * random2(5);
- 			strcpy(info, "You feel slightly more hungry.");
- 			mpr(info);
+ 			mpr("You feel slightly more hungry.");
  			break;
 
  		case ABIL_BLINK: // blink mut
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (you[0].ep < 1)
@@ -739,8 +728,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_GO_BERSERK_I: // berserk
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (go_berserk() == 0) mpr("You fail to go berserk.");
@@ -749,8 +737,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_FLY: // Fly (kenku). Eventually becomes permanent (handled in acr.cc)
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (you[0].ep < 3)
@@ -1409,24 +1396,21 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_CHANNEL_ENERGY: /* channeling */
  			if (you[0].hung_state <= 2)
  			{
- 	 			strcpy(info, "You're too hungry.");
-  				mpr(info);
+ 	 			mpr("You're too hungry.");
   				return;
  			}
  			you[0].hunger -= 50 + random2(50) + random2(50);
 		    you[0].ep += 1 + random2(you[0].skills [SK_INVOCATIONS] / 4 + 2);
 		    if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
 		    you[0].ep_ch = 1;
-		    strcpy(info, "You channel some magical energy.");
-		    mpr(info);
+		    mpr("You channel some magical energy.");
             exercise(SK_INVOCATIONS, 1 + random2(3));
 	 		break;
 
  		case ABIL_MIGHT_I: /* might */
  			if (you[0].hung_state <= 2)
  			{
- 	 			strcpy(info, "You're too hungry.");
-  				mpr(info);
+ 	 			mpr("You're too hungry.");
   				return;
  			}
  			if (you[0].ep < 2)
@@ -1463,8 +1447,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 	 	case ABIL_HASTE: /* haste */
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
  				return;
  			}
  			if (you[0].ep < 5)
@@ -1600,8 +1583,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_GO_BERSERK_II: /* berserk */
  			if (you[0].hung_state <= 2)
 	 		{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			if (go_berserk() == 0) mpr("You fail to go berserk.");
@@ -1612,8 +1594,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_MIGHT_II: /* might */
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
   				return;
  			}
  			potion_effect(POT_MIGHT, you[0].skills [SK_INVOCATIONS] * 6);
@@ -1625,8 +1606,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  		case ABIL_HASTE_SELF: /* haste */
  			if (you[0].hung_state <= 2)
  			{
-  				strcpy(info, "You're too hungry.");
-  				mpr(info);
+  				mpr("You're too hungry.");
  	 			return;
  			}
  			potion_effect(POT_SPEED, you[0].skills [SK_INVOCATIONS] * 6);
@@ -1714,8 +1694,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  			you[0].ep -= 3;
  			you[0].ep_ch = 1;
  			you[0].hunger -= 400 + random2(450) + random2(450);
-		    strcpy(info, "You feel refreshed."); // ...can't think of anything better right now
-			mpr(info);
+		    mpr("You feel refreshed."); // ...can't think of anything better right now
 			restore_str();
 			restore_int();
 			restore_dex();
@@ -1765,8 +1744,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
  			break;
 
  		default:
- 			strcpy(info, "Sorry, you can't do that.");
- 			mpr(info);
+ 			mpr("Sorry, you can't do that.");
  			return;
 	}
 

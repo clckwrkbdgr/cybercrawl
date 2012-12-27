@@ -100,8 +100,7 @@ if (empty_surrounds(cr_x, cr_y, spcw, 1, empty) == 0)
  puffy :
  if (see_grid(cr_x, cr_y) == 1)
  {
-  strcpy(info, "You see a puff of smoke.");
-  mpr(info);
+  mpr("You see a puff of smoke.");
  }
  return -1;
 } else

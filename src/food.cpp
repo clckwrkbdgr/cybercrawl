@@ -145,10 +145,8 @@ items_here++;
 
 if (counter > 1000)
 {
- strcpy(info, "Oh dear. There appears to be a bug in the program.");
- mpr(info);
- strcpy(info, "I suggest you leave this level then save as soon as possible.");
- mpr(info);
+ mpr("Oh dear. There appears to be a bug in the program.");
+ mpr("I suggest you leave this level then save as soon as possible.");
  return 0;
 }
 
@@ -182,8 +180,7 @@ if (items_here == 1)
    {
     if ((mitm.itype [item_got] >= 1 && mitm.itype [item_got] <= 4) || (mitm.itype [item_got] >= 7 && mitm.itype [item_got] <= 17))
      {
-      strcpy(info, "Sorry, you're a carnivore.");
-      mpr(info);
+      mpr("Sorry, you're a carnivore.");
       return 0;
      }
    }
@@ -197,8 +194,7 @@ if (items_here == 1)
     }
     if (you[0].hung_state > 2 && wearing_amulet(AMU_THE_GOURMAND) == 0 && you[0].species != SP_KOBOLD && you[0].species != SP_OGRE && you[0].species != SP_TROLL && you[0].species != SP_GHOUL && you[0].mutation [MUT_CARNIVOROUS] == 0)
     {
-     strcpy(info, "You aren't quite hungry enough to eat that!");
-     mpr(info);
+     mpr("You aren't quite hungry enough to eat that!");
      return 0;
     }
 
@@ -278,8 +274,7 @@ if (items_here > 1)
    {
     if ((mitm.itype [item_got] >= 1 && mitm.itype [item_got] <= 4) || (mitm.itype [item_got] >= 7 && mitm.itype [item_got] <= 17))
      {
-      strcpy(info, "Sorry, you're a carnivore.");
-      mpr(info);
+      mpr("Sorry, you're a carnivore.");
       return 0;
      }
    }
@@ -293,8 +288,7 @@ if (items_here > 1)
     }
     if (you[0].hung_state > 2 && wearing_amulet(AMU_THE_GOURMAND) == 0 && you[0].species != SP_KOBOLD && you[0].species != SP_OGRE && you[0].species != SP_TROLL && you[0].species != SP_GHOUL && you[0].mutation [MUT_CARNIVOROUS] == 0)
     {
-     strcpy(info, "You aren't quite hungry enough to eat that!");
-     mpr(info);
+     mpr("You aren't quite hungry enough to eat that!");
 					return 0;
     }
    if (mitm.idam [item_got] < 100 && ((mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0))) eat_meat(50);
@@ -387,30 +381,26 @@ unsigned char keyin;
 
 if (igrd [you[0].x_pos] [you[0].y_pos] == 501)
 {
-	strcpy(info, "There isn't anything here!");
-	mpr(info);
+	mpr("There isn't anything here!");
 	return 0;
 }
 
 
 if (you[0].lev != 0 && wearing_amulet(AMU_CONTROLLED_FLIGHT) == 0)
 {
-	strcpy(info, "You can't reach the floor from up here.");
-	mpr(info);
+	mpr("You can't reach the floor from up here.");
 	return 0;
 }
 
 if (you[0].equip [EQ_WEAPON] == -1 && you[0].species != SP_TROLL && you[0].species != SP_GHOUL && you[0].attribute [ATTR_TRANSFORMATION] != TRAN_BLADE_HANDS && you[0].attribute [ATTR_TRANSFORMATION] != TRAN_DRAGON)
 {
- strcpy(info, "What, with your bare hands?");
- mpr(info);
+ mpr("What, with your bare hands?");
  return 0;
 }
 
 if (you[0].species != SP_TROLL && you[0].species != SP_GHOUL && you[0].attribute [ATTR_TRANSFORMATION] != TRAN_BLADE_HANDS && you[0].attribute [ATTR_TRANSFORMATION] != TRAN_DRAGON && damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) != 1 && damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) != 3)
 {
- strcpy(info, "Maybe you should try using a sharper implement.");
- mpr(info);
+ mpr("Maybe you should try using a sharper implement.");
  return 0;
 }
 
@@ -433,10 +423,8 @@ items_here++;
 
 if (counter > 1000)
 {
- strcpy(info, "Oh dear. There appears to be a bug in the program.");
- mpr(info);
- strcpy(info, "I suggest you leave this level then save as soon as possible.");
- mpr(info);
+ mpr("Oh dear. There appears to be a bug in the program.");
+ mpr("I suggest you leave this level then save as soon as possible.");
  return 0;
 }
 
@@ -560,8 +548,7 @@ if (items_here > 1)
 //return 0;
 
 failed:
-strcpy(info, "There isn't anything to dissect here.");
-mpr(info);
+	mpr("There isn't anything to dissect here.");
 return 0;
 
 } // end of eat_from_floor() function
@@ -607,25 +594,21 @@ void eat_meat(int fod_eat_2)
   if ((you[0].species == SP_KOBOLD || you[0].species == SP_TROLL) && random2(15) != 0) goto appetising; // kobold, troll
   if ((you[0].species == SP_HILL_ORC  || you[0].species == SP_OGRE) && random2(5) != 0) goto appetising; // orc, ogre
   if (you[0].is_undead != 0) goto appetising;
-  strcpy(info, "There is something wrong with this meat.");
-  mpr(info);
-  strcpy(info, "You feel ill.");
-  mpr(info);
+  mpr("There is something wrong with this meat.");
+  mpr("You feel ill.");
   if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
   break;
 
   case 3:
   if (player_res_poison() != 0) goto appetising;
-  strcpy(info, "Yeeuch - this meat is poisonous!");
-  mpr(info);
+  mpr("Yeeuch - this meat is poisonous!");
   you[0].poison += 3 + random2(4);
   break;
 
   case 4:
   if (you[0].is_undead != 0) goto appetising;
 
- 	strcpy(info, "You feel your flesh start to rot away!");
- 	mpr(info);
+ 	mpr("You feel your flesh start to rot away!");
  	you[0].rotting += random2(10) + 10;
   if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
   break;
@@ -786,17 +769,16 @@ switch(food_eat_3)
 	strcpy(info, "Mmm... ");
  switch(random2(9))
 	{
-  case 0: strcat(info, "Ham and pineapple."); break;
-  case 1: strcat(info, "Extra thick crust."); break;
-  case 2: strcat(info, "Vegetable."); break;
-  case 3: strcat(info, "Pepperoni."); break;
-  case 4: strcpy(info, "Yeuchh - Anchovies!"); break;
-  case 5: strcat(info, "Cheesy."); break;
-  case 6: strcat(info, "Supreme."); break;
-  case 7: strcat(info, "Super Supreme!"); break;
-  case 8: strcat(info, "Chicken."); break;
+  case 0: mpr("Ham and pineapple."); break;
+  case 1: mpr("Extra thick crust."); break;
+  case 2: mpr("Vegetable."); break;
+  case 3: mpr("Pepperoni."); break;
+  case 4: mpr("Yeuchh - Anchovies!"); break;
+  case 5: mpr("Cheesy."); break;
+  case 6: mpr("Supreme."); break;
+  case 7: mpr("Super Supreme!"); break;
+  case 8: mpr("Chicken."); break;
 	}
-	mpr(info);
 	func_pass [0] += 1500;
 	func_pass [1] = 1;
 	func_pass [2] = 0;
@@ -912,17 +894,16 @@ switch(food_eat_3)
 	strcpy(info, "Mmm... ");
  switch(random2(9))
 	{
-  case 0: strcat(info, "Cheddar."); break;
-  case 1: strcat(info, "Edam."); break;
-  case 2: strcat(info, "Wensleydale."); break;
-  case 3: strcat(info, "Camembert."); break;
-  case 4: strcat(info, "Goat's milk cheese."); break;
-  case 5: strcat(info, "Fruit cheese."); break;
-  case 6: strcat(info, "Mozzarella."); break;
-  case 7: strcat(info, "Sheep cheese."); break;
-  case 8: strcat(info, "Yak cheese."); break;
+  case 0: mpr("Cheddar."); break;
+  case 1: mpr("Edam."); break;
+  case 2: mpr("Wensleydale."); break;
+  case 3: mpr("Camembert."); break;
+  case 4: mpr("Goat's milk cheese."); break;
+  case 5: mpr("Fruit cheese."); break;
+  case 6: mpr("Mozzarella."); break;
+  case 7: mpr("Sheep cheese."); break;
+  case 8: mpr("Yak cheese."); break;
 	}
-	mpr(info);
 	func_pass [0] += 1200;
 	func_pass [1] = 1;
 	func_pass [2] = 0;

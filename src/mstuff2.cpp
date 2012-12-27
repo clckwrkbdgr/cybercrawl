@@ -704,8 +704,7 @@ struct bolt beam [1];
 if (mons_near(i) == 1)
 {
 	viewwindow(1);
-	strcpy(info, "The giant spore explodes!");
-	mpr(info);
+	mpr("The giant spore explodes!");
 }
         beam[0].beam_source = i;
 	beam[0].type = 43;

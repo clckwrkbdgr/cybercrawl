@@ -42,8 +42,7 @@ char luggy = zappy(func_pass, str_pass, ztype);
 
 if (ztype == 14)
 {
-   strcpy(info, "You hear a mighty clap of thunder!");
-   mpr(info);
+   mpr("You hear a mighty clap of thunder!");
    noisy(25, you[0].x_pos, you[0].y_pos);
 }
 
@@ -803,9 +802,8 @@ switch(pot_eff)
 	break;
 
 	case POT_SPEED:
-	if (you[0].haste == 0) strcpy(info, "You feel yourself speed up.");
-		else strcpy(info, "Your high speed feels more durable.");
-	mpr(info);
+	if (you[0].haste == 0) mpr("You feel yourself speed up.");
+		else mpr("Your high speed feels more durable.");
 	if (you[0].slow > 0)
 	{
 		you[0].slow = 0;
@@ -817,15 +815,13 @@ switch(pot_eff)
 //}
 
 	case POT_MIGHT: // potion of might
-	if (you[0].might == 0) strcpy(info, "You feel very mighty all of a sudden.");
+	if (you[0].might == 0) mpr("You feel very mighty all of a sudden.");
 	else
 	{
 		if (you[0].might < 150) you[0].might += random2(pow) + 35;
-		strcpy(info, "You're still pretty mighty.");
-		mpr(info);
+		mpr("You're still pretty mighty.");
 		return;
 	}
-	mpr(info);
 	you[0].might += random2(pow) + 35;
 	you[0].strength += 5;
  you[0].max_strength += 5;
@@ -866,14 +862,11 @@ switch(pot_eff)
 	case POT_LEVITATION: // levitation
 	if (you[0].lev == 0)
 	{
-		strcpy(info, "You feel very buoyant!");
-		mpr(info);
-		strcpy(info, "You gently float upwards from the floor.");
-		mpr(info);
+		mpr("You feel very buoyant!");
+		mpr("You gently float upwards from the floor.");
 	} else
 	      {
-	      strcpy(info, "You feel more buoyant.");
-	      mpr(info);
+	      mpr("You feel more buoyant.");
 	      }
 	if (you[0].lev >= 0) you[0].lev += random2 (pow) + 25;
  if (you[0].lev > 100) you[0].lev = 100;
@@ -883,18 +876,15 @@ switch(pot_eff)
 	case POT_POISON: // poison!!
 	if (player_res_poison() > 0)
 	{
-		strcpy (info, "You feel slightly nauseous.");
-		mpr(info);
+		mpr ("You feel slightly nauseous.");
 		break;
 	}
 	if (you[0].poison > 0)
 	{
-		strcpy(info, "You feel even sicker.");
-		mpr(info);
+		mpr("You feel even sicker.");
 	} else
 	      {
-	      strcpy (info, "That liquid tasted very nasty...");
-	      mpr(info);
+	      mpr ("That liquid tasted very nasty...");
 	      }
 	you[0].poison += random2(3) + random2(3) + 1;
 /*	wand_id = 1;*/
@@ -903,13 +893,11 @@ switch(pot_eff)
 	case POT_SLOWING: // slow
         if (wearing_amulet(AMU_MAINTAIN_SPEED) == 1)
         {
-         strcpy(info, "You feel momentarily lethargic.");
-	 mpr(info);
+         mpr("You feel momentarily lethargic.");
          break;
         }
-	if (you[0].slow == 0) strcpy(info, "You feel yourself slow down.");
-		else strcpy(info, "Your low speed feels more durable.");
-	mpr(info);
+	if (you[0].slow == 0) mpr("You feel yourself slow down.");
+		else mpr("Your low speed feels more durable.");
 	if (you[0].haste > 0)
 	{
 		you[0].haste = 0;
@@ -919,9 +907,8 @@ switch(pot_eff)
 	break;
 
 	case POT_PARALYSIS: // paralysis
-	if (you[0].paralysis == 0) strcpy(info, "You suddenly lose the ability to move!");
-		else strcpy(info, "You still can't move!");
-	mpr(info);
+	if (you[0].paralysis == 0) mpr("You suddenly lose the ability to move!");
+		else mpr("You still can't move!");
 	new_value = random2(6) + 2;
  if (new_value > you[0].paralysis) you[0].paralysis = new_value;
 /*	wand_id = 1;*/
@@ -931,13 +918,11 @@ switch(pot_eff)
 	case POT_CONFUSION: // confusion
         if (wearing_amulet(AMU_CLARITY) == 1)
         {
-         strcpy(info, "You feel momentarily bewildered.");
-	 mpr(info);
+         mpr("You feel momentarily bewildered.");
          break;
         }
-	if (you[0].conf == 0) strcpy(info, "You feel confused.");
-		else strcpy(info, "You feel very confused.");
-	mpr(info);
+	if (you[0].conf == 0) mpr("You feel confused.");
+		else mpr("You feel very confused.");
 	new_value = random2(8) + 3;
  if (new_value > you[0].conf) you[0].conf = new_value;
 /*	wand_id = 1;*/
@@ -945,25 +930,22 @@ switch(pot_eff)
 	break;
 
 	case POT_INVISIBILITY: // Invisibility (can I do it?)
-	if (you[0].invis == 0)	strcpy(info, "You fade into invisibility!");
-		else strcpy(info, "You feel hidden.");
-	mpr(info);
+	if (you[0].invis == 0)	mpr("You fade into invisibility!");
+		else mpr("You feel hidden.");
 	if (you[0].invis >= 0) you[0].invis += random2(pow) + 15;
 /*	wand_id = 1;*/
  if (you[0].invis > 100) you[0].invis = 100;
 	break;
 
 	case POT_PORRIDGE: // oatmeal - always gluggy white/grey?
-	strcpy(info, "That liquid was really gluggy!");
-	mpr(info);
+	mpr("That liquid was really gluggy!");
 	you[0].hunger += 6000;
 	you[0].hung_ch = 1;
  if (you[0].hunger > 12000) you[0].hunger = 12000;
 	break;
 
 	case POT_DEGENERATION: // degeneration
-	strcpy(info, "There was something very wrong with that liquid!");
-	mpr(info);
+	mpr("There was something very wrong with that liquid!");
         lose_stat(100, random2(3) + random2(2) + 1);
 	break;
 
@@ -971,32 +953,27 @@ switch(pot_eff)
 	case POT_DECAY: // decay
         if (you[0].is_undead != 0)
         {
-         strcpy(info, "You feel terrible.");
-         mpr(info);
+         mpr("You feel terrible.");
          break;
         }
-	strcpy(info, "You feel your flesh start to rot away!");
-	mpr(info);
+	mpr("You feel your flesh start to rot away!");
 	you[0].rotting += random2(10) + 10;
 	break;
 
  case POT_WATER: // water
- strcpy(info, "This tastes like water.");
- mpr(info);
+ mpr("This tastes like water.");
  you[0].hunger += 20;
  break;
 
  case POT_EXPERIENCE: // experience
- strcpy(info, "You feel more experienced!");
- mpr(info);
+ mpr("You feel more experienced!");
  if (you[0].xl < 27)
   you[0].xp = exp_needed(you[0].xl + 2, you[0].species) + 1;
  level_change();
  break; // I'll let this slip past robe of archmagi
 
  case POT_MAGIC: // magic
- strcpy(info, "You feel energetic!");
- mpr(info);
+ mpr("You feel energetic!");
 	you[0].ep += random2(10) + random2(10) + 5;
     if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
 /* if (you[0].ep > you[0].ep_max)
@@ -1008,8 +985,7 @@ switch(pot_eff)
  break;
 
  case POT_RESTORE_ABILITIES: // restore abilities
- strcpy(info, "You feel refreshed."); // ...can't think of anything better right now
- mpr(info);
+ mpr("You feel refreshed."); // ...can't think of anything better right now
  restore_str();
  restore_int();
  restore_dex();
@@ -1018,18 +994,15 @@ switch(pot_eff)
 	case POT_STRONG_POISON: // strong poison!!
 	if (player_res_poison() > 0)
 	{
-		strcpy (info, "You feel extremely nauseous.");
-		mpr(info);
+		mpr ("You feel extremely nauseous.");
 		break;
 	}
 	if (player_res_poison() > 0)
 	{
-		strcpy(info, "You feel even sicker.");
-		mpr(info);
+		mpr("You feel even sicker.");
 	} else
 	      {
-	       strcpy(info, "That liquid tasted extremely nasty...");
-	       mpr(info);
+	       mpr("That liquid tasted extremely nasty...");
 	      }
 	you[0].poison += random2(7) + random2(7) + 3;
 /*	wand_id = 1;*/
@@ -1038,8 +1011,7 @@ switch(pot_eff)
  case POT_BERSERK_RAGE: // berserk
  if (go_berserk() == 0)
  {
-  strcpy(info, "You feel angry!");
-  mpr(info);
+  mpr("You feel angry!");
  }
  break;
 
@@ -1083,13 +1055,11 @@ if (you[0].inv_class [unw] == 0 && you[0].inv_dam [unw] > 180)
  {
 
   case 1:
-  strcpy(info, "The Singing Sword sighs.");
-  mpr(info);
+  mpr("The Singing Sword sighs.");
   break;
 
   case 2:
-  strcpy(info, "You feel less violent.");
-  mpr(info);
+  mpr("You feel less violent.");
   break;
 
   case 3:
@@ -1162,8 +1132,7 @@ switch(i_dam)
   break;
 
   case SPWPN_PROTECTION:
-  strcpy(info, "You feel less protected.");
-  mpr(info);
+  mpr("You feel less protected.");
 /*                player_AC() -= 5; */
          you[0].AC_ch = 1;
                 break;
@@ -1316,23 +1285,20 @@ switch(you[0].inv_dam [unw] % 30)
 {
 
   case SPARM_RUNNING:
-  strcpy(info, "You feel rather sluggish.");
-  mpr(info);
+  mpr("You feel rather sluggish.");
 /*  you[0].fast_run --; */
   break;
 
   case SPARM_FIRE_RESISTANCE:
 //  player_res_fire(you) --;
-  strcpy(info, "You feel less resistant to fire.");
-  mpr(info);
+  mpr("You feel less resistant to fire.");
   break;
 
   case SPARM_COLD_RESISTANCE:
 //  player_res_cold(you) --;
   if (player_res_cold() == 0)
   {
-          strcpy(info, "You feel less resistant to cold.");
-          mpr(info);
+          mpr("You feel less resistant to cold.");
   }
   break;
 
@@ -1340,8 +1306,7 @@ switch(you[0].inv_dam [unw] % 30)
 //  you[0].res_poison --;
                 if (player_res_poison() == 0)
                 {
-          		strcpy(info, "You feel less healthy.");
-		        mpr(info);
+          		mpr("You feel less healthy.");
                 }
   break;
 
@@ -1349,8 +1314,7 @@ switch(you[0].inv_dam [unw] % 30)
 /*  you[0].see_invis ++; */
                 if (player_see_invis() == 0)
                 {
-		          strcpy(info, "You feel less perceptive.");
-		          mpr(info);
+		          mpr("You feel less perceptive.");
                 }
   break;
 
@@ -1361,24 +1325,21 @@ switch(you[0].inv_dam [unw] % 30)
  break;
 
  case SPARM_STRENGTH:
- strcpy(info, "You feel weak.");
- mpr(info);
+ mpr("You feel weak.");
  you[0].strength -= 3;
  you[0].max_strength -= 3;
  you[0].strength_ch = 1;
  break;
 
  case SPARM_DEXTERITY:
- strcpy(info, "You feel clumsy.");
- mpr(info);
+ mpr("You feel clumsy.");
  you[0].dex -= 3;
  you[0].max_dex -= 3;
  you[0].dex_ch = 1;
  break;
 
  case SPARM_INTELLIGENCE:
- strcpy(info, "You feel dopey."); /* inspired messages, aren't they? */
- mpr(info);
+ mpr("You feel dopey."); /* inspired messages, aren't they? */
  you[0].intel -= 3;
  you[0].max_intel -= 3;
  you[0].intel_ch = 1;
@@ -1397,38 +1358,32 @@ switch(you[0].inv_dam [unw] % 30)
         break;
 
  case SPARM_MAGIC_RESISTANCE:
- strcpy(info, "You feel less resistant to cyberbrain hacks.");
- mpr(info);
+ mpr("You feel less resistant to cyberbrain hacks.");
 /* you[0].res_magic -= 40;*/
  break;
 
  case SPARM_PROTECTION:
- strcpy(info, "You feel less protected.");
- mpr(info);
+ mpr("You feel less protected.");
 // player_AC(you) -= 3;
  break;
 
  case SPARM_STEALTH:
- strcpy(info, "You feel less stealthy.");
- mpr(info);
+ mpr("You feel less stealthy.");
  break;
 
  case SPARM_RESISTANCE:
- strcpy(info, "You feel all hot and cold.");
- mpr(info);
+ mpr("You feel all hot and cold.");
 // player_res_cold(you) --;
 // player_res_fire(you) --;
  break;
 
  case SPARM_POSITIVE_ENERGY:
- strcpy(info, "You feel vulnerable.");
- mpr(info);
+ mpr("You feel vulnerable.");
 // player_prot_life(you) --;
  break;
 
  case SPARM_ARCHMAGI:
- strcpy(info, "You feel strangely numb.");
- mpr(info);
+ mpr("You feel strangely numb.");
 /* you[0].mag_abil -= 2;
  you[0].spec_conj --;
  you[0].spec_ench --;

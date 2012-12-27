@@ -98,31 +98,28 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Sparks fly from your hands!"); break;
-  case 1: strcpy(info, "The air around you crackles with energy!"); break;
-  case 2: strcpy(info, "Wisps of smoke drift from your fingertips."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You are momentarily dazzled by a flash of light!"); break;
-  case 5: strcpy(info, "Strange energies run through your body."); break;
-  case 6: strcpy(info, "Your skin tingles."); break;
-  case 7: strcpy(info, "Your skin glows momentarily."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You smell something strange."); break;
+  case 0: mpr("Sparks fly from your hands!"); break;
+  case 1: mpr("The air around you crackles with energy!"); break;
+  case 2: mpr("Wisps of smoke drift from your fingertips."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You are momentarily dazzled by a flash of light!"); break;
+  case 5: mpr("Strange energies run through your body."); break;
+  case 6: mpr("Your skin tingles."); break;
+  case 7: mpr("Your skin glows momentarily."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You smell something strange."); break;
  }
- mpr(info);
  break;
 
  case 1: // a bit less harmless stuff
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "Smoke pours from your fingertips!");
-  mpr(info);
+  mpr("Smoke pours from your fingertips!");
   big_cloud(5, you[0].x_pos, you[0].y_pos, 20);
   break;
   case 1:
-  strcpy(info, "A wave of violent energy washes through your body!");
-  mpr(info);
+  mpr("A wave of violent energy washes through your body!");
   ouch(2 + random2(3) + random2(3), 0, 18);
   break;
  }
@@ -132,15 +129,12 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You are blasted with cyber energy!");
-  mpr(info);
+  mpr("You are blasted with cyber energy!");
   ouch(4 + random2(7) + random2(7), 0, 18);
   break;
   case 1:
-  strcpy(info, "You conjure up a violent explosion!");
-  mpr(info);
-  strcpy(info, "Oops.");
-  mpr(info);
+  mpr("You conjure up a violent explosion!");
+  mpr("Oops.");
   beam[0].type = 43;
   beam[0].damage = 107;
   beam[0].flavour = 0; // <=- not sure about this
@@ -159,13 +153,11 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "Energy rips through your body!");
-  mpr(info);
+  mpr("Energy rips through your body!");
   ouch(9 + random2(12) + random2(12), 0, 18);
   break;
   case 1:
-  strcpy(info, "There is a sudden explosion of cyber energy!");
-  mpr(info);
+  mpr("There is a sudden explosion of cyber energy!");
   beam[0].type = 43;
   beam[0].damage = 110;
   beam[0].flavour = 0; // <=- not sure about this
@@ -189,18 +181,17 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Your hands glow momentarily."); break;
-  case 1: strcpy(info, "The air around you crackles with energy!"); break;
-  case 2: strcpy(info, "Multicolored lights dance before your eyes!"); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "Waves of light ripple over your body."); break;
-  case 5: strcpy(info, "Strange energies run through your body."); break;
-  case 6: strcpy(info, "Your skin tingles."); break;
-  case 7: strcpy(info, "Your skin glows momentarily."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You hear something strange."); break;
+  case 0: mpr("Your hands glow momentarily."); break;
+  case 1: mpr("The air around you crackles with energy!"); break;
+  case 2: mpr("Multicolored lights dance before your eyes!"); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("Waves of light ripple over your body."); break;
+  case 5: mpr("Strange energies run through your body."); break;
+  case 6: mpr("Your skin tingles."); break;
+  case 7: mpr("Your skin glows momentarily."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You hear something strange."); break;
  }
- mpr(info);
  break;
 
  case 1: // slightly annoying
@@ -220,8 +211,7 @@ switch(spec_effect)
  {
   case 0: // curse
   curse_an_item(0, 0);
-  strcpy(info, "You sense a malignant aura.");
-  mpr(info);
+  mpr("You sense a malignant aura.");
   break;
   case 1:
   potion_effect(POT_SLOWING, 10); // slow
@@ -241,8 +231,7 @@ switch(spec_effect)
    curse_an_item(0, 0);
    loopj = random2(3);
   } while (loopj != 0);
-  strcpy(info, "You sense an overwhelmingly malignant aura!");
-  mpr(info);
+  mpr("You sense an overwhelmingly malignant aura!");
   break;
   case 1:
   potion_effect(POT_PARALYSIS, 10); // paral
@@ -265,39 +254,34 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Space warps around you."); break;
-  case 1: strcpy(info, "The air around you crackles with energy!"); break;
-  case 2: strcpy(info, "You feel a wrenching sensation."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You spin around."); break;
-  case 5: strcpy(info, "Strange energies run through your body."); break;
-  case 6: strcpy(info, "Your skin tingles."); break;
-  case 7: strcpy(info, "The world appears momentarily distorted!"); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You feel uncomfortable."); break;
+  case 0: mpr("Space warps around you."); break;
+  case 1: mpr("The air around you crackles with energy!"); break;
+  case 2: mpr("You feel a wrenching sensation."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You spin around."); break;
+  case 5: mpr("Strange energies run through your body."); break;
+  case 6: mpr("Your skin tingles."); break;
+  case 7: mpr("The world appears momentarily distorted!"); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You feel uncomfortable."); break;
  }
- mpr(info);
  break;
 
  case 1: // mostly harmless
  switch(random2(3))
  {
   case 0:
-  strcpy(info, "You create a localised field of spatial distortion.");
-  mpr(info);
-  strcpy(info, "Ouch!");
-  mpr(info);
+  mpr("You create a localised field of spatial distortion.");
+  mpr("Ouch!");
   ouch(3 + random2(3) + random2(3), 0, 18);
   break;
   case 1:
-  strcpy(info, "Space bends around you!");
-  mpr(info);
+  mpr("Space bends around you!");
   random_blink();
   ouch(2 + random2(2) + random2(2), 0, 18);
   break;
   case 2:
-  strcpy(info, "Space twists in upon itself!");
-  mpr(info);
+  mpr("Space twists in upon itself!");
   create_monster(MONS_SPATIAL_VORTEX, 24, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   break;
  }
@@ -307,23 +291,19 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You create a strong localised field of spatial distortion.");
-  mpr(info);
-  strcpy(info, "Ouch!!");
-  mpr(info);
+  mpr("You create a strong localised field of spatial distortion.");
+  mpr("Ouch!!");
   ouch(7 + random2(7) + random2(7), 0, 18);
   break;
   case 1:
-  strcpy(info, "Space warps around you!");
-  mpr(info);
+  mpr("Space warps around you!");
   if (random2(3) == 0) you_teleport2(1);
   	else random_blink();
   ouch(5 + random2(5) + random2(5), 0, 18);
   potion_effect(POT_CONFUSION, 10); // conf
   break;
   case 2:
-  strcpy(info, "Space twists in upon itself!");
-  mpr(info);
+  mpr("Space twists in upon itself!");
   for (loopj = 0; loopj < 2 + random2(3); loopj ++)
   {
    create_monster(MONS_SPATIAL_VORTEX, 22, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
@@ -336,22 +316,18 @@ switch(spec_effect)
  switch(random2(4))
  {
   case 0:
-  strcpy(info, "You create an extremely strong localised field of spatial distortion!");
-  mpr(info);
-  strcpy(info, "Ouch!!!");
-  mpr(info);
+  mpr("You create an extremely strong localised field of spatial distortion!");
+  mpr("Ouch!!!");
   ouch(11 + random2(9) + random2(9), 0, 18);
   break;
   case 1:
-  strcpy(info, "Space warps crazily around you!");
-  mpr(info);
+  mpr("Space warps crazily around you!");
   you_teleport2(1);
   ouch(7 + random2(7) + random2(7), 0, 18);
   potion_effect(POT_CONFUSION, 30); // conf
   break;
   case 2:
-  strcpy(info, "You are thrown into the Dump!");
-  mpr(info);
+  mpr("You are thrown into the Dump!");
   more();
   banished(96); // sends you to the abyss
   break;
@@ -371,33 +347,29 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Shadowy shapes form in the air around you, then vanish."); break;
-  case 1: strcpy(info, "You hear strange voices."); break;
-  case 2: strcpy(info, "Your head hurts."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "Your brain hurts!"); break;
-  case 5: strcpy(info, "Strange energies run through your body."); break;
-  case 6: strcpy(info, "The world appears momentarily distorted."); break;
-  case 7: strcpy(info, "Space warps around you."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "Distant voices call out to you!"); break;
+  case 0: mpr("Shadowy shapes form in the air around you, then vanish."); break;
+  case 1: mpr("You hear strange voices."); break;
+  case 2: mpr("Your head hurts."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("Your brain hurts!"); break;
+  case 5: mpr("Strange energies run through your body."); break;
+  case 6: mpr("The world appears momentarily distorted."); break;
+  case 7: mpr("Space warps around you."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("Distant voices call out to you!"); break;
  }
- mpr(info);
  break;
 
  case 1: // a little bad
  switch(random2(2))
  {
   case 0: // identical to translocation
-  strcpy(info, "You create a localised field of spatial distortion.");
-  mpr(info);
-  strcpy(info, "Ouch!");
-  mpr(info);
+  mpr("You create a localised field of spatial distortion.");
+  mpr("Ouch!");
   ouch(3 + random2(3) + random2(3), 0, 18);
   break;
   case 1:
-  strcpy(info, "Space twists in upon itself!");
-  mpr(info);
+  mpr("Space twists in upon itself!");
   create_monster(MONS_SPATIAL_VORTEX, 24, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   break;
  }
@@ -406,16 +378,14 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "Space twists in upon itself!");
-  mpr(info);
+  mpr("Space twists in upon itself!");
   for (loopj = 0; loopj < 2 + random2(3); loopj ++)
   {
    create_monster(MONS_SPATIAL_VORTEX, 22, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   }
   break;
   case 1:
-  strcpy(info, "Something appears in a flash of light!");
-  mpr(info);
+  mpr("Something appears in a flash of light!");
   create_monster(MONS_WHITE_IMP + random2(5), 24, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   break;
  }
@@ -426,26 +396,22 @@ switch(spec_effect)
  switch(random2(4))
  {
   case 0:
-  strcpy(info, "Something forms out of thin air.");
-  mpr(info);
+  mpr("Something forms out of thin air.");
   create_monster(MONS_LARGE_ABOMINATION, 0, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   break;
   case 1:
-  strcpy(info, "You sense a hostile presence.");
-  mpr(info);
+  mpr("You sense a hostile presence.");
   create_monster(MONS_WHITE_IMP + random2(10), 0, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   break;
   case 2:
-  strcpy(info, "Something turns its attention towards you...");
-  mpr(info);
+  mpr("Something turns its attention towards you...");
   for (loopj = 0; loopj < 2 + random2(3); loopj ++)
   {
    create_monster(MONS_WHITE_IMP + random2(5), 22, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   }
   break;
   case 3:
-  strcpy(info, "You are thrown into the Dump!");
-  mpr(info);
+  mpr("You are thrown into the Dump!");
   banished(96); // sends you to the abyss
   break;
  }
@@ -462,26 +428,24 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Weird images run through your mind."); break;
-  case 1: strcpy(info, "You hear strange voices."); break;
-  case 2: strcpy(info, "Your head hurts."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "Your brain hurts!"); break;
-  case 5: strcpy(info, "Strange energies run through your body."); break;
-  case 6: strcpy(info, "Everything looks hazy for a moment."); break;
-  case 7: strcpy(info, "You seem to have forgotten something, but you can't remember what it was!"); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You feel uncomfortable."); break;
+  case 0: mpr("Weird images run through your mind."); break;
+  case 1: mpr("You hear strange voices."); break;
+  case 2: mpr("Your head hurts."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("Your brain hurts!"); break;
+  case 5: mpr("Strange energies run through your body."); break;
+  case 6: mpr("Everything looks hazy for a moment."); break;
+  case 7: mpr("You seem to have forgotten something, but you can't remember what it was!"); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You feel uncomfortable."); break;
  }
- mpr(info);
  break;
 
  case 1: // more annoying things
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You feel slightly disoriented.");
-  mpr(info);
+  mpr("You feel slightly disoriented.");
   forget_map(10 + random2(10));
   break;
   case 1:
@@ -496,25 +460,21 @@ switch(spec_effect)
   case 0:
   if (you[0].is_undead != 0)
   {
-   strcpy(info, "You suddenly recall your previous life!");
-   mpr(info);
+   mpr("You suddenly recall your previous life!");
    break;
   }
   if (player_sust_abil() != 0 || you[0].intel <= 3)
   {
-   strcpy(info, "You have a terrible headache.");
-   mpr(info);
+   mpr("You have a terrible headache.");
    break;
   }
-  strcpy(info, "You have damaged your brain!");
-  mpr(info);
+  mpr("You have damaged your brain!");
   you[0].intel --;
   you[0].intel_ch = 1;
   potion_effect(POT_CONFUSION, 1); // conf
   break;
   case 1:
-  strcpy(info, "You feel lost.");
-  mpr(info);
+  mpr("You feel lost.");
   forget_map(40 + random2(40));
   potion_effect(POT_CONFUSION, 1); // conf
   break;
@@ -528,31 +488,26 @@ switch(spec_effect)
   case 0:
   if (forget_spell() == 1)
   {
-   strcpy(info, "Some program have been uninstalled!");
-  } else strcpy(info, "You get a splitting headache.");
-  mpr(info);
+   mpr("Some program have been uninstalled!");
+  } else mpr("You get a splitting headache.");
   break;
   case 1:
-  strcpy(info, "You feel completely lost.");
-  mpr(info);
+  mpr("You feel completely lost.");
   forget_map(100);
   potion_effect(POT_CONFUSION, 100); // conf
   break;
   case 2:
   if (you[0].is_undead != 0)
   {
-   strcpy(info, "You suddenly recall your previous life.");
-   mpr(info);
+   mpr("You suddenly recall your previous life.");
    break;
   }
   if (player_sust_abil() != 0 || you[0].intel <= 3)
   {
-   strcpy(info, "You have a terrible headache.");
-   mpr(info);
+   mpr("You have a terrible headache.");
    break;
   }
-  strcpy(info, "You have damaged your brain!");
-  mpr(info);
+  mpr("You have damaged your brain!");
   you[0].intel -= 2 + random2(2);
   if (you[0].intel <= 3) you[0].intel = 3;
   you[0].intel_ch = 1;
@@ -575,18 +530,17 @@ break; // end divinations
   case 0:
   switch(random2(10))
   {
-   case 0: strcpy(info, "You smell decay."); break;
-   case 1: strcpy(info, "You hear strange and distant voices."); break;
-   case 2: strcpy(info, "Pain shoots through your body."); break;
-   case 3: strcpy(info, "Your bones ache."); break;
-   case 4: strcpy(info, "The world around you seems to dim momentarily."); break;
-   case 5: strcpy(info, "Strange energies run through your body."); break;
-   case 6: strcpy(info, "You shiver with cold."); break;
-   case 7: strcpy(info, "You sense a malignant aura."); break;
-   case 8: strcpy(info, "Nothing appears to happen."); break;
-   case 9: strcpy(info, "You feel very uncomfortable."); break;
+   case 0: mpr("You smell decay."); break;
+   case 1: mpr("You hear strange and distant voices."); break;
+   case 2: mpr("Pain shoots through your body."); break;
+   case 3: mpr("Your bones ache."); break;
+   case 4: mpr("The world around you seems to dim momentarily."); break;
+   case 5: mpr("Strange energies run through your body."); break;
+   case 6: mpr("You shiver with cold."); break;
+   case 7: mpr("You sense a malignant aura."); break;
+   case 8: mpr("Nothing appears to happen."); break;
+   case 9: mpr("You feel very uncomfortable."); break;
   }
-  mpr(info);
   break;
 
   case 1: // a bit nasty
@@ -595,22 +549,18 @@ break; // end divinations
    case 0:
    if (you[0].is_undead != 0)
    {
-    strcpy(info, "You feel weird for a moment.");
-    mpr(info);
+    mpr("You feel weird for a moment.");
     break;
    }
-   strcpy(info, "Pain shoots through your body!");
-   mpr(info);
+   mpr("Pain shoots through your body!");
    ouch(random2(4) + random2(4), 0, 18);
    break;
    case 1:
-   strcpy(info, "You feel horribly lethargic.");
-   mpr(info);
+   mpr("You feel horribly lethargic.");
    potion_effect(POT_SLOWING, 15); // slow
    break;
    case 2:
-   strcpy(info, "You smell decay."); // identical to a harmless message
-   mpr(info);
+   mpr("You smell decay."); // identical to a harmless message
    you[0].rotting ++;
    break;
   }
@@ -620,8 +570,7 @@ break; // end divinations
   switch(random2(3))
   {
    case 0:
-   strcpy(info, "You are surrounded by flickering shadows.");
-   mpr(info);
+   mpr("You are surrounded by flickering shadows.");
    create_monster(MONS_SHADOW, 21, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
    break;
    case 1:
@@ -633,12 +582,10 @@ break; // end divinations
    case 2:
    if (you[0].is_undead != 0)
    {
-    strcpy(info, "You feel weird for a moment.");
-    mpr(info);
+    mpr("You feel weird for a moment.");
     break;
    }
-   strcpy(info, "You convulse helplessly as pain tears through your body!");
-   mpr(info);
+   mpr("You convulse helplessly as pain tears through your body!");
    ouch(random2(12) + random2(12) + 5, 0, 18);
    break;
   }
@@ -650,20 +597,17 @@ break; // end divinations
    case 0:
    if (you[0].is_undead != 0)
    {
-    strcpy(info, "Something just walked over your grave. No, really!");
-    mpr(info);
+    mpr("Something just walked over your grave. No, really!");
     break;
    }
-   strcpy(info, "Your body is wracked with pain!");
-   mpr(info);
+   mpr("Your body is wracked with pain!");
    loopj = (you[0].hp / 2) - 1;
    if (loopj <= 0) loopj = 0;
    ouch(loopj, 0, 0); // can never die from this, right?
    you[0].hp_ch = 1;
    break;
    case 1:
-   strcpy(info, "You are engulfed in negative energy!");
-   mpr(info);
+   mpr("You are engulfed in negative energy!");
    if (player_prot_life() == 0)
    {
     drain_exp();
@@ -675,17 +619,14 @@ break; // end divinations
    case 3:
    if (you[0].is_undead != 0)
    {
-    strcpy(info, "You feel terrible.");
-    mpr(info);
+    mpr("You feel terrible.");
     break;
    }
-   strcpy(info, "You feel your flesh start to rot away!");
-   mpr(info);
+   mpr("You feel your flesh start to rot away!");
    you[0].rotting += random2(4) + 1;
    break;
    case 4:
-   strcpy(info, "Something reaches out for you...");
-   mpr(info);
+   mpr("Something reaches out for you...");
    create_monster(MONS_WRAITH, 23, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
    break;
   }
@@ -700,18 +641,17 @@ break; // end divinations
    case 0: // just a harmless message
    switch(random2(10))
    {
-    case 0: strcpy(info, "Your hands glow momentarily."); break;
-    case 1: strcpy(info, "The air around you crackles with energy!"); break;
-    case 2: strcpy(info, "Multicolored lights dance before your eyes!"); break;
-    case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-    case 4: strcpy(info, "Waves of light ripple over your body."); break;
-    case 5: strcpy(info, "Strange energies run through your body."); break;
-    case 6: strcpy(info, "Your skin tingles."); break;
-    case 7: strcpy(info, "Your skin glows momentarily."); break;
-    case 8: strcpy(info, "Nothing appears to happen."); break;
-    case 9: strcpy(info, "You smell something strange."); break;
+    case 0: mpr("Your hands glow momentarily."); break;
+    case 1: mpr("The air around you crackles with energy!"); break;
+    case 2: mpr("Multicolored lights dance before your eyes!"); break;
+    case 3: mpr("You feel a strange surge of energy!"); break;
+    case 4: mpr("Waves of light ripple over your body."); break;
+    case 5: mpr("Strange energies run through your body."); break;
+    case 6: mpr("Your skin tingles."); break;
+    case 7: mpr("Your skin glows momentarily."); break;
+    case 8: mpr("Nothing appears to happen."); break;
+    case 9: mpr("You smell something strange."); break;
    }
-   mpr(info);
    break;
 
    case 1: // slightly annoying
@@ -791,31 +731,28 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Sparks fly from your hands!"); break;
-  case 1: strcpy(info, "The air around you burns with energy!"); break;
-  case 2: strcpy(info, "Wisps of smoke drift from your fingertips."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You smell smoke."); break;
-  case 5: strcpy(info, "Heat runs through your body."); break;
-  case 6: strcpy(info, "You feel uncomfortably hot."); break;
-  case 7: strcpy(info, "Lukewarm flames ripple over your body."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You hear a sizzling sound."); break;
+  case 0: mpr("Sparks fly from your hands!"); break;
+  case 1: mpr("The air around you burns with energy!"); break;
+  case 2: mpr("Wisps of smoke drift from your fingertips."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You smell smoke."); break;
+  case 5: mpr("Heat runs through your body."); break;
+  case 6: mpr("You feel uncomfortably hot."); break;
+  case 7: mpr("Lukewarm flames ripple over your body."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You hear a sizzling sound."); break;
  }
- mpr(info);
  break;
 
  case 1: // a bit less harmless stuff
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "Smoke pours from your fingertips!");
-  mpr(info);
+  mpr("Smoke pours from your fingertips!");
   big_cloud(5 + random2(3), you[0].x_pos, you[0].y_pos, 20);
   break;
   case 1:
-  strcpy(info, "Flames dance in the air around you.");
-  mpr(info);
+  mpr("Flames dance in the air around you.");
   scrolls_burn(3, 6);
   if (player_res_fire() < 100) ouch(2 + random2(3) + random2(3), 0, 18);
   break;
@@ -826,16 +763,13 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You are blasted with flames.");
-  mpr(info);
+  mpr("You are blasted with flames.");
   ouch(check_your_resists(3 + random2(7) + random2(7), 2), 0, 18);
   scrolls_burn(5, 6);
   break;
   case 1:
-  strcpy(info, "You conjure up a fiery explosion!");
-  mpr(info);
-  strcpy(info, "Oops.");
-  mpr(info);
+  mpr("You conjure up a fiery explosion!");
+  mpr("Oops.");
   beam[0].type = 43;
   beam[0].damage = 107;
   beam[0].flavour = 2;
@@ -859,8 +793,7 @@ switch(spec_effect)
   scrolls_burn(10, 6);
   break;
   case 1:
-  strcpy(info, "There is a sudden and violent explosion of flames!");
-  mpr(info);
+  mpr("There is a sudden and violent explosion of flames!");
   beam[0].type = 43;
   beam[0].damage = 110;
   beam[0].flavour = 2;
@@ -873,8 +806,7 @@ switch(spec_effect)
   noisy(20, you[0].x_pos, you[0].y_pos);
   break;
   case 2:
-  strcpy(info, "You are covered in liquid fire!");
-  mpr(info);
+  mpr("You are covered in liquid fire!");
   you[0].duration [DUR_LIQUID_FLAMES] += 1 + random2(3) + random2(3) + random2(3);
   break;
  }
@@ -889,30 +821,27 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "You shiver with cold."); break;
-  case 1: strcpy(info, "A chill runs through your body."); break;
-  case 2: strcpy(info, "Wisps of condensation drift from your fingertips."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "Your hands feel numb with cold."); break;
-  case 5: strcpy(info, "A chill runs through your body."); break;
-  case 6: strcpy(info, "You feel uncomfortably cold."); break;
-  case 7: strcpy(info, "Frost covers your body."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You hear a crackling sound."); break;
+  case 0: mpr("You shiver with cold."); break;
+  case 1: mpr("A chill runs through your body."); break;
+  case 2: mpr("Wisps of condensation drift from your fingertips."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("Your hands feel numb with cold."); break;
+  case 5: mpr("A chill runs through your body."); break;
+  case 6: mpr("You feel uncomfortably cold."); break;
+  case 7: mpr("Frost covers your body."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You hear a crackling sound."); break;
  }
- mpr(info);
  break;
 
  case 1: // a bit less harmless stuff
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You feel extremely cold.");
-  mpr(info);
+  mpr("You feel extremely cold.");
   break;
   case 1:
-  strcpy(info, "You are covered in a thin layer of ice");
-  mpr(info);
+  mpr("You are covered in a thin layer of ice");
   scrolls_burn(2, 8);
   if (player_res_cold() < 100) ouch(2 + random2(3) + random2(3), 0, 18);
   break;
@@ -928,10 +857,8 @@ switch(spec_effect)
   scrolls_burn(4, 8);
   break;
   case 1:
-  strcpy(info, "You conjure up an explosion of ice and frost!");
-  mpr(info);
-  strcpy(info, "Oops.");
-  mpr(info);
+  mpr("You conjure up an explosion of ice and frost!");
+  mpr("Oops.");
   beam[0].type = 43;
   beam[0].damage = 107;
   beam[0].flavour = 3;
@@ -955,8 +882,7 @@ switch(spec_effect)
   scrolls_burn(9, 8);
   break;
   case 1:
-  strcpy(info, "Freezing gasses pour from your hands!");
-  mpr(info);
+  mpr("Freezing gasses pour from your hands!");
   big_cloud(3, you[0].x_pos, you[0].y_pos, 20);
   break;
  }
@@ -972,18 +898,17 @@ switch(spec_effect)
  case 1:
  switch(random2(10))
  {
-  case 0: strcpy(info, "You feel earthy."); break;
-  case 1: strcpy(info, "You are showered with tiny particles of grit."); break;
-  case 2: strcpy(info, "Sand pours from your fingers."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You sympathise with the stones."); break;
-  case 5: strcpy(info, "You feel gritty."); break;
-  case 6: strcpy(info, "You feel like a piece of rock."); break;
-  case 7: strcpy(info, "You feel like a paving stone."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You feel chalky."); break;
+  case 0: mpr("You feel earthy."); break;
+  case 1: mpr("You are showered with tiny particles of grit."); break;
+  case 2: mpr("Sand pours from your fingers."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You sympathise with the stones."); break;
+  case 5: mpr("You feel gritty."); break;
+  case 6: mpr("You feel like a piece of rock."); break;
+  case 7: mpr("You feel like a paving stone."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You feel chalky."); break;
  }
- mpr(info);
  break;
 
  case 2: // slightly less harmless stuff
@@ -992,11 +917,10 @@ switch(spec_effect)
   case 0:
   switch(random2(3))
   {
-   case 0: strcpy(info, "You are hit by flying rocks!"); break;
-   case 1: strcpy(info, "You are blasted with sand!"); break;
-   case 2: strcpy(info, "Rocks fall onto you out of nowhere!"); break;
+   case 0: mpr("You are hit by flying rocks!"); break;
+   case 1: mpr("You are blasted with sand!"); break;
+   case 2: mpr("Rocks fall onto you out of nowhere!"); break;
   }
-  mpr(info);
   hurted = 7 + random2(7) + random2(7);
   if (player_AC() > 0) hurted -= random2(player_AC());
   ouch(hurted, 0, 18);
@@ -1008,10 +932,8 @@ switch(spec_effect)
  switch(random2(1))
  {
   case 0:
-  strcpy(info, "You conjure up an explosion of flying shrapnel!");
-  mpr(info);
-  strcpy(info, "Oops.");
-  mpr(info);
+  mpr("You conjure up an explosion of flying shrapnel!");
+  mpr("Oops.");
   beam[0].type = 43;
   beam[0].damage = 108;
   beam[0].flavour = 19; // shrapnel
@@ -1037,30 +959,27 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "Ouch! You gave yourself an electric shock."); break;
-  case 1: strcpy(info, "You feel momentarily weightless."); break;
-  case 2: strcpy(info, "Wisps of vapour drift from your fingertips."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You feel electric!"); break;
-  case 5: strcpy(info, "Sparks of electricity dance on your fingertips."); break;
-  case 6: strcpy(info, "You are blasted with air!"); break;
-  case 7: strcpy(info, "You hear a whooshing sound."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You hear a crackling sound."); break;
+  case 0: mpr("Ouch! You gave yourself an electric shock."); break;
+  case 1: mpr("You feel momentarily weightless."); break;
+  case 2: mpr("Wisps of vapour drift from your fingertips."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You feel electric!"); break;
+  case 5: mpr("Sparks of electricity dance on your fingertips."); break;
+  case 6: mpr("You are blasted with air!"); break;
+  case 7: mpr("You hear a whooshing sound."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You hear a crackling sound."); break;
  }
- mpr(info);
  break;
 
  case 1: // a bit less harmless stuff
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "There is a shower of sparks.");
-  mpr(info);
+  mpr("There is a shower of sparks.");
   break;
   case 1:
-  strcpy(info, "The wind howls around you!");
-  mpr(info);
+  mpr("The wind howls around you!");
   break;
  }
  break;
@@ -1073,8 +992,7 @@ switch(spec_effect)
   ouch(check_your_resists(3 + random2(4) + random2(4), 5), 0, 18);
   break;
   case 1:
-  strcpy(info, "Noxious gasses pour from your hands!");
-  mpr(info);
+  mpr("Noxious gasses pour from your hands!");
   big_cloud(2, you[0].x_pos, you[0].y_pos, 20);
   break;
  }
@@ -1084,10 +1002,8 @@ switch(spec_effect)
  switch(random2(2))
  {
   case 0:
-  strcpy(info, "You conjure up an explosion of electrical discharges!");
-  mpr(info);
-  strcpy(info, "Oops.");
-  mpr(info);
+  mpr("You conjure up an explosion of electrical discharges!");
+  mpr("Oops.");
   beam[0].type = 43;
   beam[0].damage = 105;
   beam[0].flavour = 5;
@@ -1100,8 +1016,7 @@ switch(spec_effect)
   noisy(10, you[0].x_pos, you[0].y_pos);
   break;
   case 1:
-  strcpy(info, "Venomous gasses pour from your hands!");
-  mpr(info);
+  mpr("Venomous gasses pour from your hands!");
   big_cloud(4, you[0].x_pos, you[0].y_pos, 20);
   break;
  }
@@ -1117,18 +1032,17 @@ switch(spec_effect)
  case 0: // just a harmless message
  switch(random2(10))
  {
-  case 0: strcpy(info, "You feel mildly nauseous."); break;
-  case 1: strcpy(info, "You feel slightly ill."); break;
-  case 2: strcpy(info, "Wisps of poison gas drift from your fingertips."); break;
-  case 3: strcpy(info, "You feel a strange surge of energy!"); break;
-  case 4: strcpy(info, "You feel faint for a moment."); break;
-  case 5: strcpy(info, "You feel sick."); break;
-  case 6: strcpy(info, "You feel odd."); break;
-  case 7: strcpy(info, "You feel weak for a moment."); break;
-  case 8: strcpy(info, "Nothing appears to happen."); break;
-  case 9: strcpy(info, "You hear a slurping sound."); break;
+  case 0: mpr("You feel mildly nauseous."); break;
+  case 1: mpr("You feel slightly ill."); break;
+  case 2: mpr("Wisps of poison gas drift from your fingertips."); break;
+  case 3: mpr("You feel a strange surge of energy!"); break;
+  case 4: mpr("You feel faint for a moment."); break;
+  case 5: mpr("You feel sick."); break;
+  case 6: mpr("You feel odd."); break;
+  case 7: mpr("You feel weak for a moment."); break;
+  case 8: mpr("Nothing appears to happen."); break;
+  case 9: mpr("You hear a slurping sound."); break;
  }
- mpr(info);
  break;
 
  case 1: // a bit less harmless stuff
@@ -1140,8 +1054,7 @@ switch(spec_effect)
   you[0].poison += 2 + random2(3);
   break;
   case 1:
-  strcpy(info, "Noxious gasses pour from your hands!");
-  mpr(info);
+  mpr("Noxious gasses pour from your hands!");
   place_cloud(2, you[0].x_pos, you[0].y_pos, 2 + random2(4));
   break;
  }
@@ -1156,8 +1069,7 @@ switch(spec_effect)
   you[0].poison += 3 + random2(5) + random2(5);
   break;
   case 1:
-  strcpy(info, "Noxious gasses pour from your hands!");
-  mpr(info);
+  mpr("Noxious gasses pour from your hands!");
   big_cloud(2, you[0].x_pos, you[0].y_pos, 20);
   break;
  }
@@ -1172,8 +1084,7 @@ switch(spec_effect)
   you[0].poison += 10 + random2(10) + random2(10);
   break;
   case 1:
-  strcpy(info, "Venomous gasses pour from your hands!");
-  mpr(info);
+  mpr("Venomous gasses pour from your hands!");
   big_cloud(4, you[0].x_pos, you[0].y_pos, 20);
   break;
   case 2:
@@ -1317,15 +1228,13 @@ unsigned char nthing = 0;
 
 if (you[0].spell_levels <= 0)
 {
- strcpy(info, "You can't install any more programs yet.");
- mpr(info);
+ mpr("You can't install any more programs yet.");
  return 0;
 }
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return 0;
 	}
 
@@ -1339,8 +1248,7 @@ strcat(info, " of programs");
  strcat(info, ".");
 
 mpr(info);
-strcpy(info, "Install from which archive?");
-mpr(info);
+strcpy(info, "Inmpr from ?");
 
 keyin = get_ch();
 if (keyin == '?' || keyin == '*')
@@ -1363,8 +1271,7 @@ sc_read_1 = (int) keyin;
 
 if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return 0;
 }
 
@@ -1400,8 +1307,7 @@ read_book(spell_container);
 
 if (you[0].inv_plus [spell_container] == 64)
 {
-   strcpy(info, "That archive is empty.");
-   mpr(info);
+   mpr("That archive is empty.");
    return 0;
 }
 
@@ -1477,9 +1383,9 @@ sc_read_1 = (int) book_thing;
 
 if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 {
-	whatt : strcpy(info, "What?");
+	whatt :
         redraw_screen();
-	mpr(info);
+		mpr("What?");
 	return;
 }
 
@@ -1506,23 +1412,20 @@ char is_good = 1;
 
 if (you[0].spell_no == 21 && specspell != 43) //if changed, must also change for priest in level_change. You can always memorise selective amnesia
 {
- strcpy(info, "Your cyberbrain is already too full of programs!");
- mpr(info);
+ mpr("Your cyberbrain is already too full of programs!");
  return;
 }
 
 if (you[0].species == SP_MUMMY && spell_type(specspell, 17) == 1)
 {
-  strcpy(info, "You can't use this type of programs!");
-  mpr(info);
+  mpr("You can't use this type of programs!");
   return;
 }
 
 //if (you[0].is_undead != 0 && specspell == 42)
 if ((you[0].is_undead == 1 && undead_can_memorise(specspell) == 2) || (you[0].is_undead == 2 && undead_can_memorise(specspell) != 0))
 {
-  strcpy(info, "You can't use this program.");
-  mpr(info);
+  mpr("You can't use this program.");
   return;
 }
 
@@ -1531,8 +1434,7 @@ for (i = 0; i < 25; i ++)
 	if (you[0].spells [i] == specspell)
    {
       redraw_screen();
-      strcpy(info, "You already have that program!");
-      mpr(info);
+      mpr("You already have that program!");
       you[0].turnover = 1;
       return;
    }
@@ -1544,8 +1446,7 @@ if (you[0].spell_levels < levels_needed)
 {
    too_high :
    redraw_screen();
-   strcpy(info, "You can't install that many programs yet!");
-   mpr(info);
+   mpr("You can't install that many programs yet!");
    you[0].turnover = 1;
    return;
 
@@ -1578,23 +1479,19 @@ chance = spell_fail(specspell);
 
  if (chance >= 80)
  {
-  strcpy(info, "This program is very difficult to install.");
-  mpr(info);
+  mpr("This program is very difficult to install.");
  } else
  if (chance >= 60)
  {
-  strcpy(info, "This program is quite difficult to commit to memory.");
-  mpr(info);
+  mpr("This program is quite difficult to commit to memory.");
  } else
  if (chance >= 45)
  {
-  strcpy(info, "This program is rather tricky to install.");
-  mpr(info);
+  mpr("This program is rather tricky to install.");
  } else
  if (chance >= 30)
  {
-  strcpy(info, "This program is a little tricky to copy.");
-  mpr(info);
+  mpr("This program is a little tricky to copy.");
  }
 
 redraw_screen();
@@ -1624,8 +1521,7 @@ if (you[0].mutation [MUT_BLURRY_VISION] > 0 && random2(4) < you[0].mutation [MUT
 if (random2(40) + random2(40) + random2(40) < chance) //powm <= random2(chance) && spell_value(specspell) > 3)
 {
 redraw_screen();
- strcpy(info, "You fail to install the program.");
- mpr(info);
+ mpr("You fail to install the program.");
  you[0].turnover = 1;
  if (you[0].inv_type [spell_container] == 24)
  {
@@ -1648,8 +1544,7 @@ redraw_screen();
 #endif
 
 #ifdef DEBUG
- strcpy(info, "But I'll let you install it anyway, okay?");
- mpr(info);
+ mpr("But I'll let you install it anyway, okay?");
 #endif
 
 }

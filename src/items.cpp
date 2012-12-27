@@ -644,8 +644,7 @@ for (i = 0; i < ITEMS; i++)
 {
  if (i >= 480)
  {
-  strcpy(info, "The demon of the infinite cyberspace grins at you.");
-  mpr(info);
+  mpr("The demon of the infinite cyberspace grins at you.");
   return;
  }
 	if (mitm.iquant [i] == 0)
@@ -686,13 +685,11 @@ char str_pass [80];
 
 if (you[0].inv_no == 0)
 	{
-	strcpy(info, "You aren't carrying anything.");
-	mpr(info);
+	mpr("You aren't carrying anything.");
 	return;
 	}
 
-query2 : strcpy(info, "Drop which item? ");
-mpr(info);
+query2 : mpr("Drop which item? ");
 
 unsigned char keyin = get_ch();
 int quant_drop;
@@ -705,8 +702,7 @@ quant_drop = you[0].gp; /* needs quantity selection. */
 
 if (you[0].gp == 0)
 {
-	strcpy(info, "You don't have any credits.");
-	mpr(info);
+	mpr("You don't have any credits.");
 	return;
 }
 
@@ -791,8 +787,7 @@ if (item_drop_1 > 47 && item_drop_1 < 58)
 
 if ((item_drop_1 < 65 || (item_drop_1 > 90 && item_drop_1 < 97) || item_drop_1 > 122)) // && item_drop_1 != '$')
 {
-	strcpy(info, "You don't have any such object.");
-	mpr(info);
+	mpr("You don't have any such object.");
 	return;
 }
 
@@ -802,31 +797,27 @@ if ((item_drop_1 < 65 || (item_drop_1 > 90 && item_drop_1 < 97) || item_drop_1 >
 
 	if (you[0].inv_quant [item_drop_2] == 0)
 	{
-		strcpy(info, "You don't have any such object.");
-		mpr(info);
+		mpr("You don't have any such object.");
 		return;
 	}
 	for (i = 1; i < 7; i++)
 	{
 		if (item_drop_2 == you[0].equip [i] && you[0].equip [i] != -1)
 		{
-			strcpy(info, "You will have to take that off first.");
-			mpr(info);
+			mpr("You will have to take that off first.");
 			return;
 		}
 	}
 
 	if (item_drop_2 == you[0].equip [EQ_LEFT_RING] || item_drop_2 == you[0].equip [EQ_RIGHT_RING] || item_drop_2 == you[0].equip [EQ_AMULET])
 	{
-		strcpy(info, "You will have to take that off first.");
-		mpr(info);
+		mpr("You will have to take that off first.");
 		return;
 	}
 
 	if (item_drop_2 == you[0].equip [EQ_WEAPON] && you[0].inv_class [item_drop_2] == 0 && you[0].inv_plus [item_drop_2] >= 130)
 	{
-		strcpy(info, "That object is stuck to you!");
-		mpr(info);
+		mpr("That object is stuck to you!");
 		return;
 	}
 

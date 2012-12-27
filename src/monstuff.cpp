@@ -175,8 +175,7 @@ return xdisp + ydisp;
 void swap_places(int swap)
 {
 
-strcpy(info, "You swap places.");
-mpr(info);
+ mpr("You swap places.");
 
 //grd [mons_x [swap]] [mons_y [swap]] -= 50;
 mgrd [menv [swap].m_x] [menv [swap].m_y] = MNG;
@@ -1491,8 +1490,7 @@ mpr(info);
 } // end of if mons_near
  else if (menv [i].m_class == MONS_GERYON)
         {
-         strcpy(info, "You hear a weird and mournful sound.");
-         mpr(info); // Geryon
+         mpr("You hear a weird and mournful sound.");
         }
 
 
@@ -1696,12 +1694,10 @@ if (menv [i].m_class == MONS_JELLY || menv [i].m_class == MONS_OOZE || menv [i].
 
    if (mons_near(i) == 1)
    {
-      strcpy(info, "You hear a slurping noise.");
-      mpr(info);
+      mpr("You hear a slurping noise.");
    } else
          {
-            strcpy(info, "You hear a distant slurping noise.");
-            mpr(info);
+            mpr("You hear a distant slurping noise.");
          }
 
 
@@ -1942,8 +1938,7 @@ for (count_x = 0; count_x < 3; count_x ++)
       if (menv [i].m_class == MONS_JELLY)
       {
          grd [menv [i].m_x + mmov_x] [menv [i].m_y + mmov_y] = 67;
-         strcpy(info, "You hear a slurping sound.");
-         mpr(info);
+         mpr("You hear a slurping sound.");
          menv [i].m_hp += 5;
          if (menv [i].m_hp > menv [i].m_hp_max) menv [i].m_hp_max = menv [i].m_hp;
       }
@@ -2127,8 +2122,7 @@ if ((menv [i].m_class == MONS_TUNNELING_WORM || menv [i].m_class == MONS_BORING_
 	if (grd [menv [i].m_x + mmov_x] [menv [i].m_y + mmov_y] == 1 && menv [i].m_x + mmov_x > 6 && menv [i].m_x + mmov_x < 73 && menv [i].m_y + mmov_y > 6 && menv [i].m_y + mmov_y < 63)
         {
 		grd [menv [i].m_x + mmov_x] [menv [i].m_y + mmov_y] = 67;
-                strcpy(info, "You hear a grinding noise.");
-                mpr(info);
+                mpr("You hear a grinding noise.");
         }
 }
 
@@ -2438,35 +2432,33 @@ switch(menv [i].m_class)
  case MONS_DORGI: // dorgi
  switch(random2(10))
  {
-  case 0: strcat(info, " screams \"HALT!\""); break;
-  case 1: strcat(info, " screams \"HALT! HALT RIGHT NOW!\""); break;
-  case 2: strcat(info, " screams \"HALT, OR YOU WILL BE ELIMINATED!\""); break;
-  case 3: strcat(info, " screams \"HALT OR I SHOOT!\""); break;
-  case 4: strcat(info, " screams \"DROP YOUR WEAPONS! UP AGAINST THE WALL!\""); break;
-  case 5: strcat(info, " screams \"PREPARE TO DIE!\""); break;
-  case 6: strcat(info, " screams \"SUBMIT OR DIE!\""); break;
-  case 7: strcat(info, " screams \"YOU ARE VIOLATING AREA SECURITY!\""); break;
-  case 8: strcat(info, " screams \"SUBMIT TO THERAPY OR DIE!\""); break;
-  case 9: strcat(info, " screams \"HALT, TRESPASSER!\""); break;
+  case 0: mpr(" screams \"HALT!\""); break;
+  case 1: mpr(" screams \"HALT! HALT RIGHT NOW!\""); break;
+  case 2: mpr(" screams \"HALT, OR YOU WILL BE ELIMINATED!\""); break;
+  case 3: mpr(" screams \"HALT OR I SHOOT!\""); break;
+  case 4: mpr(" screams \"DROP YOUR WEAPONS! UP AGAINST THE WALL!\""); break;
+  case 5: mpr(" screams \"PREPARE TO DIE!\""); break;
+  case 6: mpr(" screams \"SUBMIT OR DIE!\""); break;
+  case 7: mpr(" screams \"YOU ARE VIOLATING AREA SECURITY!\""); break;
+  case 8: mpr(" screams \"SUBMIT TO THERAPY OR DIE!\""); break;
+  case 9: mpr(" screams \"HALT, TRESPASSER!\""); break;
  }
- mpr(info);
  break;
 
  case MONS_KILLER_KLOWN: // Killer Klown
  switch(random2(10))
  {
-  case 0: strcat(info, " giggles crazily."); break;
-  case 1: strcat(info, " laughs merrily."); break;
-  case 2: strcat(info, " beckons to you."); break;
-  case 3: strcat(info, " does a flip."); break;
-  case 4: strcat(info, " does a somersault."); break;
-  case 5: strcat(info, " smiles at you."); break;
-  case 6: strcat(info, " grins with merry abandon."); break;
-  case 7: strcat(info, " howls with blood-lust!"); break;
-  case 8: strcat(info, " pokes out its tongue."); break;
-  case 9: strcat(info, " says \"Come and play with me!\""); break;
+  case 0: mpr(" giggles crazily."); break;
+  case 1: mpr(" laughs merrily."); break;
+  case 2: mpr(" beckons to you."); break;
+  case 3: mpr(" does a flip."); break;
+  case 4: mpr(" does a somersault."); break;
+  case 5: mpr(" smiles at you."); break;
+  case 6: mpr(" grins with merry abandon."); break;
+  case 7: mpr(" howls with blood-lust!"); break;
+  case 8: mpr(" pokes out its tongue."); break;
+  case 9: mpr(" says \"Come and play with me!\""); break;
  }
- mpr(info);
  break;
 
 /* default:

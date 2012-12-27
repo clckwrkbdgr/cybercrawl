@@ -31,12 +31,10 @@ void torment(void)
 
  if (you[0].is_undead != 0 || you[0].mutation [MUT_TORMENT_RESISTANCE] != 0)
  {
-  strcpy(info, "You feel a surge of unholy energy.");
-  mpr(info);
+  mpr("You feel a surge of unholy energy.");
  } else
        {
-        strcpy(info, "Your body is wracked with pain!");
-        mpr(info);
+        mpr("Your body is wracked with pain!");
         //you[0].hp -= (you[0].hp / 2) - 1;
         int tormdam = (you[0].hp / 2) - 1;
         if (tormdam <= 0) tormdam = 0;
@@ -129,29 +127,25 @@ if (force_stat == 100) force_stat = random2(3);
 
   if (player_sust_abil() != 0)
   {
-   strcpy(info, "You feel slightly ill for a moment.");
-   mpr(info);
+   mpr("You feel slightly ill for a moment.");
    return 0;
   }
      	switch(force_stat)
 	{
-		case STAT_STRENGTH: strcpy(info, "You feel weakened.");
-		mpr(info);
+		case STAT_STRENGTH: mpr("You feel weakened.");
 		you[0].strength -= stat_loss;
 		if (you[0].strength < 3) you[0].strength = 3;
 		you[0].strength_ch = 1;
 		burden_change();
 		break;
 
-		case STAT_DEXTERITY: strcpy(info, "You feel clumsy.");
-		mpr(info);
+		case STAT_DEXTERITY: mpr("You feel clumsy.");
 		you[0].dex -= stat_loss;
 		if (you[0].dex < 3) you[0].dex = 3;
 		you[0].dex_ch = 1;
 		break;
 
-		case STAT_INTELLIGENCE: strcpy(info, "You feel dopey.");
-		mpr(info);
+		case STAT_INTELLIGENCE: mpr("You feel dopey.");
 		you[0].intel -= stat_loss;
 		if (you[0].intel < 3) you[0].intel = 3;
 		you[0].intel_ch = 1;
@@ -174,8 +168,7 @@ int hurted = 0;
 switch(beam[0].type)
 {
  case DMNBM_HELLFIRE: // hellfire
- strcpy(info, "You are engulfed in a burst of hellfire!");
- mpr(info);
+ mpr("You are engulfed in a burst of hellfire!");
  hurted = random2(10) + random2(10) + 5;
  beam[0].flavour = 20; // lava, but it's hellfire anyway
  strcpy(beam[0].beam_name, "hellfire"); // for ouch
@@ -186,8 +179,7 @@ switch(beam[0].type)
  break;
 
  case DMNBM_SMITING: // smiting
- strcpy(info, "Something smites you!");
- mpr(info);
+ mpr("Something smites you!");
  hurted = random2(6) + random2(6) + 7;
  strcpy(beam[0].beam_name, "smiting"); // for ouch
  ouch(hurted, beam[0].beam_source, 3);
@@ -197,15 +189,12 @@ switch(beam[0].type)
  case DMNBM_BRAIN_FEED: // brain feed
       if (random2(3) == 0 && you[0].intel > 3 && player_sust_abil() == 0)
       {
-        strcpy(info, "Something feeds on your intelligence!");
-        mpr(info);
-        strcpy(info, "You feel stupid.");
-        mpr(info);
+        mpr("Something feeds on your intelligence!");
+        mpr("You feel stupid.");
         you[0].intel --;
         you[0].intel_ch = 1;
       } else {
-                strcpy(info, "Something tries to feed on your intelligence!");
-		        mpr(info);
+                mpr("Something tries to feed on your intelligence!");
      	     }
  break;
 
@@ -296,9 +285,8 @@ switch(ru)
 	break;
 
 	case 1:
-	strcpy(info, "The device reassembles itself in your hand!");
+	mpr("The device reassembles itself in your hand!");
 	you[0].inv_quant [sc_read_2]++;
-	mpr(info);
  burden_change();
 	break;
 
@@ -316,8 +304,7 @@ switch(ru)
 	//strcat(info
 	} else
 	     {
-		strcpy(info, "Nothing appears to happen.");
-		mpr(info);
+		mpr("Nothing appears to happen.");
 		return;
 	     }
 //	break;
@@ -326,55 +313,50 @@ switch(ru)
 	strcpy(info, "You hear the distant roaring of an enraged ");
 		switch(random2(8))
 		{
-			case 0: strcat(info, "frog!"); break;
-			case 1: strcat(info, "pill bug!"); break;
-			case 2: strcat(info, "millipede!"); break;
-			case 3: strcat(info, "eggplant!"); break;
-			case 4: strcat(info, "albino dragon!"); break;
-			case 5: strcat(info, "dragon!"); break;
-			case 6: strcat(info, "human!"); break;
-			case 7: strcat(info, "slug!"); break;
+			case 0: mpr("frog!"); break;
+			case 1: mpr("pill bug!"); break;
+			case 2: mpr("millipede!"); break;
+			case 3: mpr("eggplant!"); break;
+			case 4: mpr("albino dragon!"); break;
+			case 5: mpr("dragon!"); break;
+			case 6: mpr("human!"); break;
+			case 7: mpr("slug!"); break;
 		}
-	mpr(info);
 	return;
 
 	case 4:
 	strcpy(info, "You smell ");
 		switch(random2(8))
 		{
-			case 0: strcat(info, "coffee."); break;
-			case 1: strcat(info, "salt."); break;
-			case 2: strcat(info, "burning hair!"); break;
-			case 3: strcat(info, "baking bread."); break;
-			case 4: strcat(info, "something weird."); break;
-			case 5: strcat(info, "wet wool."); break;
-			case 6: strcat(info, "sulphur."); break;
-			case 7: strcat(info, "fire and brimstone!"); break;
+			case 0: mpr("coffee."); break;
+			case 1: mpr("salt."); break;
+			case 2: mpr("burning hair!"); break;
+			case 3: mpr("baking bread."); break;
+			case 4: mpr("something weird."); break;
+			case 5: mpr("wet wool."); break;
+			case 6: mpr("sulphur."); break;
+			case 7: mpr("fire and brimstone!"); break;
 		}
-	mpr(info);
 	return;
 
 
 
 	case 5:
-	strcpy(info, "You experience a momentary feeling of inescapable doom!");
-	mpr(info);
+	mpr("You experience a momentary feeling of inescapable doom!");
 	return;
 
 	case 6:
 	strcpy(info, "Your ");
  switch(random2(3))
  {
-			case 0: strcat(info, "ears itch."); break;
-			case 1: strcat(info, "brain hurts!"); break;
-			case 2: strcat(info, "nose twitches suddenly!"); break;
+			case 0: mpr("ears itch."); break;
+			case 1: mpr("brain hurts!"); break;
+			case 2: mpr("nose twitches suddenly!"); break;
  }
- mpr(info);
 	return;
 
  case 7:
- strcpy(info, "You hear the tinkle of a tiny bell.");
- mpr(info);
+ mpr("You hear the tinkle of a tiny bell.");
  summon_butter();
  return;
 
@@ -382,17 +364,16 @@ switch(ru)
 	strcpy(info, "You hear ");
 		switch(random2(9))
 		{
-			case 0: strcat(info, "snatches of song."); break;
-			case 1: strcat(info, "a voice call someone else's name."); break;
-			case 2: strcat(info, "a very strange noise."); break;
-			case 3: strcat(info, "roaring flame."); break;
-			case 4: strcat(info, "a very strange noise indeed."); break;
-			case 5: strcat(info, "the chiming of a distant gong."); break;
-			case 6: strcat(info, "the bellowing of a yak."); break;
-			case 7: strcat(info, "a crunching sound."); break;
-			case 8: strcat(info, "the tinkle of an enormous bell."); break;
+			case 0: mpr("snatches of song."); break;
+			case 1: mpr("a voice call someone else's name."); break;
+			case 2: mpr("a very strange noise."); break;
+			case 3: mpr("roaring flame."); break;
+			case 4: mpr("a very strange noise indeed."); break;
+			case 5: mpr("the chiming of a distant gong."); break;
+			case 6: mpr("the bellowing of a yak."); break;
+			case 7: mpr("a crunching sound."); break;
+			case 8: mpr("the tinkle of an enormous bell."); break;
 		}
-	mpr(info);
 	return;
 
 
@@ -660,8 +641,7 @@ if (type_wanted == 99)
 
 if (grd [you[0].x_pos] [you[0].y_pos] == 61 || grd [you[0].x_pos] [you[0].y_pos] == 62)
 {
- strcpy(info, "You hear a splash."); // how sad (and stupid)
- mpr(info);
+ mpr("You hear a splash."); // how sad (and stupid)
  return;
 }
 
@@ -670,9 +650,8 @@ thing_created = /*items(you[0].unique_items, 1, you[0].item_description,
 		items(1, class_wanted, type_wanted, 1, 351, 250);
 
 
-if (you[0].species != SP_NAGA) strcpy(info, "Something appears at your feet!");
- else strcpy(info, "Something appears before you!");
-mpr(info);
+if (you[0].species != SP_NAGA) mpr("Something appears at your feet!");
+ else mpr("Something appears before you!");
 
 if (force_plus != 0) mitm.iplus [thing_created] = force_plus;
 
@@ -749,8 +728,7 @@ switch(keyn)
 {
 
   case '!':
-  strcpy(info, "You yell for attention!");
-  mpr(info);
+  mpr("You yell for attention!");
   you[0].turnover = 1;
   noisy(12, you[0].x_pos, you[0].y_pos);
   return;

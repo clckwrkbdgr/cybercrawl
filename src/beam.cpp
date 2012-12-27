@@ -366,8 +366,7 @@ void beam(struct bolt beam [1])
 // if ((beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3) && you_resist_magic(beam[0].ench_power) == 1)
  				 if (you_resist_magic(beam[0].ench_power) == 1)
  				 {
- 					strcpy(info, "You resist.");
-					mpr(info);
+ 					mpr("You resist.");
 					return;
 	 			 }
 				switch(beam[0].colour)
@@ -382,8 +381,7 @@ void beam(struct bolt beam [1])
 					case 7: you_teleport();
                          beam[0].wand_id = 1;
                          return;
-	                case 8: strcpy(info, "This is polymorph other only!");
-    		            mpr(info);
+	                case 8: mpr("This is polymorph other only!");
                         beam[0].wand_id = 1;
 		                return;
 				   	case 9: potion_effect(POT_CONFUSION, beam[0].ench_power);
@@ -402,12 +400,10 @@ void beam(struct bolt beam [1])
 				   	case 13: // pain
 				   		if (you[0].is_undead != 0 || you[0].mutation [MUT_TORMENT_RESISTANCE] != 0)
    						{
-    						strcpy(info, "You are unaffected.");
-    						mpr(info);
+    						mpr("You are unaffected.");
     						return;
    						}
-		   				strcpy(info, "Pain shoots through your body!");
-   						mpr(info);
+		   				mpr("Pain shoots through your body!");
    						strcpy(beam[0].beam_name, "program");
                         if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
    						 ouch(random2(beam[0].hit), 0, 22);
@@ -860,8 +856,7 @@ void beam(struct bolt beam [1])
 
 	if (beam[0].beam_name [0] == 48 && beam[0].colour != 6 && beam[0].colour != 200)
 	{
-		strcpy(info, "Nothing appears to happen.");
-	    mpr(info);
+		mpr("Nothing appears to happen.");
 	}
 
 	beam[0].aim_down = 0;
@@ -1370,8 +1365,7 @@ brek = 0;*/
 		if (throw_2 == you[0].equip [EQ_WEAPON])
 		{
 			you[0].equip [EQ_WEAPON] = -1;
-			strcpy(info, "You are empty handed.");
-	        mpr(info);
+			mpr("You are empty handed.");
 		}
 	}
 
@@ -1802,8 +1796,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
             {
             	if (menv [o].m_ench [p] == 1)
                 {
-                	strcpy(info, "Nothing appears to happen.");
-                    mpr(info);
+                	mpr("Nothing appears to happen.");
                     return 1;
                 }
                 if (menv [o].m_ench [p] == 2)
@@ -2024,8 +2017,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 
 
     nothinghap:
-    strcpy(info, "Nothing appears to happen.");
-    mpr(info);
+    mpr("Nothing appears to happen.");
 
 
     somethinghap: return 1;

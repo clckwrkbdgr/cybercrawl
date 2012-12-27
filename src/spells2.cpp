@@ -54,8 +54,7 @@ char detect_items(int map_radius)
 {
 char traps_found = 0;
 
-  strcpy(info, "You detect items!");
-                mpr(info);
+  mpr("You detect items!");
 
 int i, j;
 
@@ -79,8 +78,7 @@ char detect_creatures(int map_radius)
 {
 char traps_found = 0;
 
-  strcpy(info, "You detect creatures!");
-                mpr(info);
+  mpr("You detect creatures!");
 
 int i, j;
 
@@ -169,8 +167,7 @@ for (adx = minx; adx != maxx; adx += xinc)
  }
 }
 
-  strcpy(info, "You smell decay.");
-  mpr(info);
+  mpr("You smell decay.");
 
 power = 0;
 // should make zombies decay into skeletons
@@ -256,8 +253,7 @@ if (actual == 0) return number_raised;
 
 if (number_raised > 0)
 {
-  strcpy(info, "The dead are walking!");
-  mpr(info);
+  mpr("The dead are walking!");
 }
 
 return number_raised;
@@ -276,8 +272,7 @@ if (class_allowed == 1 && mitm.itype [igrd [axps] [ayps]] != 1) return 0;
 
 if (raise_corpse(igrd [axps] [ayps], axps, ayps, corps_beh, corps_hit, 1) > 0)
 {
-  strcpy(info, "The dead are walking!");
-  mpr(info);
+  mpr("The dead are walking!");
 }
 
 return 0;
@@ -319,8 +314,7 @@ unsigned char rotted = 0;
 
    if (igrd [you[0].x_pos] [you[0].y_pos] == 501)
    {
-    strcpy(info, "There's nothing here!");
-    mpr(info);
+    mpr("There's nothing here!");
     return;
    }
 
@@ -356,25 +350,21 @@ unsigned char rotted = 0;
 finished : // now to raise the thing
 #ifdef DEBUG
 itoa(total_mass, st_prn, 10);
-strcpy(info, st_prn);
-mpr(info);
+ mpr(st_prn);
 #endif
 
 total_mass += random2(power) * 3 + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) * 3+ random2(power) * 3 + random2(power) + random2(power) * 3;
 
 if (total_mass <= 400 + random2(500) + random2(500) || number_raised < 2 + random2(2))
 {
- strcpy(info, "The program fails.");
- mpr(info);
- strcpy(info, "The corpses disintegrate into a pulpy mess.");
- mpr(info);
+ mpr("The program fails.");
+ mpr("The corpses disintegrate into a pulpy mess.");
  return;
 }
 
 if (total_mass >= 500 + random2(700) + random2(900) + random2(1000)) type_resurr = 49;
 
-strcpy(info, "The heap of corpses melds into an agglomeration of writhing flesh!");
-mpr(info);
+ mpr("The heap of corpses melds into an agglomeration of writhing flesh!");
 
 coloured = LIGHTRED;
 if (rotted >= random2(number_raised)) coloured = RED;
@@ -501,8 +491,7 @@ void restore_str(void)
 {
  if (you[0].strength < you[0].max_strength)
  {
-  strcpy(info, "You feel your strength returning.");
-  mpr(info);
+  mpr("You feel your strength returning.");
  }
  you[0].strength = you[0].max_strength;
  you[0].strength_ch = 1;
@@ -512,8 +501,7 @@ void restore_int(void)
 {
  if (you[0].intel < you[0].max_intel)
  {
-  strcpy(info, "You feel your intelligence returning.");
-  mpr(info);
+  mpr("You feel your intelligence returning.");
  }
  you[0].intel = you[0].max_intel;
  you[0].intel_ch = 1;
@@ -523,8 +511,7 @@ void restore_dex(void)
 {
  if (you[0].dex < you[0].max_dex)
  {
-  strcpy(info, "You feel your dexterity returning.");
-  mpr(info);
+  mpr("You feel your dexterity returning.");
  }
  you[0].dex = you[0].max_dex;
  you[0].dex_ch = 1;
@@ -591,8 +578,7 @@ void holy_word(int pow)
 int tu = 0, p;
 char brek = 0;
 
-strcpy(info, "You speak a Word of immense power!");
-mpr(info);
+ mpr("You speak a Word of immense power!");
 
 for (tu = 0; tu < MNST; tu ++)
 {
@@ -650,8 +636,7 @@ void cast_toxic_radiance(void)
 
 unsigned char toxy = 0;
 
-strcpy(info, "You radiate a sickly green light!");
-mpr(info);
+ mpr("You radiate a sickly green light!");
 show_green = GREEN;
 viewwindow(1);
 more();
@@ -659,14 +644,12 @@ mesclr();
 
 if (you[0].invis != 0)
 {
- strcpy(info, "The light passes straight through your body.");
- mpr(info);
+ mpr("The light passes straight through your body.");
 } else
        if (player_res_poison() == 0)
   {
    you[0].poison += 2;
-   strcpy(info, "You feel rather sick.");
-   mpr(info);
+   mpr("You feel rather sick.");
   }
 
 
@@ -689,8 +672,7 @@ void cast_refrigeration(int pow)
 unsigned char toxy = 0;
 struct bolt beam [1];
 
-strcpy(info, "The heat is drained from your surroundings.");
-mpr(info);
+ mpr("The heat is drained from your surroundings.");
 show_green = LIGHTCYAN;
 viewwindow(1);
 more();
@@ -698,14 +680,12 @@ mesclr();
 
   if (player_res_cold() <= 100)
   {
-   strcpy(info, "You freeze!");
-   mpr(info);
+   mpr("You freeze!");
    ouch(3 + random2(7) + random2(7) + random2(pow) / 20, 0, 16);
   }
   if (player_res_cold() > 100)
   {
-   strcpy(info, "You feel very cold.");
-   mpr(info);
+   mpr("You feel very cold.");
    ouch((3 + random2(7) + random2(7) + random2(pow) / 20) / (2 + (player_res_cold() - 100) * (player_res_cold() - 100)), 0, 16);
   }
   if (player_res_cold() < 100)
@@ -745,8 +725,7 @@ void drain_life(int pow)
 unsigned char toxy = 0;
 int hp_gain = 0;
 
-strcpy(info, "You draw life from your surroundings.");
-mpr(info);
+ mpr("You draw life from your surroundings.");
 
 show_green = DARKGREY;
 viewwindow(1);
@@ -788,21 +767,18 @@ int vampiric_drain(int pow)
 int inflicted = 0, mgr = 0;
 struct dist vmove [1];
 
-dirc : strcpy(info, "Which direction?");
-mpr(info);
+dirc : mpr("Which direction?");
 direction(0, vmove);
 
 if (vmove[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles!");
-	mpr(info);
+	mpr("The program fizzles!");
 	return -1;
 }
 
 if (vmove[0].move_x > 1 || vmove[0].move_y > 1)
 {
-	strcpy(info, "This program doesn't reach that far.");
-	mpr(info);
+	mpr("This program doesn't reach that far.");
  goto dirc;
 }
 
@@ -811,22 +787,19 @@ mgr = mgrd [you[0].x_pos + vmove[0].move_x] [you[0].y_pos + vmove[0].move_y];
 
 if (vmove[0].move_x == 0 && vmove[0].move_y == 0)
 {
-	strcpy(info, "That would be silly!");
-	mpr(info);
+	mpr("That would be silly!");
  goto dirc;
 }
 
 if (mgr == MNG)
 {
-	strcpy(info, "There isn't anything there!");
-	mpr(info);
+	mpr("There isn't anything there!");
 	return -1;
 }
 
 if (mons_holiness(menv [mgr].m_class) > 0)
 {
-	strcpy(info, "Oops! That was rather foolish.");
-	mpr(info);
+	mpr("Oops! That was rather foolish.");
 	you[0].hp -= random2(20) + random2(20) + 10;
 	if (you[0].hp <= 1) you[0].hp = 1;
 	you[0].hp_ch = 1;
@@ -871,16 +844,14 @@ int burn_freeze(int pow, char b_f)
 int mgr = 0;
 struct dist bmove [1];
 
-dirc : strcpy(info, "Which direction?");
-mpr(info);
+dirc : mpr("Which direction?");
 direction(0, bmove);
 
 mgr = mgrd [you[0].x_pos + bmove[0].move_x] [you[0].y_pos + bmove[0].move_y];
 
 if (bmove[0].nothing == -1)
 {
-	strcpy(info, "The program fizzles!");
-	mpr(info);
+	mpr("The program fizzles!");
         bmove[0].move_x = 0;
 	bmove[0].move_y = 0;
 	return -1;
@@ -888,22 +859,19 @@ if (bmove[0].nothing == -1)
 
 if (bmove[0].move_x > 1 || bmove[0].move_y > 1)
 {
-	strcpy(info, "This program doesn't reach that far.");
-	mpr(info);
+	mpr("This program doesn't reach that far.");
  goto dirc;
 }
 
 if (bmove[0].move_x == 0 && bmove[0].move_y == 0)
 {
-	strcpy(info, "That would be silly!");
-	mpr(info);
+	mpr("That would be silly!");
  goto dirc;
 }
 
 if (mgr == MNG)
 {
-	strcpy(info, "There isn't anything there!");
-	mpr(info);
+	mpr("There isn't anything there!");
         bmove[0].move_x = 0;
 	bmove[0].move_y = 0;
 	return -1;
@@ -953,40 +921,35 @@ struct dist smove [1];
 if (numsc > 25) numsc = 25;
 
 dirc :
-strcpy(info, "Create from what material?");
 // cannot summon earth elemental if you are floating in the air.
 // problem: what if you're floating over water/lava and are surrounded by it and a wall, and summon an earth elemental? hmmm...
 //strcat(info, ", < for air)");
-mpr(info);
-strcpy(info, "Which direction?");
-mpr(info);
+ mpr("Create from what material?");
+ mpr("Which direction?");
 direction(0, smove);
 
 if (smove[0].nothing == -1)
 {
-	fizzles : strcpy(info, "Nothing appears to happen.");
-	mpr(info);
+	fizzles :
+	mpr("Nothing appears to happen.");
 	return -1;
 }
 
 if (mgrd [you[0].x_pos + smove[0].move_x] [you[0].y_pos + smove[0].move_y] != MNG)
 {
-        strcpy(info, "Not there!");
-        mpr(info);
+        mpr("Not there!");
         goto dirc;
 }
 
 if (smove[0].move_x > 1 || smove[0].move_y > 1)
 {
-	strcpy(info, "This program doesn't reach that far.");
-	mpr(info);
+	mpr("This program doesn't reach that far.");
      goto dirc;
 }
 
 if (smove[0].move_x == 0 && smove[0].move_y == 0)
 {
-	strcpy(info, "You can't create a nano organism from yourself!");
-	mpr(info);
+	mpr("You can't create a nano organism from yourself!");
  goto dirc;
 }
 
@@ -1030,14 +993,12 @@ goto fizzles;
 summon_it:
 if (restricted_type != 0 && type_summoned != restricted_type)
 {
- strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ mpr("Nothing appears to happen.");
  return 0;
 }
 if (random2(100) <= unfriendly || (type_summoned == 124 && random2(5) >= you[0].skills [SK_FIRE_MAGIC]) || (type_summoned == MWATER4 && random2(5) >= you[0].skills [SK_ICE_MAGIC]) || (type_summoned == 125 && random2(5) >= you[0].skills [SK_AIR_MAGIC]) || (type_summoned == 123 && random2(5) >= you[0].skills [SK_EARTH_MAGIC]))
 {
- strcpy(info, "The nanorg doesn't seem to appreciate being created.");
- mpr(info);
+ mpr("The nanorg doesn't seem to appreciate being created.");
  summ_success = create_monster(type_summoned, numsc, 0, you[0].x_pos + smove[0].move_x, you[0].y_pos + smove[0].move_y, MHITYOU, 250);
 } else summ_success = create_monster(type_summoned, numsc, 7, you[0].x_pos + smove[0].move_x, you[0].y_pos + smove[0].move_y, MHITNOT, 250);
 
@@ -1076,15 +1037,13 @@ if (random2(pow) <= 3)
 {
  if (create_monster(MONS_SCORPION, 22, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250) != -1)
  {
-  strcpy(info, "A scorpion appears. It doesn't look very happy.");
-  mpr(info);
+  mpr("A scorpion appears. It doesn't look very happy.");
  }
 } else
  {
    if (create_monster(MONS_SCORPION, 22, 7, you[0].x_pos, you[0].y_pos, MHITNOT, 250) != -1)
    {
-    strcpy(info, "A scorpion appears.");
-    mpr(info);
+    mpr("A scorpion appears.");
    }
  }
 }
@@ -1178,8 +1137,7 @@ for (scount = 0; scount < numsc; scount ++)
  } // end switch
  create_monster(thing_called, 22, 1 + (random2(pow) > 7) * 6, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
 }
- strcpy(info, "You call forth a swarm of pestilential beasts!");
- mpr(info);
+ mpr("You call forth a swarm of pestilential beasts!");
 } // end of summon_swarm
 
 void summon_undead(int pow)
@@ -1196,8 +1154,7 @@ if (numsc > 6) numsc = (numsc - 6) / 2 + 6;
 
 if (numsc > 8) numsc = 8;
 
- strcpy(info, "You call on the cyborgs to aid you!");
- mpr(info);
+ mpr("You call on the cyborgs to aid you!");
 
 
 for (scount = 0; scount < numsc; scount ++)
@@ -1211,23 +1168,20 @@ if (random2(pow) <= 5)
 {
  if (create_monster(thing_called, 22, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250) != -1)
  {
-  strcpy(info, "You sense a hostile presence.");
-  mpr(info);
+  mpr("You sense a hostile presence.");
  }
 } else
  {
    if (create_monster(thing_called, 22, 7, you[0].x_pos, you[0].y_pos, MHITNOT, 250) != -1)
    {
-    strcpy(info, "An insubstantial figure forms in the air.");
-    mpr(info);
+    mpr("An insubstantial figure forms in the air.");
    }
  }
 
 }
  if (you[0].is_undead == 0)
  {
-  strcpy(info, "You feel rather ill.");
-  mpr(info);
+  mpr("You feel rather ill.");
   you[0].disease = 200;
  }
 } // end of summon_undead
@@ -1266,13 +1220,11 @@ while (numsc > 0)
   numsc--;
 }
 
-strcpy(info, "Something answered your call!");
-mpr(info);
+ mpr("Something answered your call!");
 
 you[0].intel--;
 you[0].intel_ch = 1;
-strcpy(info, "Your brain shrivels slightly.");
-mpr(info);
+ mpr("Your brain shrivels slightly.");
 
 } // end of summon_things
 

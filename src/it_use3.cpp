@@ -53,38 +53,38 @@ if (random2(20) == 0)
  strcpy(info, "The Singing Sword ");
  switch(random2(32))
  {
-  case 0: strcat(info, "hums a little tune."); mpr(info); break;
-  case 1: strcat(info, "breaks into glorious song!"); mpr(info); break;
-  case 2: strcat(info, "sings."); mpr(info); break;
-  case 3: strcat(info, "sings loudly."); mpr(info); break;
-  case 4: strcat(info, "chimes melodiously."); mpr(info); break;
-  case 5: strcat(info, "makes a horrible noise."); mpr(info); break;
-  case 6: strcat(info, "sings off-key."); mpr(info); break;
-  case 7: strcat(info, "sings 'tra-la-la'."); mpr(info); break;
-  case 8: strcat(info, "burbles away merrily."); mpr(info); break;
-  case 9: strcat(info, "gurgles."); mpr(info); break;
-  case 10: strcat(info, "suddenly shrieks!"); mpr(info); break;
-  case 11: strcat(info, "cackles."); mpr(info); break;
-  case 12: strcat(info, "warbles."); mpr(info); break;
-  case 13: strcat(info, "chimes harmoniously."); mpr(info); break;
-  case 14: strcat(info, "makes beautiful music."); mpr(info); break;
-  case 15: strcat(info, "produces a loud orchestral chord."); mpr(info); break;
-  case 16: strcat(info, "whines plaintively."); mpr(info); break;
-  case 17: strcat(info, "tinkles."); mpr(info); break;
-  case 18: strcat(info, "rings like a bell."); mpr(info); break;
-  case 19: strcat(info, "wails mournfully."); mpr(info); break;
-  case 20: strcat(info, "practices its scales."); mpr(info); break;
-  case 21: strcat(info, "lilts tunefully."); mpr(info); break;
-  case 22: strcat(info, "hums tunelessly."); mpr(info); break;
-  case 23: strcat(info, "sighs."); mpr(info); break;
-  case 24: strcat(info, "makes a deep moaning sound."); mpr(info); break;
-  case 25: strcat(info, "makes a popping sound."); mpr(info); break;
-  case 26: strcat(info, "sings a sudden stoccato note."); mpr(info); break;
-  case 27: strcat(info, "says 'Hi! I'm the Singing Sword!'."); mpr(info); break;
-  case 28: strcat(info, "whispers something."); mpr(info); break;
-  case 29: strcat(info, "speaks gibberish."); mpr(info); break;
-  case 30: strcat(info, "raves incoherently."); mpr(info); break;
-  case 31: strcat(info, "yells in some weird language."); mpr(info); break;
+  case 0:  mpr("hums a little tune.");                break;
+  case 1:  mpr("breaks into glorious song!");         break;
+  case 2:  mpr("sings.");                             break;
+  case 3:  mpr("sings loudly.");                      break;
+  case 4:  mpr("chimes melodiously.");                break;
+  case 5:  mpr("makes a horrible noise.");            break;
+  case 6:  mpr("sings off-key.");                     break;
+  case 7:  mpr("sings 'tra-la-la'.");                 break;
+  case 8:  mpr("burbles away merrily.");              break;
+  case 9:  mpr("gurgles.");                           break;
+  case 10: mpr("suddenly shrieks!");                  break;
+  case 11: mpr("cackles.");                           break;
+  case 12: mpr("warbles.");                           break;
+  case 13: mpr("chimes harmoniously.");               break;
+  case 14: mpr("makes beautiful music.");             break;
+  case 15: mpr("produces a loud orchestral chord.");  break;
+  case 16: mpr("whines plaintively.");                break;
+  case 17: mpr("tinkles.");                           break;
+  case 18: mpr("rings like a bell.");                 break;
+  case 19: mpr("wails mournfully.");                  break;
+  case 20: mpr("practices its scales.");              break;
+  case 21: mpr("lilts tunefully.");                   break;
+  case 22: mpr("hums tunelessly.");                   break;
+  case 23: mpr("sighs.");                             break;
+  case 24: mpr("makes a deep moaning sound.");        break;
+  case 25: mpr("makes a popping sound.");             break;
+  case 26: mpr("sings a sudden stoccato note.");      break;
+  case 27: mpr("says 'Hi! I'm the Singing Sword!'."); break;
+  case 28: mpr("whispers something.");                break;
+  case 29: mpr("speaks gibberish.");                  break;
+  case 30: mpr("raves incoherently.");                break;
+  case 31: mpr("yells in some weird language.");      break;
  }
    noisy(25, you[0].x_pos, you[0].y_pos);
 }
@@ -206,15 +206,13 @@ void invoke_wielded(void)
 
 if (you[0].equip [EQ_WEAPON] == -1)
 {
- strcpy(info, "You aren't wielding anything!");
- mpr(info);
+ mpr("You aren't wielding anything!");
  return;
 }
 
 if (you[0].berserker != 0)
 {
- strcpy(info, "You are in battle mode!");
- mpr(info);
+ mpr("You are in battle mode!");
  return;
 }
 
@@ -227,8 +225,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  {
   case NWPN_STAFF_OF_DISPATER: // staff of Dispater
   if (you[0].deaths_door != 0 || you[0].hp <= 10 || you[0].ep <= 4) goto nothing_hap;
-  strcpy(info, "You feel the ROM feeding on your energy!");
-  mpr(info);
+  mpr("You feel the ROM feeding on your energy!");
   you[0].hp -= random2(10) + random2(10) + 5;
   if (you[0].hp <= 0) you[0].hp = 1;
   you[0].ep -= random2(3) + random2(3) + 2;
@@ -246,10 +243,9 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
    spell_casted = SPELL_SUMMON_ICE_BEAST + random2(10);
    if (random2(4) == 0)
    {
-    strcpy(info, "\"Your arrogance condemns you, mortal!\"");
+    mpr("\"Your arrogance condemns you, mortal!\"");
     spell_casted = SPELL_RING_OF_FLAMES; /* Fiend! */
-   } else strcpy(info, "The Sceptre summons one of its servants.");
-    mpr(info);
+   } else mpr("The Sceptre summons one of its servants.");
     create_monster(spell_casted, 25, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
     break;
   }
@@ -272,20 +268,17 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   case NWPN_STAFF_OF_WUCAD_MU: // staff of Wucad Mu
   if (you[0].ep == you[0].ep_max || random2(4) == 0)
   {
-   strcpy(info, "Nothing appears to happen.");
-   mpr(info);
+   mpr("Nothing appears to happen.");
    break;
   }
   you[0].ep += 3 + random2(5);
   if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
   you[0].ep_ch = 1;
-  strcpy(info, "Energy flows into your cyberbrain!");
-  mpr(info);
+  mpr("Energy flows into your cyberbrain!");
   if (random2(3) == 0) miscast_effect(19, random2(9), random2(70), 100);
   break;
 
-  default: nothing_hap : strcpy(info, "Nothing appears to happen.");
-  mpr(info);
+  default: nothing_hap : mpr("Nothing appears to happen.");
   break;
  }
  break;
@@ -296,15 +289,13 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  {
   if (you[0].ep == you[0].ep_max || random2(4) == 0)
   {
-   strcpy(info, "Nothing appears to happen.");
-   mpr(info);
+   mpr("Nothing appears to happen.");
    break;
   }
   you[0].ep += 1 + random2(3);
   if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
   you[0].ep_ch = 1;
-  strcpy(info, "You channel some energy.");
-  mpr(info);
+  mpr("You channel some energy.");
   break;
  }
  staff_spell(you[0].equip [EQ_WEAPON]);
@@ -320,8 +311,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   case MISC_AIR_ELEMENTAL_FAN:
   if (random2(2) == 0)
   {
-   strcpy(info, "Nothing appears to happen.");
-   mpr(info);
+   mpr("Nothing appears to happen.");
    break;
   }
   summon_elemental(100, MONS_AIR_ELEMENTAL, 4);
@@ -329,8 +319,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   case MISC_LAMP_OF_FIRE:
   if (random2(2) == 0)
   {
-   strcpy(info, "Nothing appears to happen.");
-   mpr(info);
+   mpr("Nothing appears to happen.");
    break;
   }
   summon_elemental(100, MONS_FIRE_ELEMENTAL, 4);
@@ -338,8 +327,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   case MISC_STONE_OF_EARTH_ELEMENTALS:
   if (random2(2) == 0)
   {
-   strcpy(info, "Nothing appears to happen.");
-   mpr(info);
+   mpr("Nothing appears to happen.");
    break;
   }
   summon_elemental(100, MONS_EARTH_ELEMENTAL, 4);
@@ -347,8 +335,7 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  case MISC_HORN_OF_GERYON: // Horn of Geryon
  if (you[0].where_are_you == 3)
  {
-  strcpy(info, "You produce a weird and mournful sound.");
-  mpr(info);
+  mpr("You produce a weird and mournful sound.");
   for (count_x = 0; count_x < 80; count_x ++)
   {
    for (count_y = 0; count_y < 80; count_y ++)
@@ -368,14 +355,12 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
   }
   if (opened_gates != 0)
   {
-   strcpy(info, "Your way has been unbarred.");
-   mpr(info);
+   mpr("Your way has been unbarred.");
   }
  break;
  } else
  {
-   strcpy(info, "You produce a hideous howling noise!");
-   mpr(info);
+   mpr("You produce a hideous howling noise!");
    create_monster(MONS_BEAST, 23, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
  }
  break;
@@ -431,15 +416,13 @@ switch(you[0].inv_class [you[0].equip [EQ_WEAPON]])
  you[0].inv_no --;
  break;
 
- default: strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ default: mpr("Nothing appears to happen.");
  break;
  }
  break;
 
 
- default: strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ default: mpr("Nothing appears to happen.");
  break;
 
 }
@@ -453,8 +436,7 @@ you[0].turnover = 1;
 void efreet_flask(void)
 {
 
-strcpy(info, "You open the flask, and a huge walking plasma turret comes out.");
-mpr(info);
+	mpr("You open the flask, and a huge walking plasma turret comes out.");
 
 unwield_item(you[0].equip [EQ_WEAPON]);
 you[0].inv_quant [you[0].equip [EQ_WEAPON]] = 0;
@@ -463,14 +445,12 @@ you[0].inv_no --;
 
 if (random2(5) != 0)
 {
-  strcpy(info, "\"Thank you for releasing me!\"");
-  mpr(info);
+  mpr("\"Thank you for releasing me!\"");
   create_monster(MONS_EFREET, 24, 7, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
   return;
 }
 
-  strcpy(info, "It howls insanely!");
-  mpr(info);
+  mpr("It howls insanely!");
   create_monster(MONS_EFREET, 24, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 
 } // end efreet_flask
@@ -478,43 +458,37 @@ if (random2(5) != 0)
 void ball_of_seeing(void)
 {
  int use = 0;
- strcpy(info, "You gaze into the crystal ball.");
- mpr(info);
+ mpr("You gaze into the crystal ball.");
  use = random2(you[0].intel * 6); //magic_ability(you[0].intel, you[0].intel));
  if (you[0].conf != 0) use = 0;
  if (use < 2)
  {
-  strcpy(info, "Your head hurts!");
-  mpr(info);
+  mpr("Your head hurts!");
   if (you[0].intel > 3) you[0].intel --;
   you[0].intel_ch = 1;
   return;
  }
  if (use < 5)
  {
-  strcpy(info, "You feel power drain from you!");
-  mpr(info);
+  mpr("You feel power drain from you!");
   you[0].ep = 0;
   you[0].ep_ch = 1;
   return;
  }
  if (use < 10)
  {
-  strcpy(info, "You feel confused.");
-  mpr(info);
+  mpr("You feel confused.");
   you[0].conf += 10 + random2(10);
   if (you[0].conf > 40) you[0].conf = 40;
   return;
  }
  if (use < 15 || random2(2) == 0 || you[0].level_type == 1 || you[0].level_type == 2)
  {
-  strcpy(info, "You see nothing.");
-  mpr(info);
+  mpr("You see nothing.");
   return;
  }
 
- strcpy(info, "You see a map of your surroundings!");
- mpr(info);
+ mpr("You see a map of your surroundings!");
  magic_mapping(80, 95 + random2(10));
 
 } // end ball_of_seeing()
@@ -526,27 +500,23 @@ you[0].turnover = 1;
 
 if ((random2(60) > 30 + you[0].skills [SK_AIR_MAGIC] && random2(3) != 0) || you[0].attribute [ATTR_SPEC_AIR] != 0)
 {
- strcpy(info, "Nothing appears to happen.");
- mpr(info);
+ mpr("Nothing appears to happen.");
  return;
 }
 
 if (random2(60) > 30 + you[0].skills [SK_AIR_MAGIC] && random2(3) != 0)
 {
- strcpy(info, "The disc glows for a moment, then fades.");
- mpr(info);
+ mpr("The disc glows for a moment, then fades.");
  return;
 }
 
 if (random2(60) > 30 + you[0].skills [SK_AIR_MAGIC] && random2(3) != 0)
 {
- strcpy(info, "Little bolts of electricity crackle over the disc.");
- mpr(info);
+ mpr("Little bolts of electricity crackle over the disc.");
  return;
 }
 
-strcpy(info, "The disc erupts in an explosion of electricity!");
-mpr(info);
+	mpr("The disc erupts in an explosion of electricity!");
 
 char disc_count = 0;
 char disc_count2 = 0;
@@ -587,8 +557,7 @@ void staff_spell(char zap_device_2_char)
 
 if (you[0].inv_plus [zap_device_2] == 64 || you[0].inv_type [zap_device_2] < STAFF_SMITING || you[0].inv_type [zap_device_2] >= STAFF_AIR)
 {
-   strcpy(info, "That ROM has no spells in it.");
-   mpr(info);
+   mpr("That ROM has no spells in it.");
    return;
 }
 
@@ -601,8 +570,7 @@ int sc_read_1 = book_thing; // book_thing is got in read_book
 
 if (sc_read_1 < 65 || (sc_read_1 > 90 && sc_read_1 < 97) || sc_read_1 > 122)
 {
-	strcpy(info, "What?");
-	mpr(info);
+	mpr("What?");
 	return;
 }
 
@@ -627,8 +595,7 @@ specspell = which_spell_in_book(you[0].inv_type [you[0].equip [EQ_WEAPON]] + 40,
 
 if (you[0].ep < spell_value(specspell) || you[0].xl < spell_value(specspell))
 {
-   strcpy(info, "Your brain hurts!");
-   mpr(info);
+   mpr("Your brain hurts!");
    you[0].conf += 2 + random2(4);
    if (you[0].conf > 40) you[0].conf = 40;
    you[0].turnover = 1;
@@ -660,8 +627,7 @@ you[0].turnover = 1;
 return;
 
 whattt:
-strcpy(info, "What?");
-mpr(info);
+	mpr("What?");
 
 } // end staff_spell
 
@@ -685,8 +651,7 @@ strcat(info, str_pass);
 strcat(info, ".");
 mpr(info);
 
-strcpy(info, "Read it?");
-mpr(info);
+	mpr("Read it?");
 
 question : keyin = get_ch();
 
@@ -719,8 +684,7 @@ if (you[0].mutation [MUT_BLURRY_VISION] > 0 && random2(4) < you[0].mutation [MUT
 
 powc = magic_ability(player_mag_abil(), you[0].intel);
 
-strcpy(info, "You find yourself reciting the program code!");
-mpr(info);
+	mpr("You find yourself reciting the program code!");
 
 switch(random2(50))
 {
@@ -729,8 +693,7 @@ case 11:
 case 12:
         if (random2(5) == 0)
         {
-        strcpy(info, "The archive disappears in a mighty explosion!");
-        mpr(info);
+        mpr("The archive disappears in a mighty explosion!");
         you[0].inv_quant [sc_read_2] = 0;
         you[0].inv_no --;
         if (sc_read_2 == you[0].equip [EQ_WEAPON])
@@ -753,16 +716,14 @@ case 12:
 
 case 1:
 case 14:
-strcpy(info, "A cloud of choking fumes pours from the archive's screen!");
-mpr(info);
+	mpr("A cloud of choking fumes pours from the archive's screen!");
 big_cloud(4, you[0].x_pos, you[0].y_pos, 20);
 //if (random() % 3 == 0) return; else break;
 return;
 
 case 2:
 case 13:
-strcpy(info, "A cloud of freezing gas pours from the archive's screen!");
-mpr(info);
+	mpr("A cloud of freezing gas pours from the archive's screen!");
 big_cloud(3, you[0].x_pos, you[0].y_pos, 20);
 //if (random() % 3 == 0) return; else break;
 return;
@@ -774,16 +735,13 @@ case 6:
 case 7:
 case 8:
 case 9:
-strcpy(info, "A cloud of weird smoke pours from the acrhive's screen!");
-mpr(info);
+	mpr("A cloud of weird smoke pours from the acrhive's screen!");
 big_cloud(5 + random2(3), you[0].x_pos, you[0].y_pos, 20);
 return;// else break;
 
 case 10:
-strcpy(info, "A horrible Thing appears!");
-mpr(info);
-strcpy(info, "It doesn't look too friendly.");
-mpr(info);
+	mpr("A horrible Thing appears!");
+	mpr("It doesn't look too friendly.");
 create_monster(MONS_LARGE_ABOMINATION, 25, 1, you[0].x_pos, you[0].y_pos, MHITNOT, 250);
 return;
 
@@ -840,8 +798,7 @@ strcat(info, skill_name(you[0].inv_plus [sc_read_2]));
 strcat(info, "!");
 mpr(info);
 
-strcpy(info, "Read it?");
-mpr(info);
+	mpr("Read it?");
 
 question : keyin = get_ch();
 
@@ -876,8 +833,7 @@ exercise(you[0].inv_plus [sc_read_2], 100);
 
 if (random2(10) == 0)
 {
-        strcpy(info, "The archive destroys into dust.");
-        mpr(info);
+        mpr("The archive destroys into dust.");
         you[0].inv_quant [sc_read_2] = 0;
         you[0].inv_no --;
         if (sc_read_2 == you[0].equip [EQ_WEAPON])
@@ -888,8 +844,7 @@ if (random2(10) == 0)
         burden_change();
 } else
 {
- strcpy(info, "The archive looks increasingly old and worn.");
- mpr(info);
+ mpr("The archive looks increasingly old and worn.");
 }
 
 
@@ -950,30 +905,26 @@ void ball_of_energy(void)
  int use = 0;
  int proportional = 0;
 
- strcpy(info, "You gaze into the crystal ball.");
- mpr(info);
+ mpr("You gaze into the crystal ball.");
  use = random2(you[0].intel * 6);
  if (you[0].conf != 0) use = 0;
  if (use < 2 || you[0].ep_max == 0)
  {
-  strcpy(info, "Your head hurts!");
-  mpr(info);
+  mpr("Your head hurts!");
   if (you[0].intel > 3) you[0].intel --;
   you[0].intel_ch = 1;
   return;
  }
  if (use < 4 || you[0].ep == you[0].ep_max)
  {
-  drain_away: strcpy(info, "You feel your power drain away!");
-  mpr(info);
+  drain_away: mpr("You feel your power drain away!");
   you[0].ep = 0;
   you[0].ep_ch = 1;
   return;
  }
  if (use < 6)
  {
-  strcpy(info, "You feel confused.");
-  mpr(info);
+  mpr("You feel confused.");
   you[0].conf += 10 + random2(10);
   if (you[0].conf > 40) you[0].conf = 40;
   return;
@@ -985,8 +936,7 @@ void ball_of_energy(void)
  if (random2(20) + random2(20) + random2(20) + random2(10) > proportional || random2(25) == 0)
     goto drain_away;
 
- strcpy(info, "You are suffused with power!");
- mpr(info);
+ mpr("You are suffused with power!");
  you[0].ep += 12 + random2(12) + random2(12);
  if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
  you[0].ep_ch = 1;
@@ -995,10 +945,8 @@ void ball_of_energy(void)
 void ball_of_fixation(void)
 {
 
- strcpy(info, "You gaze into the crystal ball.");
- mpr(info);
- strcpy(info, "You are mesmerised by a rainbow of scintillating colours!");
- mpr(info);
+ mpr("You gaze into the crystal ball.");
+ mpr("You are mesmerised by a rainbow of scintillating colours!");
 
  you[0].paralysis = 100;
  you[0].slow = 100;
