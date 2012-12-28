@@ -1377,69 +1377,52 @@ void close_door(char door_x, char door_y)
 	door_move[0].move_x = door_x;
 	door_move[0].move_y = door_y;
 
-	if (door_move[0].move_x == 100)
-	{
- 		door_move[0].move_x = 0;
- 		door_move[0].move_y = 0;
- 		mpr("Which direction?");
- 		direction(0, door_move);
+	if (door_move[0].move_x == 100) {
+		door_move[0].move_x = 0;
+		door_move[0].move_y = 0;
+		mpr("Which direction?");
+		direction(0, door_move);
 	}
 
-	if (door_move[0].move_x > 1 || door_move[0].move_y > 1)
-	{
+	if (door_move[0].move_x > 1 || door_move[0].move_y > 1) {
 		mpr("I'm afraid your arm isn't that long.");
 		return;
 	}
 
-	if (door_move[0].move_x == 0 && door_move[0].move_y == 0)
-	{
+	if (door_move[0].move_x == 0 && door_move[0].move_y == 0) {
 		mpr("You can't close doors on yourself!");
 		return;
 	}
 
-//if (env[0].eenv[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != MNG)
-	if (env[0].mgrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != MNG)
-	{
-	// Need to make sure that turnover = 1 if creature is invisible
+	int new_pos_x = you[0].x_pos + door_move[0].move_x;
+	int new_pos_y = you[0].y_pos + door_move[0].move_y;
+
+	if (env[0].mgrid [new_pos_x] [new_pos_y] != MNG) {
 		mpr("There's a creature in the doorway!");
-		door_move[0].move_x = 0; door_move[0].move_y = 0;
 		return;
 	}
 
-
-
-	if (grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] == 70)
-	{
-
-		if (env[0].igrid [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] != 501)
-		{
+	if (grd [new_pos_x] [new_pos_y] == 70) {
+		if (env[0].igrid [new_pos_x] [new_pos_y] != 501) {
 			mpr("There's something blocking the doorway.");
-		 	door_move[0].move_x = 0;
-			door_move[0].move_y = 0;
-		 	return;
+			return;
 		}
 
-		if (you[0].lev != 0)
-		{
-	 		mpr("You reach down and close the door.");
-	 		grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 3;
-	 		you[0].turnover = 1;
-		} else
-	    {
-			if (random2(25) == 0)
-			{
+		if (you[0].lev != 0) {
+			mpr("You reach down and close the door.");
+		} else {
+			if (random2(25) == 0) {
 				mpr("As you close the door, it creaks loudly!");
-                noisy(15, you[0].x_pos, you[0].y_pos);
-			} else mpr("You close the door.");
-
-			grd [you[0].x_pos + door_move[0].move_x] [you[0].y_pos + door_move[0].move_y] = 3;
-			you[0].turnover = 1;
-	  	}
-	} else
-	{
+				noisy(15, you[0].x_pos, you[0].y_pos);
+			} else {
+				mpr("You close the door.");
+			}
+		}
+		grd [new_pos_x] [new_pos_y] = 3;
+		you[0].turnover = 1;
+	} else {
 		mpr("There isn't anything that you can close there!");
 	}
-
 } // end of void open_door()
 
 void init_system()
