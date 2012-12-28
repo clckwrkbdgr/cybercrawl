@@ -1564,226 +1564,218 @@ void initialise()
 	setup_game();
 }
 
+bool act_confused(int move_x, int move_y) {
+	if (random2(3) != 0) {
+		move_x = random2(3) - 1;
+		move_y = random2(3) - 1;
+	}
+	
+	int new_pos_x = you[0].x_pos + move_x;
+	int new_pos_y = you[0].y_pos + move_y;
+
+	if (grd [new_pos_x] [new_pos_y] < MINMOVE) {
+		you[0].turnover = 1;
+		mpr("Ouch!");
+		return true;
+	}
+
+	if ((grd [new_pos_x] [new_pos_y] == 61 || grd [new_pos_x] [new_pos_y] == 62) && you[0].lev == 0) {
+		fall_into_a_pool(0, grd [new_pos_x] [new_pos_y]);
+		you[0].turnover = 1;
+		return true;
+	}
+	return false;
+}
+
+int mng_attack(int cell)
+{
+	if (cell != MNG) {
+		if (menv[cell].m_class >= MLAVA0 && menv[cell].m_sec == 1) {
+			return 0;
+		}
+		if (menv[cell].m_beh == 7 && menv[cell].m_ench [2] != 6 && you[0].conf == 0) {
+			swap_places(cell);
+			return 0;
+		}
+		you_attack(cell);
+		you[0].turnover = 1;
+		return 1;
+	}
+	return 0;
+}
+
+bool move_to_a_pool(int new_pos_x, int new_pos_y, char attacking)
+{
+	if ((grd [new_pos_x] [new_pos_y] == 61 || grd [new_pos_x] [new_pos_y] == 62) && attacking == 0 && you[0].lev == 0) {
+		mpr("Do you really want to step there?");
+		char stepping = get_ch();
+		if (stepping == 'y' || stepping == 'Y') {
+			fall_into_a_pool(0, grd [new_pos_x] [new_pos_y]);
+			you[0].turnover = 1;
+			return true;
+		}
+		mpr("Okay, then.");
+		return true;
+	}
+	return false;
+}
+
+bool move_to_a_trap(int new_pos_x, int new_pos_y)
+{
+	if (grd [new_pos_x] [new_pos_y] == 78 && random() % (you[0].skills [SK_TRAPS_DOORS] + 1) > 3) {
+		strcpy(info, "Wait a moment, ");
+		strcat(info, you[0].your_name);
+		strcat(info, "! Do you really want to step there?");
+		mpr(info);
+		more();
+		you[0].turnover = 0;
+		int i;
+		for (i = 0; i < NTRAPS; i ++) {
+			if (env[0].trap_x [i] == new_pos_x && env[0].trap_y [i] == new_pos_y) break;
+		}
+		if (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7) grd [new_pos_x] [new_pos_y] = 75;
+		if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8) grd [new_pos_x] [new_pos_y] = 76;
+		return true;
+	}
+	return false;
+}
+
 /*
 Called when the player moves by walking/running. Also calls attack function
 and trap function etc when necessary.
 */
 void move(char move_x, char move_y)
 {
-	char attacking = 0;
-	char stepping = 0;
-//char move_x, move_y;
-	char info [200];
 	int i;
 	int trap_known, trapped;
 	struct bolt beam [1];
 
-	if (you[0].conf > 0)
-	{
-  		if (random2(3) != 0)
-  		{
-        	move_x = random2(3) - 1;
-			move_y = random2(3) - 1;
-  		}
-
-		if (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] < MINMOVE)
-		{
-			you[0].turnover = 1;
-			mpr("Ouch!");
+	if (you[0].conf > 0) {
+		if(act_confused(move_x, move_y)) {
 			return;
 		}
+	}
 
-  		if ((grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] == 61 || grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] == 62) && you[0].lev == 0)
-		{
-		  	fall_into_a_pool(0, grd [you[0].x_pos + move_x] [you[0].y_pos + move_y]);
-			you[0].turnover = 1;
-			return;
-		}
-	} // end of if you[0].conf
+	int new_pos_x = you[0].x_pos + move_x;
+	int new_pos_y = you[0].y_pos + move_y;
 
-	if (you[0].running > 0 && you[0].running != 2 && grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] != 67 && grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] != 78)
-	{
+	if (you[0].running > 0 && you[0].running != 2 && grd [new_pos_x] [new_pos_y] != 67 && grd [new_pos_x] [new_pos_y] != 78) {
 		you[0].running = 0;
-		move_x = 0;
-		move_y = 0;
 		you[0].turnover = 0;
-	    return;
-	}
-
-	if (mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y] != MNG)
-	{
-	    if (menv[mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]].m_class >= MLAVA0 && menv[mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]].m_sec == 1) goto break_out;
-	    if (menv[mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]].m_beh == 7 && menv[mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]].m_ench [2] != 6 && you[0].conf == 0)
-	    {
-	      	swap_places(mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]);
-	      	goto break_out;
-	    }
-		you_attack(mgrd [you[0].x_pos + move_x] [you[0].y_pos + move_y]);
-		you[0].turnover = 1;
-		attacking = 1;
-	}
-
- 	break_out :
-	if ((grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] == 61 || grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] == 62) && attacking == 0 && you[0].lev == 0)
-	{
-    	mpr("Do you really want to step there?");
-		stepping = get_ch();
-  		if (stepping == 'y' || stepping == 'Y')
-  		{
-			fall_into_a_pool(0, grd [you[0].x_pos + move_x] [you[0].y_pos + move_y]);
- 			you[0].turnover = 1;
-	 		return;
- 	 	}
-  		mpr("Okay, then.");
 		return;
 	}
 
-	if (attacking == 0 && (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] >= MINMOVE))
-	{
-     	if (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] == 78 && random() % (you[0].skills [SK_TRAPS_DOORS] + 1) > 3)
-        {
-        	strcpy(info, "Wait a moment, ");
-            strcat(info, you[0].your_name);
-            strcat(info, "! Do you really want to step there?");
-            mpr(info);
-            more();
-            you[0].turnover = 0;
-			for (i = 0; i < NTRAPS; i ++)
-			{
-				if (env[0].trap_x [i] == you[0].x_pos + move_x && env[0].trap_y [i] == you[0].y_pos + move_y) break;
-			}
-			if (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7) grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] = 75;
-            if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8) grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] = 76;
-            return;
+	char attacking = mng_attack(mgrd [new_pos_x] [new_pos_y]);
+
+	if(move_to_a_pool(new_pos_x, new_pos_y, attacking)) {
+		return;
+	}
+
+	if (attacking == 0 && (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] >= MINMOVE)) {
+		if(move_to_a_trap(new_pos_x, new_pos_y)) {
+			return;
 		}
+
 		you[0].x_pos += move_x;
 		you[0].y_pos += move_y;
-        if (grd [you[0].x_pos] [you[0].y_pos] == 65 && you[0].lev == 0)
-        {
-         if (random2(3) == 0)
-         {
-          mpr("Splash!");
-          noisy(10, you[0].x_pos, you[0].y_pos);
-         }
-		 you[0].time_taken *= 13 + random2(8);
-		 you[0].time_taken /= 10;
-         if (grd [you[0].x_pos - move_x] [you[0].y_pos - move_y] != 65)
-         {
-          mpr("You enter the shallow water. Moving in this stuff is going to be slow.");
-          if (you[0].invis != 0)
-          {
-           mpr("And don't expect to remain undetected.");
-          }
-         }
-        }
+		if (grd [you[0].x_pos] [you[0].y_pos] == 65 && you[0].lev == 0) {
+			if (random2(3) == 0) {
+				mpr("Splash!");
+				noisy(10, you[0].x_pos, you[0].y_pos);
+			}
+			you[0].time_taken *= 13 + random2(8);
+			you[0].time_taken /= 10;
+			if (grd [you[0].x_pos - move_x] [you[0].y_pos - move_y] != 65) {
+				mpr("You enter the shallow water. Moving in this stuff is going to be slow.");
+				if (you[0].invis != 0) {
+					mpr("And don't expect to remain undetected.");
+				}
+			}
+		}
 		move_x = 0;
 		move_y = 0;
-  		if (player_fast_run() != 0)
- 	 	{
-   			you[0].time_taken *= 6;
-   			you[0].time_taken /= 10;
+		if (player_fast_run() != 0) {
+			you[0].time_taken *= 6;
+			you[0].time_taken /= 10;
 		}
- 		if (you[0].attribute [ATTR_WALK_SLOWLY] != 0)
-		{
-   			you[0].time_taken *= 14;
-   			you[0].time_taken /= 10;
-  		}
+		if (you[0].attribute [ATTR_WALK_SLOWLY] != 0) {
+			you[0].time_taken *= 14;
+			you[0].time_taken /= 10;
+		}
 		you[0].turnover = 1;
-        item_check(0);
+		item_check(0);
 
-		if (grd [you[0].x_pos] [you[0].y_pos] > 74 && grd [you[0].x_pos] [you[0].y_pos] < 79)
-		{
-
-			if (grd [you[0].x_pos] [you[0].y_pos] == 78)
-			{
-				//abort();
-				for (i = 0; i < NTRAPS; i ++)
-				{
+		if (grd [you[0].x_pos] [you[0].y_pos] > 74 && grd [you[0].x_pos] [you[0].y_pos] < 79) {
+			if (grd [you[0].x_pos] [you[0].y_pos] == 78) {
+				for (i = 0; i < NTRAPS; i ++) {
 					if (env[0].trap_x [i] == you[0].x_pos && env[0].trap_y [i] == you[0].y_pos) break;
 				}
 				if (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7) grd [you[0].x_pos] [you[0].y_pos] = 75;
-			   	if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8) grd [you[0].x_pos] [you[0].y_pos] = 76;
-	           	trap_known = 0;
+				if (env[0].trap_type [i] == 4 || env[0].trap_type [i] == 5 || env[0].trap_type [i] == 8) grd [you[0].x_pos] [you[0].y_pos] = 76;
+				trap_known = 0;
+			} else {
+				trap_known = 1;
+			}
 
-				// else if (trap_type is magic etc
-			} else trap_known = 1;
-
-
-			for (i = 0; i < NTRAPS; i ++)
-			{
+			for (i = 0; i < NTRAPS; i ++) {
 				if (env[0].trap_x [i] == you[0].x_pos && env[0].trap_y [i] == you[0].y_pos) break;
 			}
 
-        	if (you[0].lev != 0 && (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7))
-                goto out_of_traps; /* Can fly over mechanical traps */
+			if (you[0].lev != 0 && (env[0].trap_type [i] < 4 || env[0].trap_type [i] == 6 || env[0].trap_type [i] == 7)) {
+				goto out_of_traps; /* Can fly over mechanical traps */
+			}
 
-			switch(env[0].trap_type [i])
-			{
-
+			switch(env[0].trap_type [i]) {
 				case 0:
 					strcpy(beam[0].beam_name, " dart");
 					beam[0].damage = 4;
 					trapped = i;
 					dart_trap(trap_known, i, beam);
 					break;
-
 				case 1:
 					strcpy(beam[0].beam_name, "n arrow");
 					beam[0].damage = 7;
 					trapped = i;
 					dart_trap(trap_known, i, beam);
 					break;
-
 				case 2:
 					strcpy(beam[0].beam_name, " spear");
 					beam[0].damage = 10;
 					trapped = i;
 					dart_trap(trap_known, i, beam);
 					break;
-
 				case 3:
 					strcpy(beam[0].beam_name, "n axe");
 					beam[0].damage = 15;
 					trapped = i;
 					dart_trap(trap_known, i, beam);
 					break;
-
-   				case 4:
-				   	mpr("You enter a ventilation shaft trap!");
-	   				if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == 0 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 >= 25)
-    				if (randart_wpn_properties(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], 0, RAP_PREVENT_TELEPORTATION) > 0)
-				    {
-     					mpr("You feel a weird sense of stasis.");
-     					break;
-   					}
-	   				you_teleport2(1);
-	   				break;
-
-   				case 5:
-   					mpr("You feel momentarily disoriented.");
-   					forget_map(random2(50) + random2(50) + 2);
-   					break;
-
+				case 4:
+					mpr("You enter a ventilation shaft trap!");
+					if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == 0 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 >= 25) {
+						if (randart_wpn_properties(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], 0, RAP_PREVENT_TELEPORTATION) > 0) {
+							mpr("You feel a weird sense of stasis.");
+							break;
+						}
+					}
+					you_teleport2(1);
+					break;
+				case 5:
+					mpr("You feel momentarily disoriented.");
+					forget_map(random2(50) + random2(50) + 2);
+					break;
 				case 7:
 					strcpy(beam[0].beam_name, " bolt");
 					beam[0].damage = 13;
 					trapped = i;
 					dart_trap(trap_known, i, beam);
 					break;
-
-
-
-   				default: handle_traps(env[0].trap_type [i], trap_known); break;
-
-
+				default: handle_traps(env[0].trap_type [i], trap_known); break;
 			} // end of switch
 		} // end of if another grd == trap
-
 	}
-
-
-	out_of_traps : if (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] <= MINMOVE)
-	{
+out_of_traps :
+	if (grd [you[0].x_pos + move_x] [you[0].y_pos + move_y] <= MINMOVE) {
 		move_x = 0;
 		move_y = 0;
 		you[0].running = 0;
@@ -1791,41 +1783,13 @@ void move(char move_x, char move_y)
 	}
 
 
- 	if (you[0].running == 2) you[0].running = 1;
+	if (you[0].running == 2) {
+		you[0].running = 1;
+	}
 
- 	if (you[0].level_type == 2 && (you[0].x_pos <= 21 || you[0].x_pos >= 61 || you[0].y_pos <= 15 || you[0].y_pos >= 54))
-   	{
-	    env[0].cloud_no = area_shift();
-    	you[0].pet_target = MHITNOT;
-#ifdef DEBUG
-	    mpr("Shifting.");
-		int igly = 0;
-		int ig2 = 0;
-		for (igly = 0; igly < ITEMS; igly ++)
-		{
-			if (it[0].iquant [igly] != 0) ig2 ++;
-		}
-		strcpy(info, "No of items present: ");
-		itoa(ig2, st_prn, 10);
-		strcat(info, st_prn);
-		mpr(info);
-		ig2 = 0;
-		for (igly = 0; igly < MNST; igly ++)
-		{
-	 		if (mons [igly].m_class != -1) ig2 ++;
-		}
-		strcpy(info, "No of monsters present: ");
-		itoa(ig2, st_prn, 10);
-		strcat(info, st_prn);
-		mpr(info);
-		strcpy(info, "No of clouds present: ");
-		itoa(cloud_no, st_prn, 10);
-		strcat(info, st_prn);
-		mpr(info);
-
-#endif
-   }
-
-
-} // end of void move()
+	if (you[0].level_type == 2 && (you[0].x_pos <= 21 || you[0].x_pos >= 61 || you[0].y_pos <= 15 || you[0].y_pos >= 54)) {
+		env[0].cloud_no = area_shift();
+		you[0].pet_target = MHITNOT;
+	}
+}
 
