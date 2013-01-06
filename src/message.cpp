@@ -7,11 +7,8 @@
 #include "macro.h"
 #include "message.h"
 
-Format globalTempFormat("Temp");
-Format & format(const std::string & format_string)
-{
-	globalTempFormat = Format(format_string);
-	return globalTempFormat;
+Message msg(const std::string & format_string) {
+	return Message(format_string);
 }
 
 char scrloc = 1; // Line of next (previous?) message.
@@ -46,11 +43,6 @@ void more()
 
 	mesclr();
 } 
-
-void mpr(const Format & format)
-{
-	mpr(format.str().c_str());
-}
 
 void mpr(const char * inf)
 {

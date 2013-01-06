@@ -1,6 +1,13 @@
 #pragma once
+#include <cassert>
 #include <string>
 #include <sstream>
+
+// TODO Move all messaging from MPR to MSG.
+void mpr(const char * inf);
+void more();
+void mesclr();
+void replay_messages();
 
 class Format {
 public:
@@ -30,9 +37,6 @@ private:
 	int current_placeholder;
 	std::string result;
 };
-
-Format & format(const std::string & format_string);
-
 template<class T>
 Format & operator<<(Format & format, const T & value)
 {
@@ -40,8 +44,37 @@ Format & operator<<(Format & format, const T & value)
 	return format;
 }
 
-void mpr(const Format & format);
-void mpr(const char * inf);
-void more();
-void mesclr();
-void replay_messages();
+struct MessageData {
+	MessageData(const std::string & format_string) : format(format_string), refCount(1) {}
+	Format format;
+	int refCount;
+};
+class Message {
+public:
+	Message(const std::string & format_string) : data(new MessageData(format_string)) { }
+	Message(const Message & other) : data(other.data) { data->refCount++; }
+	~Message()
+	{
+		data->refCount--;
+		assert(data->refCount >= 0);
+		if(data->refCount == 0) {
+			mpr(data->format.str().c_str());
+			delete data;
+		}
+	}
+	template<class T>
+	void arg(const T & value) {
+		data->format.arg(value);
+	}
+private:
+	Message & operator=(const Message & other) { return * this; }
+	MessageData * data;
+};
+template<class T>
+Message operator<<(Message message, const T & value)
+{
+	message.arg(value);
+	return message;
+}
+Message msg(const std::string & format_string);
+

@@ -160,13 +160,13 @@ int get_control(char & move_x, char & move_y) // FIXME References are bad!
 
 void print_experience_info()
 {
-	mpr(format("You are a level @1 @2 @3.") << you[0].xl << species_name(you[0].species) << you[0].clasnam);
+	msg("You are a level @1 @2 @3.") << you[0].xl << species_name(you[0].species) << you[0].clasnam;
 	if (you[0].xl == 27) {
-		mpr("I'm sorry, level 27 is as high as you can go.");
-		mpr("With the way you've been playing, I'm surprised you got this far.");
+		msg("I'm sorry, level 27 is as high as you can go.");
+		msg("With the way you've been playing, I'm surprised you got this far.");
 		return;
 	}
-	mpr(format("Your next level is at @1 experience points.") << (exp_needed(you[0].xl + 2, you[0].species) + 1));
+	msg("Your next level is at @1 experience points.") << (exp_needed(you[0].xl + 2, you[0].species) + 1);
 }
 
 void process_control(int keyin, char & move_x, char & move_y) // FIXME References are bad!
