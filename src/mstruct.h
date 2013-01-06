@@ -1,7 +1,8 @@
+#pragma once
+#include "defines.h"
 // ($pellbinder) (c) D.G.S.E. 1998
 
 // ****remeber***** must make an hardcopy of this sometime
-#define  __attribute__ ((packed))
 //#define 
 typedef char MYCHAR; // used for flags and the like
 typedef unsigned char MYUCHAR; // used for flags and the like
