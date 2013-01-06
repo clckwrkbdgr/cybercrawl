@@ -158,6 +158,17 @@ int get_control(char & move_x, char & move_y) // FIXME References are bad!
 	return keyin;
 }
 
+void print_experience_info()
+{
+	mpr(format("You are a level @1 @2 @3.") << you[0].xl << species_name(you[0].species) << you[0].clasnam);
+	if (you[0].xl == 27) {
+		mpr("I'm sorry, level 27 is as high as you can go.");
+		mpr("With the way you've been playing, I'm surprised you got this far.");
+		return;
+	}
+	mpr(format("Your next level is at @1 experience points.") << (exp_needed(you[0].xl + 2, you[0].species) + 1));
+}
+
 void process_control(int keyin, char & move_x, char & move_y) // FIXME References are bad!
 {
 	if (keyin != 125) {
@@ -167,8 +178,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 	}
 
 	int plox [2];
-	switch(keyin)
-	{
+	switch(keyin) {
 		case 25: open_door(-1, -1); move_x = 0; move_y = 0; break;
 		case 11: open_door(0, -1); move_x = 0; move_y = 0; break;
 		case 21: open_door(1, -1); move_x = 0; move_y = 0; break;
@@ -292,27 +302,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 				  redraw_screen();
 				  break;
 		case 'C':
-				  strcpy(info, "You are a level ");
-				  itoa(you[0].xl, st_prn, 10);
-				  strcat(info, st_prn);
-				  strcat(info, " ");
-				  strcat(info, species_name(you[0].species));
-				  strcat(info, " ");
-				  strcat(info, you[0].clasnam);
-				  strcat(info, ".");
-				  mpr(info);
-
-				  if (you[0].xl == 27)
-				  {
-					  mpr("I'm sorry, level 27 is as high as you can go.");
-					  mpr("With the way you've been playing, I'm surprised you got this far.");
-					  break;
-				  }
-				  strcpy(info, "Your next level is at ");
-				  itoa(exp_needed(you[0].xl + 2, you[0].species) + 1, st_prn, 10);
-				  strcat(info, st_prn);
-				  strcat(info, " experience points.");
-				  mpr(info);
+				  print_experience_info();
 				  break;
 		case '!':
 				  yell(); /* in effects.cc */
