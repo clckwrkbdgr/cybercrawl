@@ -64,24 +64,15 @@ if (force_effect == 100 && random2(40) > spec_effect && random2(40) > spec_effec
 spec_effect = spec_effect / 100;
 
 #ifdef DEBUG
-strcpy(info, "Sptype: ");
-itoa(sp_type, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", failure1: ");
-itoa(spec_effect, st_prn, 10);
-strcat(info, st_prn);
+int failure = spec_effect;
 #endif
-
 
 spec_effect = random2(spec_effect);
 if (spec_effect > 3) spec_effect = 3;
 if (spec_effect < 0) spec_effect = 0;
 
 #ifdef DEBUG
-strcat(info, ", failure2: ");
-itoa(spec_effect, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
+msg("Sptype: @1, failure1: @2, failure2: @3") << sp_type << failure << spec_effect;
 #endif
 
 
@@ -1239,16 +1230,7 @@ if (you[0].inv_no == 0)
 	}
 
 query :
-strcpy(info, "You can install ");
-itoa(you[0].spell_levels, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, " more slot");
-if (!(st_prn [0] == '1' && st_prn [1] == 0)) strcat(info, "s");
-strcat(info, " of programs");
- strcat(info, ".");
-
-mpr(info);
-strcpy(info, "Inmpr from ?");
+msg("You can install @1 more slot@2 of programs.") << you[0].spell_levels << ((you[0].spell_levels == 1) ? "" : "s");
 
 keyin = get_ch();
 if (keyin == '?' || keyin == '*')
@@ -1265,7 +1247,6 @@ if (keyin == '?' || keyin == '*')
 	}
 
 }
-
 
 sc_read_1 = (int) keyin;
 
@@ -1496,11 +1477,8 @@ chance = spell_fail(specspell);
 
 redraw_screen();
 
-strcpy(info, "Install ");
 spell_name(specspell, spell_string);
-strcat(info, spell_string);
-strcat(info, "?");
-mpr(info);
+msg("Install @1?") << spell_string;
 keyin = getch();
 
 if (keyin == 0) getch();

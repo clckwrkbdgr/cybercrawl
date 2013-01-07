@@ -94,8 +94,6 @@ you[0].delay_t = func_pass [1];
 you[0].delay_doing = func_pass [2];
 
 
-//mpr(info);
-
 if (food_eat_3 == 6)
 {
  restore_str();
@@ -121,8 +119,7 @@ int item_got = 0;
 
 if (you[0].lev != 0 && wearing_amulet(AMU_CONTROLLED_FLIGHT) == 0)
 {
-//	strcpy(info, "You can't reach the floor from up here.");
-//	mpr(info);
+	mpr("You can't reach the floor from up here.");
 	return 0;
 }
 
@@ -199,10 +196,6 @@ if (items_here == 1)
      return 0;
     }
 
-/*    itoa(mons_corpse_thingy(mitm.iplus [item_got]), st_prn, 10);
-    strcpy(info, st_prn);
-    mpr(info);*/
-
 //   if ((mitm.idam [item_got] < 100 && mons_corpse_thingy(mitm.iplus [item_got]) == 1) || mons_corpse_thingy(mitm.iplus [item_got]) == 2 || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0)) eat_meat(50);
    if (mitm.idam [item_got] < 100 && ((mons_corpse_thingy(mitm.iplus [item_got]) == 1 || mons_corpse_thingy(mitm.iplus [item_got]) == 2) || (mons_corpse_thingy(mitm.iplus [item_got]) == 3 && player_res_poison() != 0))) eat_meat(50);
     else eat_meat(mons_corpse_thingy(mitm.iplus [item_got]));
@@ -220,7 +213,6 @@ if (items_here == 1)
    you[0].delay_t = func_pass [1];
    you[0].delay_doing = func_pass [2];
 
-//   mpr(info);
    if (mitm.itype [item_got] == 6)
    {
     restore_str();
@@ -308,7 +300,6 @@ if (items_here > 1)
    you[0].delay_t = func_pass [1];
    you[0].delay_doing = func_pass [2];
 
-//   mpr(info);
    if (mitm.itype [item_got] == 6)
    {
     restore_str();
@@ -343,7 +334,6 @@ if (items_here > 1)
 	if (items_here == 0) break;
 	} // end of while k loop
 
-//	strcpy(info, "That's all.");
 } // end of if items_here
 //itc = 0;
 
@@ -436,11 +426,8 @@ if (counter > 1000)
 if (items_here == 1)
 {
    if (mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14 || mitm.itype [igrd [you[0].x_pos] [you[0].y_pos]] != 0) goto out_of_eating;// && mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14) return 0;
-			strcpy(info, "Butcher ");
 			it_name(igrd [you[0].x_pos] [you[0].y_pos], 3, str_pass);
-			strcat(info, str_pass);
-			strcat(info, "\?");
-			mpr(info);
+			msg("Butcher @1\?") << str_pass;
    unsigned char keyin = getch();
    if (keyin == 0)
    {
@@ -488,11 +475,8 @@ if (items_here > 1)
 	for (k = 0; k < items_here; k++)
 	{
 		    if (mitm.iclass [o] != 14 || mitm.itype [o] != 0) goto out_of_eating; // && mitm.iclass [o] != 14) goto out_of_eating;
-			strcpy(info, "Butcher ");
 			it_name(o, 3, str_pass);
-			strcat(info, str_pass);
-			strcat(info, "\?");
-			mpr(info);
+			msg("Butcher @1\?") << str_pass;
    keyin = getch();
    if (keyin == 0)
    {
@@ -542,7 +526,6 @@ if (items_here > 1)
 	if (items_here == 0) break;
 	} // end of while k loop
 
-//	strcpy(info, "That's all.");
 } // end of if items_here
 //itc = 0;
 
@@ -767,7 +750,6 @@ switch(food_eat_3)
 	return 0;
 
 	case 8:
-	strcpy(info, "Mmm... ");
  switch(random2(9))
 	{
   case 0: mpr("Ham and pineapple."); break;
@@ -798,7 +780,6 @@ switch(food_eat_3)
 	case 10:
         if (you[0].mutation [MUT_CARNIVOROUS] > 0) mpr ("Blech - you need meat!");
 	 else   {	mpr("That orange was delicious!");
-			if (random2(8) == 0) strcat(info, " Even the peel tasted good!");
 		}
 	func_pass [0] += 1000;
 	func_pass [0] -= you[0].mutation [MUT_CARNIVOROUS] * 300;
@@ -810,7 +791,6 @@ switch(food_eat_3)
 	case 11:
         if (you[0].mutation [MUT_CARNIVOROUS] > 0) mpr ("Blech - you need meat!");
 	 else {mpr("That banana was delicious!");
- if (random2(8) == 0) strcat(info, " Even the peel tasted good!");
               }
 	func_pass [0] += 1000;
 	func_pass [0] -= you[0].mutation [MUT_CARNIVOROUS] * 300;
@@ -892,7 +872,6 @@ switch(food_eat_3)
 	return 0;
 
 	case 19:
-	strcpy(info, "Mmm... ");
  switch(random2(9))
 	{
   case 0: mpr("Cheddar."); break;

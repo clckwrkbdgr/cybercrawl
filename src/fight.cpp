@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <vector>
 
 #include "externs.h"
 #include "enum.h"
@@ -60,6 +61,37 @@ int jelly_divide(int jel);
 void place_monster_corpse(unsigned char mcr);
 extern char wield_change; /* defined in output.cc */
 
+std::string sentence_ending_for_spec_damage(int damage)
+{
+	if(damage < 3) {
+		return ".";
+	} else if(damage < 7) {
+		return "!";
+	}
+	return "!!";
+}
+
+std::string sentence_ending_for_disruption_damage(int damage)
+{
+	if(damage < 7) {
+		return ".";
+	} else if(damage < 15) {
+		return "!";
+	}
+	return "!!";
+}
+
+std::string sentence_ending_for_damage(int damage)
+{
+	if(damage < 5) {
+		return ".";
+	} else if(damage < 12) {
+		return "!";
+	} else if( damage < 21) {
+		return "!!";
+	}
+	return "!!!";
+}
 
 void you_attack(int monster_attacked)
 {
@@ -287,9 +319,7 @@ if (you[0].equip [EQ_WEAPON] != -1)
 
 if (menv [monster_attacked].m_speed_inc <= 40 || menv [monster_attacked].m_beh == BEH_SLEEP)
 {
-  strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-  strcat(info, " fails to defend itself.");
-  mpr(info);
+  msg("@1 fails to defend itself.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
   stabbed = 1;
   exercise(SK_STABBING, 1 + random2(2) + random2(2) + random2(2) + random2(2));
   if (mons_holiness(menv [monster_attacked].m_class) != MH_UNDEAD && mons_holiness(menv [monster_attacked].m_class) != MH_DEMONIC) naughty(NAUGHTY_STABBING, 4); /* Servants of TSO must fight fair */
@@ -343,11 +373,8 @@ damage_done /= 30;
 		if (you[0].inv_ident [you[0].equip [EQ_WEAPON]] < 3 && random2(100) < you[0].skills [weapon_skill(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]])])
 		{
 		 you[0].inv_ident [you[0].equip [EQ_WEAPON]] = 3;
-		 strcpy(info, "You are wielding ");
 		 in_name(you[0].equip [EQ_WEAPON], 3, str_pass);
-	 	 strcat(info, str_pass);
-		 strcat(info, ".");
-         mpr(info);
+		 msg("You are wielding @1.") << str_pass;
 		 more();
          wield_change = 1;
 		}
@@ -394,10 +421,7 @@ damage_done /= 30;
                 /* thing_thrown = 1; */
 #ifdef DEBUG
                 itoa(damage_done, st_prn, 10);
-                strcpy(info, "Hit for ");
-                strcat(info, st_prn); /* note: doesn't take account of special weapons etc */
-                strcat(info, ".");
-                mpr(info);
+                msg("Hit for @1.") << st_prn; /* note: doesn't take account of special weapons etc */
 #endif
                 if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && you[0].inv_dam [you[0].equip [EQ_WEAPON]] < 180 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 == SPWPN_VAMPIRICISM)
                 {
@@ -423,38 +447,22 @@ damage_done /= 30;
         if (damage_done < 1 && menv [monster_attacked].m_ench [2] != 6)
         {
          hit = 1;
-         strcpy(info, "You hit ");
-         strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-         strcat(info, ", but do no damage.");
-         mpr(info);
+         msg("You hit @1, but do no damage.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
         }
 
 } else
         {
          hit = 0;
-	 if (your_to_hit + heavy_armour >= menv [monster_attacked].m_ev)
-	 {
-          strcpy(info, "Your armour prevents you from hitting ");
-	 } else strcpy(info, "You miss ");
-         strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-         strcat(info, ".");
-         mpr(info);
+	 if (your_to_hit + heavy_armour >= menv [monster_attacked].m_ev) {
+         msg("Your armour prevents you from hitting @1.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+	 } else {
+		 msg("You miss @1.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+	 }
         }
 
 if ((hit == 1 && damage_done >= 1) || (hit == 1 && damage_done < 1 && menv [monster_attacked].m_ench [2] == 6))
         {
-        strcpy(info, "You hit ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-#ifdef DEBUG
-itoa(damage_done, st_prn, 10);
-strcat(info, " for ");
-strcat(info, st_prn); /* note: doesn't take account of special weapons etc */
-#endif
-        if (damage_done < 5) strcat(info, ".");
- if (damage_done >= 5 && damage_done < 12) strcat(info, "!");
- if (damage_done >= 12 && damage_done < 21) strcat(info, "!!");
- if (damage_done >= 21) strcat(info, "!!!");
- mpr(info);
+        msg("You hit @1@2") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << sentence_ending_for_damage(damage_done);
 
  if (mons_holiness(menv [monster_attacked].m_class) == -1)
 	  done_good(4, 1);
@@ -528,12 +536,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    }
     if (specdam != 0)
     {
-        strcpy(info, "You burn ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("You burn @1@2") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << sentence_ending_for_spec_damage(specdam);
     }
    break;
 
@@ -551,12 +554,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    }
     if (specdam != 0)
     {
-        strcpy(info, "You freeze ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("You freeze @1@2") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << sentence_ending_for_spec_damage(specdam);
     }
    break;
 
@@ -606,10 +604,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
 
    case SPWPN_DRAINING:
    if (mons_holiness(menv [monster_attacked].m_class) > MH_NORMAL || random2(3) == 0) break;
-   strcpy(info, "You drain ");
-   strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-   strcat(info, "!");
-                 mpr(info);
+   msg("You drain @1!") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
    if (random2(5) == 0) menv [monster_attacked].m_HD --;
    menv [monster_attacked].m_hp_max -= 2 + random2(3);
    menv [monster_attacked].m_hp -= 2 + random2(3);
@@ -648,9 +643,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    specdam = 0;
    if (mons_holiness(menv [monster_attacked].m_class) == MH_UNDEAD && random2(3) != 0)
    {
-    strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-    strcat(info, " shudders.");
-    mpr(info);
+    msg("@1 shudders.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
     specdam += random2(damage_done + 1);
     specdam += random2(damage_done + 1);
     specdam += random2(damage_done + 1);
@@ -661,9 +654,7 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    specdam = 0;
    if (mons_holiness(menv [monster_attacked].m_class) <= MH_NORMAL && random2(8) <= you[0].skills [SK_NECROMANCY])
    {
-    strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-    strcat(info, " convulses in agony.");
-    mpr(info);
+    msg("@1 convulses in agony.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
     specdam += random2((you[0].skills [SK_NECROMANCY] * 2) + 1);
    }
    naughty(NAUGHTY_NECROMANCY, 4);
@@ -672,19 +663,13 @@ if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]
    case SPWPN_DISTORTION: /* distortion */
    if (random2(3) == 0)
    {
-    strcpy(info, "Space bends around ");
-    strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-    strcat(info, ".");
-    mpr(info);
+    msg("Space bends around @1.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
     specdam += random2(5) + random2(3) + 1;
     break;
    }
    if (random2(3) == 0)
    {
-    strcpy(info, "Space warps horribly around ");
-    strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-    strcat(info, "!");
-    mpr(info);
+    msg("Space warps horribly around @1!") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
     specdam += random2(12) + random2(13) + 3;
     break;
    }
@@ -724,18 +709,13 @@ if (menv [monster_attacked].m_class == MONS_HYDRA) // hydra
  if (you[0].equip [EQ_WEAPON] != -1 && (damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 1 || damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 3))
  {
   if ((random2(2) != 0 || damage_done < 4) && (you[0].inv_class [you[0].equip [EQ_WEAPON]] != OBJ_WEAPONS || you[0].inv_dam [you[0].equip [EQ_WEAPON]] != WPN_BATTLEAXE)) goto mons_dies;
-  strcpy(info, "You ");
-  switch(random2(4))
-  {
-   case 0: strcat(info, "slice"); break;
-   case 1: strcat(info, "lop"); break;
-   case 2: strcat(info, "chop"); break;
-   case 3: strcat(info, "hack"); break;
-  }
-  strcat(info, " one of ");
-  strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-  strcat(info, "'s heads off.");
-  mpr(info);
+  std::vector<std::string> attack_types;
+  attack_types.push_back("slice");
+  attack_types.push_back("lop");
+  attack_types.push_back("chop");
+  attack_types.push_back("hack");
+
+  msg("You @1 one of @2's heads off.") << attack_types[random2(4)] << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
   menv [monster_attacked].m_sec --;
   if (menv [monster_attacked].m_sec <= 0)
   {
@@ -768,22 +748,6 @@ if (menv [monster_attacked].m_hp <= 0)
                 monster_die(monster_attacked, 1, 0);
                 return;
 }
-
-
-/*if (damage_done >= 1 && you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && you[0].inv_type [you[0].equip [EQ_WEAPON]] > SPWPN_FROST && you[0].inv_type [you[0].equip [EQ_WEAPON]] < 17) //       18??
-{
-        if (random2 (5) == 0)
-        {
-                item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-                strcpy(info, str_pass);
-                strcat(info, " breaks!");
-                mpr(info);
-		unwield_item(you[0].equip [EQ_WEAPON]);
-                you[0].inv_quant [you[0].equip [EQ_WEAPON]] --;
-                you[0].equip [EQ_WEAPON] = -1;
-                wield_change = 1;
-        }
-}*/
 
 if (you[0].invis != 0 && menv [monster_attacked].m_beh == BEH_SLEEP) menv [monster_attacked].m_beh = BEH_CHASING_I;
 
@@ -909,62 +873,34 @@ if ((your_to_hit >= menv [monster_attacked].m_ev || random2(15) == 0))
         if (menv [monster_attacked].m_hp <= 0)
         {
 #ifdef DEBUG
-                itoa(damage_done, st_prn, 10);
-                strcpy(info, "Kick for ");
-                strcat(info, st_prn);
-                strcat(info, ".");
-                mpr(info);
+                msg("Kick for @1.") << damage_done;
 #endif
                 monster_die(monster_attacked, 1, 0);
                 if (menv [monster_attacked].m_class == MONS_GIANT_SPORE)
                 {
-                        strcpy(info, "You ");
-                        strcat(info, attack_name);
-                        strcat(info, "the giant spore.");
-                        mpr(info);
+                        msg("You @1 the giant spore.") << attack_name;
                 }
                 return;
         }
 
         if (damage_done < 1 && menv [monster_attacked].m_ench [2] != 6)
         {
-         strcpy(info, "You ");
-         strcat(info, attack_name);
-         strcat(info, " ");
-         strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-         strcat(info, ", but do no damage.");
-         mpr(info);
+         msg("You @1 @2, but do no damage.") << attack_name << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
          hit = 1;
         }
 
 } else
         {
-   	     strcpy(info, "Your ");
-         strcat(info, attack_name);
-         strcat(info, " misses ");
-         strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-         strcat(info, ".");
-         mpr(info);
+   	     msg("Your @1 misses @2.") << attack_name << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
          damage_done = -99;
         }
 
 if (damage_done >= 1 || (damage_done < 1 && menv [monster_attacked].m_ench [2] == 6 && damage_done != -99))
         {
-        strcpy(info, "You ");
-        strcat(info, attack_name);
-        strcat(info, " ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-#ifdef DEBUG
-itoa(damage_done, st_prn, 10);
-strcat(info, " for ");
-strcat(info, st_prn);
-#endif
- if (damage_done < 5) strcat(info, ".");
- if (damage_done >= 5 && damage_done < 12) strcat(info, "!");
- if (damage_done >= 12 && damage_done < 21) strcat(info, "!!");
- if (damage_done >= 21) strcat(info, "!!!");
- mpr(info);
-
+			msg("You @1 @2@3")
+				<< attack_name
+				<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1)
+				<< sentence_ending_for_damage(damage_done);
  if (mons_holiness(menv [monster_attacked].m_class) == -1)
 	  done_good(4, 1);
  hit = 1;
@@ -1666,11 +1602,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
     specdam = random2(damage_taken);
     if (specdam != 0)
     {
-        strcpy(info, "The wound is extremely painful");
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("The wound is extremely painful@1") << sentence_ending_for_spec_damage(specdam);
     }
    }
    break;
@@ -1696,11 +1628,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
     specdam = random2(damage_taken);
     if (specdam != 0)
     {
-        strcpy(info, "The wound is extremely painful");
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("The wound is extremely painful@1") << sentence_ending_for_spec_damage(specdam);
     }
    }
    break;
@@ -1766,11 +1694,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
     specdam = random2(damage_taken) + random2(damage_taken) + random2(damage_taken) + random2(damage_taken);
     if (specdam != 0)
     {
-        strcpy(info, "You are blasted by holy energy");
-        if (specdam < 7) strcat(info, ".");
-        if (specdam >= 7 && specdam < 15) strcat(info, "!");
-        if (specdam >= 15) strcat(info, "!!");
-        mpr(info);
+        msg("You are blasted by holy energy@1") << sentence_ending_for_disruption_damage(specdam);
     }
    }
    break;
@@ -2737,9 +2661,7 @@ case 2: /* Monster kills in combat */
 case 4: /* Monster kills by missile or beam */
 if (mons_near(monster_killed) == 1)
 {
-        strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0)); //gmon_name [menv [monster_killed].m_class]);
-        strcat(info, " dies!");
-        mpr(info);
+	msg("@1 dies!") << monam(menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
 }
 
 if (menv [monster_killed].m_beh == BEH_ENSLAVED) naughty(6, (menv [monster_killed].m_HD / 2) + 1);
@@ -2772,9 +2694,7 @@ break;
 case 5: /* Monster killed by trap/inanimate thing/itself/poison not from you */
 if (mons_near(monster_killed))
 {
-strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-strcat(info, " dies!");
-mpr(info);
+msg("@1 dies!") << monam(menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
 }
 break;
 
@@ -2783,8 +2703,7 @@ case 6: /* Monster doesn't die, just goes back to wherever it came from
  because it uses the beam variables! Or does it??? */
 if (mons_near(monster_killed))
 {
- strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0)); //gmon_name [mons_class [i]]);
- strcat(info, " disappears in a puff of smoke!");
+ msg("@1 disappears in a puff of smoke!") << monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
  mpr(info);
  place_cloud(random2(3) + 105, menv [monster_killed].m_x, menv [monster_killed].m_y, 1 + random2(3));
 }
@@ -2867,9 +2786,7 @@ out_of_worm : if (menv [monster_killed].m_class == MONS_TUNNELING_WORM || menv [
    {
     if (mons_near(monster_killed) && mons_weight(mons_charclass(menv [monster_killed].m_class)) != 0)
     {
-     strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0));
-     strcat(info, "'s corpse disappears in a puff of smoke!");
-     mpr(info);
+     msg("@1's corpse disappears in a puff of smoke!") << monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
      place_cloud(random2(3) + 105, menv [monster_killed].m_x, menv [monster_killed].m_y, 1 + random2(3));
     }
    } else place_monster_corpse(monster_killed);
@@ -3079,15 +2996,16 @@ menv [monsc].m_speed_inc = 70 + random2(5);
 
 monster_drop_ething(monsc);
 
-strcpy(info, monam (old_sec, old_class, menv [monsc].m_ench [2], 0));
-if (menv [monsc].m_ench [1] == 39 || menv [monsc].m_ench [1] == 38) strcat(info, " changes into ");
- else if (targetc == 131) strcat(info, " degenerates into ");
-   else strcat(info, " evaporates, and reforms as ");
-
-strcat(info, monam (menv [monsc].m_sec, menv [monsc].m_class, menv [monsc].m_ench [2], 3));
-if (targetc == 131) strcat(info, " of flesh");
-strcat(info, "!");
-if (mons_near(monsc)) mpr(info);
+if (mons_near(monsc)) {
+	std::string effect = "evaporates, and reforms as";
+	if (menv [monsc].m_ench [1] == 39 || menv [monsc].m_ench [1] == 38) {
+		effect = "changes into";
+	} else if (targetc == 131) {
+		effect = "degenerates into";
+	}
+	bool of_flesh = (targetc == 131);
+	msg("@1 @2@3!") << monam(old_sec, old_class, menv[monsc].m_ench[2], 0) << effect << monam(menv[monsc].m_sec, menv[monsc].m_class, menv[monsc].m_ench[2], 3) << (of_flesh ? " of flesh" : "");
+}
 
 } /* end of monster_polymorph */
 

@@ -245,10 +245,7 @@ void beam(struct bolt beam [1])
 	               	beam[0].aim_down = 0;
 					return;
 				}
-				strcpy(info, "The ");
-				strcat(info, beam[0].beam_name);
-				strcat(info, " bounces.");
-				mpr(info);
+				msg("The @1 bounces.") << beam[0].beam_name;
 				if ((beam[0].move_x == 0) ^ (beam[0].move_y == 0)) //   ^ XOR
 				{
 					beam_sign_x *= -1;
@@ -348,10 +345,7 @@ void beam(struct bolt beam [1])
 
    				if (beam[0].hit < random2(player_evasion()) + random2(you[0].dex) / 3 - 2 && (beam[0].move_x != 0 || beam[0].move_y != 0))
    				{
-			    	strcpy(info, "The ");
-			     	strcat(info, beam[0].beam_name);
- 				    strcat(info, " misses you.");
-				    mpr(info);
+			    	msg("The @1 misses you.") << beam[0].beam_name;
 				    continue;
    				}
   			}
@@ -429,9 +423,6 @@ void beam(struct bolt beam [1])
 
 
 
-			strcpy(info, "The ");
-			strcat(info, beam[0].beam_name);
-			strcat(info, " hits you");
 
 			hurted = 0;
 
@@ -450,8 +441,7 @@ void beam(struct bolt beam [1])
 				hurted -= random2(player_AC() + 1);
 			}
 
-			strcat(info, "!");
-			mpr(info);
+			msg("The @1 hits you!") << beam[0].beam_name;
 
 		 	if (you[0].equip [EQ_SHIELD] != -1)
   			if (beam[0].move_x != 0 || beam[0].move_y != 0) exercise(SK_SHIELDS, (random() % 3) / 2);
@@ -466,8 +456,6 @@ void beam(struct bolt beam [1])
 			hurted = check_your_resists(hurted, beam[0].flavour);
 
 /*	check_your_resists(); */
-/*	strcat(info, "!");
-	if (strcmp(info, "How terrible") != 0) mpr(info);*/
 
 			if (beam[0].flavour == 2 || stricmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(3, 6); // also above
  			if (beam[0].flavour == 3) scrolls_burn(3, 8);
@@ -519,24 +507,14 @@ void beam(struct bolt beam [1])
   					{
    						if (beam[0].hit < random2(menv [o].m_ev))
    						{
-					    	strcpy(info, "The ");
-						    strcat(info, beam[0].beam_name);
-     						strcat(info, " misses ");
-					   		strcat(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1)); //gmon_name [menv_class [o]]);
-						    strcat(info, ".");
-     						mpr(info);
+					    	msg("The @1 misses @2.") << beam[0].beam_name << monam(menv[o].m_sec, menv[o].m_class, menv[o].m_ench[2], 1);
      						goto check_aimed;
    						}
   					}
 
 
 
-  					strcpy(info, "The ");
-					strcat(info, beam[0].beam_name);
-					strcat(info, " hits ");
-					strcat(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1)); //gmon_name [mons_class [o]]);
-					strcat(info, ".");
-					mpr(info);
+					msg("The @1 hits @2.") << beam[0].beam_name << monam(menv[o].m_sec, menv[o].m_class, menv[o].m_ench[2], 1);
 
 					hurted = 0;
 
@@ -651,9 +629,7 @@ void beam(struct bolt beam [1])
     		        if (check_mons_magres(o, beam[0].ench_power) == 0 && (beam[0].move_x != 0 || beam[0].move_y)) goto it_resists;
 					if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 					{
-						strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-						strcat(info, " looks slightly unstable.");
-						mpr(info);
+						msg("@1 looks slightly unstable.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                         beam[0].wand_id = 1;
 					}
 					monster_teleport(o, 0);
@@ -675,9 +651,7 @@ void beam(struct bolt beam [1])
 		            if (check_mons_magres(o, beam[0].ench_power) == 0) goto it_resists;
 		            if (you[0].level_type == 2)
                     {
- 					 strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 					 strcat(info, " wobbles for a moment.");
- 					 mpr(info);
+ 					 msg("@1 wobbles for a moment.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                     } else monster_die(o, 6, beam[0].beam_source);
 		            beam[0].aim_down = 0;
                     beam[0].wand_id = 1;
@@ -698,15 +672,12 @@ void beam(struct bolt beam [1])
 				{
 	 				if (mons_holiness(menv [o].m_class) != 1)
 	 				{
-				        unaffected : strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-				        strcat(info, " is unaffected.");
-				        mpr(info);
+				        unaffected:
+				        msg("@1 is unaffected.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  		  	 	 	    beam[0].aim_down = 0;
 			 	        return;
 	 				}
- 					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 					strcat(info, " convulses!");
- 					mpr(info);
+ 					msg("@1 convulses!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
@@ -730,9 +701,8 @@ void beam(struct bolt beam [1])
 
       			if (check_mons_magres(o, beam[0].ench_power) == 0 && beam[0].colour != 1 && beam[0].colour != 2 && beam[0].colour != 5)
       			{
-		         	it_resists : strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-			        strcat(info, " resists.");
-			        mpr(info);
+		         	it_resists:
+			        msg("@1 resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
          			beam[0].aim_down = 0;
          			return;
 			    }
@@ -741,9 +711,7 @@ void beam(struct bolt beam [1])
 				if (beam[0].colour == 13) /* pain/agony */
 				{
 				 	if (mons_holiness(menv [o].m_class) > 0) goto it_resists;
- 					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 					strcat(info, " convulses in agony!");
- 					mpr(info);
+ 					msg("@1 convulses in agony!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  					if (strstr(beam[0].beam_name, "agony") != NULL)
  					{
   						menv[o].m_hp = menv[o].m_hp / 2;
@@ -773,9 +741,7 @@ void beam(struct bolt beam [1])
 
 				if (beam[0].colour == 15) /* disrupt/disintegrate */
 				{
- 					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 					strcat(info, " is blasted.");
- 					mpr(info);
+ 					msg("@1 is blasted.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  					menv[o].m_hp -= random2(beam[0].hit + 1);
 	 				strcpy(beam[0].beam_name, "program");
  					char killer = 0;
@@ -800,9 +766,7 @@ void beam(struct bolt beam [1])
 
  				if ((beam[0].colour == 12 && mons_holiness(menv [o].m_class) == 1) || (beam[0].colour == 16 && mons_holiness(menv [o].m_class) == 2))
  				{
-  					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-  					strcat(info, " is enslaved.");
-  					mpr(info);
+  					msg("@1 is enslaved.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
   					menv [o].m_beh = 7;
                     beam[0].wand_id = 1;
  	 				return;
@@ -1067,10 +1031,7 @@ brek = 0;*/
 
 					if (player_shield_class() > 0 && random2(beam[0].hit * 5) <= random2(player_shield_class()))
 					{
- 						strcpy(info, "You block the ");
-						strcat(info, beam[0].beam_name);
- 						strcat(info, ".");
- 						mpr(info);
+ 						msg("You block the @1.") << beam[0].beam_name;
  						if (beam[0].flavour == 10)
 	 					{
 						 	explosion1(beam);
@@ -1094,20 +1055,6 @@ brek = 0;*/
 					if (beam[0].hit >= random2(player_evasion()) + random2(you[0].dex) / 3 - 2 && you[0].duration [DUR_DEFLECT_MISSILES] == 0)
 					{
 
-						strcpy(info, "The ");
-						strcat(info, beam[0].beam_name);
-						strcat(info, " hits you");
-/*	if (beam[0].thing_thrown == 3 || beam[0].thing_thrown == 4)
-	{
-	if (beam[0].bx > you[0].x_pos - 7 && beam[0].bx < you[0].x_pos + 7 && beam[0].by > you[0].y_pos - 7 && beam[0].by < you[0].y_pos + 7)
-	{
-		viewwindow(1);
-		textcolor(beam[0].colour);
-		gotoxy(beam[0].bx - you[0].x_pos + 18, beam[0].by - you[0].y_pos + 9);
-		putch(35);
-	}
-	}*/
-
 						hurted = 0;
 						if (beam[0].damage > 100)
 						{
@@ -1116,8 +1063,7 @@ brek = 0;*/
 							hurted += random2(beam[0].damage - 100);
 						} else hurted += random2(beam[0].damage);
 
-		 				strcat(info, "!");
- 						mpr(info);
+						msg("The @1 hits you!") << beam[0].beam_name;
 
  						hurted = check_your_resists(hurted, beam[0].flavour);
 
@@ -1154,10 +1100,7 @@ brek = 0;*/
 						break;
 					} else
 					{
-						strcpy(info, "The ");
-						strcat(info, beam[0].beam_name);
-						strcat(info, " misses you!");
-				        mpr(info);
+						msg("The @1 misses you!") << beam[0].beam_name;
 						if (beam[0].move_x == 0 && beam[0].move_y == 0) break;
 					}
 
@@ -1218,12 +1161,7 @@ brek = 0;*/
 
 			  			if (mons_near(o) == 1)
  	 					{
-							strcpy(info, "The ");
-							strcat(info, beam[0].beam_name);
-							strcat(info, " hits ");
-							strcat(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1)); //gmon_name [mons_class [o]]);
-							strcat(info, ".");
-			                mpr(info);
+							msg("The @1 hits @2.") << beam[0].beam_name << monam(menv[o].m_sec, menv[o].m_class, menv[o].m_ench[2], 1);
   						}
 
   						hurted = check_mons_resists(beam, o, hurted);
@@ -1304,12 +1242,7 @@ brek = 0;*/
 					} else
 						if (beam[0].thing_thrown != 2 && beam[0].thing_thrown != 4 && mons_near(o) == 1 && (menv [o].m_class < MLAVA0 || menv [o].m_sec == 0)) // No message if monster missile misses
 						{
-							strcpy(info, "The ");
-							strcat(info, beam[0].beam_name);
-							strcat(info, " misses ");
-							strcat(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1));
-							strcat(info, ".");
-			                mpr(info);
+							msg("The @1 misses @2.") << beam[0].beam_name << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1);
 
 							if (you[0].invis != 0 && mons_see_invis(menv [o].m_class) != 0 && menv [o].m_beh == 0) menv [o].m_beh = 1;
 
@@ -1443,9 +1376,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 			{
 			    if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 			    {
-		 			strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-					strcat(info, " appears unharmed.");
-					mpr(info);
+					msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 			    hurted = 0;
 			} else
@@ -1453,18 +1384,14 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
                 {
 	                if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
                     {
-    	                strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-        	       		strcat(info, " resists.");
-                        mpr(info);
+        	       		msg("@1 resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                     }
                     hurted /= 3;
               	}
 
 		   	if (mons_res_fire(menv [o].m_class) == -1 && (menv [o].m_inv [2] == 501 || mitm.idam [menv [o].m_inv [2]] % 30 != 2))
    			{
-		     	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-			    strcat(info, " is burned terribly!");
-			    mpr(info);
+			    msg("@1 is burned terribly!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    hurted *= 15;
      			hurted /= 10;
    			}
@@ -1476,9 +1403,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 			{
 			    if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 			    {
-					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-	 				strcat(info, " appears unharmed.");
- 					mpr(info);
+	 				msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 				hurted = 0;
 			} else
@@ -1486,18 +1411,14 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
                 {
 		            if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
                     {
-	                    strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-    					strcat(info, " resists.");
-	                    mpr(info);
+    					msg("@1 resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                     }
                     hurted /= 3;
                	}
 
    			if (mons_res_cold(menv [o].m_class) == -1 && (menv [o].m_inv [2] == 501 || mitm.idam [menv [o].m_inv [2]] % 30 != 3))
    			{
-     			strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-     			strcat(info, " is frozen!");
-     			mpr(info);
+     			msg("@1 is frozen!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
      			hurted *= 15;
      			hurted /= 10;
    			}
@@ -1508,9 +1429,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 		  	{
 	        	if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
                 {
-                	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-          			strcat(info, " appears unharmed.");
-                    mpr(info);
+          			msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 }
         		hurted = 0;
 		   	}
@@ -1538,9 +1457,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 	   		{
 			    if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 			    {
-	 				strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-		 			strcat(info, " appears unharmed.");
-			 		mpr(info);
+		 			msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 				hurted = 0;
 		   	}
@@ -1551,18 +1468,14 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 			{
     			if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 			    {
-	 				strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-					strcat(info, " appears unharmed.");
-					mpr(info);
+					msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 			    hurted = 0;
 			} else
 			{
 		      	if (mons_near(o) == 1)
       			{
-       				strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-			       	strcat(info, " is drained.");
-			       	mpr(info);
+			       	msg("@1 is drained.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
       			}
       			if (random() % 5 == 0) menv [o].m_HD --;
       			menv [o].m_hp_max -= 2 + random2(3);
@@ -1579,9 +1492,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 			{
 		  	  	if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
     			{
- 					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-					strcat(info, " appears unharmed.");
-					mpr(info);
+					msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 			    hurted = 0;
 			}
@@ -1592,9 +1503,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 			{
 			    if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 			    {
-					strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-	 				strcat(info, " partially resists.");
- 					mpr(info);
+	 				msg("@1 partially resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			    }
 				hurted /= 2;
 			} else
@@ -1602,18 +1511,14 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
                 {
 		            if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
                     {
-	                    strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-    					strcat(info, " partially resists.");
-	                    mpr(info);
+    					msg("@1 partially resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                     }
                     hurted /= 2;
                	}
 
    			if (mons_res_cold(menv [o].m_class) == -1 && (menv [o].m_inv [2] == 501 || mitm.idam [menv [o].m_inv [2]] % 30 != 3))
    			{
-     			strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-     			strcat(info, " is frozen!");
-     			mpr(info);
+     			msg("@1 is frozen!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
      			hurted *= 13;
      			hurted /= 10;
    			}
@@ -1628,9 +1533,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 		{
     		if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 		    {
-				strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-				strcat(info, " appears unharmed.");
-				mpr(info);
+				msg("@1 appears unharmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 			}
 			hurted = 0;
 		}
@@ -1638,17 +1541,13 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 		{
 		    if (mons_near(o) == 1 && menv [o].m_ench [2] != 6)
 		    {
- 				strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 				strcat(info, " partially resists.");
- 				mpr(info);
+ 				msg(" partially resists.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 		    }
 			hurted /= 2;
 		}
    		if (mons_res_fire(menv [o].m_class) == -1 && (menv [o].m_inv [2] == 501 || mitm.idam [menv [o].m_inv [2]] % 30 != 2))
 	   	{
-	     	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-	     	strcat(info, " is burned terribly!");
-	     	mpr(info);
+	     	msg("@1 is burned terribly!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
 		    hurted *= 12;/* hellfire */
 		    hurted /= 10;
 	   	}
@@ -1687,19 +1586,7 @@ int check_mons_magres(int mn, int pow)
 	int mrch2 = random2(100) + random2(101);
 
 #ifdef DEBUG
-	strcpy(info, "Pow:");
-	itoa(pow, st_prn, 10);
-	strcat(info, st_prn);
-	strcat(info, ", mrs: ");
-	itoa(mrs, st_prn, 10);
-	strcat(info, st_prn);
-	strcat(info, ", mrchance:");
-	itoa(mrchance, st_prn, 10);
-	strcat(info, st_prn);
-	strcat(info, ", mrch2:");
-	itoa(mrch2, st_prn, 10);
-	strcat(info, st_prn);
-	mpr(info);
+	msg("Pow:@1, mrs: @2, mrchance:@3, mrch2:@4") << pow << mrs << mrchance << mrch2;
 #endif
 
 	if (mrch2 < mrchance) return 0; /* ie saved successfully */
@@ -1731,9 +1618,7 @@ void mass_enchantment(int wh_enchant, int pow)
 /*   if (check_mons_magres(i, pow) == 0 && beam[0].colour != 1 && beam[0].colour != 2 && beam[0].colour != 5) */
    		if (check_mons_magres(i, pow) == 0) /* && beam[0].colour != 1 && beam[0].colour != 2 && beam[0].colour != 5) */
 	   	{
-	      	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-      		strcat(info, " resists.");
-      		mpr(info);
+      		msg(" resists.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 /*      beam[0].aim_down = 0;*/
    	   		continue;
    		}
@@ -1759,18 +1644,16 @@ void mass_enchantment(int wh_enchant, int pow)
 					menv [i].m_ench_1 = 1;
 			     	if (menv [i].m_ench [2] != 6 || player_see_invis() != 0)
 				    {
-				      	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
 					    switch(wh_enchant)
 				      	{
-					       	case 4: strcat(info, " looks frightened.");
+					       	case 4: msg("@1 looks frightened.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 					       		break;
-       						case 5: strcat(info, " looks rather confused.");
+       						case 5: msg("@1 looks rather confused.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
        							break;
- 							case 30: strcat(info, " submits to your will.");
+ 							case 30: msg("@1 submits to your will.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
                                  menv [i].m_beh = 7;
 					 	 	    break;
 				    	}
-      					mpr(info);
   					    break;
   				   	} else mpr("Nothing appears to happen.");
 				}
@@ -1895,9 +1778,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
   			menv [o].m_speed_inc = 0;
         	if (is_near == 1)
             {
-            	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-                strcat(info, " suddenly stops moving!");
-                mpr(info);
+                msg("@1 suddenly stops moving!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 func_pass [1] = 1;
             }
 		   	if (grd [menv [o].m_x] [menv [o].m_y] == 11 || grd [menv [o].m_x] [menv [o].m_y] == 12)
@@ -1906,12 +1787,12 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
                 {
 	                if (is_near == 1) /* don't worry about invisibility - you should be able to see if something has fallen into the lava */
     	            {
-        	            strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));//monam (menv [o].m_class, menv [o].m_ench [2], 0, you[0].see_invis)); //gmon_name [menv [o].m_class]);
 						if (grd [menv [o].m_x] [menv [o].m_y] == 12)
                         {
-	                        strcat(info, " falls into the water!");
-						} else strcat(info, " falls into the radioactive waste!");
-                        mpr(info);
+	                        msg("@1 falls into the water!") << monam(menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
+						} else {
+							msg("@1 falls into the radioactive waste!") << monam(menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
+						}
 	                }
 					switch(beam[0].thing_thrown)
 					{
@@ -1942,9 +1823,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
                 /* put in an exception for fungi, plants and other things you won't notice you[0].slow down. */
             if (is_near == 1)
             {
-	            strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-                strcat(info, " appears confused.");
-    	        mpr(info);
+                msg(" appears confused.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 func_pass [1] = 1;
             }
             return 1;
@@ -1956,18 +1835,14 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 
             if (menv [o].m_ench [2] != 0)
             {
-		       strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-               strcat(info, " flickers for a moment.");
-               mpr(info);
+               msg("@1 flickers for a moment.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                func_pass [1] = 1;
                return 1;
         	}
 
             if (is_near == 1)
             {
-	            strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));//monam (menv [o].m_class, menv [o].m_ench [2], 0, you[0].see_invis)); //gmon_name [menv [o].m_class]);
-                strcat(info, " flickers and vanishes!");
-                mpr(info);
+                msg("@1 flickers and vanishes!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 func_pass [1] = 1;
     	    }
             menv [o].m_ench [2] = 6;
@@ -1995,9 +1870,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
             /* put in an exception for fungi, plants and other things you won't notice slow down. */
             if (is_near == 1)
             {
-    	        strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-                strcat(info, " is charmed.");
-                mpr(info);
+                msg("@1 is charmed.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 func_pass [1] = 1;
             }
             return 1;
@@ -2048,9 +1921,7 @@ void poison_monster(int mn, char source)
             brek = 1;
 	    	if (mons_near(mn) == 1 && (menv [mn].m_ench [2] != 6 || player_see_invis() != 0))
    	 		{
-        		strcpy(info, monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0));
-			    strcat(info, " looks rather sicker.");
-			    mpr(info);
+			    msg("@1 looks rather sicker.") << monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0);
 		    }
 		    break;
 	    }
@@ -2066,9 +1937,7 @@ void poison_monster(int mn, char source)
             	menv [mn].m_ench_1 = 1;
                 if (mons_near(mn) == 1 && (menv [mn].m_ench [2] != 6 || player_see_invis() != 0))
                 {
-                	strcpy(info, monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0));
-                    strcat(info, " looks rather sick.");
-                    mpr(info);
+                    msg("@1 looks rather sick.") << monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0);
                 }
                 break;
             }
@@ -2114,9 +1983,7 @@ void sticky_flame_monster(int mn, char source, int power) /* modelled on the poi
             brek = 1;
 		    if (mons_near(mn) == 1 && (menv [mn].m_ench [2] != 6 || player_see_invis() != 0))
 		    {
-		        strcpy(info, monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0));
-		      	strcat(info, " is covered in liquid fire!");
-		      	mpr(info);
+		      	msg("@1 is covered in liquid fire!") << monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0);
     		}
 		    break;
 		}
@@ -2131,9 +1998,7 @@ void sticky_flame_monster(int mn, char source, int power) /* modelled on the poi
                 menv [mn].m_ench_1 = 1;
         	    if (mons_near(mn) == 1 && (menv [mn].m_ench [2] != 6 || player_see_invis() != 0))
                 {
-	                strcpy(info, monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0));
-                    strcat(info, " is covered in liquid fire!");
-                    mpr(info);
+                    msg("@1 is covered in liquid fire!") << monam (menv [mn].m_sec, menv [mn].m_class, menv [mn].m_ench [2], 0);
                 }
                 break;
            	}

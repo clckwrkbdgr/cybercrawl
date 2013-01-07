@@ -240,10 +240,8 @@ void item_corrode(char itco_char)
 
         item_name(you[0].inv_plus2 [itco], you[0].inv_class [itco], you[0].inv_type [itco], you[0].inv_dam [itco], you[0].inv_plus [itco], you[0].inv_quant [itco], you[0].inv_ident [itco], 4, str_pass);
 
-        strcpy(info, str_pass);
 
-        strcat(info, " is eaten away!");
-        mpr(info);
+        msg("@1 is eaten away!") << str_pass;
 
         rusty --;
         if (you[0].inv_class [itco] == 0) you[0].inv_plus2 [itco] = rusty;
@@ -348,9 +346,7 @@ if (dam > -9000)
  case 12:
  if (dam >= you[0].hp && you[0].duration [DUR_PRAYER] > 0 && random2(you[0].piety) >= 30)
  {
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " protects you from harm!");
-  mpr(info);
+  msg("@1 protects you from harm!") << god_name(you[0].religion);
   return;
  }
  break;
@@ -979,8 +975,6 @@ close(handle);
 
 void lose_level(void)
 {
-char temp_quant [5];
-
  if (you[0].xl == 1)
  {
     ouch(-9999, 0, 14);
@@ -990,13 +984,7 @@ char temp_quant [5];
  you[0].xp = exp_needed(you[0].xl + 1, you[0].species) - 1;
         you[0].xl --;
 
-                strcpy(info, "You are now a level ");
-                itoa(you[0].xl, temp_quant, 10);
-                strcat(info, temp_quant);
-                strcat(info, " ");
-                strcat(info, you[0].clasnam);
-                strcat(info, "!");
-                mpr(info);
+                msg("You are now a level @1 @2!") << you[0].xl << you[0].clasnam;
 
 //you[0].res_magic -= 3;
 
@@ -1037,9 +1025,7 @@ void drain_exp(void)
 
 if (you[0].duration [DUR_PRAYER] != 0 &&  (you[0].religion == GOD_ZIN || you[0].religion == GOD_SHINING_ONE || you[0].religion == GOD_ELYVILON) && random2(150) < you[0].piety)
 {
-         strcpy(info, god_name(you[0].religion));
-         strcat(info, " protects your life force!");
-         mpr(info);
+         msg("@1 protects your life force!") << god_name(you[0].religion);
          return;
 }
 
@@ -1062,11 +1048,7 @@ exp_drained /= 100;
 you[0].xp -= exp_drained;
 
 #ifdef DEBUG
-                strcpy(info, "You lose ");
-                itoa(exp_drained, temp_quant, 10);
-                strcat(info, temp_quant);
-                strcat(info, " experience points.");
-                mpr(info);
+msg("You lose @1 experience points.") << exp_drained;
 #endif
 
 you[0].xp_ch = 1;

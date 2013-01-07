@@ -87,8 +87,6 @@ for (i = 0; i < 15; i++)
 //if (inv_no != 0)
 //{
 
-//strcpy(info [info_lines], " You are carrying"); info_lines++;
-
 for (i = 0; i < 52; i++)
 {
 	if (you[0].inv_quant [i] != 0)
@@ -221,10 +219,6 @@ for (i = 0; i < 15; i ++)
 		{
 
 			anything ++;
-			//strcpy(info [info_lines], " ");
-			//strncpy(info [info_lines], letters [j], 1);
-			//strcat(info [info_lines], " - ");
-			//printf(" ");
 			if (lines > 0) cprintf(EOL);
 			lines++;
 				cprintf(" ");
