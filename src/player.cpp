@@ -121,118 +121,46 @@ int player_regen(void)
 
 int player_res_magic(void)
 {
- int rm = you[0].xl * 3;
+	int rm = you[0].xl * 3;
+	switch(you[0].species) {
+		case SP_HIGH_ELF:
+		case SP_GREY_ELF:
+		case SP_SLUDGE_ELF:
+		case SP_HILL_DWARF:
+		case SP_MOUNTAIN_DWARF:
+			rm += you[0].xl;
+			break;
+		case SP_NAGA:
+			rm += you[0].xl * 2;
+			break;
+		case SP_PURPLE_DRACONIAN:
+		case SP_GNOME:
+		case SP_DEEP_ELF:
+			rm += you[0].xl * 3;
+			break;
+		case SP_SPRIGGAN:
+			rm += you[0].xl * 4;
+			break;
+	}
 
- switch(you[0].species)
- {
-  case SP_HIGH_ELF: // high elf
-  case SP_GREY_ELF: // grey elf
-  case SP_SLUDGE_ELF: // sludge elf
-  case SP_HILL_DWARF: // hill dwarf
-  case SP_MOUNTAIN_DWARF: // mountain dwarf
-  rm += you[0].xl;
-  break;
-  case SP_NAGA: // Naga
-  rm += you[0].xl * 2;
-  break;
-  case SP_PURPLE_DRACONIAN: // purple drac
-  case SP_GNOME: // Gnome
-  case SP_DEEP_ELF: // deep elf
-  rm += you[0].xl * 3;
-  break;
-  case SP_SPRIGGAN: // Spriggan
-  rm += you[0].xl * 4;
-  break;
- }
-
-/* armour: (checks cloak & body armour only) */
- if (you[0].equip [EQ_CLOAK] != -1 && you[0].inv_dam [you[0].equip [EQ_CLOAK]] % 30 == SPARM_MAGIC_RESISTANCE) rm += 30;
- if (you[0].equip [EQ_BODY_ARMOUR] != -1 && you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] % 30 == SPARM_MAGIC_RESISTANCE) rm += 30;
-/* rings of magic resistance */
- if (you[0].equip [EQ_LEFT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_LEFT_RING]] == RING_PROTECTION_FROM_MAGIC) rm += 40;
- if (you[0].equip [EQ_RIGHT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_RIGHT_RING]] == RING_PROTECTION_FROM_MAGIC) rm += 40;
-/* randarts */
- rm += scan_randarts(RAP_MAGIC);
-/* Enchantment skill */
- rm += you[0].skills [SK_ENCHANTMENTS] * 2;
-/* Mutations */
- rm += you[0].mutation [MUT_MAGIC_RESISTANCE] * 30;
-/* transformations */
- switch(you[0].attribute [ATTR_TRANSFORMATION])
- {
-  case TRAN_LICH: rm += 50; break; /* Lich */
- }
- return rm;
+	/* armour: (checks cloak & body armour only) */
+	if (you[0].equip [EQ_CLOAK] != -1 && you[0].inv_dam [you[0].equip [EQ_CLOAK]] % 30 == SPARM_MAGIC_RESISTANCE) rm += 30;
+	if (you[0].equip [EQ_BODY_ARMOUR] != -1 && you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] % 30 == SPARM_MAGIC_RESISTANCE) rm += 30;
+	/* rings of magic resistance */
+	if (you[0].equip [EQ_LEFT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_LEFT_RING]] == RING_PROTECTION_FROM_MAGIC) rm += 40;
+	if (you[0].equip [EQ_RIGHT_RING] != -1 && you[0].inv_type [you[0].equip [EQ_RIGHT_RING]] == RING_PROTECTION_FROM_MAGIC) rm += 40;
+	/* randarts */
+	rm += scan_randarts(RAP_MAGIC);
+	/* Enchantment skill */
+	rm += you[0].skills [SK_ENCHANTMENTS] * 2;
+	/* Mutations */
+	rm += you[0].mutation [MUT_MAGIC_RESISTANCE] * 30;
+	/* transformations */
+	switch(you[0].attribute [ATTR_TRANSFORMATION]) {
+		case TRAN_LICH: rm += 50; break; /* Lich */
+	}
+	return rm;
 }
-/*        case 18: strcat(glog , "dragon scale mail"); break;
-        case 19: strcat(glog , "troll leather armour"); break;
-        case 20: strcat(glog , "ice dragon hide"); break;
-        case 21: strcat(glog , "ice dragon scale mail"); break;
-
-        case 22: strcat(glog , "steam dragon hide"); break;
-        case 23: strcat(glog , "steam dragon scale mail"); break;
-        case 24: strcat(glog , "mottled dragon hide"); break;
-        case 25: strcat(glog , "mottled dragon scale mail"); break;
-        case 26: strcat(glog , "storm dragon hide"); break;
-        case 27: strcat(glog , "storm dragon scale mail"); break;
-        case 28: strcat(glog , "gold dragon hide"); break;
-        case 29: strcat(glog , "gold dragon scale mail"); break;
-
-   case 1: strcat(glog, " of running"); break;
-   case 2: strcat(glog, " of fire resistance"); break;
-   case 3: strcat(glog, " of cold resistance"); break;
-   case 4: strcat(glog, " of poison resistance"); break;
-   case 5: strcat(glog, " of see invisible"); break;
-   case 6: strcat(glog, " of darkness"); break;
-   case 7: strcat(glog, " of strength"); break;
-   case 8: strcat(glog, " of dexterity"); break;
-   case 9: strcat(glog, " of intelligence"); break;
-  case 10: strcat(glog, " of ponderousness"); break;
-  case 11: strcat(glog, " of levitation"); break;
-  case 12: strcat(glog, " of hacking resistance"); break;
-  case 13: strcat(glog, " of protection"); break;
-  case 14: strcat(glog, " of stealth"); break;
-  case 15: strcat(glog, " of resistance"); break;
-  case 16: strcat(glog, " of positive energy"); break;
-  case 17: strcat(glog, " of the Superhacker"); break;
-  case 18: strcat(glog, " of preservation"); break;
-
-	case 0: strcat(glog , "chip of regeneration"); break;
-	case 1: strcat(glog , "chip of protection"); break;
-	case 2: strcat(glog , "chip of protection from fire"); break;
-	case 3: strcat(glog , "chip of poison resistance"); break;
-	case 4: strcat(glog , "chip of protection from cold"); break;
-	case 5: strcat(glog , "chip of strength"); break;
-	case 6: strcat(glog , "chip of slaying"); break;
-	case 7: strcat(glog , "chip of see invisible"); break;
-	case 8: strcat(glog , "chip of invisibility"); break;
-	case 9: strcat(glog , "chip of hunger"); break;
-	case 10: strcat(glog , "chip of maintenance"); break;
-	case 11: strcat(glog , "chip of evasion"); break;
- case 12: strcat(glog , "chip of sustain abilities"); break;
- case 13: strcat(glog , "chip of sustenance"); break;
- case 14: strcat(glog , "chip of dexterity"); break;
- case 15: strcat(glog , "chip of intelligence"); break;
- case 16: strcat(glog , "chip of hacking"); break;
- case 17: strcat(glog , "chip of cyber power"); break;
- case 18: strcat(glog , "chip of levitation"); break;
- case 19: strcat(glog , "chip of life protection"); break;
- case 20: strcat(glog , "chip of protection from hacking"); break;
- case 21: strcat(glog , "chip of fire"); break;
- case 22: strcat(glog , "chip of ice"); break;
- case 23: strcat(glog , "chip of maintenance control"); break;
- case 35: strcat(glog , "implant of rage"); break;
- case 36: strcat(glog , "implant of maintain speed"); break; // not foolproof
- case 37: strcat(glog , "implant of clarity"); break; // not foolproof
- case 38: strcat(glog , "implant of warding"); break;
- case 39: strcat(glog , "implant of resist corrosion"); break;
- case 40: strcat(glog , "implant of the gourmand"); break;
- case 41: strcat(glog , "implant of conservation"); break;
- case 42: strcat(glog , "implant of controlled flight"); break;
- case 43: strcat(glog , "implant of inaccuracy"); break;
- }
-*/
-
 
 int player_res_fire(void)
 {
@@ -777,19 +705,7 @@ mrchance -= ench_power;
 int mrch2 = random2(100) + random2(101);
 
 #ifdef DEBUG
-strcpy(info, "Pow:");
-itoa(ench_power, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", mrs: ");
-itoa(player_res_magic(), st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", mrchance:");
-itoa(mrchance, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", mrch2:");
-itoa(mrch2, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
+msg("Pow:@1, mrs: @2, mrchance:@3, mrch2:@4") << ench_power << player_res_magic() << mrchance << mrch2;
 #endif
 
 if (mrch2 < mrchance) return 1; // ie saved successfully
@@ -820,40 +736,33 @@ for (xcount = 0; xcount < 80; xcount ++)
 
 }
 
-void how_hungered(int hunge)
+std::string hunger_quantificator(int hunger)
 {
-if (hunge <= 1) return;
-
-if (hunge <= 100)
-{
- strcpy(info, "You feel slightly");
- goto full_or_hungry;
-}
-if (hunge <= 350)
-{
- strcpy(info, "You feel somewhat");
- goto full_or_hungry;
-}
-if (hunge <= 800)
-{
- strcpy(info, "You feel a quite a bit");
- goto full_or_hungry;
-}
- strcpy(info, "You feel a lot");
-
-full_or_hungry:
-if (you[0].hung_state >= 4)
-{
- strcat(info, " less full.");
- mpr(info);
- return;
-}
-strcat(info, " more hungry.");
-mpr(info);
-return;
-
+	if(hunger <= 100) {
+		return "You feel slightly";
+	} else if(hunger <= 350) {
+		return "You feel somewhat";
+	} else if(hunger <= 800) {
+		return "You feel a quite a bit";
+	}
+	return "You feel a lot";
 }
 
+std::string hunger_state_string(int hung_state)
+{
+	if(hung_state >= 4) {
+		return "less full.";
+	}
+	return "more hungry.";
+}
+
+void how_hungered(int hunger)
+{
+	if(hunger <= 1)
+		return;
+
+	msg("@1 @2") << hunger_quantificator(hunger) << hunger_state_string(you[0].hung_state);
+}
 
 void gain_exp(unsigned int exp_gained)
 {
@@ -1093,620 +1002,512 @@ int lev_skill [19] [8] [3] =
 };
 #endif
 
-char temp_quant [10];
-
-//while (you[0].xp > (20 * ((you[0].xl * 0.6) * (you[0].xl * 0.7)) + 10) && you[0].xl < 27)
-while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) //(20 * you[0].xl * you[0].xl)) // && you[0].xl < 27)
-//while(you[0].xp > exp_needed(you[0].xl))
-{
+while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) {
 	you[0].xl++;
-	strcpy(info, "You are now a level ");
-	itoa(you[0].xl, temp_quant, 10);
-	strcat(info, temp_quant);
-	strcat(info, " ");
-	strcat(info, you[0].clasnam);
-	strcat(info, "!");
-	mpr(info);
+	msg("You are now a level @1 @2!") << you[0].xl << you[0].clasnam;
 	more();
-/* scrloc = 0;
-switch(you[0].clas)
-{
-case 0: // fighter
-break;
-case 1: // wizard
-case 5: // necromancer
-case 10: // Conjurer
-case 11: // Enchanter
-case 12: // Fire Wizard
-case 13: // Ice Wizard
-case 14: // Summoner
-break;
-
-case 3: // thief
-break;
-
-case 4: // Gladiator
-break;
-
-case 2: // priest
-if (you[0].xl > you[0].max_level && you[0].xl % 3 == 0)
-{
- if (you[0].spell_no >= 21)
- {
-  break;
- }
-prtry2 = you[0].xl / 3;
-if (you[0].xl > 12) prtry2 = (you[0].xl - 12) / 2 + 4;
-priest_spells(func_pass, 1);
-if (prtry2 >= 8 || func_pass [prtry2] == -1) goto get_out;
-prtry = func_pass [prtry2];
-for (prtry3 = 0; prtry3 < 25; prtry3 ++)
-{
- if (you[0].spells [prtry3] == 210)
- {
-  you[0].spells [prtry3] = prtry;
-  you[0].spell_no ++;
-  you[0].spell_levels -= spell_value(prtry);
-  break;
- }
-}
-strcpy(info, "You have been granted a spell!");
-mpr(info);
-}
-break;
-
-
-case 6: // paladin
-if (you[0].xl > you[0].max_level && you[0].xl % 4 == 0)
-{
- if (you[0].spell_no >= 21)
- {
-  break; //goto infuse2;
- }
-prtry2 = you[0].xl / 4;
-if (you[0].xl > 16) prtry2 = (you[0].xl - 16) / 2 + 4;
-switch(prtry2)
-{
- case 1: prtry = 46; break; // repel undead
- case 2: prtry = 38; break; // lesser healing
- case 3: prtry = 65; break; // heal other
- case 4: prtry = 45; break; // smiting
- case 5: prtry = 39; break; // greater healing
- case 6: prtry = 41; break; // purification
- case 7: prtry = 47; break; // holy word
- default: goto get_out;
-}
-for (prtry3 = 0; prtry3 < 25; prtry3 ++)
-{
- if (you[0].spells [prtry3] == 210)
- {
-  you[0].spells [prtry3] = prtry;
-  you[0].spell_no ++;
-  you[0].spell_levels -= spell_value(prtry);
-  break;
- }
-}
-strcpy(info, "You have been granted a spell!");
-mpr(info);
-}
-get_out : break;
-
-
-case 7: // Assassin
-break;
-
-case 8: // Barbarian
-break;
-
-case 9: // Ranger
-break;
-
-// etcetera
-
-}*/
-
 
 #ifdef CLASSES
-if (you[0].xl > you[0].max_level)
-{
-int sklev1 = 0;
-int sklev2 = 0;
-int ski = 0;
-int unapplied_points = 0;
+	if (you[0].xl > you[0].max_level)
+	{
+		int sklev1 = 0;
+		int sklev2 = 0;
+		int ski = 0;
+		int unapplied_points = 0;
 
-sklev1 = skill_exp_needed(you[0].xl + 2) - skill_exp_needed(you[0].xl + 1);
+		sklev1 = skill_exp_needed(you[0].xl + 2) - skill_exp_needed(you[0].xl + 1);
 
 
-for (ski = 0; ski < 8; ski ++)
-{
- if (lev_skill [you[0].clas] [ski] [2] == 0) continue;
- unapplied_points += add_skill(you, lev_skill [you[0].clas] [ski] [0], lev_skill [you[0].clas] [ski] [1], sklev1 * lev_skill [you[0].clas] [ski] [2] / 100);
-}
+		for (ski = 0; ski < 8; ski ++)
+		{
+			if (lev_skill [you[0].clas] [ski] [2] == 0) continue;
+			unapplied_points += add_skill(you, lev_skill [you[0].clas] [ski] [0], lev_skill [you[0].clas] [ski] [1], sklev1 * lev_skill [you[0].clas] [ski] [2] / 100);
+		}
 
-add_skill(you, 0, 49, unapplied_points);
+		add_skill(you, 0, 49, unapplied_points);
 
-for (ski = SK_FIGHTING; ski < 50; ski ++)
-{
- exercise2(ski, 0, 1);
-}
+		for (ski = SK_FIGHTING; ski < 50; ski ++)
+		{
+			exercise2(ski, 0, 1);
+		}
 
-}
+	}
 #endif
 
-// you[0].res_magic += 3;
+	// you[0].res_magic += 3;
 
-int brek;
+	int brek;
 
- brek = random2(4) + 3;
- if (you[0].xl > 12) brek = random2(3) + 2;
- if (you[0].xl > 21) brek = random2(2) + 2;
- you[0].hp += brek;
- you[0].base_hp2 += brek;
+	brek = random2(4) + 3;
+	if (you[0].xl > 12) brek = random2(3) + 2;
+	if (you[0].xl > 21) brek = random2(2) + 2;
+	you[0].hp += brek;
+	you[0].base_hp2 += brek;
 
- you[0].ep += 1;
- you[0].base_ep2 ++;
+	you[0].ep += 1;
+	you[0].base_ep2 ++;
 
- if (you[0].spell_levels < 99) you[0].spell_levels ++;
+	if (you[0].spell_levels < 99) you[0].spell_levels ++;
 
- if (you[0].xl > you[0].max_level && you[0].xl % 3 == 0)
- {
-   ability_increase();
- }
+	if (you[0].xl > you[0].max_level && you[0].xl % 3 == 0)
+	{
+		ability_increase();
+	}
 
-if (you[0].xl > you[0].max_level)
-{
-switch(you[0].species)
-{
-case SP_HUMAN: // human
-if (you[0].xl % 5 == 0) increase_stats(random() % 3);
-break;
-case SP_ELF: // elf
-if (you[0].xl % 3 != 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 ++;
-}
-if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
-break;
-case SP_HIGH_ELF: // high elf
-if (you[0].xl % 3 != 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_ep2 ++;
-}
-//you[0].res_magic ++;
-if (you[0].xl % 3 == 0) increase_stats(1 + random() % 2);
-break;
-case SP_GREY_ELF: // grey elf
-if (you[0].xl <= 13)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 != 0)
-{
- you[0].base_ep2 ++;
-}
-//you[0].res_magic ++;
-if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
-break;
-case SP_DEEP_ELF: // deep elf
-if (you[0].xl <= 16)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-you[0].base_ep2 ++;
-if (you[0].xl % 4 == 0) increase_stats(2);
-break;
-case SP_SLUDGE_ELF: // sludge elf
-if (you[0].xl % 3 != 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 ++;
-}
-if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
-break;
-case SP_HILL_DWARF: // hill dwarf
-if (you[0].xl <= 13)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 3 != 0)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 4 == 0) increase_stats(0);
-break;
-case SP_MOUNTAIN_DWARF: // mountain dwarf
-if (you[0].xl <= 13)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 4 == 0) increase_stats(0);
-break;
-case SP_HALFLING: // halfling
-if (you[0].xl % 5 == 0) increase_stats(1); // note: falls through to kobold
-case SP_KOBOLD: // kobold
-if (you[0].xl <= 16)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 --;
-}
-break;
-case SP_HILL_ORC: // hill orc
-if (you[0].xl <= 16)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 5 == 0) increase_stats(0);
-break;
-// 11 (kobold) is with halfling
-case SP_MUMMY: // Mummy
-if (you[0].xl == 13 || you[0].xl == 23)
-{
-/* you[0].spec_death ++;*/
- mpr("You feel more in touch with the powers of death.");
-}
-break;
-case SP_NAGA: // Naga
-if (you[0].xl <= 13)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-you[0].base_hp2 ++;
-you[0].hp_max ++;
-//you[0].res_magic += 2;
-if (you[0].xl % 4 == 0) increase_stats(random2(3));
-if (you[0].xl % 3 == 0)
-{
- mpr("Your skin feels tougher.");
-/* player_AC(you) ++;*/
- you[0].AC_ch = 1;
-}
-break;
-case SP_GNOME: // Gnome
-if (you[0].xl <= 12)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-//you[0].res_magic += 3;
-if (you[0].xl % 4 == 0) increase_stats(1 + random2(2));
-break;
-case SP_OGRE: // ogre
-case SP_TROLL: // troll
-you[0].hp_max ++;
-you[0].base_hp2 ++;
-if (you[0].xl <= 13)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 3 != 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 3 == 0) increase_stats(0);
-break;
-case SP_OGRE_MAGE: // ogre-mage
-you[0].hp_max ++;
-you[0].base_hp2 ++;
-if (you[0].xl <= 13)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 5 == 0) increase_stats(random2(2) * 2);
-break;
-case SP_RED_DRACONIAN:
-case SP_WHITE_DRACONIAN:
-case SP_GREEN_DRACONIAN:
-case SP_GOLDEN_DRACONIAN:
-/* Grey is later */
-case SP_BLACK_DRACONIAN:
-case SP_PURPLE_DRACONIAN:
-case SP_MOTTLED_DRACONIAN:
-case SP_PALE_DRACONIAN:
-case SP_UNK0_DRACONIAN:
-case SP_UNK1_DRACONIAN:
-case SP_UNK2_DRACONIAN: // Draconian
-if (you[0].xl == 7)
-{
- switch(you[0].species)
- {
-  case SP_RED_DRACONIAN: mpr("Your scales start taking on a fiery red colour."); break;
-  case SP_WHITE_DRACONIAN: mpr("Your scales start taking on an icy white colour."); break;
-  case SP_GREEN_DRACONIAN: mpr("Your scales start taking on a green colour.");
-  mpr("You feel resistant to poison."); break;
-  case SP_GOLDEN_DRACONIAN: mpr("Your scales start taking on a golden yellow colour."); break;
+	if (you[0].xl > you[0].max_level)
+	{
+		switch(you[0].species)
+		{
+			case SP_HUMAN: // human
+				if (you[0].xl % 5 == 0) increase_stats(random() % 3);
+				break;
+			case SP_ELF: // elf
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 ++;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
+				break;
+			case SP_HIGH_ELF: // high elf
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_ep2 ++;
+				}
+				//you[0].res_magic ++;
+				if (you[0].xl % 3 == 0) increase_stats(1 + random() % 2);
+				break;
+			case SP_GREY_ELF: // grey elf
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].base_ep2 ++;
+				}
+				//you[0].res_magic ++;
+				if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
+				break;
+			case SP_DEEP_ELF: // deep elf
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				you[0].base_ep2 ++;
+				if (you[0].xl % 4 == 0) increase_stats(2);
+				break;
+			case SP_SLUDGE_ELF: // sludge elf
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 ++;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(1 + random() % 2);
+				break;
+			case SP_HILL_DWARF: // hill dwarf
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(0);
+				break;
+			case SP_MOUNTAIN_DWARF: // mountain dwarf
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(0);
+				break;
+			case SP_HALFLING: // halfling
+				if (you[0].xl % 5 == 0) increase_stats(1); // note: falls through to kobold
+			case SP_KOBOLD: // kobold
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 --;
+				}
+				break;
+			case SP_HILL_ORC: // hill orc
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 5 == 0) increase_stats(0);
+				break;
+				// 11 (kobold) is with halfling
+			case SP_MUMMY: // Mummy
+				if (you[0].xl == 13 || you[0].xl == 23)
+				{
+					/* you[0].spec_death ++;*/
+					mpr("You feel more in touch with the powers of death.");
+				}
+				break;
+			case SP_NAGA: // Naga
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				you[0].base_hp2 ++;
+				you[0].hp_max ++;
+				//you[0].res_magic += 2;
+				if (you[0].xl % 4 == 0) increase_stats(random2(3));
+				if (you[0].xl % 3 == 0)
+				{
+					mpr("Your skin feels tougher.");
+					/* player_AC(you) ++;*/
+					you[0].AC_ch = 1;
+				}
+				break;
+			case SP_GNOME: // Gnome
+				if (you[0].xl <= 12)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				//you[0].res_magic += 3;
+				if (you[0].xl % 4 == 0) increase_stats(1 + random2(2));
+				break;
+			case SP_OGRE: // ogre
+			case SP_TROLL: // troll
+				you[0].hp_max ++;
+				you[0].base_hp2 ++;
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 3 == 0) increase_stats(0);
+				break;
+			case SP_OGRE_MAGE: // ogre-mage
+				you[0].hp_max ++;
+				you[0].base_hp2 ++;
+				if (you[0].xl <= 13)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 5 == 0) increase_stats(random2(2) * 2);
+				break;
+			case SP_RED_DRACONIAN:
+			case SP_WHITE_DRACONIAN:
+			case SP_GREEN_DRACONIAN:
+			case SP_GOLDEN_DRACONIAN:
+				/* Grey is later */
+			case SP_BLACK_DRACONIAN:
+			case SP_PURPLE_DRACONIAN:
+			case SP_MOTTLED_DRACONIAN:
+			case SP_PALE_DRACONIAN:
+			case SP_UNK0_DRACONIAN:
+			case SP_UNK1_DRACONIAN:
+			case SP_UNK2_DRACONIAN: // Draconian
+				if (you[0].xl == 7)
+				{
+					switch(you[0].species)
+					{
+						case SP_RED_DRACONIAN: mpr("Your scales start taking on a fiery red colour."); break;
+						case SP_WHITE_DRACONIAN: mpr("Your scales start taking on an icy white colour."); break;
+						case SP_GREEN_DRACONIAN: mpr("Your scales start taking on a green colour.");
+												 mpr("You feel resistant to poison."); break;
+						case SP_GOLDEN_DRACONIAN: mpr("Your scales start taking on a golden yellow colour."); break;
 
-  case SP_BLACK_DRACONIAN: mpr("Your scales start turning black."); break;
-  case SP_PURPLE_DRACONIAN: mpr("Your scales start taking on a rich purple colour."); break;
-  case SP_MOTTLED_DRACONIAN: mpr("Your scales start taking on a weird mottled pattern."); break;
-  case SP_PALE_DRACONIAN: mpr("Your scales start fading to a pale grey colour."); break;
-  case SP_UNK0_DRACONIAN: mpr(""); break;
-  case SP_UNK1_DRACONIAN: mpr(""); break;
-  case SP_UNK2_DRACONIAN: mpr(""); break;
- }
- more();
- char title [40];
- strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
- draw_border(BROWN, you[0].your_name, title, you[0].species);
- you[0].hp_ch = 1;
- you[0].ep_ch = 1;
- you[0].strength_ch = 1;
- you[0].intel_ch = 1;
- you[0].dex_ch = 1;
- you[0].AC_ch = 1;
- you[0].evasion_ch = 1;
- you[0].gp_ch = 1;
- you[0].xp_ch = 1;
- you[0].hung_ch = 1;
- you[0].burden_ch = 1;
- print_stats();
- new_level();
-}
-if (you[0].xl == 18)
-{
- switch(you[0].species)
- {
-  case SP_RED_DRACONIAN: mpr("You feel resistant to fire."); break;
-  case SP_WHITE_DRACONIAN: mpr("You feel resistant to cold."); break;
-  case SP_BLACK_DRACONIAN: mpr("You feel resistant to electrical energy.");
-  you[0].attribute [ATTR_RESIST_LIGHTNING] ++; break;
- }
-}
+						case SP_BLACK_DRACONIAN: mpr("Your scales start turning black."); break;
+						case SP_PURPLE_DRACONIAN: mpr("Your scales start taking on a rich purple colour."); break;
+						case SP_MOTTLED_DRACONIAN: mpr("Your scales start taking on a weird mottled pattern."); break;
+						case SP_PALE_DRACONIAN: mpr("Your scales start fading to a pale grey colour."); break;
+						case SP_UNK0_DRACONIAN: mpr(""); break;
+						case SP_UNK1_DRACONIAN: mpr(""); break;
+						case SP_UNK2_DRACONIAN: mpr(""); break;
+					}
+					more();
+					char title [40];
+					strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
+					draw_border(BROWN, you[0].your_name, title, you[0].species);
+					you[0].hp_ch = 1;
+					you[0].ep_ch = 1;
+					you[0].strength_ch = 1;
+					you[0].intel_ch = 1;
+					you[0].dex_ch = 1;
+					you[0].AC_ch = 1;
+					you[0].evasion_ch = 1;
+					you[0].gp_ch = 1;
+					you[0].xp_ch = 1;
+					you[0].hung_ch = 1;
+					you[0].burden_ch = 1;
+					print_stats();
+					new_level();
+				}
+				if (you[0].xl == 18)
+				{
+					switch(you[0].species)
+					{
+						case SP_RED_DRACONIAN: mpr("You feel resistant to fire."); break;
+						case SP_WHITE_DRACONIAN: mpr("You feel resistant to cold."); break;
+						case SP_BLACK_DRACONIAN: mpr("You feel resistant to electrical energy.");
+												 you[0].attribute [ATTR_RESIST_LIGHTNING] ++; break;
+					}
+				}
 
-if (you[0].xl % 3 == 0)
-{
- you[0].hp_max += 1;
- you[0].base_hp2 += 1;
-}
-if (you[0].xl % 4 == 0) /* need to add to player_AC */
-{
- mpr("Your scales feel tougher.");
- you[0].AC_ch = 1;
-}
-//if (you[0].xl % 5 == 0) increase_stats(random2(3));
-break;
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].hp_max += 1;
+					you[0].base_hp2 += 1;
+				}
+				if (you[0].xl % 4 == 0) /* need to add to player_AC */
+				{
+					mpr("Your scales feel tougher.");
+					you[0].AC_ch = 1;
+				}
+				//if (you[0].xl % 5 == 0) increase_stats(random2(3));
+				break;
 
-case SP_GREY_DRACONIAN: /* grey drac */
-if (you[0].xl == 7)
-{
- mpr("Your scales start turning grey.");
- more();
- char title [40];
- strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
- draw_border(BROWN, you[0].your_name, title, you[0].species);
- you[0].hp_ch = 1;
- you[0].ep_ch = 1;
- you[0].strength_ch = 1;
- you[0].intel_ch = 1;
- you[0].dex_ch = 1;
- you[0].AC_ch = 1;
- you[0].evasion_ch = 1;
- you[0].gp_ch = 1;
- you[0].xp_ch = 1;
- you[0].hung_ch = 1;
- you[0].burden_ch = 1;
- print_stats();
- new_level();
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].hp_max += 1;
- you[0].base_hp2 += 1;
- if (you[0].xl > 7)
- {
-  you[0].hp_max += 1;
-  you[0].base_hp2 += 1;
- }
-}
-if (you[0].xl == 4 || (you[0].xl > 7 && you[0].xl % 2 == 0)) /* need to add to player_AC */
-{
- mpr("Your scales feel tougher.");
- you[0].AC_ch = 1;
-}
-if (you[0].xl > 7 && you[0].xl % 4 == 0) increase_stats(random2(2) * 2);
-break;
+			case SP_GREY_DRACONIAN: /* grey drac */
+				if (you[0].xl == 7)
+				{
+					mpr("Your scales start turning grey.");
+					more();
+					char title [40];
+					strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
+					draw_border(BROWN, you[0].your_name, title, you[0].species);
+					you[0].hp_ch = 1;
+					you[0].ep_ch = 1;
+					you[0].strength_ch = 1;
+					you[0].intel_ch = 1;
+					you[0].dex_ch = 1;
+					you[0].AC_ch = 1;
+					you[0].evasion_ch = 1;
+					you[0].gp_ch = 1;
+					you[0].xp_ch = 1;
+					you[0].hung_ch = 1;
+					you[0].burden_ch = 1;
+					print_stats();
+					new_level();
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].hp_max += 1;
+					you[0].base_hp2 += 1;
+					if (you[0].xl > 7)
+					{
+						you[0].hp_max += 1;
+						you[0].base_hp2 += 1;
+					}
+				}
+				if (you[0].xl == 4 || (you[0].xl > 7 && you[0].xl % 2 == 0)) /* need to add to player_AC */
+				{
+					mpr("Your scales feel tougher.");
+					you[0].AC_ch = 1;
+				}
+				if (you[0].xl > 7 && you[0].xl % 4 == 0) increase_stats(random2(2) * 2);
+				break;
 
-case SP_CENTAUR: // centaur
-if (you[0].xl % 4 == 0) increase_stats(0 + random2(2) * 2); /* str or dex */
-if (you[0].xl <= 16)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 --;
-}
-break;
+			case SP_CENTAUR: // centaur
+				if (you[0].xl % 4 == 0) increase_stats(0 + random2(2) * 2); /* str or dex */
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				break;
 
-case SP_DEMIGOD: // demigod
-if (you[0].xl % 3 == 0) increase_stats(random2(3));
-if (you[0].xl <= 16)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 3 != 0) you[0].base_ep2 ++;
-break;
+			case SP_DEMIGOD: // demigod
+				if (you[0].xl % 3 == 0) increase_stats(random2(3));
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 3 != 0) you[0].base_ep2 ++;
+				break;
 
-case SP_SPRIGGAN: // spriggan
-if (you[0].xl <= 16)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 != 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-you[0].base_ep2 ++;
-if (you[0].xl % 5 == 0) increase_stats(1 + random2(2));
-break;
-case SP_MINOTAUR: // Minotaur
-if (you[0].xl <= 16)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 4 == 0) increase_stats(0 + random2(2) * 2); /* str or dex */
-break;
-case SP_DEMONSPAWN: // demonspawn
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 0 && (you[0].xl == 4 || (you[0].xl < 4 && random2(3) == 0)))
- demonspawn();
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 1 && you[0].xl > 4 && (you[0].xl == 9 || (you[0].xl < 9 && random2(3) == 0)))
- demonspawn();
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 2 && you[0].xl > 9 && (you[0].xl == 14 || (you[0].xl < 14 && random2(3) == 0)))
- demonspawn();
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 3 && you[0].xl > 14 && (you[0].xl == 19 || (you[0].xl < 19 && random2(3) == 0)))
- demonspawn();
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 4 && you[0].xl > 19 && (you[0].xl == 24 || (you[0].xl < 24 && random2(3) == 0)))
- demonspawn();
-if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 5 && you[0].xl == 27)
- demonspawn();
-/*if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 6 && (you[0].xl == 8 || (you[0].xl < 8 && random2(3) == 0))
- demonspawn();*/
-if (you[0].xl % 4 == 0) increase_stats(random2(3));
-break;
-case SP_GHOUL: // Ghoul
-if (you[0].xl <= 16)
-{
- you[0].hp_max ++;
- you[0].base_hp2 ++;
-}
-if (you[0].xl % 2 == 0)
-{
- you[0].base_hp2 ++;
- you[0].hp_max ++;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].base_ep2 --;
-}
-if (you[0].xl % 5 == 0) increase_stats(STAT_STRENGTH);
-break;
-case SP_KENKU: // Kenku
-if (you[0].xl <= 16)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 3 == 0)
-{
- you[0].hp_max --;
- you[0].base_hp2 --;
-}
-if (you[0].xl % 4 == 0) increase_stats(random2(3));
-if (you[0].xl == 5) mpr("You have gained the ability to fly.");
-if (you[0].xl == 15) mpr("You can now fly continuously.");
-break;
+			case SP_SPRIGGAN: // spriggan
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 != 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				you[0].base_ep2 ++;
+				if (you[0].xl % 5 == 0) increase_stats(1 + random2(2));
+				break;
+			case SP_MINOTAUR: // Minotaur
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(0 + random2(2) * 2); /* str or dex */
+				break;
+			case SP_DEMONSPAWN: // demonspawn
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 0 && (you[0].xl == 4 || (you[0].xl < 4 && random2(3) == 0)))
+					demonspawn();
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 1 && you[0].xl > 4 && (you[0].xl == 9 || (you[0].xl < 9 && random2(3) == 0)))
+					demonspawn();
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 2 && you[0].xl > 9 && (you[0].xl == 14 || (you[0].xl < 14 && random2(3) == 0)))
+					demonspawn();
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 3 && you[0].xl > 14 && (you[0].xl == 19 || (you[0].xl < 19 && random2(3) == 0)))
+					demonspawn();
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 4 && you[0].xl > 19 && (you[0].xl == 24 || (you[0].xl < 24 && random2(3) == 0)))
+					demonspawn();
+				if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 5 && you[0].xl == 27)
+					demonspawn();
+				/*if (you[0].attribute [ATTR_NUM_DEMONIC_POWERS] == 6 && (you[0].xl == 8 || (you[0].xl < 8 && random2(3) == 0))
+				  demonspawn();*/
+				if (you[0].xl % 4 == 0) increase_stats(random2(3));
+				break;
+			case SP_GHOUL: // Ghoul
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max ++;
+					you[0].base_hp2 ++;
+				}
+				if (you[0].xl % 2 == 0)
+				{
+					you[0].base_hp2 ++;
+					you[0].hp_max ++;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].base_ep2 --;
+				}
+				if (you[0].xl % 5 == 0) increase_stats(STAT_STRENGTH);
+				break;
+			case SP_KENKU: // Kenku
+				if (you[0].xl <= 16)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 3 == 0)
+				{
+					you[0].hp_max --;
+					you[0].base_hp2 --;
+				}
+				if (you[0].xl % 4 == 0) increase_stats(random2(3));
+				if (you[0].xl == 5) mpr("You have gained the ability to fly.");
+				if (you[0].xl == 15) mpr("You can now fly continuously.");
+				break;
 
-}
-}
-
-
-if (you[0].hp > you[0].hp_max) you[0].hp = you[0].hp_max;
-if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
-if (you[0].ep <= 0) you[0].ep = 0;
-
-calc_hp();
-calc_ep();
-
- if (you[0].xl > you[0].max_level) you[0].max_level = you[0].xl;
+		}
+	}
 
 
+	if (you[0].hp > you[0].hp_max) you[0].hp = you[0].hp_max;
+	if (you[0].ep > you[0].ep_max) you[0].ep = you[0].ep_max;
+	if (you[0].ep <= 0) you[0].ep = 0;
 
-/*
-if (you[0].xl < 5) you[0].rate_regen += 2;
-if (you[0].xl > 4 && you[0].xl <= 10 && you[0].xl % 2 == 0) you[0].rate_regen += 2;
-if (you[0].xl > 10 && you[0].xl % 2 == 0) you[0].rate_regen ++;
-*/
+	calc_hp();
+	calc_ep();
 
-you[0].hp_ch = 1; you[0].ep_ch = 1;
+	if (you[0].xl > you[0].max_level) you[0].max_level = you[0].xl;
 
-if (you[0].religion == GOD_XOM) Xom_acts(1, you[0].xl, 1);
+
+
+	/*
+	   if (you[0].xl < 5) you[0].rate_regen += 2;
+	   if (you[0].xl > 4 && you[0].xl <= 10 && you[0].xl % 2 == 0) you[0].rate_regen += 2;
+	   if (you[0].xl > 10 && you[0].xl % 2 == 0) you[0].rate_regen ++;
+	   */
+
+	you[0].hp_ch = 1; you[0].ep_ch = 1;
+
+	if (you[0].religion == GOD_XOM) Xom_acts(1, you[0].xl, 1);
 
 
 }

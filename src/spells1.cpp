@@ -150,41 +150,30 @@ if (you[0].level_type == 2)
 
 void fireball(int power)
 {
+	mpr("Which direction? (* to target)");
+	if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST) {
+		if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
+		{
+			msg("You are currently targetting @1 (p to target).") << monam(menv[you[0].prev_targ].m_sec, menv[you[0].prev_targ].m_class, menv[you[0].prev_targ].m_ench [2], 1);
+		} else {
+			mpr("You have no current target.");
+		}
+	}
 
- mpr("Which direction? (* to target)");
+	struct dist fire_ball [1];
+	direction(1, fire_ball);
+	if (fire_ball[0].nothing == -1) {
+		mpr("The program fizzles.");
+		return;
+	}
 
- if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
- {
-  if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
-  {
-	strcpy(info, "You are currently targetting ");
-        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
-        strcat(info, " (p to target).");
-        mpr(info);
-  } else mpr("You have no current target.");
- }
-
-
-struct dist fire_ball [1];
-
-direction(1, fire_ball);
-
-if (fire_ball[0].nothing == -1)
-{
-	mpr("The program fizzles.");
-	return;
-}
-
-struct bolt beam [1];
-
-beam[0].source_x = you[0].x_pos; beam[0].source_y = you[0].y_pos;
-beam[0].move_x = fire_ball[0].move_x;
-beam[0].move_y = fire_ball[0].move_y;
-beam[0].target_x = fire_ball[0].target_x;
-beam[0].target_y = fire_ball[0].target_y;
-
-zapping(ZAP_FIREBALL, power, beam);
-
+	struct bolt beam [1];
+	beam[0].source_x = you[0].x_pos; beam[0].source_y = you[0].y_pos;
+	beam[0].move_x = fire_ball[0].move_x;
+	beam[0].move_y = fire_ball[0].move_y;
+	beam[0].target_x = fire_ball[0].target_x;
+	beam[0].target_y = fire_ball[0].target_y;
+	zapping(ZAP_FIREBALL, power, beam);
 }
 
 void cast_fire_storm(int powc)
@@ -258,39 +247,47 @@ viewwindow(1);
 
 char spell_direction(struct dist spelld [1], struct bolt beam [1])
 {
+	mpr("Which direction? (* to target)");
+	if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST) {
+		if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0)) {
+			msg("You are currently targetting @1 (p to target).") << monam(menv[you[0].prev_targ].m_sec, menv[you[0].prev_targ].m_class, menv[you[0].prev_targ].m_ench [2], 1);
+		} else {
+			mpr("You have no current target.");
+		}
+	}
 
- mpr("Which direction? (* to target)");
+	direction(1, spelld);
 
- if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST)
- {
-  if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
-  {
-	strcpy(info, "You are currently targetting ");
-        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
-        strcat(info, " (p to target).");
-        mpr(info);
-  } else mpr("You have no current target.");
- }
+	if (spelld[0].nothing == -1)
+	{
+		mpr("The program fizzles.");
+		return -1;
+	}
+	beam[0].move_x = spelld[0].move_x;
+	beam[0].move_y = spelld[0].move_y;
+	beam[0].target_y = spelld[0].target_y;
+	beam[0].target_x = spelld[0].target_x;
+	beam[0].source_x = you[0].x_pos;
+	beam[0].source_y = you[0].y_pos;
+	return 1;
 
-direction(1, spelld);
+}
 
-if (spelld[0].nothing == -1)
+std::string equip_type(int sc_read_2)
 {
-	mpr("The program fizzles.");
-	return -1;
+	if (sc_read_2 == you[0].equip [EQ_WEAPON]) {
+		return " (weapon in hand)";
+	} else if (sc_read_2 == you[0].equip [EQ_BODY_ARMOUR]) {
+		return " (being worn)";
+	} else if (sc_read_2 == you[0].equip [EQ_LEFT_RING]) {
+		return " (on left hemisphere)";
+	} else if (sc_read_2 == you[0].equip [EQ_RIGHT_RING]) {
+		return " (on right hemisphere)";
+	} else if (sc_read_2 == you[0].equip [EQ_AMULET]) {
+		return " (on vertebra)";
+	}
+	return "";
 }
-beam[0].move_x = spelld[0].move_x;
-beam[0].move_y = spelld[0].move_y;
-beam[0].target_y = spelld[0].target_y;
-beam[0].target_x = spelld[0].target_x;
-beam[0].source_x = you[0].x_pos;
-beam[0].source_y = you[0].y_pos;
-return 1;
-
-}
-
-
-
 
 void identify(char pow)
 {
@@ -341,27 +338,13 @@ void identify(char pow)
 	set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 	you[0].inv_ident [sc_read_2] = 3;
 
-	strcpy(info, " ");
+	if (sc_read_2 == you[0].equip [EQ_WEAPON]) {
+		wield_change = 1;
+	}
 
-                        if (sc_read_2 <= 25) info [0] = sc_read_2 + 97;
-				else info [0] = sc_read_2 + 39;
-			info [1] = 0; /* This null-terminates it, right? */
-			strcat(info, " - ");
-			item_name(you[0].inv_plus2 [sc_read_2], you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], you[0].inv_dam [sc_read_2], you[0].inv_plus [sc_read_2], you[0].inv_quant [sc_read_2], you[0].inv_ident [sc_read_2], 3, str_pass);
-			strcat(info, str_pass);
-
-			if (sc_read_2 == you[0].equip [EQ_WEAPON])
- 			{
-              strcat(info, " (weapon in hand)");
-              wield_change = 1;
-            }
-			if (sc_read_2 == you[0].equip [EQ_BODY_ARMOUR]) strcat(info, " (being worn)");
-
-			if (sc_read_2 == you[0].equip [EQ_LEFT_RING]) strcat(info, " (on left hemisphere)");
-			if (sc_read_2 == you[0].equip [EQ_RIGHT_RING]) strcat(info, " (on right hemisphere)");
-			if (sc_read_2 == you[0].equip [EQ_AMULET]) strcat(info, " (on vertebra)");
-
-			mpr(info);
+	char slot = (sc_read_2 <= 25) ? (sc_read_2 + 97) : (sc_read_2 + 39);
+	item_name(you[0].inv_plus2 [sc_read_2], you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], you[0].inv_dam [sc_read_2], you[0].inv_plus [sc_read_2], you[0].inv_quant [sc_read_2], you[0].inv_ident [sc_read_2], 3, str_pass);
+	msg("@1 - @2@3") << slot << str_pass << equip_type(sc_read_2);
 
 	id_used -= 1;
 
@@ -432,11 +415,10 @@ struct bolt beam [1];
  {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
-	strcpy(info, "You are currently targetting ");
-        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
-        strcat(info, " (p to target).");
-        mpr(info);
-  } else mpr("You have no current target.");
+	msg("You are currently targetting @1 (p to target).") << monam(menv[you[0].prev_targ].m_sec, menv[you[0].prev_targ].m_class, menv[you[0].prev_targ].m_ench [2], 1);
+  } else {
+	  mpr("You have no current target.");
+  }
  }
 
 direction(1, spelld);
@@ -624,19 +606,14 @@ if (mgr == MNG)
 	return -1;
 }
 
-strcpy(info, "You heal ");
-strcat(info, monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1));
-strcat(info, ".");
-mpr(info);
+msg("You heal @1.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
 
 menv [mgr].m_hp += healed;
 
 if (menv [mgr].m_hp >= menv [mgr].m_hp_max)
 {
  menv [mgr].m_hp = menv [mgr].m_hp_max;
- strcpy(info, monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 0));
- strcat(info, " is completely healed.");
- mpr(info);
+ msg("@1 is completely healed.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 0);
 } else print_wounds(mgr);
 
 return 1;
@@ -776,9 +753,7 @@ for (ab = 0; ab < MNST; ab ++)
   monster_die(ab, 6, 0);
   continue;
  }
- strcpy(info, monam (menv [ab].m_sec, menv [ab].m_class, menv [ab].m_ench [2], 0));
- strcat(info, " shudders.");
- mpr(info);
+ msg("@1 shudders.") << monam (menv [ab].m_sec, menv [ab].m_class, menv [ab].m_ench [2], 0);
 
 } // end of for ab
 

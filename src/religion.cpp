@@ -52,6 +52,27 @@ void god_pitch(unsigned char which_god);
 void altar_prayer();
 void lose_piety(char pgn);
 
+std::string god_attitude(int piety)
+{
+	if (piety <= 5) {
+		return "is displeased.";
+	} else if (piety <= 20) {
+		return "is noncommittal.";
+	} else if (piety <= 40) {
+		return "is pleased with you.";
+	} else if (piety <= 70) {
+		return "is most pleased with you.";
+	} else if (piety <= 100) {
+		you[0].duration [DUR_PRAYER] *= 2;
+		return "is greatly pleased with you.";
+	} else if (piety <= 130) {
+		you[0].duration [DUR_PRAYER] *= 2;
+		return "is extremely pleased with you.";
+	}
+	you[0].duration [DUR_PRAYER] *= 3;
+	return "is exalted by your worship!";
+}
+
 void pray(void)
 {
 
@@ -85,96 +106,13 @@ if (you[0].religion == GOD_XOM)
 mpr("The Anonimous ignores you.");
 return;
 }
-strcpy(info, "You offer a prayer to ");
-strcat(info, god_name(you[0].religion));
-strcat(info, ".");
-mpr(info);
+msg("You offer a prayer to @1.") << god_name(you[0].religion);
 
 you[0].duration [DUR_PRAYER] = 9 + random2(you[0].piety) / 20 + random2(you[0].piety) / 20;
 
 //if (you[0].clas == 2 || you[0].clas == 6) you[0].duration [3] = 4 + random2(you[0].piety) / 20 + random2(you[0].piety) / 20 + random2(you[0].piety) / 20;
 
-strcpy(info, god_name(you[0].religion));
-
-if (you[0].piety <= 5)
-{
-strcat(info, " is displeased.");
-} else
-if (you[0].piety <= 20)
-{
-strcat(info, " is noncommittal.");
-} else
-if (you[0].piety <= 40)
-{
-strcat(info, " is pleased with you.");
-} else
-if (you[0].piety <= 70)
-{
-strcat(info, " is most pleased with you.");
-} else
-if (you[0].piety <= 100)
-{
-strcat(info, " is greatly pleased with you.");
-you[0].duration [DUR_PRAYER] *= 2;
-} else
-if (you[0].piety <= 130)
-{
-strcat(info, " is extremely pleased with you.");
-you[0].duration [DUR_PRAYER] *= 2;
-} else
-{
-strcat(info, " is exalted by your worship!");
-you[0].duration [DUR_PRAYER] *= 3;
-}
-
-/*if (you[0].piety <= 20)
-{
-strcpy(info, "You sense hostility.");
-you[0].duration [DUR_PRAYER] = 0;
-} else
-if (you[0].piety <= 35)
-{
-strcat(info, " is most displeased with you.");
-you[0].duration [DUR_PRAYER] = 0;
-} else
-if (you[0].piety <= 45)
-{
-strcat(info, " is displeased with you.");
-you[0].duration [DUR_PRAYER] = 0;
-} else
-if (you[0].piety <= 65)
-{
-strcat(info, " is noncommittal.");
-} else
-if (you[0].piety <= 75)
-{
-strcat(info, " is pleased with you.");
-} else
-if (you[0].piety <= 90)
-{
-strcat(info, " is most pleased with you.");
-} else
-if (you[0].piety <= 110)
-{
-strcat(info, " favours you.");
-you[0].duration [DUR_PRAYER] *= 2;
-} else
-if (you[0].piety <= 130)
-{
-strcat(info, " favours you greatly.");
-you[0].duration [DUR_PRAYER] *= 2;
-} else
-{
-strcat(info, " is exalted by your worship!");
-you[0].duration [DUR_PRAYER] *= 3;
-}
-*/
-mpr(info);
-
-/* itoa(you[0].piety, st_prn, 10);
- strcpy(info, "Debug info - Piety: ");
- strcat(info, st_prn);
- mpr(info);*/
+msg("@1 @2") << god_name(you[0].religion) << god_attitude(you[0].piety);
 
 you[0].turnover = 1;
 
@@ -215,9 +153,7 @@ Remember to check for water/lava
 
  if ((you[0].religion == GOD_OKAWARU || you[0].religion == GOD_TROG) && you[0].piety > 130 && random2(you[0].piety) > 120 && random2(4) == 0 && grd [you[0].x_pos] [you[0].y_pos] != 61 && grd [you[0].x_pos] [you[0].y_pos] != 62)
  {
-   strcpy(info, god_name(you[0].religion));
-   strcat(info, " grants you a gift!");
-   mpr(info);
+   msg("@1 grants you a gift!") << god_name(you[0].religion);
    more();
    if (you[0].religion == GOD_TROG || (you[0].religion == GOD_OKAWARU && random2(2) == 0)) acquirement(OBJ_WEAPONS);
      else acquirement(OBJ_ARMOUR);
@@ -226,9 +162,7 @@ Remember to check for water/lava
 
  if (you[0].religion == GOD_YREDELEMNUL && random2(you[0].piety) > 80 && random2(10) == 0)
  {
-   strcpy(info, god_name(you[0].religion));
-   strcat(info, " grants you a cyborg servant!");
-   mpr(info);
+   msg("@1 grants you a cyborg servant!") << god_name(you[0].religion);
    more();
    int und_serv = MONS_WRAITH; /* wraith */
    if (random2(7) == 0) und_serv = MONS_MUMMY;
@@ -276,9 +210,7 @@ Remember to check for water/lava
 
   if (gift != BOOK_MINOR_MAGIC_I && (grd [you[0].x_pos] [you[0].y_pos] != 61 && grd [you[0].x_pos] [you[0].y_pos] != 62))
   { /* shouldn't give you something if it's just going to fall in a pool */
-   strcpy(info, god_name(you[0].religion));
-   strcat(info, " grants you a gift!");
-   mpr(info);
+   msg("@1 grants you a gift!") << god_name(you[0].religion);
    more();
    if (gift == 250)
    {
@@ -303,62 +235,43 @@ Remember to check for water/lava
 
 const char *god_name(int which_god)
 {
-
-switch(which_god)
-{
-/*case 0: strcpy(info, "You aren't religious!"); mpr(info); return;
-case 1: strcat(info, "Zin."); break;
-case 2: strcat(info, "The Shining One."); break;
-case 3: strcat(info, "Elyvilon."); break;
-case 4: strcat(info, "Nemelex Xobeh."); break;
-case 5: strcat(info, "Jurubetut."); break;
-case 6: strcat(info, "Vuhemeti."); break;
-case 7: strcat(info, "Okawaru."); break;
-case 8: strcat(info, "Kikubaaqudgha."); break;
-case 9: strcat(info, "Sif Muna."); break;
-case 10: strcat(info, "Trog."); break;*/
-case 0: return "You aren't employed!";
-case 1: return "Knights Templar";
-case 2: return "UNATCO";
-case 3: return "Manticore";
-case 4: return "NSF";
-case 5: return "The Anonimous";
-case 6: return "Digicorp";
-case 7: return "S.T.A.R.S.";
-case 8: return "Netchaos Order";
-case 9: return "Black Mesa";
-case 10: return "Human Liberation Front";
-case 11: return "Triads";
-case 12: return "Aperture Labs";
-}
-
-return "Illegal employer!";
-
+	switch(which_god) {
+		case 0: return "You aren't employed!";
+		case 1: return "Knights Templar";
+		case 2: return "UNATCO";
+		case 3: return "Manticore";
+		case 4: return "NSF";
+		case 5: return "The Anonimous";
+		case 6: return "Digicorp";
+		case 7: return "S.T.A.R.S.";
+		case 8: return "Netchaos Order";
+		case 9: return "Black Mesa";
+		case 10: return "Human Liberation Front";
+		case 11: return "Triads";
+		case 12: return "Aperture Labs";
+	}
+	return "Illegal employer!";
 }
 
 
 const char *god_name_long(int which_god)
 {
-
-switch(which_god)
-{
-case 0: return "Nobody";
-case 1: return "Mighty Knights Templar";
-case 2: return "United Nation Anti-Terrorist Coalition";
-case 3: return "Manticore Bioresearch";
-case 4: return "National Sessionist Forces";
-case 5: return "The Anonimous";
-case 6: return "Digicorp";
-case 7: return "S.T.A.R.S.";
-case 8: return "Netchaos Order";
-case 9: return "Black Mesa Research Facility";
-case 10: return "Human Liberation Front";
-case 11: return "Triads";
-case 12: return "Aperture Science Laboratories";
-}
-
-return "Illegal employer!";
-
+	switch(which_god) {
+		case 0: return "Nobody";
+		case 1: return "Mighty Knights Templar";
+		case 2: return "United Nation Anti-Terrorist Coalition";
+		case 3: return "Manticore Bioresearch";
+		case 4: return "National Sessionist Forces";
+		case 5: return "The Anonimous";
+		case 6: return "Digicorp";
+		case 7: return "S.T.A.R.S.";
+		case 8: return "Netchaos Order";
+		case 9: return "Black Mesa Research Facility";
+		case 10: return "Human Liberation Front";
+		case 11: return "Triads";
+		case 12: return "Aperture Science Laboratories";
+	}
+	return "Illegal employer!";
 }
 
 
@@ -663,9 +576,7 @@ switch(thing_done)
   case GOD_OKAWARU:
   case GOD_MAKHLEB:
   case GOD_TROG:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your kill.");
-  mpr(info);
+  msg("@1 accepts your kill.") << god_name(you[0].religion);
   if (random2(pgain + 18) > 5) gain_piety(1);
   break;
  }
@@ -678,9 +589,7 @@ switch(thing_done)
   case GOD_SHINING_ONE:
   case GOD_VEHUMET:
   case GOD_MAKHLEB:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your kill.");
-  mpr(info);
+  msg("@1 accepts your kill.") << god_name(you[0].religion);
   if (random2(pgain + 18) > 4) gain_piety(1);
   break;
  }
@@ -693,9 +602,7 @@ switch(thing_done)
   case GOD_SHINING_ONE:
   case GOD_VEHUMET:
   case GOD_MAKHLEB:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your kill.");
-  mpr(info);
+  msg("@1 accepts your kill.") << god_name(you[0].religion);
   if (random2(pgain + 18) > 3) gain_piety(1);
   break;
  }
@@ -705,18 +612,10 @@ switch(thing_done)
  case 5:
  switch(you[0].religion)
  {
-/*case 3:
-  case 8:
-  strcpy(info, god_name(you[0].religion);
-  strcat(info, " accepts your kill with pleasure!");
-  gain_piety(random2(2) + 1);
-  break;*/
   case GOD_ZIN:
   case GOD_SHINING_ONE:
   case GOD_ELYVILON:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " did not appreciate that!");
-  mpr(info);
+  msg("@1 did not appreciate that!") << god_name(you[0].religion);
   if (you[0].conf != 0) naughty(4, 3);
    else naughty(4, pgain * 3);
   break;
@@ -730,26 +629,20 @@ switch(thing_done)
   case GOD_OKAWARU:
   case GOD_MAKHLEB:
   case GOD_TROG:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your offering.");
-  mpr(info);
+  msg("@1 accepts your offering.") << god_name(you[0].religion);
   if (random2(pgain + 10) > 5) gain_piety(1);
   break;
   case GOD_ZIN:
   case GOD_SHINING_ONE:
   case GOD_ELYVILON:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " did not appreciate that!");
-  mpr(info);
+  msg("@1 did not appreciate that!") << god_name(you[0].religion);
   naughty(7, 8);
   break;
  }
  break;
 
  case GOD_OKAWARU:
- strcpy(info, god_name(you[0].religion));
- strcat(info, " is pleased with your offering.");
- mpr(info);
+ msg("@1 is pleased with your offering.") << god_name(you[0].religion);
  gain_piety(1);
  break;
 
@@ -759,9 +652,7 @@ switch(thing_done)
   case GOD_KIKUBAAQUDGHA:
   case GOD_YREDELEMNUL:
   case GOD_VEHUMET:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your slave's kill.");
-  mpr(info);
+  msg("@1 accepts your slave's kill.") << god_name(you[0].religion);
   if (random2(pgain + 18) > 5) gain_piety(1);
   break;
  }
@@ -772,9 +663,7 @@ switch(thing_done)
  {
   case GOD_VEHUMET:
   case GOD_MAKHLEB:
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " accepts your collateral kill.");
-  mpr(info);
+  msg("@1 accepts your collateral kill.") << god_name(you[0].religion);
   if (random2(pgain + 18) > 5) gain_piety(1);
   break;
  }
@@ -1240,23 +1129,17 @@ void excommunication(void)
  if (you[0].religion == GOD_XOM) Xom_acts(0, you[0].xl * 2, 1);
  if (you[0].religion == GOD_KIKUBAAQUDGHA || you[0].religion == GOD_YREDELEMNUL)
  {
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " does not appreciate desertion!");
-  mpr(info);
+  msg("@1 does not appreciate desertion!") << god_name(you[0].religion);
   miscast_effect(16, 5 + you[0].xl, random2(30) + random2(30) + random2(30), 100);
  }
  if (you[0].religion == GOD_VEHUMET || you[0].religion == GOD_MAKHLEB)
  {
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " does not appreciate desertion!");
-  mpr(info);
+  msg("@1 does not appreciate desertion!") << god_name(you[0].religion);
   miscast_effect(11 + (random2(2) * 7), 8 + you[0].xl, random2(40) + random2(30) + random2(30), 100);
  }
  if (you[0].religion == GOD_TROG)
  {
-  strcpy(info, god_name(you[0].religion));
-  strcat(info, " does not appreciate desertion!");
-  mpr(info);
+  msg("@1 does not appreciate desertion!") << god_name(you[0].religion);
   miscast_effect(13, 8 + you[0].xl, random2(40) + random2(30) + random2(30), 100);
  } /* Trog uses fire wild magic - is this right? */
  you[0].religion = GOD_NO_GOD;
@@ -1302,9 +1185,7 @@ switch(you[0].religion)
  case GOD_MAKHLEB:
  case GOD_NEMELEX_XOBEH:
  it_name(i, 0, str_pass);
- strcpy(info, str_pass);
- strcat(info, sacrifice [you[0].religion - 1]);
- mpr(info);
+ msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
  if (mitm.iclass [i] == OBJ_CORPSES || random2(item_value(mitm.iclass [i], mitm.itype [i], mitm.idam [i], mitm.iplus [i], mitm.iplus2 [i], mitm.iquant [i], 3, subst_id)) >= 50)
      gain_piety(1);
  destroy_item(i);
@@ -1312,9 +1193,7 @@ switch(you[0].religion)
 
  case GOD_SIF_MUNA:
  it_name(i, 0, str_pass);
- strcpy(info, str_pass);
- strcat(info, sacrifice [you[0].religion - 1]);
- mpr(info);
+ msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
  if (item_value(mitm.iclass [i], mitm.itype [i], mitm.idam [i], mitm.iplus [i], mitm.iplus2 [i], mitm.iquant [i], 3, subst_id) >= 150)
      gain_piety(1 + random2(3));
  destroy_item(i);
@@ -1324,9 +1203,7 @@ switch(you[0].religion)
  case GOD_TROG:
  if (mitm.iclass [i] != OBJ_CORPSES) break;
  it_name(i, 0, str_pass);
- strcpy(info, str_pass);
- strcat(info, sacrifice [you[0].religion - 1]);
- mpr(info);
+ msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
  gain_piety(1);
  destroy_item(i);
  break;
@@ -1334,9 +1211,7 @@ switch(you[0].religion)
  case GOD_ELYVILON:
  if (mitm.iclass [i] != OBJ_WEAPONS && mitm.iclass [i] != OBJ_MISSILES) break;
  it_name(i, 0, str_pass);
- strcpy(info, str_pass);
- strcat(info, sacrifice [you[0].religion - 1]);
- mpr(info);
+ msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
  gain_piety(1);
  destroy_item(i);
  break;
@@ -1352,18 +1227,13 @@ i = j;
 void god_pitch(unsigned char which_god)
 {
 
-strcpy(info, "You connect to the terminal of ");
-strcat(info, god_name(which_god));
-strcat(info, ".");
-mpr(info);
+msg("You connect to the terminal of @1.") << god_name(which_god);
 
 more();
 
 if ((you[0].is_undead != 0 || you[0].species == SP_DEMONSPAWN) && (which_god == GOD_ZIN || which_god == GOD_SHINING_ONE || which_god == GOD_ELYVILON))
 {
- strcpy(info, god_name(which_god));
- strcat(info, " does not employ those such as you!");
- mpr(info);
+ msg("@1 does not employ those such as you!") << god_name(which_god);
  return;
 }
 
@@ -1379,9 +1249,7 @@ if (keyi != 'Y' && keyi != 'y') return;
 
 if (you[0].religion != GOD_NO_GOD) excommunication();
 
-strcpy(info, god_name(which_god));
-strcat(info, " welcomes you!");
-mpr(info);
+msg("@1 welcomes you!") << god_name(which_god);
 
 you[0].religion = which_god;
 you[0].piety = 15;
@@ -1392,9 +1260,7 @@ you[0].piety = 15;
 void offer_corpse(int corpse)
 {
  it_name(corpse, 0, str_pass);
- strcpy(info, str_pass);
- strcat(info, sacrifice [you[0].religion - 1]);
- mpr(info);
+ msg("@1@2") << str_pass << sacrifice [you[0].religion - 1];
  done_good(6, 10);
 }
 

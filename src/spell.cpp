@@ -153,23 +153,8 @@ alert();
 
 powc = spell_spec(spc2, powc);
 
-/*strcpy(info, "Spell_spec: ");
-itoa(powc, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);*/
-
 surge_power(spc2);
 powc = magic_ability(powc, you[0].intel);
-
-/*strcpy(info, "Magic_ability: ");
-itoa(powc, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
-
-strcpy(info, "Spell_fail: ");
-itoa(spell_fail(spc2), st_prn, 10);
-strcat(info, st_prn);
-mpr(info);*/
 
 if (allow_fail == 1)
 {

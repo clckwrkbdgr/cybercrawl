@@ -356,26 +356,8 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 				  {
 					  j += you[0].skill_points [i];
 				  }
-				  strcpy(info, "You have a total of ");
-				  itoa(j, st_prn, 10);
-				  strcat(info, st_prn);
-				  strcat(info, " skill points.");
-				  mpr(info);
+				  msg("You have a total of @1 skill points.") << j;
 				  break;
-				  /*  case '=':
-					  new_level();
-					  strcpy(info, "");
-					  for (i = 0; i < 20; i ++)
-					  {
-					  itoa(mons_alloc [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, ",");
-					  }
-					  mpr(info);
-					  break;*/
-#endif
-
-#ifdef DEBUG
 		case '`':
 				  itoa(OUTPUT_NO, st_prn, 10);
 				  mpr(st_prn);
@@ -387,30 +369,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 				  for (i = 0; i < ITEMS; i ++)
 				  {
 					  if (it[0].ilink [i] == ING) continue;
-					  itoa(i, st_prn, 10);
-					  strcpy(info, st_prn);
-					  strcat(info, " is linked to ");
-					  itoa(it[0].ilink [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " c:");
-					  itoa(it[0].iclass [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " t:");
-					  itoa(it[0].itype [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " p:");
-					  itoa(it[0].iplus [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " p2:");
-					  itoa(it[0].iplus2 [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " d:");
-					  itoa(it[0].idam [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  strcat(info, " q: ");
-					  itoa(it[0].iquant [i], st_prn, 10);
-					  strcat(info, st_prn);
-					  mpr(info);
+					  msg("@1 is linked to @2 c:@3 t:@4 p:@5 p2:@6 d:@7 q: @8") << i << it[0].ilink [i] << it[0].iclass [i] << it[0].itype [i] << it[0].iplus [i] << it[0].iplus2 [i] << it[0].idam [i] << it[0].iquant [i];
 				  }
 				  mpr("igrid:");
 				  for (i = 0; i < GXM; i ++)
@@ -419,33 +378,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 					  {
 						  if (igrid [i] [j] != ING)
 						  {
-							  itoa(igrid [i] [j], st_prn, 10);
-							  strcpy(info, st_prn);
-							  strcat(info, " at ");
-							  itoa(i, st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, ", ");
-							  itoa(j, st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " c:");
-							  itoa(it[0].iclass [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " t:");
-							  itoa(it[0].itype [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " p:");
-							  itoa(it[0].iplus [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " p2:");
-							  itoa(it[0].iplus2 [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " d:");
-							  itoa(it[0].idam [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  strcat(info, " q: ");
-							  itoa(it[0].iquant [igrid [i] [j]], st_prn, 10);
-							  strcat(info, st_prn);
-							  mpr(info);
+							  msg("@1 at @, @ c:@ t:@ p:@ p2:@ d:@ q: @") << igrid [i] [j] << i << j << it[0].iclass [igrid [i] [j]] << it[0].itype [igrid [i] [j]] << it[0].iplus [igrid [i] [j]] << it[0].iplus2 [igrid [i] [j]] << it[0].idam [igrid [i] [j]] << it[0].iquant [igrid [i] [j]];
 						  }
 					  }
 				  }
@@ -575,9 +508,7 @@ void input(void)
 	}
 	if (you[0].duration [DUR_VORPAL_BLADE] == 1) {
 		item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-		strcpy(info, str_pass);
-		strcat(info, " seems blunter.");
-		mpr(info);
+		msg("@1 seems blunter.") << str_pass;
 		you[0].duration [DUR_VORPAL_BLADE] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 10;
 		wield_change = 1;
@@ -587,9 +518,7 @@ void input(void)
 	}
 	if (you[0].duration [DUR_FIRE_BRAND] == 1) {
 		item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-		strcpy(info, str_pass);
-		strcat(info, " goes out.");
-		mpr(info);
+		msg("@1 goes out.") << str_pass;
 		you[0].duration [DUR_FIRE_BRAND] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 1;
 		wield_change = 1;
@@ -599,9 +528,7 @@ void input(void)
 	}
 	if (you[0].duration [DUR_ICE_BRAND] == 1) {
 		item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-		strcpy(info, str_pass);
-		strcat(info, " stops glowing.");
-		mpr(info);
+		msg("@1 stops glowing.") << str_pass;
 		you[0].duration [DUR_ICE_BRAND] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 2;
 		wield_change = 1;
@@ -611,9 +538,7 @@ void input(void)
 	}
 	if (you[0].duration [DUR_LETHAL_INFUSION] == 1) {
 		item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-		strcpy(info, str_pass);
-		strcat(info, " stops crackling.");
-		mpr(info);
+		msg("@1 stops crackling.") << str_pass;
 		you[0].duration [DUR_LETHAL_INFUSION] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 8;
 		wield_change = 1;
@@ -623,9 +548,7 @@ void input(void)
 	}
 	if (you[0].duration [DUR_POISON_WEAPON] == 1) {
 		item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-		strcpy(info, str_pass);
-		strcat(info, " stops dripping with poison.");
-		mpr(info);
+		msg("@1 stops dripping with poison.") << str_pass;
 		you[0].duration [DUR_POISON_WEAPON] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 6;
 		wield_change = 1;
@@ -958,11 +881,8 @@ void input(void)
 				case 0: break;
 				case 2:
 						if (random2(4) == 0) {
-							strcpy(info, "The silver statue's eyes glow a ");
 							weird_colours(random2(200), wc);
-							strcat(info, wc);
-							strcat(info, " colour.");
-							mpr(info);
+							msg("The silver statue's eyes glow a @1 colour.") << wc;
 							create_monster(summon_any_demon(random2(2)), 25, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 						}
 						break;
@@ -1351,10 +1271,7 @@ bool move_to_a_pool(int new_pos_x, int new_pos_y, char attacking)
 bool move_to_a_trap(int new_pos_x, int new_pos_y)
 {
 	if (grd [new_pos_x] [new_pos_y] == 78 && random() % (you[0].skills [SK_TRAPS_DOORS] + 1) > 3) {
-		strcpy(info, "Wait a moment, ");
-		strcat(info, you[0].your_name);
-		strcat(info, "! Do you really want to step there?");
-		mpr(info);
+		msg("Wait a moment, @1! Do you really want to step there?") << you[0].your_name;
 		more();
 		you[0].turnover = 0;
 		int i;

@@ -48,11 +48,6 @@ void exercise2(char exsk_char, char deg)
  char title [40];
  char old_best_skill = best_skill(0, 50, 99);
 
-/*                itoa(skill_change, st_prn, 10);
-                strcpy(info, "skill_change (0): ");
-                strcat(info, st_prn);
-                mpr(info);*/
-
 
 #ifdef CLASSES
 if (cutting == 1) goto cut_through;
@@ -194,23 +189,12 @@ if (exsk < SK_SLINGS)
  }
  skill_change -= random2(5);
 
-/*                itoa(skill_change, st_prn, 10);
-                strcpy(info, "skill_change (2): ");
-                strcat(info, st_prn);
-                mpr(info);*/
-
-
  if (skill_change <= 0) skill_change = 0;
 
 // Can safely return at any stage before this
 
  you[0].skill_points [exsk] += deg;
  you[0].exp_available -= skill_change;
-/*                itoa(skill_change, st_prn, 10);
-                strcpy(info, "skill_change (3): ");
-                strcat(info, st_prn);
-                mpr(info);
-*/
 
 #ifdef CLASSES
  cut_through:
@@ -223,10 +207,7 @@ if (exsk < SK_SLINGS)
 /*        if (exsk == SK_DODGING) player_evasion(you) -= ev_mod();*/
 
         you[0].skills [exsk] ++;
-        strcpy(info, "Your ");
-        strcat(info, skill_name(exsk));
-        strcat(info, " skill increases!");
-        mpr(info);
+        msg("Your @1 skill increases!") << skill_name(exsk);
 
         calc_hp();
         you[0].hp_ch = 1;

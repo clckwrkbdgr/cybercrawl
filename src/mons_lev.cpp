@@ -79,7 +79,7 @@ case 86: mlev = 5; break; // "ice devil"
 case 87: mlev = 5; break; // "blue devil"
 case 107:
 case 108: mlev = 2; break; // "skeleton"
-case 109: mlev = 2; break; //strcat(gmon_name, "hell knight"); break; break; break;
+case 109: mlev = 2; break; //"hell knight"); break; break; break;
 case 116: mlev = 1; break; // clay golem
 case 118: mlev = 2; break; // stone golem
 case 119: mlev = 3; break; // iron golem
@@ -130,7 +130,7 @@ case 84: mlev = 6; break; // "soul eater"
 case 85: mlev = 4; break; // "hairy devil"
 case 107:
 case 108: mlev = 1; break; // "skeleton"
-case 109: mlev = 4; break; //strcat(gmon_name, "hell knight"); break; break; break;
+case 109: mlev = 4; break; //"hell knight"); break; break; break;
 case 116: mlev = 1; break; // clay golem
 case 118: mlev = 2; break; // stone golem
 case 119: mlev = 3; break; // iron golem
@@ -182,7 +182,7 @@ case 86: return 30; // "ice devil"
 case 87: return 40; // "blue devil"
 case 107:
 case 108: return 25; // "skeleton"
-case 109: return 10; //strcat(gmon_name, "hell knight"); break;
+case 109: return 10; //"hell knight"); break;
 case 116: return 10; // clay golem
 case 118: return 10; // stone golem
 case 119: return 10; // iron golem
@@ -230,7 +230,7 @@ case 85: return 20; // "hairy devil"
 case 89: return 30; // iron devil - in Dis
 case 107:
 case 108: return 99; // "skeleton"
-case 109: return 21; //strcat(gmon_name, "hell knight"); break;
+case 109: return 21; //"hell knight"); break;
 case 116: return 10; // clay golem
 case 118: return 8; // stone golem
 case 119: return 5; // iron golem
@@ -409,8 +409,8 @@ case 86: return 34; // "ice devil" not really appropriate for a fiery hell.
 case 87: return 32; // "blue devil"
 case 107:
 case 108: return 99; // "skeleton"
-case 109: return 14; //strcat(gmon_name, "hell knight"); break;
-case 110: return 12; //strcat(gmon_name, "necromancer"); break;
+case 109: return 14; //"hell knight"); break;
+case 110: return 12; //"necromancer"); break;
 case 130: return 45;
 case 137: return 30; // flayed ghost
 case 165: return 12; // shadow dragon
@@ -471,22 +471,22 @@ case 85: //60; // "hairy devil"
 case 86: //6500; // "ice devil" not really appropriate for a fiery hell.
 case 87: //6200; // "blue devil"
 case 89:
-case 102: //25; //strcat(gmon_name, "very ugly thing"); break;
+case 102: //25; //"very ugly thing"); break;
 case 107:
 case 108: //20; // "skeleton"
-case 109: //31; //strcat(gmon_name, "hell knight"); break;
-case 110: //20; //strcat(gmon_name, "necromancer"); break;
-case 111: //17; //strcat(gmon_name, "wizard"); break;
+case 109: //31; //"hell knight"); break;
+case 110: //20; //"necromancer"); break;
+case 111: //17; //"wizard"); break;
 case 116: //20; // clay golem
 case 117: //15; // wood golem
 case 118: //22; // stone golem
 case 119: //25; // iron golem
 case 120: //30; // crystal golem
 case 121: //35; // toenail golem
-case 123: //22; //strcat(gmon_name, "earth elemental"); break;
-case 124: //22; //strcat(gmon_name, "fire elemental"); break;
-case 125: //22; //strcat(gmon_name, "air elemental"); break;
-case 130: //30; //strcat(gmon_name, "spectre"); break;
+case 123: //22; //"earth elemental"); break;
+case 124: //22; //"fire elemental"); break;
+case 125: //22; //"air elemental"); break;
+case 130: //30; //"spectre"); break;
 case 137: //29; // flayed ghost
 case 140: //32; // wisp
 case 141: //29; // vapour
@@ -496,17 +496,17 @@ case 220: // demons:
  case 221:
 case 222:
 case 223:
- case 224: //strcat(gmon_name, "lesser demon"); break;
+ case 224: //"lesser demon"); break;
  case 225:
 case 226:
  case 227:
  case 228:
- case 229: //strcat(gmon_name, "demon"); break;
+ case 229: //"demon"); break;
  case 230:
  case 231:
  case 232:
  case 233:
- case 234: //strcat(gmon_name, "greater demon"); break;
+ case 234: //"greater demon"); break;
  case 235:
  case 236:
  case 237:
@@ -581,22 +581,22 @@ case 85: return 10; // "hairy devil"
 case 86: return 10; // "ice devil" not really appropriate for a fiery hell.
 case 87: return 10; // "blue devil"
 case 89: return 6; // "iron devil"
-case 102: return 15; //strcat(gmon_name, "very ugly thing"); break;
+case 102: return 15; //"very ugly thing"); break;
 case 107:
 case 108: return 40; // "skeleton"
-case 109: return 3; //strcat(gmon_name, "hell knight"); break;
-case 110: return 3; //strcat(gmon_name, "necromancer"); break;
-case 111: return 5; //strcat(gmon_name, "wizard"); break;
+case 109: return 3; //"hell knight"); break;
+case 110: return 3; //"necromancer"); break;
+case 111: return 5; //"wizard"); break;
 case 116: return 5; // clay golem
 case 117: return 5; // wood golem
 case 118: return 5; // stone golem
 case 119: return 5; // iron golem
 case 120: return 3; // crystal golem
 case 121: return 1; // toenail golem
-case 123: return 4; //strcat(gmon_name, "earth elemental"); break;
-case 124: return 4; //strcat(gmon_name, "fire elemental"); break;
-case 125: return 4; //strcat(gmon_name, "air elemental"); break;
-case 130: return 5; //strcat(gmon_name, "spectre"); break;
+case 123: return 4; //"earth elemental"); break;
+case 124: return 4; //"fire elemental"); break;
+case 125: return 4; //"air elemental"); break;
+case 130: return 5; //"spectre"); break;
 case 137: return 4; // flayed ghost
 case 140: return 12; // wisp
 case 141: return 9; // vapour
@@ -768,20 +768,20 @@ case 77: return 22; // "freezing wraith"
 case 79: return 20; // GooE
 case 98: return 27; // glowing shapeshifter
 case 99: return 17; // shapeshifter
-case 100: return 5; //strcat(gmon_name, "giant mite"); break;
-case 101: return 10; //strcat(gmon_name, "steam dragon"); break;
-case 102: return 20; //strcat(gmon_name, "very ugly thing"); break;
-case 103: return 23; //strcat(gmon_name, "orc sorceror"); break;
-case 104: return 11; //strcat(gmon_name, "hippogriff"); break;
-case 105: return 17; //strcat(gmon_name, "griffon"); break;
-case 106: return 20; //strcat(gmon_name, "hydra"); break;
+case 100: return 5; //"giant mite"); break;
+case 101: return 10; //"steam dragon"); break;
+case 102: return 20; //"very ugly thing"); break;
+case 103: return 23; //"orc sorceror"); break;
+case 104: return 11; //"hippogriff"); break;
+case 105: return 17; //"griffon"); break;
+case 106: return 20; //"hydra"); break;
 case 107:
 case 108: return 20; // "skeleton"
-case 109: return 25; //strcat(gmon_name, "hell knight"); break;
-case 110: return 20; //strcat(gmon_name, "necromancer"); break;
-case 111: return 17; //strcat(gmon_name, "wizard"); break;
-case 112: return 15; //strcat(gmon_name, "orc priest"); break;
-case 113: return 21; //strcat(gmon_name, "orc high priest"); break;
+case 109: return 25; //"hell knight"); break;
+case 110: return 20; //"necromancer"); break;
+case 111: return 17; //"wizard"); break;
+case 112: return 15; //"orc priest"); break;
+case 113: return 21; //"orc high priest"); break;
 
 case 115: return 5; // gnoll
 case 116: return 17; // clay golem
@@ -791,21 +791,21 @@ case 119: return 19; // iron golem
 case 120: return 22; // crystal golem
 case 121: return 19; // toenail golem
 case 122: return 15; // mottled dragon
-case 123: return 20; //strcat(gmon_name, "earth elemental"); break;
-case 124: return 20; //strcat(gmon_name, "fire elemental"); break;
-case 125: return 20; //strcat(gmon_name, "air elemental"); break;
-//case 126: strcat(gmon_name, "Ice Fiend"); break;
-//case 127: strcat(gmon_name, "Shadow Fiend"); break;
+case 123: return 20; //"earth elemental"); break;
+case 124: return 20; //"fire elemental"); break;
+case 125: return 20; //"air elemental"); break;
+//case 126: "Ice Fiend"); break;
+//case 127: "Shadow Fiend"); break;
 
-case 128: return 9; //strcat(gmon_name, "brown snake"); break;
-case 129: return 11; //strcat(gmon_name, "giant lizard"); break;
-case 130: return 26; //strcat(gmon_name, "spectre"); break;
+case 128: return 9; //"brown snake"); break;
+case 129: return 11; //"giant lizard"); break;
+case 130: return 26; //"spectre"); break;
 case 131: return 21; // pulsating mass
 case 132: return 26; // storm D
-case 133: return 19; //strcat(gmon_name, "yaktaur"); break;
-//case 134: return 32; //strcat(gmon_name, "death yak"); break;
-case 135: return 19; //strcat(gmon_name, "rock troll"); break;
-case 136: return 25; //strcat(gmon_name, "stone giant"); break; // stoned giant
+case 133: return 19; //"yaktaur"); break;
+//case 134: return 32; //"death yak"); break;
+case 135: return 19; //"rock troll"); break;
+case 136: return 25; //"stone giant"); break; // stoned giant
 case 137: return 22; // flayed ghost
 case 138: return 24; // bumblebee
 case 139: return 22; // red back
@@ -1034,21 +1034,21 @@ case 84: return 30; // "soul eater"
 case 85: return 40; // "hairy devil"
 case 98: return 35; // glowing shapeshifter
 case 99: return 59; // shapeshifter
-case 100: return 30; //strcat(gmon_name, "giant mite"); break;
-case 101: return 20; //strcat(gmon_name, "steam dragon"); break;
-case 102: return 20; //strcat(gmon_name, "very ugly thing"); break;
-case 103: return 10; //strcat(gmon_name, "orc sorceror"); break;
-case 104: return 50; //strcat(gmon_name, "hippogriff"); break;
-case 105: return 40; //strcat(gmon_name, "griffon"); break;
-case 106: return 20; //strcat(gmon_name, "hydra"); break;
+case 100: return 30; //"giant mite"); break;
+case 101: return 20; //"steam dragon"); break;
+case 102: return 20; //"very ugly thing"); break;
+case 103: return 10; //"orc sorceror"); break;
+case 104: return 50; //"hippogriff"); break;
+case 105: return 40; //"griffon"); break;
+case 106: return 20; //"hydra"); break;
 case 107: return 99;
 case 108: return 99; // skeletons
 
-case 109: return 10; //strcat(gmon_name, "hell knight"); break;
-case 110: return 15; //strcat(gmon_name, "necromancer"); break;
-case 111: return 20; //strcat(gmon_name, "wizard"); break;
-case 112: return 25; //strcat(gmon_name, "orc priest"); break;
-case 113: return 12; //strcat(gmon_name, "orc high priest"); break;
+case 109: return 10; //"hell knight"); break;
+case 110: return 15; //"necromancer"); break;
+case 111: return 20; //"wizard"); break;
+case 112: return 25; //"orc priest"); break;
+case 113: return 12; //"orc high priest"); break;
 // 114 is human
 case 115: return 30; // gnoll
 case 116: return 15; // clay golem
@@ -1058,19 +1058,19 @@ case 119: return 10; // iron golem
 case 120: return 5; // crystal golem
 case 121: return 2; // toenail golem
 case 122: return 40; // mottled dragon
-case 123: return 4; //strcat(gmon_name, "earth elemental"); break;
-case 124: return 4; //strcat(gmon_name, "fire elemental"); break;
-case 125: return 4; //strcat(gmon_name, "air elemental"); break;
+case 123: return 4; //"earth elemental"); break;
+case 124: return 4; //"fire elemental"); break;
+case 125: return 4; //"air elemental"); break;
 
-case 128: return 30; //strcat(gmon_name, "brown snake"); break;
-case 129: return 30; //strcat(gmon_name, "giant lizard"); break;
-case 130: return 20; //strcat(gmon_name, "spectre"); break;
+case 128: return 30; //"brown snake"); break;
+case 129: return 30; //"giant lizard"); break;
+case 130: return 20; //"spectre"); break;
 case 131: return 2; // pulsating mass
 case 132: return 20; // storm D
-case 133: return 40; //strcat(gmon_name, "yaktaur"); break;
-//case 134: return 32; //strcat(gmon_name, "death yak"); break;
-case 135: return 48; //strcat(gmon_name, "rock troll"); break;
-case 136: return 53; //strcat(gmon_name, "stone giant"); break; // stoned giant
+case 133: return 40; //"yaktaur"); break;
+//case 134: return 32; //"death yak"); break;
+case 135: return 48; //"rock troll"); break;
+case 136: return 53; //"stone giant"); break; // stoned giant
 case 137: return 29; // flayed ghost
 case 138: return 12; // bumblebee
 case 139: return 20; // red back
@@ -1177,12 +1177,12 @@ case 45: mlev = 3; break; // "troll"
 case 52: mlev = 1; break; // "orc warrior"
 case 54: mlev = 3; break; // "orc wizard"
 case 55: mlev = 3; break; // "orc knight"
-case 103: mlev = 3; break; //strcat(gmon_name, "orc sorceror"); break; break;
-case 112: mlev = 1; break; //strcat(gmon_name, "orc priest"); break; break;
-case 113: mlev = 3; break; //strcat(gmon_name, "orc high priest"); break; break;
+case 103: mlev = 3; break; //"orc sorceror"); break; break;
+case 112: mlev = 1; break; //"orc priest"); break; break;
+case 113: mlev = 3; break; //"orc high priest"); break; break;
 case 115: mlev = 2; break; // gnoll
-case 135: mlev = 3; break; //strcat(gmon_name, "rock troll"); break; break;
-case 136: mlev = 3; break; //strcat(gmon_name, "stone giant"); break; break; break; // stoned giant
+case 135: mlev = 3; break; //"rock troll"); break; break;
+case 136: mlev = 3; break; //"stone giant"); break; break; break; // stoned giant
 case 142: mlev = 3; break; // Ogre mage
 case 160: mlev = 3; break; // iron Troll
 case 262: mlev = 3; break; // orc warlord
@@ -1211,12 +1211,12 @@ case 45: mlev = 13; break; // "troll"
 case 52: mlev = 30; break; // "orc warrior"
 case 54: mlev = 10; break; // "orc wizard"
 case 55: mlev = 10; break; // "orc knight"
-case 103: mlev = 10; break; //strcat(gmon_name, "orc sorceror"); break; break;
-case 112: mlev = 10; break; //strcat(gmon_name, "orc priest"); break; break;
-case 113: mlev = 5; break; //strcat(gmon_name, "orc high priest"); break; break;
+case 103: mlev = 10; break; //"orc sorceror"); break; break;
+case 112: mlev = 10; break; //"orc priest"); break; break;
+case 113: mlev = 5; break; //"orc high priest"); break; break;
 case 115: mlev = 2; break; // gnoll
-case 135: mlev = 3; break; //strcat(gmon_name, "rock troll"); break; break;
-case 136: mlev = 3; break; //strcat(gmon_name, "stone giant"); break; break; break; // stoned giant
+case 135: mlev = 3; break; //"rock troll"); break; break;
+case 136: mlev = 3; break; //"stone giant"); break; break; break; // stoned giant
 case 142: mlev = 1; break; // Ogre mage
 case 160: mlev = 3; break; // iron Troll
 case 262: mlev = 2; break; // orc warlord
@@ -1477,8 +1477,8 @@ case 72: mlev = 3; break; // "flying skull"
 case 83: mlev = 5; break; // "reaper"
 case 107:
 case 108: mlev = 1; break; // "skeleton"
-case 110: mlev = 3; break; //strcat(gmon_name, "necromancer");
-case 130: mlev = 4; break; //strcat(gmon_name, "spectre");
+case 110: mlev = 3; break; //"necromancer");
+case 130: mlev = 4; break; //"spectre");
 case 131: mlev = 3; break; // pulsating mass
 case 137: mlev = 3; break; // flayed ghost
 case 156: mlev = 3; break; // ghoul
@@ -1526,8 +1526,8 @@ case 72: mlev = 13; break; // "flying skull"
 case 83: mlev = 5; break; // "reaper"
 case 107:
 case 108: mlev = 410; break; // "skeleton"
-case 110: mlev = 25; break; //strcat(gmon_name, "necromancer");
-case 130: mlev = 14; break; //strcat(gmon_name, "spectre");
+case 110: mlev = 25; break; //"necromancer");
+case 130: mlev = 14; break; //"spectre");
 case 131: mlev = 3; break; // pulsating mass
 case 137: mlev = 13; break; // flayed ghost
 case 156: mlev = 25; break; // ghoul
@@ -1663,9 +1663,9 @@ case 14: mlev = 1; break; // "orc"
 case 52: mlev = 1; break; // "orc warrior"
 case 54: mlev = 2; break; // "orc wizard"
 case 55: mlev = 3; break; // "orc knight"
-case 103: mlev = 4; break; //strcat(gmon_name, "orc sorceror"); break; break;
-case 112: mlev = 5; break; //strcat(gmon_name, "orc priest"); break; break;
-case 113: mlev = 5; break; //strcat(gmon_name, "orc high priest"); break; break;
+case 103: mlev = 4; break; //"orc sorceror"); break; break;
+case 112: mlev = 5; break; //"orc priest"); break; break;
+case 113: mlev = 5; break; //"orc high priest"); break; break;
 
 default: mlev = 99; break;
 
@@ -1705,9 +1705,9 @@ case 14: mlev = 20; break; // "orc"
 case 52: mlev = 11; break; // "orc warrior"
 case 54: mlev = 13; break; // "orc wizard"
 case 55: mlev = 5; break; // "orc knight"
-case 103: mlev = 10; break; //strcat(gmon_name, "orc sorceror"); break; break;
-case 112: mlev = 5; break; //strcat(gmon_name, "orc priest"); break; break;
-case 113: mlev = 5; break; //strcat(gmon_name, "orc high priest"); break; break;
+case 103: mlev = 10; break; //"orc sorceror"); break; break;
+case 112: mlev = 5; break; //"orc priest"); break; break;
+case 113: mlev = 5; break; //"orc high priest"); break; break;
 
 default: mlev = 0; break;
 

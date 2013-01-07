@@ -5731,21 +5731,21 @@ void item_colour(int p)
 					mitm.icol [bp] = BROWN;
 					break;
 
-                case 15: mitm.icol [bp] = GREEN; break; //strcat(glog , "dragon hide"); break;
-                case 16: mitm.icol [bp] = BROWN; break; //strcat(glog , "troll hide"); break;
-                case 17: mitm.icol [bp] = LIGHTGREY; break; //strcat(glog , "crystal plate mail"); break;
-                case 18: mitm.icol [bp] = GREEN; break; //strcat(glog , "dragon scale mail"); break;
-                case 19: mitm.icol [bp] = BROWN; break; //strcat(glog , "troll leather armour"); break;
-                case 20: mitm.icol [bp] = WHITE; break; //strcat(glog , "ice dragon hide"); break;
-                case 21: mitm.icol [bp] = WHITE; break; //strcat(glog , "ice dragon scale mail"); break;
+                case 15: mitm.icol [bp] = GREEN; break; //"dragon hide"); break;
+                case 16: mitm.icol [bp] = BROWN; break; //"troll hide"); break;
+                case 17: mitm.icol [bp] = LIGHTGREY; break; //"crystal plate mail"); break;
+                case 18: mitm.icol [bp] = GREEN; break; //"dragon scale mail"); break;
+                case 19: mitm.icol [bp] = BROWN; break; //"troll leather armour"); break;
+                case 20: mitm.icol [bp] = WHITE; break; //"ice dragon hide"); break;
+                case 21: mitm.icol [bp] = WHITE; break; //"ice dragon scale mail"); break;
                 case 22:
-                case 23: mitm.icol [bp] = LIGHTGREY; break; //strcat(glog , "ste dragon scale mail"); break;
+                case 23: mitm.icol [bp] = LIGHTGREY; break; //"ste dragon scale mail"); break;
                 case 24:
-                case 25: mitm.icol [bp] = LIGHTMAGENTA; break; //strcat(glog , "mot dragon scale mail"); break;
+                case 25: mitm.icol [bp] = LIGHTMAGENTA; break; //"mot dragon scale mail"); break;
                 case 26:
-                case 27: mitm.icol [bp] = LIGHTBLUE; break; //strcat(glog , "stordragon scale mail"); break;
+                case 27: mitm.icol [bp] = LIGHTBLUE; break; //"stordragon scale mail"); break;
                 case 28:
-                case 29: mitm.icol [bp] = YELLOW; break; //strcat(glog , "gol dragon scale mail"); break;
+                case 29: mitm.icol [bp] = YELLOW; break; //"gol dragon scale mail"); break;
                 case 30: mitm.icol [bp] = BROWN; break; // animal skin
                 case 31: mitm.icol [bp] = BROWN; break; // swamp dragon skin
                 case 32: mitm.icol [bp] = BROWN; break; // swamp dragon armour
@@ -5947,20 +5947,20 @@ void item_colour(int p)
 		case 10: // books
 			switch(mitm.idam [bp] % 10)
  			{
- 				case 0: //strcat(glog , "paperback book");
-			 	case 1: //strcat(glog , "hardcover book");
+ 				case 0: //"paperback book");
+			 	case 1: //"hardcover book");
 					mitm.icol [bp] = random3(15) + 1;
 				    break;
-			 	case 2: mitm.icol [bp] = DARKGREY; //strcat(glog , "leatherbound book");
+			 	case 2: mitm.icol [bp] = DARKGREY; //"leatherbound book");
 					if (random3(3) == 0) mitm.icol [bp] = BROWN;
 				    break;
-			 	case 3: mitm.icol [bp] = CYAN; //strcat(glog , "metal-bound book");
+			 	case 3: mitm.icol [bp] = CYAN; //"metal-bound book");
 				    break;
-			 	case 4: mitm.icol [bp] = LIGHTGREY; //strcat(glog , "papyrus book");
+			 	case 4: mitm.icol [bp] = LIGHTGREY; //"papyrus book");
 				    break;
-			 	case 5: //strcat(glog , " book");
+			 	case 5: //" book");
 				    break;
-			 	case 6: //strcat(glog , " book");
+			 	case 6: //" book");
 				    break;
 			}
 			break;
@@ -6004,9 +6004,9 @@ void item_colour(int p)
 			{
 			 	case 0: mitm.icol [bp] = BROWN; break; // flask
 			 	case 1: mitm.icol [bp] = LIGHTGREY; break; // orb
-		        case 2: mitm.icol [bp] = LIGHTGREY; break; //strcat(glog, "fan of air elementals"); break;
-		        case 3: mitm.icol [bp] = YELLOW; break; //strcat(glog, "lamp of fire elementals"); break;
-		        case 4: mitm.icol [bp] = BROWN; break; //strcat(glog, "stone of earth elementals"); break;
+		        case 2: mitm.icol [bp] = LIGHTGREY; break; //fan of air elementals"); break;
+		        case 3: mitm.icol [bp] = YELLOW; break; //lamp of fire elementals"); break;
+		        case 4: mitm.icol [bp] = BROWN; break; //stone of earth elementals"); break;
 		        case 5: mitm.icol [bp] = LIGHTGREY; break; // bone lantern
 		        case 6: mitm.icol [bp] = LIGHTGREY; break; // horn of Geryon
 		        case 7: mitm.icol [bp] = DARKGREY; break; // box of beasts

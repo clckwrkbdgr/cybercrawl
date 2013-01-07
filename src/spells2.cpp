@@ -290,9 +290,6 @@ if (actual == 0) return 1;
 if (mitm.itype [corps] == 0) create_monster(MONS_SMALL_ZOMBIE, 0, corps_beh, corx, cory, corps_hit, mitm.iplus [corps]);
  else create_monster(MONS_SMALL_SKELETON, 0, corps_beh, corx, cory, corps_hit, mitm.iplus [corps]);
 
-//strcpy(info, monam (250, mitm.iplus [corps], 0, 0));
-//strcat(info, " lurches to"
-
 destroy_item(corps);
 
 return 1;
@@ -558,9 +555,7 @@ for (tu = 0; tu < MNST; tu ++)
  				{
  					menv [tu].m_ench [p] = 4;
  					menv [tu].m_ench_1 = 1;
-					strcpy(info, monam (menv [tu].m_sec, menv [tu].m_class, menv [tu].m_ench [2], 0));
-					strcat(info, " is repelled.");
-					mpr(info);
+					msg("@1 is repelled.") << monam(menv[tu].m_sec, menv[tu].m_class, menv[tu].m_ench[2], 0);
  					break;
  				}
    }
@@ -589,9 +584,7 @@ for (tu = 0; tu < MNST; tu ++)
   menv [tu].m_hp -= random2(15) + random2(15) + random2(pow) / 3;
   if (menv [tu].m_ench [2] == 6 && player_see_invis() == 0)
   {
-   strcpy(info, monam (menv [tu].m_sec, menv [tu].m_class, menv [tu].m_ench [2], 0));
-   strcat(info, " convulses!");
-   mpr(info);
+   msg("@1 convulses!") << monam(menv[tu].m_sec, menv[tu].m_class, menv[tu].m_ench[2], 0);
   }
   if (menv [tu].m_hp <= 0)
   {
@@ -699,10 +692,7 @@ for (toxy = 0; toxy < MNST; toxy ++)
   if (menv [toxy].m_class == -1) continue;
   if (mons_near(toxy) == 1)
   {
-   strcpy(info, "You freeze ");
-   strcat(info, monam(menv [toxy].m_sec,menv[toxy].m_class, menv [toxy].m_ench [2], 1));
-   strcat(info, ".");
-   mpr(info);
+   msg("You freeze @1.") << monam(menv [toxy].m_sec,menv[toxy].m_class, menv [toxy].m_ench [2], 1);
    int hurted = 3 + random2(7) + random2(pow) / 20;
    beam[0].flavour = 3;
 //   o = toxy;
@@ -738,10 +728,7 @@ for (toxy = 0; toxy < MNST; toxy ++)
   if (mons_holiness(menv [toxy].m_class) > 0) continue;
   if (mons_near(toxy) == 1)
   {
-   strcpy(info, "You draw life from ");
-   strcat(info, monam(menv [toxy].m_sec,menv[toxy].m_class, menv [toxy].m_ench [2], 1));
-   strcat(info, ".");
-   mpr(info);
+   msg("You draw life from @1.") << monam(menv [toxy].m_sec,menv[toxy].m_class, menv [toxy].m_ench [2], 1);
    int hurted = 3 + random2(7) + random2(pow);
    menv [toxy].m_hp -= hurted;
    hp_gain += hurted / 2;
@@ -817,10 +804,7 @@ if (inflicted == 0)
 
 menv [mgr].m_hp -= inflicted;
 
-strcpy(info, "You feel life coursing from ");
-strcat(info, monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1));
-strcat(info, " into your body!");
-mpr(info);
+msg("You feel life coursing from @1 into your body!") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
 print_wounds(mgr);
 
 if (menv [mgr].m_hp <= 0)
@@ -923,7 +907,6 @@ if (numsc > 25) numsc = 25;
 dirc :
 // cannot summon earth elemental if you are floating in the air.
 // problem: what if you're floating over water/lava and are surrounded by it and a wall, and summon an earth elemental? hmmm...
-//strcat(info, ", < for air)");
  mpr("Create from what material?");
  mpr("Which direction?");
 direction(0, smove);

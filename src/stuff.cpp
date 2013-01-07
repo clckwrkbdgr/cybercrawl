@@ -63,16 +63,6 @@ lincurses_shutdown();
  exit(end_arg);
 }
 
-void output_value(char string [100], int value)
-{
-
- strcpy(info, string);
- itoa(value, st_prn, 10);
- strcat(info, st_prn);
- mpr(info);
-
-}
-
 // this function is used for systems without gettext/puttext to redraw the
 // playing screen after a call to for example inventory.
 void redraw_screen(void)

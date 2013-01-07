@@ -1830,9 +1830,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 
 
               /* put in an exception for fungi, plants and other things you won't notice slow down. */
-         	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-            strcat(info, " seems to slow down.");
-	      	mpr(info);
+            msg("@1 seems to slow down.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
             func_pass [1] = 1;
             return 1;
 
@@ -1871,9 +1869,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
             if (p == 2 && menv [o].m_ench [p] != 0) goto nothinghap;
 
             /* put in an exception for fungi, plants and other things you won't notice speed up. */
-            strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-            strcat(info, " seems to speed up.");
-	      	mpr(info);
+            msg("@1 seems to speed up.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
             func_pass [1] = 1;
             return 1;
 
@@ -1887,15 +1883,11 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
             if (menv [o].m_hp >= menv [o].m_hp_max)
             {
             	menv [o].m_hp = menv [o].m_hp_max;
-               	strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-                strcat(info, "'s wounds heal themselves!");
-                mpr(info);
+                msg("@1's wounds heal themselves!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
                 func_pass [1] = 1;
                 return 1;
 	        }
-            strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
-            strcat(info, " is healed somewhat."); /* is a little less battered */
-            mpr(info);
+            msg("@1 is healed somewhat.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
             func_pass [1] = 1;
             return 1;
 

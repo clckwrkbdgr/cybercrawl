@@ -167,10 +167,7 @@ counter = 0;
 
 if (counter_max == 1)
 {
-	strcpy(info, "You see here "); // remember 'an'.
-	strcat(info, item_show [counter_max]);
-	strcat(info, ".");
-	mpr(info);
+	msg("You see here @1.") << item_show [counter_max]; // remember 'an'.
 	counter++;
 	counter_max = 0; // to skip next part.
 }
@@ -242,13 +239,8 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 190 && you[0].where_are_you != 18)
 			you[0].inv_quant [m] = 1;
 		    you[0].inv_no++;
 			burden_change();
-            if (m <= 25) info [0] = m + 97;
-				else info [0] = m + 39;
-			info [1] = 0;
-			strcat(info, " - ");
 		    in_name(m, 3, str_pass);
-			strcat(info, str_pass);
-			mpr(info);
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
 		    break;
           }
      }
@@ -319,21 +311,13 @@ if (items_here > 1)
 	{
 			if (keyin != 'a')
 			{
-			 strcpy(info, "pick up ");
 
-			 if (mitm.iclass [o] == 15)
-			 {
-				itoa(mitm.iquant [o], st_prn, 10);
-				strcat(info, st_prn);
-				strcat(info, " credit chip");
-				if (mitm.iquant [o] > 1) strcat(info, "s");
-			 } else
-			 {
-				it_name(o, 3, str_pass);
-				strcat(info, str_pass);
-			 }
-			 strcat(info, "\? (y,n,a,q)");
-			 mpr(info);
+				if (mitm.iclass [o] == 15) {
+					msg("pick up @1 credit chip@2\? (y,n,a,q)") << mitm.iquant [o] << (mitm.iquant [o] > 1 ? "s" : "");
+				} else {
+					it_name(o, 3, str_pass);
+					msg("pick up @1 \? (y,n,a,q)") << str_pass;
+				}
 			}
 
 		if (keyin != 'a') keyin = get_ch();
@@ -476,11 +460,7 @@ if (mitm.iclass [item_got] == 15)
 {
 	you[0].gp += quant_got;
 	you[0].gp_ch = 1;
-	strcpy(info, "You pick up ");
-	itoa(quant_got, st_prn, 10);
-	strcat(info, st_prn);
-	strcat(info, " credit chips.");
-	mpr(info);
+	msg("You pick up @1 credit chips.") << quant_got;
 	you[0].turnover = 1;
 	alert();
 	goto change_igrid;
@@ -496,19 +476,8 @@ for (m = 0; m < 52; m++)
 		you[0].inv_quant [m] += quant_got;//mitm.iquant [item_got];
 
 		burden_change();
-
-//		strcpy(info, " ");
-/*			strncpy(info, letters [m], 1);*/
-                        if (m <= 25) info [0] = m + 97;
-				else info [0] = m + 39;
-
-			info [1] = 0;
-
-			strcat(info, " - ");
-
-			in_name(m, 3, str_pass);
-			strcat(info, str_pass);
-			mpr(info);
+				in_name(m, 3, str_pass);
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
 
 		you[0].turnover = 1;
   alert();
@@ -534,16 +503,8 @@ for (m = 0; m < 52; m++)
 		you[0].inv_quant [m] = quant_got;
 		burden_change();
 
-//			strcpy(info, " ");
-/*			strncpy(info, letters [m], 1);*/
-                        if (m <= 25) info [0] = m + 97;
-				else info [0] = m + 39;
-
-			info [1] = 0;
-
-			strcat(info, " - ");
-	in_name(m, 3, str_pass);
-	strcat(info, str_pass);
+				in_name(m, 3, str_pass);
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
 
 			mpr(info);
 
@@ -693,7 +654,6 @@ query2 : mpr("Drop which item? ");
 
 unsigned char keyin = get_ch();
 int quant_drop;
-char temp_quant [10];
 
 if (keyin == '$')
 {
@@ -706,14 +666,7 @@ if (you[0].gp == 0)
 	return;
 }
 
-strcpy(info, "You drop ");
-itoa(you[0].gp, temp_quant, 10);
-strcat(info, temp_quant);
-
-if (you[0].gp > 1) strcat(info, " credit chips.");
-	    else strcat(info, " credit chip.");
-
-mpr(info);
+msg("You drop @1 credit chip@2.") << you[0].gp << (you[0].gp > 1 ? "s" : "");
 
 if (igrd [you[0].x_pos] [you[0].y_pos] != 501)
 {
@@ -823,14 +776,8 @@ if ((item_drop_1 < 65 || (item_drop_1 > 90 && item_drop_1 < 97) || item_drop_1 >
 
 	if (quant_drop > you[0].inv_quant [item_drop_2]) quant_drop = you[0].inv_quant [item_drop_2];
 
-	strcpy(info, "You drop ");
-
-
 	item_name(you[0].inv_plus2 [item_drop_2], you[0].inv_class [item_drop_2], you[0].inv_type [item_drop_2], you[0].inv_dam [item_drop_2], you[0].inv_plus [item_drop_2], quant_drop, you[0].inv_ident [item_drop_2], 3, str_pass);
-	strcat(info, str_pass);
-
-	strcat(info, ".");
-	mpr(info);
+	msg("You drop @1.") << str_pass;
 
 	if (item_drop_2 == you[0].equip [EQ_WEAPON])
 	{

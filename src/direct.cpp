@@ -140,10 +140,7 @@ void print_current_target()
 {
 	if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST) {
 		if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0)) {
-			strcpy(info, "You are currently targetting ");
-			strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
-			strcat(info, " (p to target).");
-			mpr(info);
+			msg("You are currently targetting @1 (p to target).") << monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1);
 		} else {
 			mpr("You have no current target.");
 		}
@@ -174,11 +171,8 @@ void check_ing(int xps, int yps)
 		if (mitm.iclass [igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] == 15) {
 			mpr("You see some credit chips here.");
 		} else {
-			strcpy(info, "You see ");
 			it_name(igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9], 3, str_pass);
-			strcat(info, str_pass);
-			strcat(info, " here.");
-			mpr(info);
+			msg("You see @1 here.") << str_pass;
 		}
 		if (mitm.ilink [igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] != 501) {
 			mpr("There is something else lying underneath.");
@@ -210,11 +204,7 @@ void describe_monster(int xps, int yps)
 		print_wounds(i);
 
 		if (menv [i].m_class == 106) {
-			strcpy(info, "It has ");
-			itoa(menv [i].m_sec, st_prn, 10);
-			strcat(info, st_prn);
-			strcat(info, " heads.");
-			mpr(info);
+			msg("It has @1 heads.") << menv [i].m_sec;
 		}
 		if (menv [i].m_beh == 7) {
 			mpr("It is friendly.");

@@ -741,9 +741,7 @@ strcat(del_file, ".lab");
 sysg = unlink(del_file);
 
 #ifdef DEBUG
-strcpy(info, "Deleting: ");
-strcat(info, del_file);
-mpr(info);
+msg("Deleting: @1") << del_file;
 more();
 #endif
 
@@ -1046,63 +1044,46 @@ void new_level(void)
 
 void dart_trap(int trap_known, int trapped, struct bolt beam [1])
 {
-
-int damage_taken = 0;
-
-
-			if (random2(10) < 2 || (trap_known == 1 && random2(4) != 0))
-			{
-				strcpy(info, "You avoid triggering a");
-				strcat(info, beam[0].beam_name);
-				strcat(info, " trap.");
-				mpr(info);
-				return;
-			}
-                        if (you[0].equip [EQ_SHIELD] != -1) exercise(SK_SHIELDS, (random2(3)) / 2);
-			strcpy(info, "A");
-			strcat(info, beam[0].beam_name);
-			strcat(info, " shoots out and ");
-
-   if (random2(50) < player_shield_class())
-   {
-    strcat(info, "hits your shield.");
-    mpr(info);
-    goto out_of_trap;
-   }
-
-			if ((20 + you[0].your_level * 2) * random2(200) / 100 >= player_evasion() + random2(you[0].dex) / 3 - 2)
-			{
-				damage_taken = random2(beam[0].damage);
-				damage_taken -= random2 (player_AC() + 1);
-				strcat(info, "hits you!");
-				mpr(info);
-				if (damage_taken > 0) ouch(damage_taken, 0, 10);
-			} else
-			{
-				strcat(info, "misses you.");
-				mpr(info);
-			}
-
-                        if ((you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] < ARM_RING_MAIL || (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= ARM_STEAM_DRAGON_HIDE && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= ARM_MOTTLED_DRAGON_ARMOUR) || you[0].inv_dam [you[0].equip [EQ_BODY_ARMOUR]] / 30 == 4) && random2(2) == 0) /* && move_x != 0 || move_y != 0) */
-                         exercise(SK_DODGING, 1);
-
-			out_of_trap : beam[0].bx = you[0].x_pos;
-			beam[0].by = you[0].y_pos;
-
-			if (random2(2) != 0) itrap(beam, trapped);
-
-
-			if (random2(10) + damage_taken < 7)
-			{
-
-		} // end of if grd is a trap
-		return; // This is to avoid going through the you_attack bit.
+	int damage_taken = 0;
+	if (random2(10) < 2 || (trap_known == 1 && random2(4) != 0)) {
+		msg("You avoid triggering a@1 trap.") << beam[0].beam_name;
+		return;
+	}
+	if (you[0].equip [EQ_SHIELD] != -1) {
+		exercise(SK_SHIELDS, (random2(3)) / 2);
 	}
 
 
+	if (random2(50) < player_shield_class()) {
+		msg("A@1 shoots out and hits your shield.") << beam[0].beam_name;
+	} else {
+		int strike_dice = (20 + you[0].your_level * 2) * random2(200) / 100;
+		int evasion_chance = player_evasion() + random2(you[0].dex) / 3 - 2;
+		if(strike_dice >= evasion_chance) {
+			damage_taken = random2(beam[0].damage);
+			damage_taken -= random2 (player_AC() + 1);
+			msg("A@1 shoots out and hits you!") << beam[0].beam_name;
+			if (damage_taken > 0) {
+				ouch(damage_taken, 0, 10);
+			}
+		} else {
+			msg("A@1 shoots out and misses you.") << beam[0].beam_name;
+		}
 
+		int armour = you[0].equip [EQ_BODY_ARMOUR];
+		bool is_dragon_armour = (armour > -1 && you[0].inv_type [armour] >= ARM_STEAM_DRAGON_HIDE && you[0].inv_type [armour] <= ARM_MOTTLED_DRAGON_ARMOUR);
+		bool is_proper_armour = (armour == -1 || you[0].inv_type [armour] < ARM_RING_MAIL || is_dragon_armour || you[0].inv_dam [armour] / 30 == 4);
+		if(is_proper_armour && random2(2) == 0) {
+			exercise(SK_DODGING, 1);
+		}
+	}
 
-
+	beam[0].bx = you[0].x_pos;
+	beam[0].by = you[0].y_pos;
+	if (random2(2) != 0) {
+		itrap(beam, trapped);
+	}
+}
 
 void itrap(struct bolt beam [1], int trapped)
 {

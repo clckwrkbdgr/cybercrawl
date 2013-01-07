@@ -156,9 +156,7 @@ case 51: /* randart makes noises */
 if (random2(20) == 0)
 {
  in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
- strcpy(info, str_pass);
- strcat(info, " lets out a weird humming sound.");
- mpr(info);
+ msg("@1 lets out a weird humming sound.") << str_pass;
  noisy(25, you[0].x_pos, you[0].y_pos);
 }
 break;
@@ -167,9 +165,7 @@ case 52: /* randart makes noises */
 if (random2(20) == 0)
 {
  in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
- strcpy(info, str_pass);
- strcat(info, " chimes like a gong.");
- mpr(info);
+ msg("@1 chimes like a gong.") << str_pass;
  noisy(25, you[0].x_pos, you[0].y_pos);
 }
 break;
@@ -642,15 +638,10 @@ int spell_casted = 0;
 char keyin = 0;
 struct bolt beam [1];
 
-strcpy(info, "The archive opens to a screen covered in ");
 
 char str_pass [40];
-
 weird_writing(str_pass);
-strcat(info, str_pass);
-strcat(info, ".");
-mpr(info);
-
+msg( "The archive opens to a screen covered in @1.") << str_pass;
 	mpr("Read it?");
 
 question : keyin = get_ch();
@@ -793,9 +784,7 @@ void skill_manual(char sc_read_2_char)
 char skname [30];
 char keyin;
 
-strcpy(info, "This is a manual of ");
-strcat(info, skill_name(you[0].inv_plus [sc_read_2]));
-strcat(info, "!");
+msg("This is a manual of @1!") << skill_name(you[0].inv_plus [sc_read_2]);
 mpr(info);
 
 	mpr("Read it?");
@@ -824,9 +813,7 @@ you[0].turnover = 1;
 
 strcpy(skname, skill_name(you[0].inv_plus [sc_read_2]));
 
-strcpy(info, "You read about ");
-strcat(info, strlwr(skname));
-strcat(info, ".");
+msg("You read about @1.") << strlwr(skname);
 mpr(info);
 
 exercise(you[0].inv_plus [sc_read_2], 100);
@@ -854,49 +841,32 @@ if (random2(10) == 0)
 
 void box_of_beasts(void)
 {
-
-int beasty = 0;
-
-you[0].turnover = 1;
-
-strcpy(info, "You open the lid, ");
-
-if (random2(3) == 0)
-{
- strcat(info, "but nothing happens.");
- mpr(info);
- return;
-}
-
-if (random2(10) == 0)
-{
- strcat(info, "but nothing happens.");
- mpr(info);
- you[0].inv_type [you[0].equip [EQ_WEAPON]] = MISC_EMPTY_EBONY_CASKET;
- return;
-}
-
-switch(random2(11))
-{
- case 0: beasty = MONS_GIANT_BAT; break; // bat
- case 1: beasty = MONS_HOUND; break; // hound
- case 2: beasty = MONS_JACKAL; break; // jackal
- case 3: beasty = MONS_RAT; break; // rat
- case 4: beasty = MONS_ICE_BEAST; break; // ice beast
- case 5: beasty = MONS_SNAKE; break; // snake
- case 6: beasty = MONS_YAK; break; // yak
- case 7: beasty = MONS_BUTTERFLY; break; // butterfly
- case 8: beasty = MONS_HELL_HOUND; break; // hell hound
- case 9: beasty = MONS_BROWN_SNAKE; break; // brown snake
- case 10: beasty = MONS_GIANT_LIZARD; break; // giant lizard
-}
-
- create_monster(beasty, 21 + random2(4), 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
-
- strcat(info, "and something leaps out!");
- mpr(info);
-
-
+	you[0].turnover = 1;
+	if (random2(3) == 0) {
+		msg("You open the lid, but nothing happens.");
+		return;
+	}
+	if (random2(10) == 0) {
+		msg("You open the lid, but nothing happens.");
+		you[0].inv_type [you[0].equip [EQ_WEAPON]] = MISC_EMPTY_EBONY_CASKET;
+		return;
+	}
+	msg("You open the lid, and something leaps out!");
+	int beasty = 0;
+	switch(random2(11)) {
+		case 0: beasty = MONS_GIANT_BAT; break; // bat
+		case 1: beasty = MONS_HOUND; break; // hound
+		case 2: beasty = MONS_JACKAL; break; // jackal
+		case 3: beasty = MONS_RAT; break; // rat
+		case 4: beasty = MONS_ICE_BEAST; break; // ice beast
+		case 5: beasty = MONS_SNAKE; break; // snake
+		case 6: beasty = MONS_YAK; break; // yak
+		case 7: beasty = MONS_BUTTERFLY; break; // butterfly
+		case 8: beasty = MONS_HELL_HOUND; break; // hell hound
+		case 9: beasty = MONS_BROWN_SNAKE; break; // brown snake
+		case 10: beasty = MONS_GIANT_LIZARD; break; // giant lizard
+	}
+	create_monster(beasty, 21 + random2(4), 7, you[0].x_pos, you[0].y_pos, you[0].pet_target, 250);
 }
 
 void ball_of_energy(void)

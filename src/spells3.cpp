@@ -187,10 +187,7 @@ if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 
 i = mgrd [beam[0].target_x] [beam[0].target_y];
 
-strcpy(info, "You smite ");
-strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1));
-strcat(info, "!");
-mpr(info);
+msg("You smite @1!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1);
 
 menv [i].m_hp -= random2(8) + random2(pow) / 3;
 menv [i].m_hp -= random2(8) + random2(pow) / 3;
@@ -219,10 +216,7 @@ if (beam[0].nothing == -1 || mgrd [beam[0].target_x] [beam[0].target_y] == MNG)
 
 i = mgrd [beam[0].target_x] [beam[0].target_y];
 
-strcpy(info, "The air twists around and strikes ");
-strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1));
-strcat(info, "!");
-mpr(info);
+msg("The air twists around and strikes @1!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1);
 
 hurted += random2(12) + random2(pow) / 6 + random2(pow) / 7;
 
@@ -395,10 +389,7 @@ for (i = 0; i < ITEMS; i++)
 } /* end of i loop */
 
 item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-strcpy(info, str_pass);
-strcat(info, " dances into the air!");
-mpr(info);
-
+msg("@1 dances into the air!") << str_pass;
 
 unwield_item(you[0].equip [EQ_WEAPON]);
 
@@ -459,13 +450,7 @@ if (you[0].attribute [ATTR_CONTROL_TELEPORT] != 0 && you[0].level_type != 2 && y
  }
 
 #ifdef DEBUG
-strcpy(info, "Target square: ");
-itoa(plox [0], st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", ");
-itoa(plox [1], st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
+msg("Target square: @1, @2") << plox[0] << plox[1];
 #endif
 
  if (plox [0] < 6 || plox [1] < 6 || plox [0] > 75 || plox [1] > 65)
@@ -583,10 +568,11 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
 }
 
 item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-strcpy(info, str_pass);
-if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 1) strcat(info, " is covered in a thin film of poison.");
- else strcat(info, " are covered in a thin film of poison.");
-mpr(info);
+if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 1) {
+	msg("@1 is covered in a thin film of poison.") << str_pass;
+} else {
+	msg("@1 are covered in a thin film of poison.") << str_pass;
+}
 
 you[0].inv_dam [you[0].equip [EQ_WEAPON]] = 3;
 wield_change = 1;
@@ -605,13 +591,7 @@ int plox [2];
  show_map(plox);
 
 #ifdef DEBUG
-strcpy(info, "Target square: ");
-itoa(plox [0], st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", ");
-itoa(plox [1], st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
+msg("Target square: @1, @2") << plox[0] << plox [1];
 #endif
 
  if (plox [0] < 1 || plox [1] < 1 || plox [0] > 78 || plox [1] > 68)
@@ -674,10 +654,7 @@ for (i = j; i != l; i += k)
 	recalled ++;
 	if (menv [i].m_ench [2] != 6 || player_see_invis() != 0)
 	{
-	 strcpy(info, "You recall your ");
-	 strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4));
-	 strcat(info, ".");
-	 mpr(info);
+	 msg("You recall your @1.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4);
 	} else recalled --; /* you're not informed if you've recalled an invis creature */
        } /* end else */
 

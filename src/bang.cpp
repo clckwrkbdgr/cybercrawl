@@ -327,10 +327,7 @@ void explosion(char ex_size, struct bolt beam [1])
 
 
 
-				strcpy(info, "The ");
-				strcat(info, beam[0].beam_name);
-				strcat(info, " engulfs you!");
-				mpr(info);
+				msg("The @1 engulfs you!") << beam[0].beam_name;
 
 				hurted = 0;
 
@@ -354,7 +351,6 @@ void explosion(char ex_size, struct bolt beam [1])
   		 		exercise(SK_ARMOUR, 1);
 
  				if (hurted <= 0) hurted = 0;
-				strcat(info, "!");
 
  				if (beam[0].flavour == 2 || stricmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(5, 6);
  				if (beam[0].flavour == 3) scrolls_burn(5, 8);
@@ -425,12 +421,7 @@ void explosion(char ex_size, struct bolt beam [1])
   					}
   					if (hurted <= 0) hurted = 0;
 
-					strcpy(info, "The ");
-					strcat(info, beam[0].beam_name);
-					strcat(info, " engulfs ");
-					strcat(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 1)); //gmon_name [mons_class [o]]);
-					strcat(info, ".");
-					mpr(info);
+					msg("The @1 engulfs @2.") << beam[0].beam_name << monam(menv[o].m_sec, menv[o].m_class, menv[o].m_ench[2], 1);
 
 					hurted = check_mons_resists(beam, o, hurted);
 

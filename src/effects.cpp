@@ -62,9 +62,7 @@ void torment(void)
 
                 if (menv [dmi].m_ench [2] == 6) continue; // can't see it
 
-                strcpy(info, monam (menv [dmi].m_sec, menv [dmi].m_class, menv [dmi].m_ench [2], 0));
-                strcat(info, " convulses!");
-                mpr(info);
+                msg("@1 convulses!") << monam (menv [dmi].m_sec, menv [dmi].m_class, menv [dmi].m_ench [2], 0);
         }
 
 }
@@ -224,9 +222,7 @@ switch(beam[0].type)
   case DMNBM_HELLFIRE:
   if (mons_near(menv [i].m_hit) == 1)
   {
- 		strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 		strcat(info, " is engulfed in hellfire.");
- 		mpr(info);
+ 		msg("@1 is engulfed in hellfire.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
   }
   strcpy(beam[0].beam_name, "hellfire");
   beam[0].flavour = 20;
@@ -244,9 +240,7 @@ switch(beam[0].type)
   case DMNBM_SMITING:
   if (mons_near(o) == 1)
   {
- 		strcpy(info, monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0));
- 		strcat(info, " is smitten.");
- 		mpr(info);
+ 		msg("@1 is smitten.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
   }
   strcpy(beam[0].beam_name, "smiting");
   beam[0].flavour = 0;
@@ -277,11 +271,8 @@ char wc [30];
 switch(ru)
 {
 	case 0:
-	strcpy(info, "The dust glows a ");
 	weird_colours(random2(256), wc);
-	strcat(info, wc);
-	strcat(info, " colour!");
-	mpr(info);
+	msg("The dust glows a @1 colour!") << wc;
 	break;
 
 	case 1:
@@ -294,20 +285,14 @@ switch(ru)
 	if (you[0].equip [EQ_WEAPON] != -1)
 	{
 	in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
-	strcpy(info, str_pass);
-	strcat(info, " glows ");
 	weird_colours(random2(256), wc);
-	strcat(info, wc);
-	strcat(info, " for a moment.");
-	mpr(info);
+	msg("@1 glows @2 for a moment.") << str_pass << wc;
 	return;
-	//strcat(info
 	} else
 	     {
 		mpr("Nothing appears to happen.");
 		return;
 	     }
-//	break;
 
 	case 3:
 	strcpy(info, "You hear the distant roaring of an enraged ");
@@ -689,9 +674,7 @@ if (you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_FIREBALL || you[0].inv_ty
  charge_gain = 4;
 
 item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-strcpy(info, str_pass);
-strcat(info, " glows for a moment.");
-mpr(info);
+msg("@1 glows for a moment.") << str_pass;
 
 you[0].inv_plus [you[0].equip [EQ_WEAPON]] += random2(charge_gain) + random2(charge_gain) + random2(charge_gain) + 1;
 
@@ -718,9 +701,7 @@ mpr(" a - Order allies to attack a monster");
 		mpr(" p - Order allies to attack your previous target");
 		targ_prev = 1;
 	 }
-strcpy(info, " Anything else - Stay silent ");
-if (random2(10) == 0) strcat(info, "(and be thought of as a fool)");
-mpr(info);
+msg(" Anything else - Stay silent ");
 
 char keyn = get_ch();
 

@@ -8,75 +8,17 @@ int monc = 0;
 int msecc = 0;
 char brkk = 0;
 
-//cprintf("og");
-
-
-
-
-//itoa((int) time_taken, st_prn, 10);
-//cprintf(st_prn);
-
-//getch();
-//delay(500);
-
 brek = 0;
-//viewwindow(); // only once; before the monster function
 losight(show, grid, you[0].x_pos, you[0].y_pos);
 
 brek = 0;
-//mnc = 0;
-
-
-
-//viewwindow(); // only once; before the monster function
-
-
-//itoa(no_mons, st_prn, 10);
-//mons [i].m_speed, st_prn, 10);
-//strcpy(info, st_prn);
-//strcat(info, ",");
-//itoa(mons [i].m_speed_inc, st_prn, 10);
-//strcat(info, st_prn);
-//incrl();
 
 no_mons = 0;
 
 for (i = 0; i < MNST; i++)
 {
-/*
-if (mons_near(i) == 9)
-{
-itoa(mnc, st_prn, 10);
-//mons [i].m_speed, st_prn, 10);
-strcpy(info, st_prn);
-//strcat(info, ",");
-//itoa(mons [i].m_speed_inc, st_prn, 10);
-//strcat(info, st_prn);
-incrl();
-}
-*/
-
-//if (mons_class [i] == -1) continue;
 
 
-//if (monc > no_mons) break;
-
-
-
-
-
-/*
-if (mons_near(i) == 1)
-{
-itoa(mnc, st_prn, 10);
-//mons [i].m_speed, st_prn, 10);
-strcpy(info, st_prn);
-//strcat(info, ",");
-//itoa(mons [i].m_speed_inc, st_prn, 10);
-//strcat(info, st_prn);
-incrl();
-}
-*/
 
 /*
 if (mons_near(i))

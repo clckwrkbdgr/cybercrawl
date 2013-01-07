@@ -38,15 +38,10 @@ void stethoscope(int mwh)
 
 		if (nothing == -1) return;
 
-		if (env[0].cgrid [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y] != CNG)
+		int cell = env[0].cgrid [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y];
+		if (cell != CNG)
 		{
- 			itoa(env[0].cloud_type [env[0].cgrid [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y]], st_prn, 10);
- 			strcpy(info, st_prn);
- 			strcat(info, "/");
- 			itoa(env[0].cloud_decay [env[0].cgrid [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y]], st_prn, 10);
- 			strcat(info, st_prn);
- 			strcat(info, "   ");
-	 		mpr(info);
+ 			msg("@1/@2") << env[0].cloud_type[cell] << env[0].cloud_decay[cell];
 		}
 
 		if (mgrd [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y] == MNG)
@@ -64,69 +59,7 @@ void stethoscope(int mwh)
 
 	} else i = mwh;
 
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-	strcat(info, ": ");
-
-	{
-/*
-itoa(i, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ": cl ");
-
-itoa(menv [i].m_class, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, " - ");
-
-itoa(menv [i].m_hp, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, "/");
-itoa(menv [i].m_hp_max, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, "   ");
-
-itoa(menv [i].m_beh, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, "/");
-itoa(menv [i].m_hit, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
-
-strcpy(info, "speed:");
-itoa(menv [i].m_speed, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, "/");
-itoa(menv [i].m_speed_inc, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
-
-
-strcpy(info, "sec:");
-itoa(menv [i].m_sec, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
-
-strcpy(info, "target: ");
-itoa(menv [i].m_targ_1_x, st_prn, 10);
-strcat(info, st_prn);
-strcat(info, ", ");
-itoa(menv [i].m_targ_1_y, st_prn, 10);
-strcat(info, st_prn);
-mpr(info);
-*/
-//if (menv [i].m_class == 400)
-//{
- 		strcpy(info, "Ghost damage: ");
- 		itoa(ghost.ghs [7], st_prn, 10);
- 		strcat(info, st_prn);
- 		mpr(info);
-//}
-
-	}
-	stmove[0].move_x = 0;
-	stmove[0].move_y = 0;
-
-	return;
-
+	msg("Ghost damage: ") << ghost.ghs[7];
 } // end of stethoscope()
 
 
@@ -226,17 +159,9 @@ void adjust_item(void)
 		return;
 	}
 
-	strcpy(info, " ");
-   	if (throw_2 <= 25) info [0] = throw_2 + 97;
-	else info [0] = throw_2 + 39;
-
-	info [1] = 0; /* This null-terminates it, right? */
-	strcat(info, " - ");
-
+   	char slot = (throw_2 <= 25) ? (throw_2 + 97) :(throw_2 + 39);
 	in_name(throw_2, 3, str_pass);
-	strcat(info, str_pass);
-	mpr(info);
-
+	msg("@1 - @2") << slot << str_pass;
 	mpr("Adjust to which letter?");
 
 	keyin = get_ch();
@@ -288,16 +213,9 @@ void adjust_item(void)
 
 	you[0].inv_quant [throw_2] = 0;
 
-	strcpy(info, " ");
-	if (throw_3 <= 25) info [0] = throw_3 + 97;
-	else info [0] = throw_3 + 39;
-
-	info [1] = 0; /* This null-terminates it, right? */
-	strcat(info, " - ");
-
 	in_name(throw_3, 3, str_pass);
-	strcat(info, str_pass);
-	mpr(info);
+	slot = (throw_3 <= 25) ? (throw_3 + 97) : (throw_3 + 39);
+	msg("@1 - @2") << slot << str_pass;
 
 	if (throw_3 == you[0].equip [EQ_WEAPON]) wield_change = 1;
 
@@ -352,13 +270,8 @@ void adjust_spells(void)
 		return;
 	}
 
-	strcpy(info, " ");
-	info [0] = throw_2 + 97;
-	info [1] = 0; /* This null-terminates it, right? */
-	strcat(info, " - ");
 	spell_name(you[0].spells [throw_2], str_pass);
-	strcat(info, str_pass);
-	mpr(info);
+	msg("@1 - @2") << char(throw_2 + 97) << str_pass;
 
 	mpr("Adjust to which letter?");
 
@@ -392,23 +305,13 @@ void adjust_spells(void)
 	you[0].spells [throw_3] = you[0].spells [throw_2];
 	you[0].spells [throw_2] = backup;
 
-	strcpy(info, " ");
-	info [0] = throw_3 + 97;
-	info [1] = 0; /* This null-terminates it, right? */
-	strcat(info, " - ");
 	spell_name(you[0].spells [throw_3], str_pass);
-	strcat(info, str_pass);
-	mpr(info);
+	msg("@1 - @2") << char(throw_3 + 97) << str_pass;
 
 	if (you[0].spells [throw_2] != 210)
 	{
-	 	strcpy(info, " ");
- 		info [0] = throw_2 + 97;
- 		info [1] = 0; /* This null-terminates it, right? */
- 		strcat(info, " - ");
- 		spell_name(you[0].spells [throw_2], str_pass);
- 		strcat(info, str_pass);
- 		mpr(info);
+		spell_name(you[0].spells [throw_2], str_pass);
+		msg("@1 - @2") << char(throw_2 + 97) << str_pass;
 	}
 
 }

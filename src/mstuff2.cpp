@@ -104,31 +104,28 @@ int func_pass [10];
    case 5:
   	if (mons_near(i) == 1)
   	{
-   		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-     strcat(info, " looks momentarily disoriented.");
-     mpr(info);
+     msg("@1 looks momentarily disoriented.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    }
    return;
 
    case 6:
   if (random2(5) == 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " avoids triggering a blade trap.");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+	   msg("@1 avoids triggering a blade trap.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   }
    return;
   }
   if (random2(menv [i].m_ev) > 8)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-   strcat(info, " avoids a huge swinging blade.");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+	   msg("@1 avoids a huge swinging blade.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   }
    return;
   }
-   strcpy(info, "A huge blade swings out and slices into ");
-   strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1));
-   strcat(info, "!");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+   msg("A huge blade swings out and slices into @1!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1);
+   }
    damage_taken = 10 + random2(15) + random2(15) - random2(menv[i].m_AC + 1);
    if (damage_taken <= 0) damage_taken = 0;
    menv [i].m_hp -= damage_taken;
@@ -142,9 +139,7 @@ int func_pass [10];
    case 8:
    if (mons_near(i) == 1)
    {
-   	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-     strcat(info, " enters an Alice trap!");
-     mpr(info);
+     msg("@1 enters an Alice trap!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    } else mpr("You hear a distant \"Alice\".");
    /* Zot traps are out to get *YOU*! They benefit hostile monsters and hurt friendly ones */
    if (menv [i].m_beh == 7)
@@ -185,12 +180,7 @@ int func_pass [10];
 	{
 		if (mons_near(i) == 1)
 		{
-			strcpy(info, "A");
-			strcat(info, beem[0].beam_name);
-			strcat(info, " hits ");
-			strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1)); //gmon_name [mons_class [i]]);
-			strcat(info, "!");
-			mpr(info);
+			msg("A@1 hits @2!") << beem[0].beam_name << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1);
 		}
 		if (menv [i].m_hp <= 0)
 		{
@@ -200,12 +190,7 @@ int func_pass [10];
 	} else
 	if (mons_near(i) == 1)
 	{
-		strcpy(info, "A");
-		strcat(info, beem[0].beam_name);
-		strcat(info, " misses ");
-		strcat(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1)); //gmon_name [mons_class [i]]);
-		strcat(info, "!");
-		mpr(info);
+		msg("A@1 misses @2!") << beem[0].beam_name << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 1);
 	}
 
 
@@ -337,9 +322,7 @@ case 48: // torment
   if (mons_near(i) == 0 || menv [i].m_beh == 7) return;
   if (menv [i].m_ench [2] != 6)
   {
-  	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
-  	strcat(info, " calls on the powers of Facilities!");
-  	mpr(info);
+  	msg("@1 calls on the powers of Facilities!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   }
 /*  mmov_x = 0; mmov_y = 0;*/
   torment();
@@ -435,9 +418,7 @@ if (instan == 0)
                                         menv [monstel].m_ench_1 = 0;
                                         if (mons_near(monstel) == 1 && (player_see_invis() != 0 || menv [monstel].m_ench [2] != 6))
                                         {
-                                           strcpy(info, monam (menv [monstel].m_sec, menv [monstel].m_class, menv [monstel].m_ench [2], 0));
-                                           strcat(info, " seems more stable.");
-                                           mpr(info);
+                                           msg("@1 seems more stable.") << monam (menv [monstel].m_sec, menv [monstel].m_class, menv [monstel].m_ench [2], 0);
                                         }
                                 return;
                         }
@@ -459,9 +440,7 @@ if (instan == 0)
 
 if (mons_near(monstel) == 1 && (player_see_invis() != 0 || menv [monstel].m_ench [2] != 6))
 {
-     strcpy(info, monam (menv [monstel].m_sec, menv [monstel].m_class, menv [monstel].m_ench [2], 0));
-     strcat(info, " disappears!");
-     mpr(info);
+     msg("@1 disappears!") << monam (menv [monstel].m_sec, menv [monstel].m_class, menv [monstel].m_ench [2], 0);
 }
 mgrd [menv [monstel].m_x] [menv [monstel].m_y] = MNG;
 
@@ -538,9 +517,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 
   if (mons_near(i) == 1)
 		{
-  		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-	  	strcat(info, " breathes.");
-  		mpr(info);
+	  	msg("@1 breathes.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   }
 	beem[0].thing_thrown = 2;
 	beam(beem);
@@ -583,8 +560,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 
 	if (menv [i].m_class == 12)
 	{
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
-		strcat(info, " flicks its tail!");
+		msg("@1 flicks its tail!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 		beem[0].damage = 10;
 		beem[0].hit *= 2;
 	}
@@ -635,31 +611,31 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 
 
                 if (mitm.idam [menv [i].m_inv [0]] % 30 == 11)
-                {
-                 beem[0].hit += 2;
-                 beem[0].damage += 1 + random2(5);
-                 beem[0].flavour = 2;
-                 strcpy(beem[0].beam_name, "bolt of ");
-		 if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
-			strcat(beem[0].beam_name, "poison ");
-                 strcat(beem[0].beam_name, "flame");
-                 beem[0].colour = RED;
-                 beem[0].type = 35;
-                 beem[0].thing_thrown = 4;
-                }
+				{
+					beem[0].hit += 2;
+					beem[0].damage += 1 + random2(5);
+					beem[0].flavour = 2;
+					strcpy(beem[0].beam_name, "bolt of ");
+					if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
+						strcat(beem[0].beam_name, "poison ");
+					strcat(beem[0].beam_name, "flame");
+					beem[0].colour = RED;
+					beem[0].type = 35;
+					beem[0].thing_thrown = 4;
+				}
                 if (mitm.idam [menv [i].m_inv [0]] % 30 == 12)
-                {
-                 beem[0].hit += 2;
-                 beem[0].damage += 1 + random2(5);
-                 beem[0].flavour = 3;
-                 strcpy(beem[0].beam_name, "bolt of ");
-		 if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
-			strcat(beem[0].beam_name, "poison ");
-                 strcat(beem[0].beam_name, "frost");
-                 beem[0].colour = WHITE;
-                 beem[0].type = 35;
-                 beem[0].thing_thrown = 4;
-                }
+				{
+					beem[0].hit += 2;
+					beem[0].damage += 1 + random2(5);
+					beem[0].flavour = 3;
+					strcpy(beem[0].beam_name, "bolt of ");
+					if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
+						strcat(beem[0].beam_name, "poison ");
+					strcat(beem[0].beam_name, "frost");
+					beem[0].colour = WHITE;
+					beem[0].type = 35;
+					beem[0].thing_thrown = 4;
+				}
 
 	}
 
@@ -737,10 +713,6 @@ switch(spell_cast)
 {
 
 case 0: // magic missile
-//strcpy(info [info_lines], "The ");
-//strcpy(info [info_lines], monam (mons_class [i], mons_ench [i] [2], 0)); //gmon_name [mons_class [i]]);
-//strcat(info [info_lines], " hurls a ball of sizzling energy!");
-//incrl();
 func_pass [0] = 13;//inv_col [throw_2];//icolour [inv_class [throw_2]] [inv_type [throw_2]];
 strcpy(beam_name, "magic dart");// inv_name [throw_2]);
 func_pass [1] = random2(5) + 7;
@@ -754,10 +726,6 @@ return 0;
 //break;
 
 case 1: // flame
-//strcpy(info [info_lines], "The ");
-//strcpy(info [info_lines], monam (mons_class [i], mons_ench [i] [2], 0)); //gmon_name [mons_class [i]]);
-//strcat(info [info_lines], " hurls a puff of flame!");
-//incrl();
 func_pass [0] = 4;
 strcpy(beam_name, "puff of flame");
 func_pass [1] = random2(5) + 7;
@@ -771,10 +739,6 @@ return 0;
 
 
 case 2: // frost
-//strcpy(info [info_lines], "The ");
-//strcpy(info [info_lines], monam (mons_class [i], mons_ench [i] [2], 0)); //gmon_name [mons_class [i]]);
-//strcat(info [info_lines], " hurls a puff of frost!");
-//incrl();
 func_pass [0] = 15;
 strcpy(beam_name, "puff of frost");
 func_pass [1] = random2(5) + 7;
@@ -1217,9 +1181,7 @@ for (ab = 0; ab < MNST; ab ++)
   monster_die(ab, 6, 0);
   continue;
  }
- strcpy(info, monam (menv [ab].m_sec, menv [ab].m_class, menv [ab].m_ench [2], 0));
- strcat(info, " shudders.");
- mpr(info);
+ msg("@1 shudders.") << monam (menv [ab].m_sec, menv [ab].m_class, menv [ab].m_ench [2], 0);
 
 } // end of for ab
 
