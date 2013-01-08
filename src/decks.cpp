@@ -315,7 +315,7 @@ mutate(100);
 mutate(100);
 break;
 case 13: // reaper
-strcpy(info, "Oh no! You have execute the Death program!");
+msg("Oh no! You have execute the Death program!");
 if (you[0].duration [DUR_TELEPORT] != 0) you_teleport(); /* heh heh heh */
 create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 create_monster(MONS_REAPER, 0, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);

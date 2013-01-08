@@ -58,10 +58,8 @@ void initialise(void);
 
 struct environ env [1];
 struct player you [1];
-char info [200];
-char st_prn [20];
 char str_pass [80];
-char gmon_use [1000];
+int gmon_use [1000];
 int stealth; /* externed in view.h */
 int visible [10];
 
@@ -74,7 +72,7 @@ extern int wield_change; /* defined in output.cc */
 It all starts here. Some initialisations are run first, then straight to
 new_game and then input.
 */
-int main(/*int argc, char *argv[]*/)
+int main()
 {
 	lincurses_startup();
 	macro_init();
@@ -355,8 +353,7 @@ void process_control(int keyin, int & move_x, int & move_y) // FIXME References 
 				  msg("You have a total of @1 skill points.") << j;
 				  break;
 		case '`':
-				  itoa(OUTPUT_NO, st_prn, 10);
-				  mpr(st_prn);
+				  msg("@1") << OUTPUT_NO;
 				  move_x = 0;
 				  move_y = 0;
 				  break;
@@ -1097,8 +1094,6 @@ void init_structures()
 		env[0].it[0].ilink [i] = ING;
 	}
 
-	strcpy(info, "");
-
 	for(int i = 0; i < MNST; i++) {
 		env[0].mons[i].m_class = -1;
 		env[0].mons[i].m_speed_inc = 10;
@@ -1190,10 +1185,8 @@ void setup_game()
 	you[0].gp_ch = 1;
 	you[0].hung_ch = 1;
 	wield_change = 1;
-	char title [40];
 
-	strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
-	draw_border(BROWN, you[0].your_name, title, you[0].species);
+	draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
 
 	new_level();
 	viewwindow(1); // This just puts the view up for the first turn.

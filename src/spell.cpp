@@ -592,12 +592,6 @@ switch(spc2)
 
    case 113: // banishment
    if (spell_direction(spd, beam) == -1) return 1;
-/*   if (beam[0].move_x == 0 && beam[0].move_y == 0)
-   {
-    strcpy(info, "Why would you want to do that?");
-    mpr(info);
-    return 1;
-   }*/
    zapping(ZAP_BANISHMENT, powc, beam);
    return 1;
 

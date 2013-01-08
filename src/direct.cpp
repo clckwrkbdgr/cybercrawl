@@ -180,6 +180,8 @@ void check_ing(int xps, int yps)
 	}
 }
 
+char info[200];
+
 void describe_monster(int xps, int yps)
 {
 	if (mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9] != MNG) {

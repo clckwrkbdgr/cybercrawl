@@ -91,8 +91,7 @@ void create_spec_object(void)
 	type_wanted = (getche() - 48) * 10;
 	type_wanted += getche() - 48;
 
-	itoa(property(class_wanted, type_wanted, 2), st_prn, 10);
-	mpr(st_prn);
+	msg("@1") << property(class_wanted, type_wanted, 2);
 
 	int thing_created = items(1, class_wanted, type_wanted, 1, you[0].your_level, 250);
 
@@ -123,13 +122,6 @@ void create_spec_object2(void)
 
 	dam_wanted = (getche() - 48) * 10;
 	dam_wanted += getche() - 48;
-
-//itoa(property [class_wanted] [type_wanted] [2], st_prn, 10);
-//strcpy(info, st_prn);
-//mpr(info);
-
-//int thing_created = items(you[0].unique_items, 1, you[0].item_description,
-//       grd, class_wanted, type_wanted, 1, 100, 250);
 
 	int thing_created = items(1, class_wanted, type_wanted, 1, you[0].your_level, 250);
 

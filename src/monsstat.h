@@ -5,8 +5,6 @@
 
 int mondamage(int mc, int rt);
 
-void mon_init(char gmon_use [1000], char mcolour [1000]);
-
 void def_letters(char letters [52] [1]);
 
 void def_properties(int property [4] [50] [3], int mass [20] [50]);

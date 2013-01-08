@@ -1041,7 +1041,7 @@ switch(spec_effect)
  {
   case 0:
   if (player_res_poison() != 0) goto nothing_happening;
-  strcpy(info, "You feel sick.");
+  msg("You feel sick.");
   you[0].poison += 2 + random2(3);
   break;
   case 1:
@@ -1056,7 +1056,7 @@ switch(spec_effect)
  {
   case 0:
   if (player_res_poison() != 0) goto nothing_happening;
-  strcpy(info, "You feel very sick.");
+  msg("You feel very sick.");
   you[0].poison += 3 + random2(5) + random2(5);
   break;
   case 1:
@@ -1071,7 +1071,7 @@ switch(spec_effect)
  {
   case 0:
   if (player_res_poison() != 0) goto nothing_happening;
-  strcpy(info, "You feel incredibly sick.");
+  msg("You feel incredibly sick.");
   you[0].poison += 10 + random2(10) + random2(10);
   break;
   case 1:

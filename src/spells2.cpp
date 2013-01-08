@@ -223,9 +223,6 @@ for (adx = minx; adx != maxx; adx += xinc)
   {
    if (igrd [adx] [ady] == 501) continue;
 
-//      strcpy(info, "Found.");
-//      mpr(info);
-
    int objl = igrd [adx] [ady];
    int hrg = 0;
 
@@ -235,8 +232,6 @@ for (adx = minx; adx != maxx; adx += xinc)
     {
 //      if (
       number_raised += raise_corpse(objl, adx, ady, corps_beh, corps_hit, actual);
-//      strcpy(info, "Raised.");
-//      mpr(info);
       power --;
 //      if (power <= 0);
       goto out_of_raise;
@@ -397,32 +392,31 @@ if (you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 != 0 || you[0].inv_dam [you[0
 }
 
 item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-strcpy(info, str_pass);
 
 switch(which_brand)
 {
  case 1: // flaming
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 1;
- strcat(info, " bursts into flame!");
+ msg("@1 bursts into flame!") << str_pass;
  duration_affected = 6;
  break;
 
  case 2: // freezing
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 2;
- strcat(info, " glows blue.");
+ msg("@1 glows blue.") << str_pass;
  duration_affected = 7;
  break;
 
  case 6: // venom
  if (damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 0) return 0;
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 6;
- strcat(info, " starts dripping with poison.");
+ msg("@1 starts dripping with poison.") << str_pass;
  duration_affected = 15;
  break;
 
  case 7: // draining
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 8;
- strcat(info, " crackles with corrupted data.");
+ msg("@1 crackles with corrupted data.") << str_pass;
  duration_affected = 8;
  break;
 
@@ -432,13 +426,11 @@ switch(which_brand)
   return 0;
  }
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 10;
- strcat(info, " glows silver and looks extremely sharp.");
+ msg("@1 glows silver and looks extremely sharp.") << str_pass;
  duration_affected = 5;
  break;
 
 }
-
-mpr(info);
 
 wield_change = 1;
 
@@ -861,22 +853,15 @@ if (mgr == MNG)
 	return -1;
 }
 
-strcpy(info, "You burn ");
-if (b_f == 3)
-{
- strcpy(info, "You freeze ");
+if (b_f == 3) {
+	msg("You freeze @1.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
+} else if (b_f == 0) {
+	msg("You crush @1.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
+} else if (b_f == 5) {
+	msg("You zap @1.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
+} else {
+	msg("You burn @1.") << monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1);
 }
-if (b_f == 0)
-{
- strcpy(info, "You crush ");
-}
-if (b_f == 5)
-{
- strcpy(info, "You zap ");
-}
-strcat(info, monam(menv [mgr].m_sec,menv[mgr].m_class, menv [mgr].m_ench [2], 1));
-strcat(info, ".");
-mpr(info);
 
 int hurted = 1 + random2(4) + random2(3) + random2(pow) / 25;
 struct bolt beam [1];

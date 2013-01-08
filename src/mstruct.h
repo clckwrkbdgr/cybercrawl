@@ -120,13 +120,13 @@ extern struct monsterentry {
 	char shouts ;
 	// AI things?
 	char intel ; // 0=none, 1=worst...4=best
-	char gmon_use ;
+	int gmon_use ;
 } mondata[];
 // wow. this struct is only about 48 bytes, (excluding the name)
 
 
 int mondamage(int mc, int rt);
-void mon_init(char gmon_use [1000], char mcolour [1000]);
+void mon_init(int gmon_use [1000], int mcolour [1000]);
 void def_letters(char letters [52] [1]);
 int mon_resist_mag(int mc, char mhd);
 int mons_res_fire(int mclass);

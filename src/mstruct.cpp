@@ -17,7 +17,7 @@
 #include "enum.h"
 #include "player.h"
 
-char mcolour [1000];
+int mcolour [1000];
 char *gmo_n; /* used in monam - could possibly be static to that function */
 
 int local_toupper(int c) {
@@ -341,7 +341,7 @@ int f=smc->bitfields;
 }
 
 
-void mon_init(char gmon_use [1000], char mcolour [1000])
+void mon_init(int gmon_use [1000], int mcolour [1000])
 {
 int x;
 	// that saves *MAJOR* space

@@ -7,8 +7,8 @@ extern char st_prn [20];
 
 extern char str_pass [80];
 
-extern char gmon_use [1000];
-extern char mcolour [1000];
+extern int gmon_use [1000];
+extern int mcolour [1000];
 extern int show_green;
 
 

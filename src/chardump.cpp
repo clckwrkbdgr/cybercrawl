@@ -585,9 +585,7 @@ for (xy = 0; xy < 100; xy ++)
 
 	int handle = open(file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
 
-	strcpy(info, "File name: ");
-	strcat(info, file_name);
-	mpr(info);
+	msg("File name: @1") << file_name;
 
 	if (handle == -1)
 	{

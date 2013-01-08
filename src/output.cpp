@@ -11,6 +11,7 @@
 #include "ouch.h"
 
 int wield_change;
+char st_prn[20];
 
 void print_stats(void)
 {

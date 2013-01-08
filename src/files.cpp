@@ -242,7 +242,6 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
         if (menv [fmenv].m_class >= MLAVA0) continue;
         if (menv [fmenv].m_speed_inc < 50) continue;
         foll_class [following] = menv [fmenv].m_class;
-//        itoa(foll_class [following], st_prn, 10);
 
         foll_hp [following] = menv [fmenv].m_hp;
         foll_hp_max [following] = menv [fmenv].m_hp_max;
@@ -334,9 +333,7 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
 //        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
        FILE *gfile = fopen(cha_fil, "rb");
         if (gfile==NULL) {
-          strcpy(info, "Error opening ghost file: ");
-          strcat(info, cha_fil);
-          mpr(info);
+          msg("Error opening ghost file: @1") << cha_fil;
           more();
         } else {
           char buf1[40];
@@ -563,13 +560,9 @@ out_of_foll :
   int retval=read2(handle, buf, datalen);
   if (datalen!=retval) {
     perror("opa (7)...");
-    cprintf(EOL"Wanted to read ");
-    itoa(datalen, st_prn, 10);
-    cprintf(st_prn);
-    cprintf(" bytes; could only read ");
-    itoa(retval, st_prn, 10);
-    cprintf(st_prn);
-    cprintf(".");
+	Format format(EOL"Wanted to read @1 bytes; could only read @2.");
+	format << datalen << retval;
+    cprintf(format.str().c_str());
     end(-1);
   }
   fclose(handle);
@@ -814,9 +807,9 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
         mitm.iy [frx] = count_y;
 
         if (frx > 501 || frx < 0) {
-          cprintf("Error! Item out of bounds: ");
-          itoa(frx, st_prn, 10);
-          cprintf(st_prn);
+			Format format("Error! Item out of bounds: @1");
+			format << frx;
+          cprintf(format.str().c_str());
           if (getch() == 0) getch();
           cprintf(EOL);
           break;
@@ -1429,9 +1422,7 @@ void save_ghost () {
 
   gfile=fopen(cha_fil, "wb"); //open(cha_fil, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
   if (gfile==NULL) {
-   strcpy(info, "Error creating ghost file: ");
-   strcat(info, cha_fil);
-   mpr(info);
+   msg("Error creating ghost file: @1") << cha_fil;
    more();
    return;
   }
@@ -1618,6 +1609,7 @@ for (rdem = 0; rdem < MNST + 1; rdem ++)
  if (menv [rdem].m_class == 401) break; /* found one! */
 }
 
+char st_prn[200];
 make_name(random2(250), random2(250), random2(250), 3, st_prn);
 strcpy(ghost.gname, st_prn);
 

@@ -1071,7 +1071,7 @@ if ((gr [x_p] [y_p + ys] < MINSEE && gr [x_p + xs] [y_p + ys] < MINSEE) || (gr [
 }
 
 
-void draw_border(int bord_col, char your_name [30], char clasnam [40], char tspecies)
+void draw_border(int bord_col, const char * your_name, const char * clasnam, char tspecies)
 {
 
 textcolor(bord_col);

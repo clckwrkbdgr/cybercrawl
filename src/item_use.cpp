@@ -124,9 +124,6 @@ if (keyin == '?')
 	{
       mesclr();
       goto query;
-	/*		strcpy(info, "Wield which item?"); mpr(info);
-		relay_message();
-		keyin = get_ch();*/
 	}
 }
 
@@ -235,21 +232,8 @@ if (you[0].inv_class [item_wield_2] != OBJ_WEAPONS)
 	you[0].equip [EQ_WEAPON] = item_wield_2;
 	}
 
-strcpy(info, " ");
-/*			strncpy(info, letters [item_wield_2], 1);*/
-                        if (item_wield_2 <= 25) info [0] = item_wield_2 + 97;
-				else info [0] = item_wield_2 + 39;
-
-			info [1] = 0; /* This null-terminates it, right? */
-
-			strcat(info, " - ");
-
-			in_name(item_wield_2, 3, str_pass);
-			strcat(info, str_pass);
-
-
-			strcat(info, " (weapon in hand)");
-			mpr(info);
+in_name(item_wield_2, 3, str_pass);
+msg("@1 - @2 (weapon in hand)") << ((item_wield_2 <= 25) ? (item_wield_2 + 97) : (item_wield_2 + 39)) << str_pass;
 
 you[0].turnover = 1;
 wield_change = 1;
@@ -371,8 +355,6 @@ switch(i_dam) //you[0].inv_dam [item_wield_2] % 30)
 		break;
 
   case NWPN_MACE_OF_VARIABILITY:
-//  strcpy(info, "You feel bloodthirsty!");
-//		mpr(info);
   you[0].special_wield = SPWLD_VARIABLE;
 		break;
 
@@ -491,12 +473,6 @@ if (you[0].inv_class [item_wield_2] == OBJ_STAVES)
  }
 }
 
-/*if (you[0].inv_dam [item_wield_2] == 6)
-{
-  strcpy(info, "You feel protected.");
-  mpr(info);
-  if (you[0].inv_ident [item_wield_2] == 1) you[0].inv_ident [item_wield_2] = 2;
-}*/
  you[0].time_taken *= 5;
  you[0].time_taken /= 10;
 
@@ -544,9 +520,6 @@ if (keyin == '?')
 	{
       mesclr();
    goto query;
-	/*		strcpy(info, "Wear which item?"); mpr(info);
-		relay_message();
-		keyin = get_ch();*/
 	}
 }
 
@@ -567,16 +540,6 @@ if (keyin == '*')
 
 
 int armour_wear_1 = (int) keyin; // have to do shield, helmet etc later
-
-/*if (keyin == '-')
-{
-you[0].damage = 1;
-you[0].equip [EQ_WEAPON] = -1;
-strcpy(info, "You are empty handed.");
-mpr(info);
-damage_ch = 1;
-return;
-}*/
 
 if (armour_wear_1 < 65 || (armour_wear_1 > 90 && armour_wear_1 < 97) || armour_wear_1 > 122)
 {
@@ -704,15 +667,6 @@ if (you[0].species != SP_CENTAUR && you[0].inv_type [armour_wear_2] == ARM_BOOTS
 	return;
 }
 
-/*if (you[0].inv_type [armour_wear_2] == ARM_BOOTS && you[0].species == SP_NAGA && you[0].attribute [ATTR_TRANSFORMATION] == TRAN_NONE) / * Naga * /
-{
-	strcpy(info, "You don't have feet!"); / * Naga * /
-	mpr(info);
-	return;
-}*/
-
-
-
 //if (you[0].attribute [5] != 0)
 //{
  wh_equip = EQ_BODY_ARMOUR;
@@ -751,15 +705,7 @@ fits_on_body : if (you[0].inv_type [armour_wear_2] == ARM_BOOTS && you[0].equip 
 
 if (you[0].inv_type [armour_wear_2] == ARM_CRYSTAL_PLATE_MAIL && (you[0].skills [SK_ARMOUR] < 10 || you[0].species == SP_KOBOLD || you[0].species == SP_HALFLING || you[0].species == SP_GNOME || (you[0].species >= SP_ELF && you[0].species <= SP_SLUDGE_ELF))) // no halflings or elves
 {
-/* if (you[0].species == SP_NAGA || you[0].species == SP_KOBOLD || you[0].species == SP_GNOME || you[0].species == SP_HALFLING || (you[0].species >= SP_ELF && you[0].species <= SP_SLUDGE_ELF))
- {
-  strcpy(info, "I'm afraid you have the wrong body type. Try something lighter.");
-  mpr(info);
-  return;
- } else*/
- {
   mpr("This armour is very cumbersome.");
- }
 }
 
 if ((you[0].species >= SP_OGRE && you[0].species <= SP_UNK2_DRACONIAN) || you[0].species == SP_SPRIGGAN)
@@ -870,65 +816,27 @@ if (you[0].inv_type [armour_wear_2] < 8 || you[0].inv_type [armour_wear_2] > 14)
 
 	}
 
-strcpy(info, " ");
-/*			strncpy(info, letters [armour_wear_2], 1);*/
-                        if (armour_wear_2 <= 25) info [0] = armour_wear_2 + 97;
-				else info [0] = armour_wear_2 + 39;
-
-			info [1] = 0;
-
-			strcat(info, " - ");
-
-/*
-			if (inv_name [armour_wear_2] [0] == 97 ^ inv_name [armour_wear_2] [0] == 101 ^ inv_name [armour_wear_2] [0] == 105 ^ inv_name [armour_wear_2] [0] == 111 ^ inv_name [armour_wear_2] [0] == 117)
-			{
-				strcat(info, "an ");
-			}
-			if ((inv_name [armour_wear_2] [0] != 97 && inv_name [armour_wear_2] [0] != 101 && inv_name [armour_wear_2] [0] != 105 && inv_name [armour_wear_2] [0] != 111 && inv_name [armour_wear_2] [0] != 117 && inv_name [armour_wear_2] [0] > 96) || inv_name [armour_wear_2] [0] == 43 || inv_name [armour_wear_2] [0] == 45)
-			{
-				strcat(info, "a ");
-			}
-*/
-			//item_name(you[0].inv_class [armour_wear_2], you[0].inv_type [armour_wear_2], you[0].inv_dam [armour_wear_2], you[0].inv_plus [armour_wear_2], you[0].inv_quant [armour_wear_2], you[0].inv_ident [armour_wear_2], 3, str_pass);
-
-
-if (you[0].inv_type [armour_wear_2] < ARM_SHIELD || you[0].inv_type [armour_wear_2] > ARM_LARGE_SHIELD)
-{
-/* player_evasion() -= ev_mod(); */
- you[0].equip [EQ_BODY_ARMOUR] = armour_wear_2;
-/* player_evasion() += ev_mod(); */
- if (you[0].duration [DUR_ICY_ARMOUR] != 0)
- {
-  mpr("Your icy armour melts away.");
-/*  player_AC() -= 6; */
-  you[0].AC_ch = 1;
-  you[0].duration [DUR_ICY_ARMOUR] = 0;
- }
-}
- else
-switch (you[0].inv_type [armour_wear_2])
-{
-case ARM_BUCKLER:
-case ARM_LARGE_SHIELD:
-case ARM_SHIELD:
-/*you[0].equip [EQ_SHIELD] = armour_wear_2;
-player_shield_class() += 3; // because takes account of plusses above
-break;
-
-case ARM_LARGE_SHIELD:you[0].equip [EQ_SHIELD] = armour_wear_2;
-player_shield_class() += 7;
-break;
-
-case ARM_SHIELD: you[0].equip [EQ_SHIELD] = armour_wear_2;
-player_shield_class() += 5;*/
-you[0].equip [EQ_SHIELD] = armour_wear_2;
-/*player_shield_class() = get_shield_class();*/
-break;
-case ARM_CLOAK: you[0].equip [EQ_CLOAK] = armour_wear_2; break;
-case ARM_HELMET: you[0].equip [EQ_HELMET] = armour_wear_2; break;
-case ARM_GLOVES: you[0].equip [EQ_GLOVES] = armour_wear_2; break;
-case ARM_BOOTS: you[0].equip [EQ_BOOTS] = armour_wear_2; break;
-//case 10: you[0].equip [5] = armour_wear_2;
+if (you[0].inv_type [armour_wear_2] < ARM_SHIELD || you[0].inv_type [armour_wear_2] > ARM_LARGE_SHIELD) {
+	you[0].equip [EQ_BODY_ARMOUR] = armour_wear_2;
+	if (you[0].duration [DUR_ICY_ARMOUR] != 0) {
+		mpr("Your icy armour melts away.");
+		/*  player_AC() -= 6; */
+		you[0].AC_ch = 1;
+		you[0].duration [DUR_ICY_ARMOUR] = 0;
+	}
+} else {
+	switch (you[0].inv_type [armour_wear_2])
+	{
+		case ARM_BUCKLER:
+		case ARM_LARGE_SHIELD:
+		case ARM_SHIELD:
+			you[0].equip [EQ_SHIELD] = armour_wear_2;
+			break;
+		case ARM_CLOAK: you[0].equip [EQ_CLOAK] = armour_wear_2; break;
+		case ARM_HELMET: you[0].equip [EQ_HELMET] = armour_wear_2; break;
+		case ARM_GLOVES: you[0].equip [EQ_GLOVES] = armour_wear_2; break;
+		case ARM_BOOTS: you[0].equip [EQ_BOOTS] = armour_wear_2; break;
+	}
 }
 you[0].AC_ch = 1;
 you[0].evasion_ch = 1;
@@ -939,12 +847,8 @@ you[0].delay_doing = 1;
 
 if (you[0].inv_ident [armour_wear_2] < 3) you[0].inv_ident [armour_wear_2] = 3;
 
-			in_name(armour_wear_2, 3, str_pass);
-			strcat(info, str_pass);
-			//if (you[0].inv_quant [j] != 1) strcat(info, "s");
-
-			strcat(info, " (being worn)");
-			mpr(info);
+in_name(armour_wear_2, 3, str_pass);
+msg("@1 - @2 (being worn)") << ((armour_wear_2 <= 25) ? (armour_wear_2 + 97) : (armour_wear_2 + 39)) << str_pass;
 
 switch(you[0].inv_type [armour_wear_2])
 {
@@ -1043,7 +947,7 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
  break;
 
  case SPARM_PONDEROUSNESS:
- strcpy(info, "You feel rather ponderous.");
+ msg("You feel rather ponderous.");
  you[0].speed += 2;
 /* player_evasion() -= 1; */
  you[0].evasion_ch = 1;
@@ -1051,16 +955,6 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
 
 	case SPARM_LEVITATION: // levitation
 	mpr("You feel light on your feet.");
-/*	if (you[0].lev > 0) you[0].lev = 0;
-	   else if (you[0].lev == 0)
-	   {
-     		strcpy(info, "You feel very buoyant!");
-     		mpr(info);
-     		strcpy(info, "You gently float upwards from the floor.");
-     		mpr(info);
-	   }
-	you[0].lev --;
-        burden_change();*/
 	break;
 
  case SPARM_MAGIC_RESISTANCE:
@@ -1091,7 +985,7 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
   case SPARM_ARCHMAGI: // archmagi
   if (you[0].skills [SK_SPELLCASTING] == 0)
   {
-   strcpy(info, "You feel strangely numb.");
+   msg("You feel strangely numb.");
   } else
   mpr("You feel extremely powerful.");
 /*  you[0].mag_abil += 2;
@@ -1160,20 +1054,8 @@ if (keyin == '?' || keyin == '*')
 	{
       mesclr();
     goto query;
-	/*		strcpy(info, "Take off which item?"); mpr(info);
-		relay_message();
-		keyin = get_ch();*/
 	}
 }
-
-/*if (keyin == '*')
-{
-	inventory(-1);
-	strcpy(info, "Take off which item?"); mpr(info);
-	relay_message();
-	keyin = get_ch();
-}*/
-
 
 int armour_wear_1 = (int) keyin;
 
@@ -1183,16 +1065,6 @@ if (armour_wear_1 < 65 || (armour_wear_1 > 90 && armour_wear_1 < 97) || armour_w
 	return;
 }
 
-
-
-/*
-if (you[0].equip [EQ_BODY_ARMOUR] == -1) // or helmet etc
-{
-	strcpy(info, "You aren't wearing any you[0].equip.");
-	mpr(info);
-	return;
-}
-*/
 
 
 int armour_wear_2 = conv_lett(armour_wear_1); //you[0].equip [6]; // may as well keep on using armour_wear_2
@@ -1223,12 +1095,7 @@ if (you[0].inv_type [armour_wear_2] < ARM_SHIELD || you[0].inv_type [armour_wear
 	return;
 	}
 
-//	itoa(you[0].equip [1], st_prn, 10);
-//	strcpy(info, st_prn);
-//	mpr(info);
-/*        player_evasion() -= ev_mod();*/
 	you[0].equip [EQ_BODY_ARMOUR] = -1;
-/*        player_evasion() += ev_mod();*/
 } else
 switch(you[0].inv_type [armour_wear_2])
 {
@@ -1291,12 +1158,8 @@ you[0].turnover = 1;
 you[0].delay_t = property(you[0].inv_class [armour_wear_2], you[0].inv_type [armour_wear_2], 0);
 you[0].delay_doing = 2;
 
-strcpy(info, "You take off ");
-//item_name(you[0].inv_class [armour_wear_2], you[0].inv_type [armour_wear_2], you[0].inv_dam [armour_wear_2], you[0].inv_plus [armour_wear_2], you[0].inv_quant [armour_wear_2], you[0].inv_ident [armour_wear_2], 5, str_pass);
 in_name(armour_wear_2, 5, str_pass);
-strcat(info, str_pass);
-strcat(info, ".");
-mpr(info);
+msg("You take off @1.") << str_pass;
 
 unwear_armour(armour_wear_2);
 
@@ -1442,10 +1305,7 @@ char shoot_skill = 0;
  {
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
-	strcpy(info, "You are currently targetting ");
-        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
-        strcat(info, " (p to target).");
-        mpr(info);
+	msg("You are currently targetting @1 (p to target).") << monam(menv[you[0].prev_targ].m_sec, menv[you[0].prev_targ].m_class, menv[you[0].prev_targ].m_ench [2], 1);
   } else mpr("You have no current target.");
  }
 
@@ -1618,11 +1478,8 @@ ammo of fire and weapons of frost don't work together, and vice versa */
 		if (you[0].inv_ident [you[0].equip [EQ_WEAPON]] < 3 && random2(100) < shoot_skill)
 		{
 		 you[0].inv_ident [you[0].equip [EQ_WEAPON]] = 3;
-		 strcpy(info, "You are wielding ");
 		 in_name(you[0].equip [EQ_WEAPON], 3, str_pass);
-	 	 strcat(info, str_pass);
-		 strcat(info, ".");
-                 mpr(info);
+		 msg("You are wielding @1.") << str_pass;
 		 more();
 		 wield_change = 1;
 		}
@@ -2407,13 +2264,7 @@ you[0].inv_plus [zap_device_2] --;
 if (get_id(you[0].inv_class [zap_device_2], you[0].inv_type [zap_device_2]) == 1 && (you[0].inv_ident [zap_device_2] > 1 || you[0].skills [SK_ENCHANTMENTS] > random2(15) + 5))
 {
  if (you[0].inv_ident [zap_device_2] <= 1) mpr("Your skill with plugins lets you calculate the power of this device...");
- strcpy(info, "This gun has ");
- itoa(you[0].inv_plus [zap_device_2], st_prn, 10);
- strcat(info, st_prn);
- strcat(info, " charge");
- if (you[0].inv_plus [zap_device_2] == 1) strcat(info, " left.");
-  else strcat(info, "s left.");
- mpr(info);
+ msg("This gun has @1 charge@2 left") << you[0].inv_plus [zap_device_2] << ((you[0].inv_plus [zap_device_2] == 1) ? "" : "s");
  you[0].inv_ident [zap_device_2] = 3;
 }
 

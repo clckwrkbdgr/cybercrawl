@@ -831,32 +831,14 @@ switch(pot_eff)
 
 	case POT_GAIN_STRENGTH: // potion of increase you[0].strength
  	mutate(MUT_STRONG);
-/*	strcpy(info, "You feel strong!");
-	mpr(info);
-	abil_change = random2 (2) + 1;
- you[0].strength += abil_change;
- if (you[0].strength > you[0].max_strength) you[0].max_strength = you[0].strength; //+= abil_change;
-	you[0].strength_ch = 1;*/
 	break;
 
 	case POT_GAIN_DEXTERITY: // potion of increase dexterity
  	mutate(MUT_AGILE);
-/*	strcpy(info, "You feel dextrous!");
-	mpr(info);
-	abil_change = random2 (2) + 1;
- you[0].dex += abil_change;
- if (you[0].dex > you[0].max_dex) you[0].max_dex = you[0].dex; // += abil_change;
-	you[0].dex_ch = 1;*/
 	break;
 
 	case POT_GAIN_INTELLIGENCE: // potion of increase intelligence
  	mutate(MUT_CLEVER);
-/*	strcpy(info, "You feel intelligent!");
-	mpr(info);
-	abil_change = random2 (2) + 1;
- you[0].intel += abil_change;
- if (you[0].intel > you[0].max_intel) you[0].max_intel = you[0].intel; // += abil_change;
-	you[0].intel_ch = 1;*/
 	break;
 
 	case POT_LEVITATION: // levitation
@@ -1094,7 +1076,6 @@ if (you[0].inv_class [unw] == 0 && you[0].inv_dam [unw] != 0)
 if (you[0].inv_ident [unw] == 1) you[0].inv_ident [unw] = 2;
 
 item_name(you[0].inv_plus2 [unw], you[0].inv_class [unw], you[0].inv_type [unw], you[0].inv_dam [unw], you[0].inv_plus [unw], you[0].inv_quant [unw], you[0].inv_ident [unw], 4, str_pass);
-strcpy(info, str_pass);
 
 char i_dam = you[0].inv_dam [unw] % 30;
 
@@ -1107,28 +1088,23 @@ switch(i_dam)
 {
 
   case SPWPN_FLAMING:
-  strcat(info, " stops flaming.");
-  mpr(info);
+  msg("@1 stops flaming.") << str_pass;
   break;
 
   case SPWPN_FREEZING:
-  strcat(info, " stops glowing.");
-  mpr(info);
+  msg("@1 stops glowing.") << str_pass;
   break;
 
   case SPWPN_HOLY_WRATH:
-  strcat(info, " stops glowing.");
-  mpr(info);
+  msg("@1 stops glowing.") << str_pass;
   break;
 
   case SPWPN_ELECTROCUTION:
-  strcat(info, " stops crackling.");
-  mpr(info);
+  msg("@1 stops crackling.") << str_pass;
   break;
 
   case SPWPN_VENOM:
-  strcat(info, " stops dripping with poison.");
-  mpr(info);
+  msg("@1 stops dripping with poison.") << str_pass;
   break;
 
   case SPWPN_PROTECTION:
@@ -1142,7 +1118,6 @@ switch(i_dam)
 
   case SPWPN_VAMPIRICISM:
   you[0].hunger_inc -= 6;
-        //      mpr(info);
                 break;
 
   case SPWPN_DISTORTION:
@@ -1346,7 +1321,7 @@ switch(you[0].inv_dam [unw] % 30)
  break;
 
  case SPARM_PONDEROUSNESS:
- strcpy(info, "You feel rather less ponderous.");
+ msg("You feel rather less ponderous.");
  you[0].speed -= 2;
 /* player_evasion(you) += 1;*/
  you[0].evasion_ch = 1;

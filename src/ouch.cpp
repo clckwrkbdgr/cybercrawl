@@ -588,6 +588,7 @@ if (death_type != 11 && death_type != 12)
    goto ending;
  }
 
+ char st_prn[20];
         itoa((you[0].your_level + 1), st_prn, 10);
 
  if (you[0].where_are_you >= 1 && you[0].where_are_you <= 9)
@@ -597,14 +598,6 @@ if (death_type != 11 && death_type != 12)
  {
   itoa(you[0].your_level - you[0].branch_stairs [you[0].where_are_you - 10], st_prn, 10);
  }
-/* switch(you[0].where_are_you)
- {
-  case 10: itoa(you[0].your_level - you[0].branch_stairs [0], st_prn, 10); break;
-  case 11: itoa(you[0].your_level - you[0].branch_stairs [1], st_prn, 10); break;
-  case 12: itoa(you[0].your_level - you[0].branch_stairs [2], st_prn, 10); break;
-  case 13: itoa(you[0].your_level - you[0].branch_stairs [3], st_prn, 10); break;
-  case 14: itoa(you[0].your_level - you[0].branch_stairs [4], st_prn, 10); break;
- }*/
 if (you[0].where_are_you != 3)
 {
         strcat(death_string, " on L");
