@@ -12,14 +12,14 @@
 #include "player.h"
 #include "dungeon.h"
 
-int spell_hunger(int spell_value, unsigned char spell);
+int spell_hunger(int spell_value, int spell);
 int which_spell_in_book(int sbook_type, int spl);
-char spellbook_contents(unsigned char plus, unsigned char type);
-void spell_name(unsigned char spell, char spln [60]);
-char spell_value(unsigned char spell);
-int spell_type(unsigned char spell, unsigned char typy);
+char spellbook_contents(int plus, int type);
+void spell_name(int spell, char spln [60]);
+char spell_value(int spell);
+int spell_type(int spell, int typy);
 int spell_spec(int spell, int power);
-char spell_fail(unsigned char spell);
+char spell_fail(int spell);
 void print_slash(char already);
 char spell_list(void);
 
@@ -30,7 +30,7 @@ char st_pass [60];
 
    int j;
    char lines = 0;
-   unsigned char anything = 0;
+   int anything = 0;
    char strng [5] = "";
    char ft;
    char ki;
@@ -288,7 +288,7 @@ void print_slash(char already)
 }
 
 
-char spell_fail(unsigned char spell)
+char spell_fail(int spell)
 {
 
 int chance = 60;
@@ -591,9 +591,9 @@ return power;
 
 
 
-int spell_type(unsigned char spell, unsigned char typy)
+int spell_type(int spell, int typy)
 {
-unsigned long stype = 0;
+int stype = 0;
 
 switch(spell)
 {
@@ -989,7 +989,7 @@ return 1;
 }
 */
 
-char spell_value(unsigned char spell)
+char spell_value(int spell)
 {
 
 switch(spell)
@@ -1148,7 +1148,7 @@ return 1;
 }
 
 
-void spell_name(unsigned char spell, char spln [60])
+void spell_name(int spell, char spln [60])
 {
 	//char spln [30] = "";
 
@@ -1332,7 +1332,7 @@ default: strcpy(spln, "another program"); break;
 }
 
 
-char spellbook_contents(unsigned char plus, unsigned char type)
+char spellbook_contents(int plus, int type)
 {
 
 char st_pass [60];
@@ -1535,7 +1535,7 @@ return func_pass [spl];
 
 }
 
-int spell_hunger(int spell_value, unsigned char spell)
+int spell_hunger(int spell_value, int spell)
 {
 
 switch(spell_value)
@@ -1563,7 +1563,7 @@ return spell;
 } // end of spell_hunger
 
 
-char undead_can_memorise(unsigned char spell)
+char undead_can_memorise(int spell)
 {
 
 switch(spell)

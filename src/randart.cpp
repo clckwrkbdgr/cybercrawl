@@ -617,10 +617,6 @@ const char *rand_armour_names[] = {
 /* The following unrandart bits were taken from $pellbinder's mstruct code
 (see mstruct.h & mstruct.cc) and modified (LH). They're in randart.cc and
 not randart.h because they're only used in this code module. */
-typedef char MYCHAR; // used for flags and the like
-typedef unsigned char MYUCHAR; // used for flags and the like
-typedef short MYSHORT; // used for flags and the like
-typedef int MYINT; // used for flags and the like
 
 //extern int unranddatasize;
 //extern struct unrandart_entry {
@@ -630,12 +626,12 @@ struct unrandart_entry {
 
 	const char *name/*[32]*/; // true name of unrandart (max 31 chars)
 	const char *unid_name/*[32]*/; // un-id'd name of unrandart (max 31 chars)
-	unsigned char ura_cl ; // class of ura
-	unsigned char ura_ty ; // type of ura
-	unsigned char ura_pl ; // plus of ura
-	unsigned char ura_pl2 ; // plus2 of ura
-	unsigned char ura_col ; // colour of ura
-	short prpty [RA_PROPERTIES] ;
+	int ura_cl ; // class of ura
+	int ura_ty ; // type of ura
+	int ura_pl ; // plus of ura
+	int ura_pl2 ; // plus2 of ura
+	int ura_col ; // colour of ura
+	int prpty [RA_PROPERTIES] ;
 	const char *spec_descrip1/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
 	const char *spec_descrip2/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
 	const char *spec_descrip3/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
@@ -649,17 +645,17 @@ struct unrandart_entry unranddata[]={
 
 #define sura seekunrandart(aclass, atype, aplus, aplus2)
 
-struct unrandart_entry *seekunrandart(unsigned char aclass, unsigned char atype, unsigned char aplus, unsigned char aplus2);
+struct unrandart_entry *seekunrandart(int aclass, int atype, int aplus, int aplus2);
 
 char *art_n;
 
 char unrandart_exist [NO_UNRANDARTS];
 void set_unrandart_exist(int whun, char is_exist);
 
-void standard_name_weap(unsigned char item_typ, char glog [80]);
-void standard_name_armour(unsigned char item_typ, unsigned char item_plus2, char glorg [80]);
+void standard_name_weap(int item_typ, char glog [80]);
+void standard_name_armour(int item_typ, int item_plus2, char glorg [80]);
 
-int random4(unsigned int randmax);
+int random4(int randmax);
 
 
 
@@ -674,7 +670,7 @@ char does_unrandart_exist(int whun)
 }
 
 
-int randart_wpn_properties(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char acol, char prop)
+int randart_wpn_properties(int aclass, int atype, int adam, int aplus, int aplus2, int acol, char prop)
 {
 
 if ((aclass == OBJ_JEWELLERY && adam == 201) || (aclass != OBJ_JEWELLERY && adam == 25))
@@ -683,8 +679,8 @@ if ((aclass == OBJ_JEWELLERY && adam == 201) || (aclass != OBJ_JEWELLERY && adam
  return search_unrandarts->prpty [int(prop)];
 }
 
-long globby = aclass * adam + acol + atype * (aplus % 100) + aplus2 * 100;
-long randstore = random();
+int globby = aclass * adam + acol + atype * (aplus % 100) + aplus2 * 100;
+int randstore = random();
 char proprt [RA_PROPERTIES];
 int i = 0;
 int power_level = ((aplus % 100) - 50) / 3 + (aplus2 - 50) / 3;
@@ -973,7 +969,7 @@ return proprt [int(prop)];
 
 
 
-const char *randart_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
 
 if (adam == 25)
@@ -992,8 +988,8 @@ if (art_n == NULL)
 }
 strcpy(art_n, "");
 
-long globby = aclass + adam * (aplus % 100) + atype * aplus2;
-long randstore = random();
+int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+int randstore = random();
 
 srandom(globby);
 
@@ -1066,7 +1062,7 @@ return art_n;
 
 
 
-const char *randart_armour_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_armour_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
 
 if (adam == 25)
@@ -1085,8 +1081,8 @@ if (art_n == NULL)
 }
 strcpy(art_n, "");
 
-long globby = aclass + adam * (aplus % 100) + atype * aplus2;
-long randstore = random();
+int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+int randstore = random();
 
 srandom(globby);
 
@@ -1158,7 +1154,7 @@ return art_n;
 }
 
 
-const char *randart_ring_name(unsigned char aclass, unsigned char atype, unsigned char adam, unsigned char aplus, unsigned char aplus2, unsigned char ident_lev)
+const char *randart_ring_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
 
 if (adam == 201)
@@ -1178,8 +1174,8 @@ if (art_n == NULL)
 }
 strcpy(art_n, "");
 
-long globby = aclass + adam * (aplus % 100) + atype * aplus2;
-long randstore = random();
+int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+int randstore = random();
 
 srandom(globby);
 
@@ -1243,7 +1239,7 @@ return art_n;
 }
 
 
-struct unrandart_entry *seekunrandart(unsigned char aclass, unsigned char atype, unsigned char aplus, unsigned char aplus2)
+struct unrandart_entry *seekunrandart(int aclass, int atype, int aplus, int aplus2)
 {
 
 int x = 0;
@@ -1260,7 +1256,7 @@ int x = 0;
 
 }
 
-int find_okay_unrandart(unsigned char aclass)
+int find_okay_unrandart(int aclass)
 {
  int x = 0;
  char ura_index [NO_UNRANDARTS];
@@ -1305,7 +1301,7 @@ void make_item_unrandart(int x, int ura_item)
 
 }
 
-const char *unrandart_descrip(char which_descrip, unsigned char aclass, unsigned char atype, unsigned char aplus, unsigned char aplus2)
+const char *unrandart_descrip(char which_descrip, int aclass, int atype, int aplus, int aplus2)
 {
  switch(which_descrip)
  {
@@ -1322,7 +1318,7 @@ randarts. */
 }
 
 
-void standard_name_weap(unsigned char item_typ, char glorg [80])
+void standard_name_weap(int item_typ, char glorg [80])
 {
 
 strcpy(glorg, "");
@@ -1372,7 +1368,7 @@ strcpy(glorg, "");
 
 }
 
-void standard_name_armour(unsigned char item_typ, unsigned char item_plus2, char glorg [80])
+void standard_name_armour(int item_typ, int item_plus2, char glorg [80])
 {
 
  strcpy(glorg, "");
@@ -1429,7 +1425,7 @@ void standard_name_armour(unsigned char item_typ, unsigned char item_plus2, char
 
 
 
-int random4(unsigned int randmax)
+int random4(int randmax)
 {
  if (randmax <= 0) return 0;
  return random() % randmax;

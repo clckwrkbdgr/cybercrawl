@@ -99,7 +99,7 @@ char rand_demon_9(char vgrid [81] [81], int mons_array [7]);
 
 char vault_main(char vgrid [81] [81], int mons_array [7], int vault_force, int many_many)
 {
-unsigned char vx, vy;
+int vx, vy;
 
 int vault_force2 = 0;
 

@@ -68,30 +68,7 @@ void torment(void)
 }
 
 
-/*
-char go_berserk(void)
-{
-  if (you[0].berserker != 0 || you[0].slow != 0) return 0;
-  if (you[0].is_undead == 2) return 0;
-  strcpy(info, "A red film seems to cover your vision as you go in battle mode!");
-  mpr(info);
-  strcpy(info, "You feel yourself moving faster!");
-  mpr(info);
-  strcpy(info, "You feel mighty!");
-  mpr(info);
-  you[0].berserker += 10 + random2(10) + random2(10);
-  if (you[0].might == 0)
-  {
-   you[0].strength_ch = 1;
-   you[0].strength += 5;
-   you[0].max_strength += 5;
-  }
-  you[0].might += you[0].berserker;
-  you[0].haste += you[0].berserker;
-  return 1;
-}
-*/
-void banished(unsigned char gate_type)
+void banished(int gate_type)
 {
  you_teleport2(0); // this is to ensure that you're standing on a suitable space (67)
  grd [you[0].x_pos] [you[0].y_pos] = gate_type;
@@ -99,9 +76,9 @@ void banished(unsigned char gate_type)
 }
 
 
-char forget_spell(void)
+int forget_spell(void)
 {
-unsigned char spc2;
+int spc2;
 if (you[0].spell_no <= 0) return 0;
 
 do
@@ -118,7 +95,7 @@ do
 }
 
 
-char lose_stat(char force_stat, char stat_loss)
+int lose_stat(int force_stat, int stat_loss)
 {
 
 if (force_stat == 100) force_stat = random2(3);
@@ -263,7 +240,7 @@ switch(beam[0].type)
 
 
 
-void random_uselessness(unsigned char ru, unsigned char sc_read_2)
+void random_uselessness(int ru, int sc_read_2)
 {
 
 char wc [30];
@@ -369,20 +346,20 @@ switch(ru)
 }
 
 
-void acquirement(unsigned char force_class)
+void acquirement(int force_class)
 {
 int thing_created = 0;
 // Remember lava!
-unsigned char class_wanted = 250;
-unsigned char type_wanted = 250;
+int class_wanted = 250;
+int type_wanted = 250;
 
-unsigned char force_plus = 0;
+int force_plus = 0;
 
-unsigned char acqc = 0;
-char already_has [50];
+int acqc = 0;
+int already_has [50];
 
-char glof = 99;
-unsigned char keyin;
+int glof = 99;
+int keyin;
 int func_pass [10];
 
 for (acqc = 0; acqc < 50; acqc ++)
@@ -650,7 +627,7 @@ return;
 
 
 
-char recharge_wand(void)
+int recharge_wand(void)
 {
 
 // note that the scroll of recharging also recharges weapons of electrocution; see the scroll function
@@ -665,7 +642,7 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] != OBJ_WANDS)
  return 0; // not a wand
 }
 
-char charge_gain = 8;
+int charge_gain = 8;
 
 if (you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_FIRE || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_COLD)
  charge_gain = 5;
@@ -688,7 +665,7 @@ return 1;
 void yell(void)
 {
 
-char targ_prev = 0;
+int targ_prev = 0;
 int mons_targd = 0;
 struct dist beam [1];
 
@@ -703,7 +680,7 @@ mpr(" a - Order allies to attack a monster");
 	 }
 msg(" Anything else - Stay silent ");
 
-char keyn = get_ch();
+int keyn = get_ch();
 
 switch(keyn)
 {

@@ -31,7 +31,7 @@ int macro_init (void)
 {
 	FILE* f;
 	char* s;
-	unsigned int ssize;
+	int ssize;
 	macro_list = new_list();
         macro_buf = new_list();
         macro_buf->data = macro_buf->next;
@@ -46,7 +46,8 @@ int macro_init (void)
 	    signed int* rkey;
 		char* act;
 	    signed int* ract;
-		unsigned int a, len, rlen, tlen;
+		int a, rlen, tlen;
+		size_t len;
 		
 		/* Fixes a crash with empty macro-file. */
 		a = len = rlen = tlen = 0;

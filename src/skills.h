@@ -11,7 +11,7 @@ int species_skills(char skill, char species);
 int calc_hp();
 int calc_ep();
 
-unsigned int skill_exp_needed(int lev);
+int skill_exp_needed(int lev);
 
 const char *skill_name(char which_skill);
 

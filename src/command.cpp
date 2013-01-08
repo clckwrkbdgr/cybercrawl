@@ -16,7 +16,7 @@
 void adjust_item(void);
 void adjust_spells(void);
 
-extern char wield_change;
+extern int wield_change;
 
 
 #ifdef DEBUG
@@ -70,7 +70,7 @@ void quit_game(void)
 
 	mpr("Really quit?");
 
-	char keyin = get_ch();
+	int keyin = get_ch();
 
 	if (keyin == 'y' || keyin == 'Y')
 	{
@@ -94,7 +94,7 @@ void adjust(void)
 
 	mpr("Adjust (i)tems or program(s)?");
 
-	unsigned char keyin = get_ch();
+	int keyin = get_ch();
 
 	if (keyin == 'i' || keyin == 'I')
 	{
@@ -117,8 +117,8 @@ void adjust(void)
 void adjust_item(void)
 {
 
-	unsigned char throw_2, throw_3;
-    unsigned nthing = 0;
+	int throw_2, throw_3;
+    int nthing = 0;
 
 	if (you[0].inv_no == 0)
 	{
@@ -128,7 +128,7 @@ void adjust_item(void)
 
 	query : mpr("Adjust which item?");
 
-	unsigned char keyin = get_ch();
+	int keyin = get_ch();
 
 	if (keyin == '?' || keyin == '*')
 	{
@@ -228,8 +228,8 @@ void adjust_item(void)
 void adjust_spells(void)
 {
 
-	unsigned char throw_2, throw_3;
-    unsigned char nthing = 0;
+	int throw_2, throw_3;
+    int nthing = 0;
 
 	if (you[0].spell_no == 0)
 	{
@@ -239,7 +239,7 @@ void adjust_spells(void)
 
 	query : mpr("Adjust which program?");
 
-	unsigned char keyin = get_ch();
+	int keyin = get_ch();
 
 	if (keyin == '?' || keyin == '*')
 	{

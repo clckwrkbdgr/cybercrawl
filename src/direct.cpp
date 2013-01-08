@@ -234,10 +234,10 @@ bool describe_verbose(int xps, int yps)
 	return true;
 }
 
-char main_look_cycle(int & xps, int & yps) // TODO References are bad.
+int main_look_cycle(int & xps, int & yps) // TODO References are bad.
 {
-	char mve_x, mve_y;
-	char gotch;
+	int mve_x, mve_y;
+	int gotch;
 	do {
 		mve_x = 0;
 		mve_y = 0;
@@ -300,7 +300,7 @@ int look_around(struct dist moves [1])
 	gotoxy(xps + 1,yps);
 	losight(env[0].show, grd, you[0].x_pos, you[0].y_pos);
 
-	char gotch = main_look_cycle(xps, yps);
+	int gotch = main_look_cycle(xps, yps);
 	if(gotch == -1) {
 		return -1;
 	}
@@ -318,11 +318,11 @@ int look_around(struct dist moves [1])
 /*
 Another cursor input thing.
 */
-int dir_cursor(char rng)
+int dir_cursor(int rng)
 {
-	char mve_x = 0, mve_y = 0;
-	char bk = 0;
-	char keyy;
+	int mve_x = 0, mve_y = 0;
+	int bk = 0;
+	int keyy;
 
 	if (rng == 100) return -9999;
 
@@ -375,10 +375,10 @@ int dir_cursor(char rng)
 /*
 Handles entering of directions. Passes to look_around for cursor aiming.
 */
-void direction(char rnge, struct dist moves [1])
+void direction(int rnge, struct dist moves [1])
 {
-	char ink = 0;
-	char looked = 0;
+	int ink = 0;
+	int looked = 0;
 	moves[0].nothing = dir_cursor(rnge);
 
 	if (moves[0].nothing == -9999) {

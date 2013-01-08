@@ -22,7 +22,7 @@
 
 int mons_spells(char spell_cast, int func_pass [10], char beam_name [30]);
 void itrap(struct bolt beam [1], int trapped);
-unsigned char monster_abjuration(int pow, char test);
+int monster_abjuration(int pow, char test);
 
 /*
 NOTE: must fix species abils to not use duration 15
@@ -1155,11 +1155,11 @@ return 0; // Should never reach this. Stupid pedantic gcc warning thing.
 }
 
 
-unsigned char monster_abjuration(int pow, char test)
+int monster_abjuration(int pow, char test)
 {
 
 int ab = 0;
-unsigned char result = 0;
+int result = 0;
 
 if (test == 0)
 {

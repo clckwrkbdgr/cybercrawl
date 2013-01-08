@@ -36,12 +36,12 @@ char curse_an_item(char which, char power)
 
 /* I think this is wrong??? */
 
-unsigned char possib [52];
-unsigned char cu = power;
+int possib [52];
+int cu = power;
 cu = 0;
-unsigned char cu1 = 0;
-unsigned char cu2 = 0;
-unsigned char cu3 = 0;
+int cu1 = 0;
+int cu2 = 0;
+int cu3 = 0;
 
 
 for (cu = 0; cu < 52; cu++)
@@ -276,7 +276,7 @@ int i, j, hand_used, spell_cast;
 struct bolt beem [1];
 int func_pass [10];
 
-unsigned int show [19] [19];
+int show [19] [19];
 
 losight(show, grd, you[0].x_pos, you[0].y_pos);
 
@@ -1655,7 +1655,7 @@ if (menv [i].m_class == MONS_JELLY || menv [i].m_class == MONS_OOZE || menv [i].
 {
 
    int hps_gained;
-   unsigned int quant_eated;
+   int quant_eated;
 
    quant_eated = random2(10) + 1;
 
@@ -2126,7 +2126,7 @@ if ((menv [i].m_class == MONS_TUNNELING_WORM || menv [i].m_class == MONS_BORING_
         }
 }
 
-unsigned char grik = grd [menv [i].m_x + mmov_x] [menv [i].m_y + mmov_y];
+int grik = grd [menv [i].m_x + mmov_x] [menv [i].m_y + mmov_y];
 
  mgrd [menv [i].m_x] [menv [i].m_y] = MNG;
 

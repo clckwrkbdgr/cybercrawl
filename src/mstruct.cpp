@@ -31,7 +31,7 @@ struct monsterentry mondata[]={
 #define MONDATASIZE (sizeof(mondata)/sizeof(struct monsterentry))
 int mondatasize=MONDATASIZE;
 
-unsigned char // will do as long as spell/sec numbers don't come above 255 or below 0
+int // will do as long as spell/sec numbers don't come above 255 or below 0
 spell_list[][7] =       {// sec  bolt   ench  selfench  misc   misc2  emergency
 /*orc wiz              */ {  0,	  0,	  4,	  5,	  0,	100,	 16},
 /*orc wiz              */ {  1,	  1,	  6,	 11,	  0,	100,	100},
@@ -188,22 +188,22 @@ summonings can also cast Abjuration (just for simplicity)
 int m_class;
 int m_hp;
 int m_hp_max;
-unsigned char m_HD;
+int m_HD;
 int m_AC;
 char m_ev;
-unsigned char m_speed;
-unsigned char m_speed_inc;
-unsigned char m_x;
-unsigned char m_y;
-unsigned char m_targ_1_x;
-unsigned char m_targ_1_y;
-unsigned int m_inv [8];
-unsigned char m_beh;
-	unsigned char m_sec;
+int m_speed;
+int m_speed_inc;
+int m_x;
+int m_y;
+int m_targ_1_x;
+int m_targ_1_y;
+int m_inv [8];
+int m_beh;
+	int m_sec;
         //int m_sec;
- unsigned char m_hit;
-	 unsigned char m_ench [3];
-	 unsigned char m_ench_1;
+ int m_hit;
+	 int m_ench [3];
+	 int m_ench_1;
 };
 */
 
@@ -250,7 +250,7 @@ char mons_see_invis(int mc)
 }
 
 int mons_exp_mod(int mc) { return smc->exp_mod; }
-unsigned char mons_char(int mc) { return (unsigned char) smc->showchar; }
+int mons_char(int mc) { return (int) smc->showchar; }
 
 int mondamage(int mc, int rt)
 {
@@ -503,10 +503,10 @@ struct monsterentry *m = seekmonster(m2_class);
 
 
 
-#define SPELLS (sizeof(spell_list)/(sizeof(unsigned char)*7))
-void mons_spell_list(unsigned char sec, int splist [6])
+#define SPELLS (sizeof(spell_list)/(sizeof(int)*7))
+void mons_spell_list(int sec, int splist [6])
 {
-unsigned int x;
+size_t x;
 	for (x = 0; x < SPELLS; x++) if (spell_list [x] [0] == sec) break;
 	if (x >= SPELLS) return;
 	// I *KNOW* this can easily be done in a loop
@@ -652,7 +652,7 @@ strcat(glog, gmon_name);
 
 int exper_value(int mclass, int mHD, int maxhp)
 {
-long x_val = 0;
+int x_val = 0;
 
 if (mclass == 25 || mclass == 51 || mclass == 107 || mclass == 108)
 {

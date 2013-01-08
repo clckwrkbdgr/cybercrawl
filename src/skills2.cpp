@@ -12,7 +12,7 @@ This file was extensively modified by Wladimir van der Laan.
 #include <stdlib.h>
 
 int species_skills(char skill, char species);
-unsigned int skill_exp_needed(int lev); /* both in skills.cc */
+int skill_exp_needed(int lev); /* both in skills.cc */
 
 //#define DEBUG
 
@@ -2057,7 +2057,7 @@ return enp;
 }
 
 #ifdef CLASSES
-unsigned int skill_exp_needed(int lev)
+int skill_exp_needed(int lev)
 {
 lev --;
 switch(lev)
@@ -2083,7 +2083,7 @@ return 0;
 
 }
 #else
-unsigned int skill_exp_needed(int lev)
+int skill_exp_needed(int lev)
 {
 lev --;
 switch(lev)

@@ -33,7 +33,7 @@
 Order for looking for conjurations for the 1st & 2nd spell slots,
 when finding spells to be remembered by a player's ghost:
 */
-unsigned char search_order_conj [] = {
+int search_order_conj [] = {
 /* 0 */
 54, // crystal spear
 53, // -ve energy
@@ -60,7 +60,7 @@ unsigned char search_order_conj [] = {
 /*
 Order for looking for summonings and self-enchants for the 3rd spell slot:
 */
-unsigned char search_order_third [] = {
+int search_order_third [] = {
 /* 0 */
 158, // symbol of torment
 121, // summon gr dmn
@@ -85,7 +85,7 @@ Order for looking for enchants for the 4th + 5th spell slot. If fails, will
 go through conjs.
 Note: Dig must be in misc2 (5th) position to work.
 */
-unsigned char search_order_misc [] = {
+int search_order_misc [] = {
 /* 0 */
 148, // agony - evil spell
 113, // banishment
@@ -101,8 +101,8 @@ unsigned char search_order_misc [] = {
 /* Last slot (emergency) can only be teleport self or blink. */
 
 
-int write2(FILE *file, char *buffer, unsigned int count);
-int read2(FILE *file, char *buffer, unsigned int count);
+int write2(FILE *file, char *buffer, int count);
+int read2(FILE *file, char *buffer, int count);
 
 static void reset_ch () {
   you[0].hp_ch = 1;
@@ -122,15 +122,15 @@ static void reset_ch () {
 struct ghost_struct ghost;
 
 
-extern unsigned char your_sign; /* these two are defined in view.cc */
-extern unsigned char your_colour;
+extern int your_sign; /* these two are defined in view.cc */
+extern int your_colour;
 
-unsigned char translate_spell(unsigned char spel);
-unsigned char search_third_list(unsigned char ignore_spell);
-unsigned char search_second_list(unsigned char ignore_spell);
-unsigned char search_first_list(unsigned char ignore_spell);
-char find_spell(unsigned char which_sp);
-void add_spells(unsigned char buffer [40]);
+int translate_spell(int spel);
+int search_third_list(int ignore_spell);
+int search_second_list(int ignore_spell);
+int search_first_list(int ignore_spell);
+char find_spell(int which_sp);
+void add_spells(int buffer [40]);
 void generate_random_demon(void);
 
 static void save_int (char **pp, int val, int digits) {
@@ -159,7 +159,7 @@ static int load_int (char **pp, int digits) {
 }
 
 
-void load (unsigned char stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2) {
+void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2) {
   int j = 0;
   int i, count_x, count_y;
   char cha_fil [80];
@@ -171,29 +171,29 @@ void load (unsigned char stair_taken, char moving_level, char was_a_labyrinth, c
   int foll_class [8];
   int foll_hp [8];
   int foll_hp_max [8];
-  unsigned char foll_HD [8];
+  int foll_HD [8];
   int foll_AC [8];
   char foll_ev [8];
-  unsigned char foll_speed [8];
-  unsigned char foll_speed_inc [8];
+  int foll_speed [8];
+  int foll_speed_inc [8];
 
-  unsigned char foll_targ_1_x [8];
-  unsigned char foll_targ_1_y [8];
+  int foll_targ_1_x [8];
+  int foll_targ_1_y [8];
   int foll_inv [8] [8];
-  unsigned char foll_beh [8];
+  int foll_beh [8];
   int foll_sec [8];
-  unsigned char foll_hit [8];
+  int foll_hit [8];
 
-  unsigned char foll_ench [8] [3];
-  unsigned char foll_ench_1 [8];
+  int foll_ench [8] [3];
+  int foll_ench_1 [8];
 
-  unsigned char fit_iclass [8] [8];
-  unsigned char fit_itype [8] [8];
-  unsigned char fit_iplus [8] [8];
-  unsigned char fit_iplus2 [8] [8];
-  unsigned char fit_idam [8] [8];
-  unsigned int fit_iquant [8] [8];
-  unsigned char fit_icol [8] [8];
+  int fit_iclass [8] [8];
+  int fit_itype [8] [8];
+  int fit_iplus [8] [8];
+  int fit_iplus2 [8] [8];
+  int fit_idam [8] [8];
+  int fit_iquant [8] [8];
+  int fit_icol [8] [8];
   char fit_iid [8] [8];
 
   int itmf = 0;
@@ -841,7 +841,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
   char *buf=(char*)malloc(datalen);
   char *p=buf;
 
-  unsigned char ghost_bak[20];
+  int ghost_bak[20];
   for (j = 0; j < 20; j ++) ghost_bak [j] = ghost.ghs [j];
   for (i=0; i<20; ++i) *p++=ghost.gname[i];
   for (i=0; i<20; ++i) *p++=ghost_bak[i];
@@ -961,7 +961,7 @@ void save_game (char leave_game) {
   char *p=buf;
 
   for (j=0; j<30; ++j) {
-    unsigned char ch=you[0].your_name[j];
+    int ch=you[0].your_name[j];
     if ((ch==26) || (ch==27)) ch=0;
     *p++=ch;
   }
@@ -1075,8 +1075,8 @@ void save_game (char leave_game) {
   save_int(&p, you[0].base_ep, 5);
   save_int(&p, you[0].base_ep2, 5);
 
-  *p++=(unsigned char)you[0].x_pos;
-  *p++=(unsigned char)you[0].y_pos;
+  *p++=(int)you[0].x_pos;
+  *p++=(int)you[0].y_pos;
 
   for (j=0; j<30; ++j) *p++=you[0].clasnam[j];
 
@@ -1314,7 +1314,7 @@ void restore_game () {
 
   for (i=0; i<4; ++i) {
     for (j=0; j<50; ++j) {
-      unsigned char ch=*p++;
+      int ch=*p++;
       switch (i) {
         case 0: set_id(OBJ_WANDS, j, ch); break;
         case 1: set_id(OBJ_SCROLLS, j, ch); break;
@@ -1380,7 +1380,7 @@ void save_ghost () {
     return;
   }
 
-  unsigned char buf1[40];
+  int buf1[40];
   for (int i=0; i<20; ++i) buf1[i]=you[0].your_name[i];
   buf1[20]=(you[0].hp_max>=120)?(150):(you[0].hp_max);
   buf1[21]=player_evasion();
@@ -1440,24 +1440,12 @@ void save_ghost () {
 }
 
 
-//int write2(int file, const void *buffer, unsigned count)
-int write2(FILE *file, char *buffer, unsigned int count)
+int write2(FILE *file, char *buffer, int count)
 {
-
-/*unsigned int i = 0;
-
-for (i = 0; i < count; i ++)
-{
- if (buffer [i] == EOF | buffer [i] == 26) buffer [i] = 0;
-}*/
-
-return fwrite(buffer, 1, count, file);
-
-//return write(file, buffer, count);
-
+	return fwrite(buffer, 1, count, file);
 }
 
-int read2(FILE *file, char *buffer, unsigned int count)
+int read2(FILE *file, char *buffer, int count)
 {
 
 return fread(buffer, 1, count, file);
@@ -1468,7 +1456,7 @@ return fread(buffer, 1, count, file);
 Used when creating ghosts: goes through and finds spells for the ghost to
 cast. Death is a traumatic experience, so ghosts only remember a few spells.
 */
-void add_spells(unsigned char buffer [40])
+void add_spells(int buffer [40])
 {
 
 int i = 0;
@@ -1500,7 +1488,7 @@ for (i = 34; i < 40; i ++)
 
 }
 
-unsigned char search_first_list(unsigned char ignore_spell)
+int search_first_list(int ignore_spell)
 {
 
 int i;
@@ -1514,7 +1502,7 @@ for (i = 0; i < 20; i ++)
 return 250;
 }
 
-unsigned char search_second_list(unsigned char ignore_spell)
+int search_second_list(int ignore_spell)
 {
 
 int i;
@@ -1528,7 +1516,7 @@ for (i = 0; i < 20; i ++)
 return 250;
 }
 
-unsigned char search_third_list(unsigned char ignore_spell)
+int search_third_list(int ignore_spell)
 {
 
 int i;
@@ -1546,7 +1534,7 @@ return 250;
 Searches for a specific spell, according to search order in the global arrays
 defined start of file (top to bottom).
 */
-char find_spell(unsigned char which_sp)
+char find_spell(int which_sp)
 {
 
 int i = 0;
@@ -1565,7 +1553,7 @@ return 0;
 When passed the number for a player spell, returns the equivalent monster
 spell. Returns 250 on failure (no equiv).
 */
-unsigned char translate_spell(unsigned char spel)
+int translate_spell(int spel)
 {
  switch(spel)
  {

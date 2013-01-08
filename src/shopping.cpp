@@ -23,18 +23,18 @@
 /*
 struct item_struct
 {
-	 unsigned char iclass [ITEMS];
-	 unsigned char itype [ITEMS];
-	 unsigned char iplus [ITEMS]; // +, charges, remaining food value
-         unsigned char iplus2 [ITEMS];
-	 unsigned char idam [ITEMS]; // damage
-	 unsigned int iquant [ITEMS]; // multiple items
-	 unsigned char ix [ITEMS]; //  x-location
-	 unsigned char iy [ITEMS]; //  y-location
-	 unsigned char icol [ITEMS];
-	 unsigned char iid [ITEMS];
+	 int iclass [ITEMS];
+	 int itype [ITEMS];
+	 int iplus [ITEMS]; // +, charges, remaining food value
+         int iplus2 [ITEMS];
+	 int idam [ITEMS]; // damage
+	 int iquant [ITEMS]; // multiple items
+	 int ix [ITEMS]; //  x-location
+	 int iy [ITEMS]; //  y-location
+	 int icol [ITEMS];
+	 int iid [ITEMS];
 
-	 unsigned int ilink [ITEMS];
+	 int ilink [ITEMS];
 
 };
 
@@ -43,12 +43,12 @@ struct item_struct
 struct shop_struct
 {
 
-unsigned char keeper_name [5] [3];
-unsigned char sh_x [5];
-unsigned char sh_y [5];
-unsigned char sh_greed [5];
-unsigned char sh_type [5];
-unsigned char sh_level [5];
+int keeper_name [5] [3];
+int sh_x [5];
+int sh_y [5];
+int sh_greed [5];
+int sh_type [5];
+int sh_level [5];
 
 };
 
@@ -58,7 +58,7 @@ void purchase(int item_got);
 
 //void purchase(struct player you [1]);
 
-unsigned int item_value(unsigned char item_clas, unsigned char item_typ, unsigned char item_da, unsigned char it_plus, unsigned char it_plus2, unsigned int item_quant, char ident_lev, char id [4] [50]);
+int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, char id [4] [50]);
 
 
 char in_a_shop(char shoppy, char id [4] [50]);
@@ -77,14 +77,14 @@ char shop_getch(void);
 void shop_init_id(int i, int shop_id [4] [50]);
 void shop_uninit_id(int i, int shop_id [4] [50]);
 
-void shop_set_id(int i, int shop_id [4] [50], unsigned char iclass, unsigned char itype);
+void shop_set_id(int i, int shop_id [4] [50], int iclass, int itype);
 
 char book_rarity(char which_book);
 
 char in_a_shop(char shoppy_char, char id [4] [50])
 {
 	int shoppy = shoppy_char;
-   unsigned int greedy = env[0].sh_greed [shoppy];
+   int greedy = env[0].sh_greed [shoppy];
    int shop_id [4] [50];
    int shop_items [20];
 
@@ -94,7 +94,7 @@ char in_a_shop(char shoppy_char, char id [4] [50])
 
    int gp_value = 0;
    char i;
-   unsigned char ft;
+   int ft;
 
    strcpy(st_pass, "");
 
@@ -104,7 +104,7 @@ int itty = 0;
 char sh_name [40];
 
 
-//char *make_name(unsigned char var1, unsigned char var2, unsigned char var3, char ncase)
+//char *make_name(int var1, int var2, int var3, char ncase)
 
       strcpy(sh_name, "Welcome to ");
       char str_pass [50];
@@ -348,7 +348,7 @@ int j = 0;
        }
 }
 
-void shop_set_id(int i, int shop_id [4] [50], unsigned char iclass, unsigned char itype)
+void shop_set_id(int i, int shop_id [4] [50], int iclass, int itype)
 {
 
   if (env[0].sh_type [i] != 2 && env[0].sh_type [i] != 3 && env[0].sh_type [i] != 4)
@@ -441,7 +441,7 @@ void purchase(int item_got)
 
 
 
-unsigned int item_value(unsigned char item_clas, unsigned char item_typ, unsigned char item_da, unsigned char it_plus, unsigned char it_plus2, unsigned int item_quant, char ident_lev, char id [4] [50])
+int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, char id [4] [50])
 {
 
 int valued = 0;

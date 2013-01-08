@@ -3,7 +3,7 @@ struct player
 {
 char your_name [30];
 
-unsigned char species;
+int species;
 
 char teleport;
 char see_invis;
@@ -22,8 +22,8 @@ char prot_life;
 char special_wield;
 char berserker;
 char energy;
-unsigned char corpse_count;
-unsigned char disease;
+int corpse_count;
+int disease;
 char spec_death;
 char spec_holy;
 char spec_conj;
@@ -52,7 +52,7 @@ int might ; // might
 int lev ; // levitation
 int poison ; // poison!!
 int rotting ;
-unsigned char shock_shield ;
+int shock_shield ;
 int hunger;
 char hunger_inc;
 char armour [6];
@@ -77,12 +77,12 @@ int evasion;
 char shield_class ;
 int damage;
 char rate_regen;
-unsigned char incr_regen ;
+char incr_regen ;
 char ep_rate_regen;
-unsigned char ep_incr_regen ;
-unsigned long xp ;
+char ep_incr_regen ;
+int xp ;
 int xl;
-unsigned int gp ;
+int gp ;
 int clas;
 char clasnam [30];
 int f_abil; // fighting ability, out of whatever
@@ -90,32 +90,32 @@ int mag_abil; // magic ability, out of whatever
 int thr_abil; // throw_abil
 char speed; // 0.75;
 int speed_inc ; // This variable isn't used - must remove it sometime.
-	unsigned char inv_class [52];
-	unsigned char inv_type [52];
-	unsigned char inv_plus [52];
-	unsigned char inv_plus2 [52];
-	unsigned char inv_dam [52];
+	int inv_class [52];
+	int inv_type [52];
+	int inv_plus [52];
+	int inv_plus2 [52];
+	int inv_dam [52];
 	char inv_col [52];
 	int inv_quant [52]; // multiple items, eg ammo or potions
 	int burden; // total weight of items carried.
  char burden_state ;
 	char inv_no; // number of items carried.
-	unsigned char inv_ident [52];
-unsigned char spells [25];
+	int inv_ident [52];
+int spells [25];
 char spell_no;
 char spell_levels;
-unsigned char char_direction ;
+int char_direction ;
 // 0 = going down
 // 1 = going up!
-unsigned char where_are_you ;
+int where_are_you ;
 // 0 = normal dungeon level
 // 1 = dis
 // 2 = hell
-unsigned char item_description [5] [50];
-unsigned char pet_target;
+int item_description [5] [50];
+int pet_target;
 int your_level;
 char levels_exist [30];
-unsigned char duration [30]; // lots of durational things. Why didn't I do this for haste etc right from the start? Oh well.
+int duration [30]; // lots of durational things. Why didn't I do this for haste etc right from the start? Oh well.
 /*
 duration:
 0 - liquid flames
@@ -135,7 +135,7 @@ duration:
 14 - teleport control
 15 - species ability
 */
-unsigned char attribute [10]; // various attributes, eg resist lightning
+int attribute [10]; // various attributes, eg resist lightning
 /*
 0 - resist lightning
 1 - spec_air
@@ -145,12 +145,12 @@ unsigned char attribute [10]; // various attributes, eg resist lightning
 */
 
 
-unsigned char piety;
-unsigned char religion;
+int piety;
+int religion;
 
-unsigned char skills [50];
-unsigned char practise_skill [50];
-unsigned int skill_points [50];
+int skills [50];
+int practise_skill [50];
+int skill_points [50];
 int exp_available;
 
 char is_undead;

@@ -29,9 +29,7 @@
 
 #define TOTAL_CARDS 55
 
-char mutate(int which_mutation);
-
-unsigned char deck_of_wonders [] =
+int deck_of_wonders [] =
 {
 0, /* Blank */
 1, /* Butterfly */
@@ -64,7 +62,7 @@ unsigned char deck_of_wonders [] =
 0 /* */
 };
 
-unsigned char deck_of_summoning [] =
+int deck_of_summoning [] =
 {
 17, /* Statue */
 20, /* Little demon */
@@ -82,7 +80,7 @@ unsigned char deck_of_summoning [] =
 
 };
 
-unsigned char deck_of_tricks [] =
+int deck_of_tricks [] =
 {
 0, /* Blank */
 1, /* Butterfly */
@@ -101,7 +99,7 @@ unsigned char deck_of_tricks [] =
 
 };
 
-unsigned char deck_of_power [] =
+int deck_of_power [] =
 {
 0, /* Blank */
 21, /* Demon */
@@ -124,13 +122,13 @@ unsigned char deck_of_power [] =
 0 /* */
 };
 
-void cards(unsigned char which_card);
+void cards(int which_card);
 
 
-void deck_of_cards(unsigned char which_deck)
+void deck_of_cards(int which_deck)
 {
 int card [50];
-unsigned char max_card = 0;
+int max_card = 0;
 int i = 0;
 
 mpr("You execute a nanite program...");
@@ -200,7 +198,7 @@ if (random2(3) == 0 || which_deck == 0) done_good(11, 1);
 
 }
 
-void cards(unsigned char which_card)
+void cards(int which_card)
 {
 
 int dvar [5];

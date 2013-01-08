@@ -23,7 +23,7 @@ char class_allowed(char speci, char clas);
 void init_player(void);
 void choose_weapon(void);
 
-extern char wield_change;
+extern int wield_change;
 
 
 char new_game(void)
@@ -72,7 +72,7 @@ you[0].your_level = 1;
 you[0].ep_incr_regen = 0;
 
 
-unsigned char j = 0;
+int j = 0;
 char char_name [30];
 
 for (i = 0; i < 30; i ++)
@@ -114,7 +114,7 @@ if (strcmp(your_nam, "bones") == 0 || strlen(your_nam) == 0) /* this would cause
 	goto name_q;
 }
 
-unsigned int glorpo = 0;
+size_t glorpo = 0;
 
 for (glorpo = 0; glorpo < strlen(your_nam); glorpo ++)
 {

@@ -23,14 +23,14 @@ void monster_grid(void);
 void noisy(char loudness, char nois_x, char nois_y);
 void cloud_grid(void);
 int check_awaken(int mons_aw);
-void losight(unsigned int sh [19] [19], unsigned char gr [80] [70], int x_p, int y_p);
-unsigned char mapch(unsigned char ldfk);
-unsigned char mapch2(unsigned char ldfk);
+void losight(int sh [19] [19], int gr [80] [70], int x_p, int y_p);
+int mapch(int ldfk);
+int mapch2(int ldfk);
 
-unsigned char your_sign; /* these two are accessed as externs in transform and acr */
-unsigned char your_colour;
+int your_sign; /* these two are accessed as externs in transform and acr */
+int your_colour;
 
-unsigned char show_green;
+int show_green;
 extern int stealth; /* defined in acr.cc */
 extern char visible [10]; /* also acr.cc */
 
@@ -131,7 +131,7 @@ return 0;
 void item(void)
 {
 
-unsigned char count_x, count_y;
+int count_x, count_y;
 
 for (count_y = (you[0].y_pos - 8); (count_y < you[0].y_pos + 9); count_y++)
 {
@@ -324,20 +324,20 @@ int p = 0;
 The losight function is so complex and tangled that I daren't even look at it.
 Good luck trying to work out what each bit does.
 */
-void losight(unsigned int sh [19] [19], unsigned char gr [80] [70], int x_p, int y_p)
+void losight(int sh [19] [19], int gr [80] [70], int x_p, int y_p)
 {
 
 char shad;
 char see_section;
-unsigned char startPoint_x = 0; // = 8;
-unsigned char startPoint_y = 0; // = 7;
+int startPoint_x = 0; // = 8;
+int startPoint_y = 0; // = 7;
 char behind = 0;
 char xs = 0; // the multiplier of the x addition thing
 char ys = 0;
-unsigned char cx = 0;
-unsigned char cy = 0;
+int cx = 0;
+int cy = 0;
 
-short int see; // see = 1 means 'visible'
+int see; // see = 1 means 'visible'
 
 // first comes the horizontal east:
 see = 1;
@@ -1340,7 +1340,7 @@ for (i = you[0].x_pos - map_radius; i < you[0].x_pos + map_radius; i ++)
 
 /* mapchars 3 & 4 are for non-ibm char sets */
 
-char mons_near(unsigned char monst)
+char mons_near(int monst)
 {
 
  if (menv [monst].m_x > you[0].x_pos - 9 && menv [monst].m_x < you[0].x_pos + 9 && menv [monst].m_y > you[0].y_pos - 9 && menv [monst].m_y < you[0].y_pos + 9)
@@ -1357,9 +1357,9 @@ void viewwindow(char draw_it)
 {
 
    int bufcount = 0;
-   unsigned char buffy [1500]; //[800]; //392];
+   int buffy [1500]; //[800]; //392];
 
-   unsigned char showed = 0;
+   int showed = 0;
 
    int count_x, count_y;
 
@@ -1677,9 +1677,9 @@ if (you[0].running == 0) // this line is purely optional
 
 
 
-unsigned char mapch(unsigned char ldfk)
+int mapch(int ldfk)
 {
-unsigned char showed = 0;
+int showed = 0;
 
 	switch (ldfk)
 	{
@@ -1802,9 +1802,9 @@ return showed;
 
 }
 
-unsigned char mapch2(unsigned char ldfk)
+int mapch2(int ldfk)
 {
-unsigned char showed = 0;
+int showed = 0;
 
 	switch (ldfk)
 	{

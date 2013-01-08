@@ -48,7 +48,7 @@ const char *god_name_long(int which_god);
 void gain_piety(char pgn);
 void naughty(char type_naughty, int naughtiness);
 void excommunication(void);
-void god_pitch(unsigned char which_god);
+void god_pitch(int which_god);
 void altar_prayer();
 void lose_piety(char pgn);
 
@@ -76,7 +76,7 @@ std::string god_attitude(int piety)
 void pray(void)
 {
 
-unsigned char was_praying = you[0].duration [DUR_PRAYER];
+int was_praying = you[0].duration [DUR_PRAYER];
 
 if (you[0].religion != GOD_NO_GOD && grd [you[0].x_pos] [you[0].y_pos] == 179 + you[0].religion)
 {
@@ -1224,7 +1224,7 @@ i = j;
 
 
 
-void god_pitch(unsigned char which_god)
+void god_pitch(int which_god)
 {
 
 msg("You connect to the terminal of @1.") << god_name(which_god);

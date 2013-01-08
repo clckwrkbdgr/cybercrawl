@@ -8,10 +8,9 @@
 #include "dungeon.h"
 #include "stuff.h"
 
-char empty_surrounds(int emx, int emy, unsigned char spc_wanted, char allow_centre, char empty [2]);
+char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, char empty [2]);
 
-
-int mons_place(int typed, int type_place, int px, int py, char behaviour, int hitting, unsigned char plus_seventy, int lev_mons)
+int mons_place(int typed, int type_place, int px, int py, char behaviour, int hitting, int plus_seventy, int lev_mons)
 {
 int passed [2];
 passed [0] = 0;
@@ -62,23 +61,6 @@ if (glokp > 0) return passed [0];
 
 } /* end of mons_place() */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int create_monster(int cls, int dur, int beha, int cr_x, int cr_y, int hitting, int zsec)
 {
 int pets = 0;
@@ -88,7 +70,7 @@ int dem_beha = beha;
 
 if (beha == 100) beha = 7;
 
-unsigned char spcw = 65;
+int spcw = 65;
 
 if (cls >= MLAVA0) spcw = 61;
 if (cls >= MWATER0) spcw = 62;
@@ -133,9 +115,7 @@ return summd;
 
 }
 
-
-
-char empty_surrounds(int emx, int emy, unsigned char spc_wanted, char allow_centre, char empty [2])
+char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, char empty [2])
 {
 
 int count_x, count_y = 0;
@@ -191,7 +171,6 @@ empty [1] = emy + count_y;
 return 1;
 
 } /* end empty surrounds */
-
 
 int summon_any_demon(char demon_class)
 {

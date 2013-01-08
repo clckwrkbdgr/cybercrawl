@@ -22,9 +22,6 @@
 #include "skills.h"
 #include "stuff.h"
 
-char mutate(int which_mutation);
-
-
 int add_item(int item_got, int it_quant);
 void item_place(int item_drop_2, int x_plos, int y_plos, int quant_drop);
 int conv_lett(int item_drop_3);
@@ -32,13 +29,13 @@ int conv_lett(int item_drop_3);
 
 int last_item = ING;
 
-extern unsigned char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 /*
 Takes keyin as an argument because it will only display a long list of items
  if ; is pressed.
 */
-void item_check(char keyin)
+void item_check(int keyin)
 {
 char item_show [50] [50];
 char temp_quant [10];
@@ -206,7 +203,7 @@ int k = 0;
 int m = 0;
 int nothing = 0;
 char str_pass [50];
-char keyin = 0;
+int keyin = 0;
 
 if (you[0].lev != 0 && wearing_amulet(AMU_CONTROLLED_FLIGHT) == 0)
 {
@@ -395,7 +392,7 @@ int add_item(int item_got, int quant_got)
 int item_mass = 0;
 int unit_mass = 0;
 int retval = 1;
-char brek = 0;
+int brek = 0;
 //int last_item = ING;
 int m = 0;
 char str_pass [50];
@@ -638,10 +635,10 @@ you[0].turnover = 1;
 void drop(void)
 {
 
-unsigned char nthing;
+int nthing;
 int i;
-unsigned char item_drop_1;
-unsigned char item_drop_2;
+int item_drop_1;
+int item_drop_2;
 char str_pass [80];
 
 if (you[0].inv_no == 0)
@@ -652,7 +649,7 @@ if (you[0].inv_no == 0)
 
 query2 : mpr("Drop which item? ");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 int quant_drop;
 
 if (keyin == '$')

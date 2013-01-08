@@ -13,13 +13,13 @@
 #include "randart.h"
 #include "skills2.h"
 
-char item_name_2(unsigned char item_plus2, char item_clas, char item_typ, unsigned char item_da, unsigned char it_plus, unsigned int it_quant, char ident_lev, char glog [60]);
+char item_name_2(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char glog [60]);
 
-char reduce(unsigned char reducee);
-char is_a_vowel(unsigned char let);
+char reduce(int reducee);
+char is_a_vowel(int let);
 char retbit(char sed);
 char retvow(char sed);
-void make_name(unsigned char var1, unsigned char var2, unsigned char var3, char ncase, char str_pass [50]);
+void make_name(int var1, int var2, int var3, char ncase, char str_pass [50]);
 
 
 char id [4] [50];
@@ -39,7 +39,7 @@ void in_name(int inn, char des, char str_pass [80])
 		item_name(you[0].inv_plus2 [inn], you[0].inv_class [inn], you[0].inv_type [inn], you[0].inv_dam [inn], you[0].inv_plus [inn], you[0].inv_quant [inn], you[0].inv_ident [inn], des, str_pass);
 }
 
-char item_name(unsigned char item_plus2, char item_clas, char item_typ, unsigned char item_da, unsigned char it_plus, unsigned int it_quant, char ident_lev, char descrip, char glag [60])
+char item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip, char glag [60])
 {
 
 char itm_name [60] = "";
@@ -116,7 +116,7 @@ return 1;
 
 
 
-char item_name_2(unsigned char item_plus2, char item_clas, char item_typ, unsigned char item_da, unsigned char it_plus, unsigned int it_quant, char ident_lev, char glog [60])
+char item_name_2(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char glog [60])
 {
 
 char tmp_quant [5];
@@ -283,7 +283,7 @@ if (item_da % 30 == 3 || item_da % 30 == 4)
 }
 	if (ident_lev > 2)
 	{
-		unsigned char gokh = it_plus;
+		int gokh = it_plus;
 		//it_plus -= 50;
 		if (gokh >= 50 && (gokh <= 130 || gokh >= 150)) strcat(glog, "+");
 		itoa(gokh - 50, tmp_quant, 10);
@@ -1306,8 +1306,8 @@ return 1;
 void save_id(char identy [4] [50])
 {
 
-unsigned char ix = 0;
-unsigned char jx = 0;
+int ix = 0;
+int jx = 0;
 
 for (ix = 0; ix < 4; ix ++)
 {
@@ -1322,8 +1322,8 @@ for (ix = 0; ix < 4; ix ++)
 
 void initial(void)
 {
-unsigned char i = 0;
-unsigned char j = 0;
+int i = 0;
+int j = 0;
 
 for (i = 0; i < 4; i ++)
 {
@@ -1891,7 +1891,7 @@ mss [OBJ_MISCELLANY] [MISC_CRYSTAL_BALL_OF_SEEING] = 200; // crystal ball
 
 
 
-unsigned char check_item_knowledge(void)
+int check_item_knowledge(void)
 {
 
 
@@ -1900,7 +1900,7 @@ unsigned char check_item_knowledge(void)
    int i;
    int j;
    char lines = 0;
-   unsigned char anything = 0;
+   int anything = 0;
    char ft = 0;
 
    char yps = 0;
@@ -1911,7 +1911,7 @@ unsigned char check_item_knowledge(void)
 
 
 int inv_count = 0;
-unsigned char ki = 0;
+int ki = 0;
 
 
 
@@ -1982,7 +1982,7 @@ switch(i)
    yps = wherey();
 
 //   item_name_2(i, j, 0, 0, 1, 3, 3, st_pass);
-//char item_name_2(char item_clas, char item_typ, unsigned char item_da, unsigned char it_plus, unsigned int it_quant, char ident_lev, char glog [60])
+//char item_name_2(char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char glog [60])
 item_name_2(0, ft, j, 0, 0, 1, 0, st_pass);
 
 			cprintf(st_pass);
@@ -2124,15 +2124,15 @@ return 0;
 } // end damage_type
 
 
-void make_name(unsigned char var1, unsigned char var2, unsigned char var3, char ncase, char str_pass [50])
+void make_name(int var1, int var2, int var3, char ncase, char str_pass [50])
 {
 
 char name [30] = "";
-unsigned char numb [15];
+int numb [15];
 char len;
-unsigned char i = 0;
+int i = 0;
 char nexty = 0;
-unsigned char j = 0;
+int j = 0;
 char igo = 0;
 
 int ix = 0;
@@ -2348,7 +2348,7 @@ goto hello;
 
 
 
-char reduce(unsigned char reducee)
+char reduce(int reducee)
 {
 
 while(reducee >= 26)
@@ -2362,7 +2362,7 @@ return reducee;
 
 
 
-char is_a_vowel(unsigned char let)
+char is_a_vowel(int let)
 {
 	//if (let == 'a' || let == 'e' || let == 'i' || let == 'o' || let == 'u')
 	if (let == 0 || let == 4 || let == 8 || let == 14 || let == 20 || let == 24 || let == 32)

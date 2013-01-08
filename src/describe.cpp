@@ -30,18 +30,18 @@
 #include "stuff.h"
 
 void print_description(char descr [1000]);
-void print_ench(char descpr [1000], unsigned char item_plus);
-void append_value(char descpr [1000], int valu, char plussed);
+void print_ench(char descpr [1000], int item_plus);
+void append_value(char descpr [1000], int valu, int plussed);
 void randart_descpr(char descpr [1000], int item_class, int item_type, int item_plus, int item_plus2, int item_dam);
 void describe_demon(char descpr [1000]);
 
 /*
 Contains sketchy descriptions of every monster in the game.
 */
-void describe_monsters(int class_described, unsigned char which_mons)
+void describe_monsters(int class_described, int which_mons)
 {
 
-   unsigned char useless = which_mons;
+   int useless = which_mons;
    which_mons = useless;
 
    char descpr [1000];
@@ -1287,7 +1287,7 @@ if (getch() == 0) getch();
 /*
 Describes all items in the game.
 */
-void describe_item(int item_class, int item_type, int item_plus, int item_plus2, int item_dam, unsigned char item_id) //, int property [4] [50] [3], int mass [20] [50])
+void describe_item(int item_class, int item_type, int item_plus, int item_plus2, int item_dam, int item_id) //, int property [4] [50] [3], int mass [20] [50])
 {
 
 
@@ -2595,7 +2595,7 @@ void randart_descpr(char descpr [1000], int item_class, int item_type, int item_
 /*
 Used for weapons, armour and ammo.
 */
-void print_ench(char descpr [1000], unsigned char item_plus)
+void print_ench(char descpr [1000], int item_plus)
 {
  if (item_plus < 52) strcat(descpr, "lightly enchanted ");
  else if (item_plus < 54) strcat(descpr, "moderately enchanted ");
@@ -3182,15 +3182,10 @@ The character $ is interpreted as a CR.
 void print_description(char descr [1000])
 {
 
-unsigned int i = 0;
+size_t i = 0;
 int j = 0;
 
 textcolor(7);
-
-//char descrpr [250];
-//char kl [2];
-
-//strcpy(kl, "");
 
 for (i = 0; i < strlen(descr); i ++)
 {
@@ -3230,7 +3225,7 @@ j ++;
 Appends a value to the string. If plussed == 1, will add a + to positive
 values (itoa always adds - to -ve ones).
 */
-void append_value(char descpr [1000], int valu, char plussed)
+void append_value(char descpr [1000], int valu, int plussed)
 {
 char value_str [5];
 if (valu >= 0 && plussed == 1) strcat(descpr, "+");
@@ -3244,9 +3239,9 @@ strcat(descpr, value_str);
 void describe_demon(char descpr [1000])
 {
 
-long globby = 0;
-long randstore = random();
-unsigned int i = 0;
+int globby = 0;
+int randstore = random();
+size_t i = 0;
 
 for (i = 0; i < strlen(ghost.gname); i ++)
 {

@@ -58,8 +58,8 @@
 #include "view.h"
 
 int jelly_divide(int jel);
-void place_monster_corpse(unsigned char mcr);
-extern char wield_change; /* defined in output.cc */
+void place_monster_corpse(int mcr);
+extern int wield_change; /* defined in output.cc */
 
 std::string sentence_ending_for_spec_damage(int damage)
 {
@@ -1511,7 +1511,7 @@ char drained = 0;
 /* special weapons */
 if (hit == 1 && (menv [monster_attacking].m_inv [hand_used] != 501 || ((menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attacking].m_class == MONS_PANDEMONIUM_DEMON) && ghost.ghs [8] != 0)))
 {
-unsigned char itdam;
+int itdam;
 if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attacking].m_class == MONS_PANDEMONIUM_DEMON)
 {
  itdam = ghost.ghs [8];
@@ -2275,7 +2275,7 @@ if (hit == 1) //(int) damage_taken >= 1)
 /* special weapons */
 if (hit == 1 && (menv [monster_attacking].m_inv [hand_used] != 501 || ((menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attacking].m_class == MONS_PANDEMONIUM_DEMON) && ghost.ghs [8] != 0)))
 {
-unsigned char itdam;
+int itdam;
 if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attacking].m_class == MONS_PANDEMONIUM_DEMON)
 {
  itdam = ghost.ghs [8];
@@ -2934,7 +2934,7 @@ if (mons_near(it) == 1)
 
 
 
-void monster_polymorph(unsigned int monsc, unsigned int targetc, int power)
+void monster_polymorph(int monsc, int targetc, int power)
 {
 
 int k = power;
@@ -2955,10 +2955,10 @@ if (targetc == 250)
 
 /* if (power != -1) // automatic success */
 
-unsigned char old_class = menv [monsc].m_class;
-unsigned char old_hp = menv [monsc].m_hp;
-unsigned char old_hp_max = menv [monsc].m_hp_max;
-unsigned char old_sec = menv [monsc].m_sec;
+char old_class = menv [monsc].m_class;
+char old_hp = menv [monsc].m_hp;
+char old_hp_max = menv [monsc].m_hp_max;
+char old_sec = menv [monsc].m_sec;
 
 /* deal with mons_sec */
 
@@ -3063,7 +3063,7 @@ for (ygy = 7; ygy >= 0; ygy --)
 
 
 
-void place_monster_corpse(unsigned char mcr)
+void place_monster_corpse(int mcr)
 {
 int corpse_class = mons_charclass(menv [mcr].m_class);
 

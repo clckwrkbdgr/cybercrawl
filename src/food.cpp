@@ -27,7 +27,7 @@ carnivores and things if it's changed here.
 void eat_meat(int fod_eat_2);
 char eat_from_floor(void);
 char butchery(void);
-int eating(int func_pass [10], unsigned char item_class, int food_eat_3);
+int eating(int func_pass [10], int item_class, int food_eat_3);
 void ghoul_eat_flesh(char rotting);
 
 
@@ -112,7 +112,7 @@ char eat_from_floor(void)
 int gloggj;
 int o = igrd [you[0].x_pos] [you[0].y_pos];
 int k = 0; /* initialised in the loop */
-unsigned char keyin;
+int keyin;
 //gloggo = 0;
 int items_here = 0;
 int item_got = 0;
@@ -161,7 +161,7 @@ if (items_here == 1)
    } else {
 	   msg("Eat @1\?") << str_pass;
    }
-   unsigned char keyin = getch();
+   int keyin = getch();
    if (keyin == 0)
    {
      getch();
@@ -368,7 +368,7 @@ int items_here = 0;
 int o = igrd [you[0].x_pos] [you[0].y_pos];
 int k = 0;
 int item_got;
-unsigned char keyin;
+int keyin;
 
 if (igrd [you[0].x_pos] [you[0].y_pos] == 501)
 {
@@ -428,7 +428,7 @@ if (items_here == 1)
    if (mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14 || mitm.itype [igrd [you[0].x_pos] [you[0].y_pos]] != 0) goto out_of_eating;// && mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14) return 0;
 			it_name(igrd [you[0].x_pos] [you[0].y_pos], 3, str_pass);
 			msg("Butcher @1\?") << str_pass;
-   unsigned char keyin = getch();
+   int keyin = getch();
    if (keyin == 0)
    {
      getch();
@@ -657,7 +657,7 @@ you[0].hp_ch = 1;
 }
 
 
-int eating(int func_pass [10], unsigned char item_class, int food_eat_3)
+int eating(int func_pass [10], int item_class, int food_eat_3)
 {
 
 if (item_class == 4)

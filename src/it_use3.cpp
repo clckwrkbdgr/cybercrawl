@@ -34,9 +34,9 @@ void ball_of_fixation(void);
 void box_of_beasts(void);
 void staff_spell(char zap_device_2);
 
-extern unsigned char show_green; /* defined in view.cc, I think */
+extern int show_green; /* defined in view.cc, I think */
 extern int book_thing; /* defined in spells.cc */
-extern unsigned char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 
 void special_wielded(void)
@@ -197,7 +197,7 @@ break;
 void invoke_wielded(void)
 {
  char opened_gates = 0;
- unsigned char spell_casted = random2(21);
+ int spell_casted = random2(21);
  int count_x, count_y;
 
 if (you[0].equip [EQ_WEAPON] == -1)
@@ -516,7 +516,7 @@ if (random2(60) > 30 + you[0].skills [SK_AIR_MAGIC] && random2(3) != 0)
 
 char disc_count = 0;
 char disc_count2 = 0;
-unsigned char which_zap_thing = 0;
+int which_zap_thing = 0;
 
 disc_count2 = 2 + random2(4);
 
@@ -559,7 +559,7 @@ if (you[0].inv_plus [zap_device_2] == 64 || you[0].inv_type [zap_device_2] < STA
 
 
 read_book(zap_device_2);
-unsigned char specspell;
+int specspell;
 int powc = magic_ability(player_mag_abil(), you[0].intel);
 
 int sc_read_1 = book_thing; // book_thing is got in read_book

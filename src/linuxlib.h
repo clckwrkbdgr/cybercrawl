@@ -16,7 +16,7 @@ char * strlwr(char *str);
 
 int cprintf (const char *format, ... );
 
-int putch(unsigned char chr);
+int putch(int chr);
 
 char getche();
 
@@ -36,7 +36,7 @@ int wherey();
 
 int stricmp(const char *str1, const char *str2);
 
-void delay(long time);
+void delay(int time);
 
 int kbhit();
 

@@ -1,13 +1,13 @@
 
-int spell_hunger(int spell_value, unsigned char spell);
+int spell_hunger(int spell_value, int spell);
 int which_spell_in_book(int sbook_type, int spl);
-char spellbook_contents(unsigned char plus, unsigned char type);
-void spell_name(unsigned char spell, char spln [60]);
-char spell_value(unsigned char spell);
-int spell_type(unsigned char spell, unsigned char typy);
+char spellbook_contents(int plus, int type);
+void spell_name(int spell, char spln [60]);
+char spell_value(int spell);
+int spell_type(int spell, int typy);
 int spell_spec(int spell, int power);
-char spell_fail(unsigned char spell);
+char spell_fail(int spell);
 void print_slash(char already);
 char spell_list(void);
-char undead_can_memorise(unsigned char spell);
+char undead_can_memorise(int spell);
 

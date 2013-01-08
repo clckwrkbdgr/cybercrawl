@@ -1,1 +1,1 @@
-char dump_char(char show_prices, const char fname [30]);
+int dump_char(int show_prices, const char * fname);

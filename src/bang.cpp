@@ -39,7 +39,7 @@ beams (eg scrolls of immolation) bypass this function.
 */
 void explosion1(struct bolt beam [1])
 {
-	char exsize = 0;
+	int exsize = 0;
 
 
 	if (stricmp(beam[0].beam_name, "hellfire") == 0)
@@ -174,11 +174,11 @@ if (stricmp(beam[0].beam_name, "blast") == 0)
 Makes a bang. ex_size determines whether the explosion is 3x3 or 5x5 without
 corners.
 */
-void explosion(char ex_size, struct bolt beam [1])
+void explosion(int ex_size, struct bolt beam [1])
 {
 
 	int clouty = 0;
-	char empty [5] [5];
+	int empty [5] [5];
 	int n = 0;
 	int q = 0;
 

@@ -16,8 +16,8 @@ void extra_hp(int amount_extra);
 void untransform(void);
 
 
-extern unsigned char your_sign; /* these two are defined in view.cc */
-extern unsigned char your_colour;
+extern int your_sign; /* these two are defined in view.cc */
+extern int your_colour;
 
 int remove_equipment(char remove_stuff [8])
 {
@@ -181,7 +181,7 @@ return 0;
 void untransform(void)
 {
 
-unsigned char was_transformed = you[0].attribute [ATTR_TRANSFORMATION];
+int was_transformed = you[0].attribute [ATTR_TRANSFORMATION];
 
 char rem_stuff [8];
 int i = 0;

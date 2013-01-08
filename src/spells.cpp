@@ -1124,13 +1124,13 @@ return 0;
 
 
 
-char learn_a_spell(unsigned char splbook, char bitty)
+char learn_a_spell(int splbook, char bitty)
 {
 
 
 char strungy [9];
 
-unsigned int numbo;
+int numbo;
 
 int j;
 int h;
@@ -1215,7 +1215,7 @@ you[0].inv_plus [splbook] = numbo + 64;
 
 int which_spellbook(void)
 {
-unsigned char nthing = 0;
+int nthing = 0;
 
 if (you[0].spell_levels <= 0)
 {
@@ -1387,7 +1387,7 @@ if (learn_a_spell(spell_container, sc_read_2) != 1)
 
 
 
-unsigned char specspell = which_spell_in_book(you[0].inv_type [spell_container], learned);
+int specspell = which_spell_in_book(you[0].inv_type [spell_container], learned);
 char is_good = 1;
 
 

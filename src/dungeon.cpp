@@ -28,7 +28,7 @@
 #define SPLBOOK_TOME_OF_DEST		35
 #define SPLBOOK_MANUALS				41
 
-unsigned char border_type = 1;
+int border_type = 1;
 
 int bcount_x;
 int bcount_y;
@@ -85,10 +85,6 @@ char save_file [9];
 char whole_line [80];
 //int counting;
 int leng_str;
-char wm_1 [5];
-char wm_2;
-
-//char gmon_use [200];
 
 int skipped = 0;
 int randnum;
@@ -107,13 +103,10 @@ int dx = 0;
 int dy = 0;
 int rd = 0;
 
-char dung1;
-char dung2;
+int oblique;
+int oblique_max;
 
-char oblique;
-char oblique_max;
-
-char is_a_specroom = 0;
+int is_a_specroom = 0;
 
 int vsx, vsy; /* used in vaults function */
 
@@ -661,36 +654,36 @@ int spellbook_template_array [ NUMBER_SPELLBOOKS ] [ 7 ] = {
 
 void build_vaults(int force_vault);
 void build_minivaults(int force_vault);
-int vault_grid(int vx, int vy, int altar_count, char acq_item_class [7], int mons_array [10], char vgrid);
+int vault_grid(int vx, int vy, int altar_count, int acq_item_class [7], int mons_array [10], int vgrid);
 
 
-void chequerboard(unsigned char cheq1, unsigned char cheq2, unsigned char deleted, unsigned char chx1, unsigned char chy1, unsigned char chx2, unsigned char chy2);
-void spotty_level(char seeded, int iterations, char boxy);
+void chequerboard(int cheq1, int cheq2, int deleted, int chx1, int chy1, int chx2, int chy2);
+void spotty_level(int seeded, int iterations, int boxy);
 
 
 
-char item_in_shop(char shop_type);
+int item_in_shop(int shop_type);
 
 void make_room(void);
 
 void make_trail(void);
 
-int items(unsigned char allow_uniques, int force_class, int force_type,
+int items(int allow_uniques, int force_class, int force_type,
 int force_place, int many_many, int force_spec);
 
 void give_item(void);
 
 void special_room(void);
 
-int treasure_area(int many_many, unsigned char ta1_x, unsigned char ta2_x,
-unsigned char ta1_y, unsigned char ta2_y);
+int treasure_area(int many_many, int ta1_x, int ta2_x,
+int ta1_y, int ta2_y);
 
 void specr_2(void);
 
 void place_traps(void);
 
-int place_specific_trap(unsigned char spec_x, unsigned char spec_y,
-unsigned char spec_type);
+int place_specific_trap(int spec_x, int spec_y,
+int spec_type);
 
 
 void link_items(void);
@@ -699,13 +692,13 @@ void big_room(void);
 
 void diamond_rooms(void);
 
-void octa_room(unsigned char type_floor);
+void octa_room(int type_floor);
 
 void item_colour(int p);
 
-int random3(unsigned int rmax);
+int random3(int rmax);
 
-void place_spec_shop(char shop_x, char shop_y, char force_s_type);
+void place_spec_shop(int shop_x, int shop_y, int force_s_type);
 
 void place_shops(void);
 
@@ -720,8 +713,8 @@ void labyrinth_level(void);
 
 void box_room(int bx1, int bx2, int by1, int by2, int wall_type);
 void bigger_room(void);
-void place_pool(unsigned char pool_type, unsigned char pool_x1, unsigned char pool_y1, unsigned char pool_x2, unsigned char pool_y2);
-void many_pools(unsigned char pool_type);
+void place_pool(int pool_type, int pool_x1, int pool_y1, int pool_x2, int pool_y2);
+void many_pools(int pool_type);
 void generate_abyss(void);
 
 void beehive(void);
@@ -730,48 +723,49 @@ void check_doors(void);
 
 void morgue(void);
 
-void define_zombie(char not_zombsize,
+void define_zombie(int not_zombsize,
 	int ztype,
 	int cs);
 
 
 
-int builder(unsigned int lev_numb, char level_type);
+int builder(int lev_numb, int level_type);
 
 
-int place_monster(unsigned char plus_seventy, int typed, int type_place,
-	int px, int py, char behaviour, int hitting, char allow_bands,
+int place_monster(int plus_seventy, int typed, int type_place,
+	int px, int py, int behaviour, int hitting, int allow_bands,
 	int many_many, int passed [2]);
 
-void clear_area(unsigned char xr1, unsigned char yr1, unsigned char xr2,
-	unsigned char yr2, unsigned char deleting, unsigned char replacing);
+void clear_area(int xr1, int yr1, int xr2,
+	int yr2, int deleting, int replacing);
 
 void spellbook_template(int sbook_type, int func_pass [10]);
 
 void hide_doors(void);
 
-void plan_main(char force_plan);
-char plan_1(void);
-char plan_2(void);
-char plan_3(void);
-char plan_4(char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2,
-	unsigned char force_wall);
-char plan_5(void);
-char plan_6(void);
+void plan_main(int force_plan);
+int plan_1(void);
+int plan_2(void);
+int plan_3(void);
+int plan_4(int forbid_x1, int forbid_y1, int forbid_x2, int forbid_y2,
+	int force_wall);
+int plan_5(void);
+int plan_6(void);
 
-void join_the_dots(unsigned char dotx1, unsigned char doty1,
-	unsigned char dotx2, unsigned char doty2, char forbid_x1, char forbid_y1,
-    char forbid_x2, char forbid_y2);
+void join_the_dots(int dotx1, int doty1,
+	int dotx2, int doty2, int forbid_x1, int forbid_y1,
+    int forbid_x2, int forbid_y2);
 
 void place_curse_skull(void);
 void place_altar(void);
 void prepare_swamp(void);
 void prepare_water(void);
 /*void item_bugs(void);
-void find_item(unsigned int found);*/
+void find_item(int found);*/
 
+// TODO
 
-int builder(unsigned int lev_numb, char level_type)
+int builder(int lev_numb, int level_type)
 {
 
 	int lava_spaces = 0;
@@ -786,8 +780,6 @@ int builder(unsigned int lev_numb, char level_type)
 
 	int done_city = 0;
 
-	dung1 = random3(100);
-	dung2 = random3(100);
 
 	border_type = 1;
 	if (many_many == 60) border_type = 4;
@@ -874,7 +866,7 @@ int builder(unsigned int lev_numb, char level_type)
  // Could do spotty_level, but that doesn't always put all paired stairs reachable from each other which isn't a problem in normal dungeon but could be in Pandemonium
 		if (random() % 7 == 0)
 		{
- 			char which_demon = 0;
+ 			int which_demon = 0;
  			do
  			{
   				which_demon = random() % 4;
@@ -1007,7 +999,7 @@ where_are_you == 5 Tartarus 90 - 94*/
 //	if (many_many == 84 || many_many == 79 || many_many == 89 || many_many == 94)
 	if (many_many == 33 && (you[0].where_are_you == 1 || you[0].where_are_you == 2 || you[0].where_are_you == 4 || you[0].where_are_you == 5))
 	{
-		char which_v = 0;
+		int which_v = 0;
 		switch(you[0].where_are_you)
 		{
  			case 1: which_v = 51; break;
@@ -1576,7 +1568,7 @@ depends on level: */
 
 	if (you[0].where_are_you == 1 || you[0].where_are_you == 14 || you[0].where_are_you == 15)
 	{
-		unsigned char vault_wall = 4;
+		int vault_wall = 4;
 		if (you[0].where_are_you == 14)
 		{
  			vault_wall = 1;
@@ -1701,19 +1693,19 @@ depends on level: */
 
 	return 0;
 
-} // end of int builder(unsigned int lev_numb, char level_type)
+} // end of int builder(int lev_numb, int level_type)
 
 
 
 
 int place_monster(
-	unsigned char plus_seventy,
-	int typed, int type_place, int px, int py, char behaviour, int hitting,
-	char allow_bands,
+	int plus_seventy,
+	int typed, int type_place, int px, int py, int behaviour, int hitting,
+	int allow_bands,
 	int many_many, int passed [2])
 {
 
-	unsigned char grid_ok = 67;
+	int grid_ok = 67;
 	int worm = 0;
 	int plussed = 0;
 	int inv_delete = 0;
@@ -2731,8 +2723,8 @@ void make_room(void)
 void big_room(void)
 {
 
-	unsigned char type_floor = 67;
-	unsigned char type_2 = 67;
+	int type_floor = 67;
+	int type_2 = 67;
 	int i, j, k, l;
 
 	if (random3 (4) == 0)
@@ -2834,8 +2826,8 @@ void big_room(void)
 void diamond_rooms(void)
 {
 
-	char numb_diam = random3(10) + 1;
-	char type_floor = 62;
+	int numb_diam = random3(10) + 1;
+	int type_floor = 62;
 	int runthru = 0;
 
 	if (many_many >= 6 + random3(5) && random3(2) != 0) type_floor = 65; // shallow water
@@ -2896,7 +2888,7 @@ void diamond_rooms(void)
 
 
 
-void octa_room(unsigned char type_floor)
+void octa_room(int type_floor)
 {
 
 
@@ -3089,7 +3081,7 @@ void make_trail(void)
 
 
 
-int items(unsigned char allow_uniques,
+int items(int allow_uniques,
 	int force_class,
 	int force_type,
 	int force_place,
@@ -4217,19 +4209,19 @@ int items(unsigned char allow_uniques,
 void special_room(void)
 {
 
-	char spec_room_type;
+	int spec_room_type;
 
 	int thing_created = 0;
 
 	int glopop = 0;
 
-	char depth_max = 1;
+	int depth_max = 1;
 
 	depth_max = 3;
 	int mons_alloc [20];
 
-	char lordx = 0;
-	char lordy = 0;
+	int lordx = 0;
+	int lordy = 0;
 
 	room_x1 = random3 (55) + 8;
 	room_y1 = random3 (45) + 8;
@@ -4540,7 +4532,7 @@ void special_room(void)
 
 void beehive(void)
 {
-	long quant; // these odd things are to avoid warnings
+	int quant; // these odd things are to avoid warnings
 
 	for (bcount_x = x1; bcount_x < x2; bcount_x ++)
 	{
@@ -4576,7 +4568,7 @@ void beehive(void)
 	}
 
 
-	finished_it : char queen = 1;
+	finished_it : int queen = 1;
 
 	for (bcount_x = x1; bcount_x < x2; bcount_x ++)
 	{
@@ -4708,7 +4700,7 @@ void morgue(void)
 
 
 
-void define_zombie(char not_zombsize, /* 1=2, 2=1, 3=1 or 2 */
+void define_zombie(int not_zombsize, /* 1=2, 2=1, 3=1 or 2 */
 	int ztype,
 	int cs)
 {
@@ -4873,7 +4865,7 @@ void give_item(void)
 	int iquan = 1;
 	int bp = 0;
 	int thing_created = 0;
-	unsigned char hand_used = 0; // for Ettins etc.
+	int hand_used = 0; // for Ettins etc.
 	int xitc = 0;
 	int xitt = 0;
 
@@ -6113,51 +6105,13 @@ void link_items(void)
 	}
 }
 
-/*
-void fix_item(int fit, char fx, char fy)
-{
-
-
-
-
-for (bi = 0; bi < ITEMS; bi ++)
-{
-	if (mitm.iclass [bi] == 100 || mitm.iquant [bi] == 0 || mitm.ix [bi] == 1)
-        {
-	 mitm.ilink [bi] = 501;
-	 continue;
-        }
-
-	if (igrd [mitm.ix [bi]] [mitm.iy [bi]] == 501)
-	{
-		igrd [mitm.ix [bi]] [mitm.iy [bi]] = bi;
-		continue;
-	} else
-	{
-	b = igrd [mitm.ix [bi]] [mitm.iy [bi]];
-
-	while(b != 501)
-	{
-		m = b;
-		n = mitm.ilink [b];
-		b = n;
-	} // end of while
-
-	mitm.ilink [m] = bi;
-
-	}
-} // end of for i
-
-}
-*/
-
 void roguey_level(void)
 {
 
-	unsigned char rox1 [30];
-	unsigned char rox2 [30];
-	unsigned char roy1 [30];
-	unsigned char roy2 [30];
+	int rox1 [30];
+	int rox2 [30];
+	int roy1 [30];
+	int roy2 [30];
 	int cn = 0;
 
 	for (bcount_y = 0; bcount_y < 5; bcount_y ++)
@@ -6208,9 +6162,9 @@ void roguey_level(void)
 // Now, join them together:
 
 	int pos [2];
-	char jpos [2];
+	int jpos [2];
 
-	unsigned char doing = 0;
+	int doing = 0;
 
 	int last_room = 0;
 
@@ -6453,7 +6407,7 @@ void box_room(int bx1, int bx2, int by1, int by2, int wall_type)
 
 
 
-int random3(unsigned int rmax)
+int random3(int rmax)
 {
 	if (rmax == 0) return 0;
 	return (random() % rmax);
@@ -6463,7 +6417,7 @@ int random3(unsigned int rmax)
 
 void check_doors(void)
 {
-	char ig;
+	int ig;
 
 	for (bcount_x = 0; bcount_x < 80; bcount_x ++)
 	{
@@ -7056,13 +7010,13 @@ void labyrinth_level(void)
 	int keep_ly = 0;
 	int keep_lx2 = 0;
 	int keep_ly2 = 0;
-	char do_2 = 0;
+	int do_2 = 0;
 	int clear_space = 1;
-	char start_point_x = 10;
-	char start_point_y = 10;
-	char going_x = 1;
-	char going_y = 0;
-	unsigned char traps_put2 = 0;
+	int start_point_x = 10;
+	int start_point_y = 10;
+	int going_x = 1;
+	int going_y = 0;
+	int traps_put2 = 0;
 
 	if (random3(2) == 0) going_x = 1; else going_y = 1;
 
@@ -7226,7 +7180,7 @@ void labyrinth_level(void)
 
 
 
-	unsigned char floory = 2;
+	int floory = 2;
 	if (random3(5) == 0) floory = 4;
 	if (random3(15) == 0) floory = 10;
 
@@ -7245,8 +7199,8 @@ void labyrinth_level(void)
 
 
 
-int place_specific_trap(unsigned char spec_x, unsigned char spec_y,
-	unsigned char spec_type)
+int place_specific_trap(int spec_x, int spec_y,
+	int spec_type)
 {
 
 	int tcount = 0;
@@ -7279,9 +7233,9 @@ void place_shops(void)
 
 	int i = 0;
 
-	unsigned char shop_place_x = 0;
-	unsigned char shop_place_y = 0;
-	char force_stype = 100;
+	int shop_place_x = 0;
+	int shop_place_y = 0;
+	int force_stype = 100;
 
 	if (random3(5) == 0) no_shops = 1;
 	if (random3(25) == 0) no_shops = random3(5); //random3(5);
@@ -7306,7 +7260,7 @@ void place_shops(void)
 
 }
 
-void place_spec_shop(char shop_x, char shop_y, char force_s_type)
+void place_spec_shop(int shop_x, int shop_y, int force_s_type)
 {
 	int orb = 0;
 	int i = 0;
@@ -7360,7 +7314,7 @@ void place_spec_shop(char shop_x, char shop_y, char force_s_type)
 }
 
 
-char item_in_shop(char shop_type)
+int item_in_shop(int shop_type)
 {
 
 	switch(shop_type)
@@ -7388,10 +7342,10 @@ char item_in_shop(char shop_type)
 
 int treasure_area(
 	int many_many,
-	unsigned char ta1_x,
-	unsigned char ta2_x,
-	unsigned char ta1_y,
-	unsigned char ta2_y)
+	int ta1_x,
+	int ta2_x,
+	int ta1_y,
+	int ta2_y)
 {
 	int cx = 0;
 	int cy = 0;
@@ -7424,8 +7378,8 @@ int treasure_area(
 
 void hide_doors(void)
 {
-	unsigned char dx = 0;
-	unsigned char dy = 0;
+	int dx = 0;
+	int dy = 0;
 
 	for (dx = 0; dx < 80; dx ++)
 	{
@@ -7438,7 +7392,7 @@ void hide_doors(void)
 
 }
 
-void chequerboard(unsigned char cheq1, unsigned char cheq2, unsigned char deleted, unsigned char chx1, unsigned char chy1, unsigned char chx2, unsigned char chy2)
+void chequerboard(int cheq1, int cheq2, int deleted, int chx1, int chy1, int chx2, int chy2)
 {
 
 	int i, j;
@@ -7462,7 +7416,7 @@ void chequerboard(unsigned char cheq1, unsigned char cheq2, unsigned char delete
 
 
 
-void spotty_level(char seeded, int iterations, char boxy)
+void spotty_level(int seeded, int iterations, int boxy)
 {
 
 // assumes starting with a level full of rock walls (1)
@@ -7553,12 +7507,12 @@ void bigger_room(void)
 
 
 
-void place_pool(unsigned char pool_type, unsigned char pool_x1, unsigned char pool_y1, unsigned char pool_x2, unsigned char pool_y2)
+void place_pool(int pool_type, int pool_x1, int pool_y1, int pool_x2, int pool_y2)
 {
 
 	int i, j;
 
-	unsigned char left_edge, right_edge;
+	int left_edge, right_edge;
 
 	if (pool_x1 >= pool_x2 - 4) return;
 	if (pool_y1 >= pool_y2 - 4) return;
@@ -7583,7 +7537,7 @@ void place_pool(unsigned char pool_type, unsigned char pool_x1, unsigned char po
 }
 
 
-void many_pools(unsigned char pool_type)
+void many_pools(int pool_type)
 {
 
 	int pools = 0;
@@ -7620,7 +7574,7 @@ void generate_abyss(void)
 
 	int i, j;
 
-	unsigned char replaced [5];
+	int replaced [5];
 	for (i = 0; i < 5; i ++)
 	{
  		replaced [i] = 1;
@@ -7645,7 +7599,7 @@ void generate_abyss(void)
 }
 
 
-void clear_area(unsigned char xr1, unsigned char yr1, unsigned char xr2, unsigned char yr2, unsigned char deleting, unsigned char replacing)
+void clear_area(int xr1, int yr1, int xr2, int yr2, int deleting, int replacing)
 {
 
 // first coordinates *must* be top left
@@ -7663,14 +7617,14 @@ void clear_area(unsigned char xr1, unsigned char yr1, unsigned char xr2, unsigne
 
 }
 
-void plan_main(char force_plan)
+void plan_main(int force_plan)
 {
 
-	char do_stairs = 0;
+	int do_stairs = 0;
 
 	int pos [2];
 
-	unsigned char special_grid = 2;
+	int special_grid = 2;
 	if (random() % 3 == 0) special_grid = 4;
 
 // do_stairs:
@@ -7728,11 +7682,11 @@ void plan_main(char force_plan)
 }
 
 
-char plan_1(void)
+int plan_1(void)
 {
 
-	char width = 10;
-	char width2 = 5;
+	int width = 10;
+	int width2 = 5;
 	if (random() % 2 == 0) width2 -= random() % 5;
 	width -= random() % 7;
 
@@ -7779,10 +7733,10 @@ char plan_1(void)
 
 }
 
-char plan_2(void) // just a cross
+int plan_2(void) // just a cross
 {
 
-	char width2 = 5;
+	int width2 = 5;
 	width2 -= random() % 5;
 
 	clear_area(10, 35 - width2, 70, 35 + width2, 1, 67);
@@ -7794,24 +7748,24 @@ char plan_2(void) // just a cross
 
 }
 
-char plan_3(void)
+int plan_3(void)
 {
 
 /* Draws a room, then another and links them together, then another and etc
    Of course, this can easily end up looking just like a make_trail level. */
 
 
-	unsigned char cnx, cny;
-	char roomsss = 30 + random() % 90;
-	char exclusive = 1;
+	int cnx, cny;
+	int roomsss = 30 + random() % 90;
+	int exclusive = 1;
 	if (random() % 10 == 0) exclusive = 0;
 
-	char exclusive2 = 1;
+	int exclusive2 = 1;
 	if (random() % 2 == 0) exclusive2 = 0;
 
-	char romx1 [30] , romy1 [30], romx2 [30], romy2 [30];
+	int romx1 [30] , romy1 [30], romx2 [30], romy2 [30];
 
-	unsigned char which_room = 0;
+	int which_room = 0;
 
 	for (bi = 0; bi < roomsss; bi ++)
 	{
@@ -7859,7 +7813,7 @@ char plan_3(void)
 }
 
 
-char plan_4(char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2, unsigned char force_wall)
+int plan_4(int forbid_x1, int forbid_y1, int forbid_x2, int forbid_y2, int force_wall)
 {
 
 // a more chaotic version of city level
@@ -7870,18 +7824,18 @@ char plan_4(char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2, unsi
 	if (random3(3) == 0) number_boxes -= random3(1000);
 	if (random3(3) == 0) number_boxes -= random3(1000);
 
-	unsigned char drawing = 1;
+	int drawing = 1;
 
-	char b1x, b1y, b2x, b2y;
+	int b1x, b1y, b2x, b2y;
 
-	unsigned char cnx, cny;
+	int cnx, cny;
 
 	if (random() % 3 == 0) drawing = 2;
 	if (random() % 6 == 0) drawing = 4;
 
 	if (force_wall != 99) drawing = force_wall;
 
-	char boxy_type = 0;
+	int boxy_type = 0;
 	if (random() % 3 == 0) boxy_type = 1;
 
 
@@ -7948,11 +7902,11 @@ char plan_4(char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2, unsi
 
 }
 
-char plan_5(void)
+int plan_5(void)
 {
 
-	char glop = 0;
-	char glop2 = 5 + random() % 20;
+	int glop = 0;
+	int glop2 = 5 + random() % 20;
 
 	do
 	{
@@ -7969,7 +7923,7 @@ char plan_5(void)
 
 }
 
-char plan_6(void)
+int plan_6(void)
 {
 
 // circle of standing stones (well, kind of)
@@ -8023,12 +7977,12 @@ char plan_6(void)
 }
 
 
-void join_the_dots(unsigned char dotx1, unsigned char doty1, unsigned char dotx2, unsigned char doty2, char forbid_x1, char forbid_y1, char forbid_x2, char forbid_y2)
+void join_the_dots(int dotx1, int doty1, int dotx2, int doty2, int forbid_x1, int forbid_y1, int forbid_x2, int forbid_y2)
 {
 
 	if (dotx1 == dotx2 && doty1 == doty2) return;
 
-	unsigned char atx = dotx1, aty = doty1;
+	int atx = dotx1, aty = doty1;
 
 	int join_count = 0;
 
@@ -8078,11 +8032,11 @@ void build_vaults(int force_vault)
 //  isn't generated.
 
 	int altar_count = 0;
-	char stair_exist [10];
-	unsigned char stx, sty;
+	int stair_exist [10];
+	int stx, sty;
 
 
-	char acq_item_class [7];
+	int acq_item_class [7];
 	acq_item_class [0] = 0;
 	acq_item_class [1] = 2;
 	acq_item_class [2] = 0;
@@ -8097,14 +8051,14 @@ void build_vaults(int force_vault)
 
 	int mons_array [7];
 
-	char roomsss = 10 + random() % 90;
-	char exclusive = 1;
-	unsigned char which_room = 0;
+	int roomsss = 10 + random() % 90;
+	int exclusive = 1;
+	int which_room = 0;
 
 	char vgrid [81] [81];
 
-	char gluggy = vault_main(vgrid, mons_array, force_vault, many_many);
-	char exclusive2 = 1;
+	int gluggy = vault_main(vgrid, mons_array, force_vault, many_many);
+	int exclusive2 = 1;
 
 	int vx, vy;
 
@@ -8112,10 +8066,10 @@ void build_vaults(int force_vault)
 
 //int item_made;
 
-	char dig_dir_x = 0;
-	char dig_dir_y = 0;
-	unsigned char dig_place_x = 0;
-	unsigned char dig_place_y = 0;
+	int dig_dir_x = 0;
+	int dig_dir_y = 0;
+	int dig_place_x = 0;
+	int dig_place_y = 0;
 
 // note: assumes *no* previous item (I think) or monster (definitely) placement
 
@@ -8188,12 +8142,12 @@ void build_vaults(int force_vault)
 	}
 
 
-	unsigned char cnx, cny;
+	int cnx, cny;
 	if (random() % 10 == 0) exclusive = 0;
 
 	if (random() % 2 == 0) exclusive2 = 0;
 
-	char romx1 [30] , romy1 [30], romx2 [30], romy2 [30];
+	int romx1 [30] , romy1 [30], romx2 [30], romy2 [30];
 
 
 	for (bi = 0; bi < roomsss; bi ++)
@@ -8313,7 +8267,7 @@ void build_minivaults(int force_vault)
 
 	int altar_count = 0;
 
-	char acq_item_class [7];
+	int acq_item_class [7];
 	acq_item_class [0] = 0;
 	acq_item_class [1] = 2;
 	acq_item_class [2] = 0;
@@ -8328,7 +8282,7 @@ void build_minivaults(int force_vault)
 
 	if (force_vault == 200) force_vault = 200 + random3(34);
 
-//char gluggy =
+//int gluggy =
 	vault_main(vgrid, mons_array, force_vault, many_many);
 
 	int vx, vy;
@@ -8385,7 +8339,7 @@ void build_minivaults(int force_vault)
 
 
 
-int vault_grid(int vx, int vy, int altar_count, char acq_item_class [7], int mons_array [10], char vgrid)
+int vault_grid(int vx, int vy, int altar_count, int acq_item_class [7], int mons_array [10], int vgrid)
 {
 	int item_made = 501;
 	int place_a_monster = 0;
@@ -8797,7 +8751,7 @@ for (i = 0; i < ITEMS; i ++)
 }
 
 
-void find_item(unsigned int found)
+void find_item(int found)
 {
 
 int i = 0;

@@ -28,7 +28,7 @@
 #include "view.h"
 #include "it_use2.h"
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 void blink(void);
 void random_blink(void);
@@ -294,13 +294,13 @@ void identify(char pow)
    int id_used = 1;
 
 	if (pow == 1 && random2(3) == 0) id_used = random2 (3) + 1;
-	unsigned char nthing = 0;
+	int nthing = 0;
 
 	do
 	{
 	query : mpr("Identify which item?");
 
-	unsigned char keyin = get_ch();
+	int keyin = get_ch();
 
 	if (keyin == '*' || keyin == '?')
 	{

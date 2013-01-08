@@ -1,6 +1,6 @@
 
 void destroy_item(int dest);
-void place_chunks(int mcls, unsigned char rot_status, unsigned char chx, unsigned char chy, unsigned char ch_col);
+void place_chunks(int mcls, int rot_status, int chx, int chy, int ch_col);
 char search_around(void);
 void in_a_cloud(void);
 void up_stairs(void);
@@ -12,9 +12,9 @@ void handle_traps(char trt, char trap_known);
 void disarm_trap(struct dist disa [1]);
 int manage_clouds(void);
 void weird_writing(char stringy [40]);
-void fall_into_a_pool(char place, unsigned char grype);
+void fall_into_a_pool(char place, int grype);
 void new_level(void);
-void weird_colours(unsigned char coll, char wc [30]);
+void weird_colours(int coll, char wc [30]);
 char go_berserk(void);
 
 

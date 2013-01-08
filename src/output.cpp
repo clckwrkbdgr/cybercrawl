@@ -10,7 +10,7 @@
 #include "player.h"
 #include "ouch.h"
 
-char wield_change;
+int wield_change;
 
 void print_stats(void)
 {

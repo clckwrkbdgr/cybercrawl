@@ -5,6 +5,6 @@ void monster_attack(int monster_attacking);
 char monsters_fight(int monster_attacking, int monster_attacked);
 int jelly_divide(int jel);
 void alert(void);
-void monster_polymorph(unsigned int monsc, unsigned int targetc, int power);
+void monster_polymorph(int monsc, int targetc, int power);
 void monster_drop_ething(int monster_killed);
 

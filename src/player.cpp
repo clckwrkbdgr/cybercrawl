@@ -629,7 +629,7 @@ char old_burden = you[0].burden_state;
 
 you[0].burden = 0;
 
-unsigned char bu = 0;
+int bu = 0;
 
 int max_carried = 1000 + you[0].strength * 200;
 
@@ -722,8 +722,8 @@ return 0;
 
 void forget_map(char chance_forgotten)
 {
-unsigned char xcount = 0;
-unsigned char ycount = 0;
+int xcount = 0;
+int ycount = 0;
 
 for (xcount = 0; xcount < 80; xcount ++)
 {
@@ -764,7 +764,7 @@ void how_hungered(int hunger)
 	msg("@1 @2") << hunger_quantificator(hunger) << hunger_state_string(you[0].hung_state);
 }
 
-void gain_exp(unsigned int exp_gained)
+void gain_exp(int exp_gained)
 {
 
  if (you[0].equip [EQ_BODY_ARMOUR] != -1)
@@ -1589,7 +1589,7 @@ return stealth;
 
 void ability_increase(void)
 {
-unsigned char keyin;
+int keyin;
 
 #ifdef DEBUG
 return; // that prompt was irritating when gaining levels via '$'
@@ -1928,10 +1928,10 @@ switch(species)
 
 }
 
-unsigned long exp_needed(int lev, char species)
+int exp_needed(int lev, char species)
 {
 lev --;
-unsigned long level = 0;
+int level = 0;
 switch(lev)
 {
         case 1: level = 1; break;

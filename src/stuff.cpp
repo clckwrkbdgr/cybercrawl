@@ -14,24 +14,24 @@
 #include "view.h"
 #include "skills2.h"
 
-extern char wield_change;
+extern int wield_change;
 
-int random2(unsigned int randmax)
+int random2(int randmax)
 {
  if (randmax <= 0) return 0;
  return random() % randmax;
 }
 
-unsigned char get_ch(void)
+int get_ch(void)
 {
- unsigned char gotched = getch();
+ int gotched = getch();
  if (gotched == 0) gotched = getch();
  return gotched;
 }
 
 
 
-char see_grid(unsigned char grx, unsigned char gry)
+char see_grid(int grx, int gry)
 {
 
 if (grx > you[0].x_pos - 9 && grx < you[0].x_pos + 9 && gry > you[0].y_pos - 9 && gry < you[0].y_pos + 9)

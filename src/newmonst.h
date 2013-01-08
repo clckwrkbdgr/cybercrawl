@@ -1478,7 +1478,7 @@ if (mons [i].m_class == 35) // Jelly!
    // need to make sure it doesn't eat artefacts etc.
 
    int hps_gained;
-   unsigned int quant_eated;
+   int quant_eated;
 
    quant_eated = random2(10) + 1;
 

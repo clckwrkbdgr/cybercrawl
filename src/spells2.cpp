@@ -24,7 +24,7 @@
 
 int raise_corpse(int corps, char corx, char cory, int corps_beh, int corps_hit, int actual);
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 
 char detect_traps(void)
@@ -307,7 +307,7 @@ coloured = corps_hit;
 coloured = 0;
 char type_resurr = 23;
 
-unsigned char rotted = 0;
+int rotted = 0;
 
    if (igrd [you[0].x_pos] [you[0].y_pos] == 501)
    {
@@ -376,7 +376,7 @@ create_monster(type_resurr, 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target,
 char brand_weapon(char which_brand, int power)
 {
 
-unsigned char duration_affected = 0;
+int duration_affected = 0;
 
 if (you[0].duration [DUR_VORPAL_BLADE] != 0 || you[0].duration [DUR_FIRE_BRAND] != 0 || you[0].duration [DUR_ICE_BRAND] != 0 || you[0].duration [DUR_LETHAL_INFUSION] != 0)
         return 0;
@@ -627,7 +627,7 @@ for (tu = 0; tu < MNST; tu ++)
 void cast_toxic_radiance(void)
 {
 
-unsigned char toxy = 0;
+int toxy = 0;
 
  mpr("You radiate a sickly green light!");
 show_green = GREEN;
@@ -662,7 +662,7 @@ for (toxy = 0; toxy < MNST; toxy ++)
 void cast_refrigeration(int pow)
 {
 
-unsigned char toxy = 0;
+int toxy = 0;
 struct bolt beam [1];
 
  mpr("The heat is drained from your surroundings.");
@@ -712,7 +712,7 @@ for (toxy = 0; toxy < MNST; toxy ++)
 void drain_life(int pow)
 {
 
-unsigned char toxy = 0;
+int toxy = 0;
 int hp_gain = 0;
 
  mpr("You draw life from your surroundings.");
@@ -894,7 +894,7 @@ return 1;
 } // end vamp drain
 
 
-int summon_elemental(int pow, unsigned char restricted_type, unsigned char unfriendly)
+int summon_elemental(int pow, int restricted_type, int unfriendly)
 {
 int type_summoned = 0;
 int numsc = 21 + random2(pow) / 5;

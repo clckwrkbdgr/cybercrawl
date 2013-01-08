@@ -9,7 +9,7 @@
 #include "externs.h"
 #include "enum.h"
 
-void generate_area(unsigned char gx1, unsigned char gy1, unsigned char gx2, unsigned char gy2);
+void generate_area(int gx1, int gy1, int gx2, int gy2);
 char area_shift(void);
 
 
@@ -191,7 +191,7 @@ Gods:
 
 
 
-void generate_area(unsigned char gx1, unsigned char gy1, unsigned char gx2, unsigned char gy2)
+void generate_area(int gx1, int gy1, int gx2, int gy2)
 {
 
 int i, j;
@@ -216,8 +216,8 @@ int thing_created;
 int rooms_done = 0;
 int rooms_to_do = 0;
 
-unsigned char replaced [5];
-unsigned char base_type = 1;
+int replaced [5];
+int base_type = 1;
 if (random() % 4 == 0) base_type = 2;
 if (random() % 15 == 0) base_type = 4;
 if (random() % 20 == 0) base_type = 61;
@@ -326,12 +326,12 @@ for (i = gx1; i < gx2 + 1; i ++)
 
 char area_shift(void)
 {
-/*unsigned char grd [80] [70];
+/*int grd [80] [70];
  struct player you [1];*/
 
 int i, j;
 int k, l;
-unsigned char cloud_no2 = 0;
+int cloud_no2 = 0;
 
 
 for (i = 0; i < MNST; i ++)
@@ -471,7 +471,7 @@ menv,
 );*/
 
 		place_monster(
-		250, //unsigned char plus_seventy,
+		250, //int plus_seventy,
 		250, 0, 1, 1, 1,
 		MHITNOT,
 		1,
@@ -491,7 +491,7 @@ void abyss_teleport(void)
 int i, j, k;
 
 init_pandemonium(); /* changes colours */
-  unsigned char pcol = 0;
+  int pcol = 0;
   pcol = mcolour [env[0].mons_alloc [9]];
   if (pcol == 0) pcol = LIGHTGREY;
   env[0].floor_colour = pcol;

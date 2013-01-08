@@ -20,9 +20,9 @@
 #include "view.h"
 
 char zappy(int func_pass [10], char str_pass [50], char z_type);
-void unuse_randart(unsigned char unw);
+void unuse_randart(int unw);
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 
 
@@ -1402,7 +1402,7 @@ if (you[0].inv_dam [unw] % 30 >= 25)
 } /* end of unwear_armour */
 
 
-void unuse_randart(unsigned char unw)
+void unuse_randart(int unw)
 {
 
  if (randart_wpn_properties(you[0].inv_class [unw], you[0].inv_type [unw], you[0].inv_dam [unw], you[0].inv_plus [unw], you[0].inv_plus2 [unw], 0, RAP_AC) != 0)

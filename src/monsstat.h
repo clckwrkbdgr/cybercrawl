@@ -35,7 +35,7 @@ char mons_shouts(int mclass);
 
 char mons_flies(int mclass);
 
-void mons_spell_list(unsigned char sec, int splist [6]);
+void mons_spell_list(int sec, int splist [6]);
 
 void replay_messages(char info [78] [78]);
 
@@ -62,5 +62,5 @@ char mons_pan(int mcls);
 char weapon_speed(char wclass, char wtype);
 
 
-unsigned char mons_char(int mc);
+int mons_char(int mc);
 int mons_flag(int mc,int bf);

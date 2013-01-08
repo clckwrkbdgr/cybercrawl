@@ -11,7 +11,7 @@ char brand_weapon(char which_brand, int power);
 void manage_shock_shield(void);
 int vampiric_drain(int pow);
 int burn_freeze(int pow, char b_f);
-int summon_elemental(int pow, unsigned char restricted_type, unsigned char unfriendly);
+int summon_elemental(int pow, int restricted_type, int unfriendly);
 void summon_small_mammals(void);
 void summon_scorpions(int pow);
 void summon_ice_beast_etc(int pow, int ibc);

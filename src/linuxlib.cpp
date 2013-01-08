@@ -20,12 +20,12 @@
 #include "defines.h"
 
 // Globals holding current text/backg. colors
-short FG_COL = COLOR_WHITE;
-short BG_COL = COLOR_BLACK;
+int FG_COL = COLOR_WHITE;
+int BG_COL = COLOR_BLACK;
 
 
 // Translate DOS colors to curses. 128 just means use high intens./bold.
-short translatecolor(short col)
+int translatecolor(int col)
 {
         switch (col)
         {
@@ -53,7 +53,7 @@ short translatecolor(short col)
 
 void setupcolorpairs()
 {
-        short i, j;
+        int i, j;
 
         for (i = 0; i < 8; i++)
                 for (j = 0; j < 8; j++)
@@ -88,7 +88,7 @@ void lincurses_shutdown()
 /* Convert value to string */
 int itoa(int value, char *strptr, int radix)
 {
-        unsigned int bitmask = 32768;
+        int bitmask = 32768;
         int ctr = 0;
         int startflag = 0;
 
@@ -125,7 +125,7 @@ int itoa(int value, char *strptr, int radix)
 // Convert string to lowercase.
 char * strlwr(char *str)
 {
-	unsigned int i;
+	size_t i;
 
 	for(i = 0; i < strlen(str); i++)
 		str[i] = tolower(str[i]);
@@ -147,7 +147,7 @@ int cprintf (const char *format, ... )
 }
 
 
-int putch(unsigned char chr)
+int putch(int chr)
 {
         if (chr == 0)
                 chr = ' ';
@@ -192,7 +192,7 @@ void _setcursortype(int curstype)
 
 void textcolor(int col)
 {
-        short fg, bg;
+        int fg, bg;
 
         FG_COL = col;
         fg = translatecolor(FG_COL);
@@ -215,7 +215,7 @@ void textcolor(int col)
 
 void textbackground(int col)
 {
-        short fg, bg;
+        int fg, bg;
 
         BG_COL = col;
         fg = translatecolor(FG_COL);
@@ -266,7 +266,7 @@ int stricmp(const char *str1, const char *str2)
 }
 
 
-void delay(long time)
+void delay(int time)
 {
 	usleep(time * 1000);
 }

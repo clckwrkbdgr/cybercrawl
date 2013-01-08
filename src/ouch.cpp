@@ -29,16 +29,16 @@
 #include "stuff.h"
 #include "files.h"
 
-void highscore(char death_string [80], long points);
+void highscore(char death_string [80], int points);
 void item_corrode(char itco);
 void end_game(char end_status);
 int set_status(int stat);
 
 
 char death_string [80];
-long points = 0;
+int points = 0;
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 /* NOTE: DOES NOT check for hellfire!!! */
 int check_your_resists(int hurted, int flavour)
@@ -153,7 +153,7 @@ void splash_with_acid(char acid_strength)
 
 //abort();
 
-unsigned char splc = 0;
+int splc = 0;
 
 for (splc = 1; splc < 7; splc++)
 {
@@ -197,7 +197,7 @@ void item_corrode(char itco_char)
 	int itco = itco_char;
 
         int chance_corr = 0;
-        unsigned char rusty = 0;
+        int rusty = 0;
         if (you[0].inv_class [itco] == 0) rusty = you[0].inv_plus2 [itco];
                 else rusty = you[0].inv_plus [itco];
 
@@ -258,9 +258,9 @@ void item_corrode(char itco_char)
 void scrolls_burn(char burn_strength, char target_class)
 {
 
-unsigned char burnc;
-unsigned char burn2;
-unsigned char burn_no = 0;
+int burnc;
+int burn2;
+int burn_no = 0;
 
 if (wearing_amulet(AMU_CONSERVATION) == 1 && random() % 10 != 0)
 {
@@ -817,11 +817,11 @@ get_ch();
 
 
 
-void highscore(char death_string [80], long points)
+void highscore(char death_string [80], int points)
 {
 
 char high_scores [20] [80];
-long scores [20];
+int scores [20];
 int hc = 0;
 int hc2 = 0;
 int hc3 = 0;
@@ -979,7 +979,7 @@ void lose_level(void)
  {
     ouch(-9999, 0, 14);
  }
-// because you[0].xp is unsigned long, if it's going to be -ve must die straightaway.
+// because you[0].xp is int, if it's going to be -ve must die straightaway.
 
  you[0].xp = exp_needed(you[0].xl + 1, you[0].species) - 1;
         you[0].xl --;
@@ -1041,8 +1041,8 @@ if (you[0].xl == 1)
  return;
 }
 
-unsigned long total_exp = exp_needed(you[0].xl + 2, you[0].species) - exp_needed(you[0].xl + 1, you[0].species);
-unsigned long exp_drained = total_exp * (10 + random() % 11);
+int total_exp = exp_needed(you[0].xl + 2, you[0].species) - exp_needed(you[0].xl + 1, you[0].species);
+int exp_drained = total_exp * (10 + random() % 11);
 exp_drained /= 100;
 
 you[0].xp -= exp_drained;

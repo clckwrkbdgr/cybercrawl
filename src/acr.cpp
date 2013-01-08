@@ -51,9 +51,9 @@
 
 /* Functions in main module */
 void input(void);
-void open_door(char move_x, char move_y);
-void close_door(char move_x, char move_y);
-void move(char move_x, char move_y);
+void open_door(int move_x, int move_y);
+void close_door(int move_x, int move_y);
+void move(int move_x, int move_y);
 void initialise(void);
 
 struct environ env [1];
@@ -63,13 +63,12 @@ char st_prn [20];
 char str_pass [80];
 char gmon_use [1000];
 int stealth; /* externed in view.h */
-char use_colour = 1;
-char visible [10];
+int visible [10];
 
-extern unsigned char your_sign; /* these two are defined in view.cc. What does the player look like? (changed for shapechanging */
-extern unsigned char your_colour;
+extern int your_sign; /* these two are defined in view.cc. What does the player look like? (changed for shapechanging */
+extern int your_colour;
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 /*
 It all starts here. Some initialisations are run first, then straight to
@@ -114,7 +113,7 @@ void run_delay()
 	}
 }
 
-int get_key_while_running(char & move_x, char & move_y) // FIXME References are bad!
+int get_key_while_running(int & move_x, int & move_y) // FIXME References are bad!
 {
 	int keyin = 125;
 	move_x = you[0].run_x;
@@ -132,7 +131,7 @@ int get_key_while_running(char & move_x, char & move_y) // FIXME References are 
 	return keyin;
 }
 
-int get_control(char & move_x, char & move_y) // FIXME References are bad!
+int get_control(int & move_x, int & move_y) // FIXME References are bad!
 {
 	int keyin = '.';
 	if (you[0].paralysis == 0) {
@@ -169,7 +168,7 @@ void print_experience_info()
 	msg("Your next level is at @1 experience points.") << (exp_needed(you[0].xl + 2, you[0].species) + 1);
 }
 
-void process_control(int keyin, char & move_x, char & move_y) // FIXME References are bad!
+void process_control(int keyin, int & move_x, int & move_y) // FIXME References are bad!
 {
 	if (keyin != 125) {
 		move_x = 0;
@@ -318,10 +317,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 				  //  case '^': disarm_trap(); break;
 
 		case '#':
-				  char name_your [30];
-				  strncpy(name_your, you[0].your_name, 6);
-				  name_your [6] = 0;
-				  if (dump_char(0, name_your) == 1)
+				  if (dump_char(0, std::string(you[0].your_name, 6).c_str()) == 1)
 					  mpr("Char dumped successfully.");
 				  else
 					  mpr("Char dump unsuccessful! Sorry about that.");
@@ -391,7 +387,7 @@ void process_control(int keyin, char & move_x, char & move_y) // FIXME Reference
 		case 'Q': quit_game(); break;
 		case 'v': version(); break;
 		case '}':
-				  //        Can't use this char
+				  //        Can't use this character
 				  break;
 		default: mpr("Unknown command.");
 
@@ -404,8 +400,8 @@ an endless loop.
 */
 void input(void)
 {
-	char move_x = 0;
-	char move_y = 0;
+	int move_x = 0;
+	int move_y = 0;
 	char str_pass [50];
 
 	you[0].time_taken = player_speed();
@@ -414,7 +410,7 @@ void input(void)
 	textcolor(7);
 	print_stats();
 
-	char keyin = get_control(move_x, move_y);
+	int keyin = get_control(move_x, move_y);
 	process_control(keyin, move_x, move_y);
 
 	if (move_x != 0 || move_y != 0) {
@@ -952,7 +948,7 @@ Opens doors and handles some aspects of untrapping. If move_x != 100, it
 carries a specific direction for the door to be opened (eg if you type
 ctrl - dir).
 */
-void open_door(char move_x, char move_y)
+void open_door(int move_x, int move_y)
 {
 	struct dist door_move [1];
 
@@ -1018,7 +1014,7 @@ void open_door(char move_x, char move_y)
 /*
 Similar to open_door. Can you spot the difference?
 */
-void close_door(char door_x, char door_y)
+void close_door(int door_x, int door_y)
 {
 	struct dist door_move [1];
 	door_move[0].move_x = door_x;
@@ -1155,8 +1151,8 @@ void setup_game()
 	 	if (you[0].inv_quant [i] != 0) you[0].inv_no ++;
 	}
 
-	char just_made_new_lev = (newc == 0) ? 1 : 0;
-	char moving_level = (newc == 1) ? 1 : 0;
+	int just_made_new_lev = (newc == 0) ? 1 : 0;
+	int moving_level = (newc == 1) ? 1 : 0;
 
 	load(82, moving_level, 0, 0, 0, just_made_new_lev, you[0].where_are_you);
 
@@ -1252,11 +1248,11 @@ int mng_attack(int cell)
 	return 0;
 }
 
-bool move_to_a_pool(int new_pos_x, int new_pos_y, char attacking)
+bool move_to_a_pool(int new_pos_x, int new_pos_y, int attacking)
 {
 	if ((grd [new_pos_x] [new_pos_y] == 61 || grd [new_pos_x] [new_pos_y] == 62) && attacking == 0 && you[0].lev == 0) {
 		mpr("Do you really want to step there?");
-		char stepping = get_ch();
+		int stepping = get_ch();
 		if (stepping == 'y' || stepping == 'Y') {
 			fall_into_a_pool(0, grd [new_pos_x] [new_pos_y]);
 			you[0].turnover = 1;
@@ -1381,7 +1377,7 @@ void step_into_a_trap()
 Called when the player moves by walking/running. Also calls attack function
 and trap function etc when necessary.
 */
-void move(char move_x, char move_y)
+void move(int move_x, int move_y)
 {
 	//int i;
 	if (you[0].conf > 0) {
@@ -1399,7 +1395,7 @@ void move(char move_x, char move_y)
 		return;
 	}
 
-	char attacking = mng_attack(mgrd [new_pos_x] [new_pos_y]);
+	int attacking = mng_attack(mgrd [new_pos_x] [new_pos_y]);
 
 	if(move_to_a_pool(new_pos_x, new_pos_y, attacking)) {
 		return;

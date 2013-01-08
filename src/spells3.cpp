@@ -24,14 +24,14 @@
 #include "stuff.h"
 #include "view.h"
 
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 
 void cast_selective_amnesia(void)
 {
 
 char spc = 0;
-unsigned char spc2 = 0;
+int spc2 = 0;
 char ep_gain = 0;
 int keyin = 0;
 
@@ -276,7 +276,7 @@ if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 0) /* can this be false? */
 void sublimation(int pow)
 {
 
-unsigned char was_wielded = 0;
+int was_wielded = 0;
 
 if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]] != 4 || you[0].inv_type [you[0].equip [EQ_WEAPON]] != 21)
 {
@@ -494,8 +494,8 @@ if (you[0].level_type == 2)
 void entomb(void)
 {
 
-unsigned char srx = 0;
-unsigned char sry = 0;
+int srx = 0;
+int sry = 0;
 
 char chance_found = 4;
 

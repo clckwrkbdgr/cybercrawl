@@ -52,7 +52,7 @@
 
 int check_mons_resists(struct bolt beam [1], int o, int hurted);
 int check_mons_magres(int mn, int pow);
-int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1]);
+int mons_ench_f2(int o, int is_near, int func_pass [10], struct bolt beam [1]);
 
 
 // Up to line 1111
@@ -74,8 +74,8 @@ void beam(struct bolt beam [1])
 
 	int clouty = 0;
 
-	char crumble = 0;
-	char bounce = 0;
+	int crumble = 0;
+	int bounce = 0;
 
 	int hurted = 0;
 
@@ -682,7 +682,7 @@ void beam(struct bolt beam [1])
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
 	 				strcpy(beam[0].beam_name, "program");
- 					char killer = 0;
+ 					int killer = 0;
 					switch(beam[0].thing_thrown)
 					{
 						case 1: killer = 3; break; // your beam
@@ -722,7 +722,7 @@ void beam(struct bolt beam [1])
   						menv[o].m_hp -= random2(beam[0].hit);
   						strcpy(beam[0].beam_name, "pain");
  					}
- 					char killer = 0;
+ 					int killer = 0;
 					switch(beam[0].thing_thrown)
 					{
 						case 1: killer = 3; break; // your beam
@@ -744,7 +744,7 @@ void beam(struct bolt beam [1])
  					msg("@1 is blasted.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  					menv[o].m_hp -= random2(beam[0].hit + 1);
 	 				strcpy(beam[0].beam_name, "program");
- 					char killer = 0;
+ 					int killer = 0;
 					switch(beam[0].thing_thrown)
 					{
 						case 1: killer = 3; break; // your beam
@@ -1125,7 +1125,7 @@ brek = 0;*/
 
 			}
 
-			char count_x = 0;
+			int count_x = 0;
 
 			if (mgrd [beam[0].bx] [beam[0].by] != MNG)
 			{
@@ -1603,7 +1603,7 @@ void mass_enchantment(int wh_enchant, int pow)
 
 	int i = 0;
 	int p;
-	char brek = 0;
+	int brek = 0;
 
 	viewwindow(0);
 	for (i = 0; i < MNST; i ++)
@@ -1666,11 +1666,11 @@ void mass_enchantment(int wh_enchant, int pow)
 /*
 Monster has probably failed save, now it gets enchanted somehow.
 */
-int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
+int mons_ench_f2(int o, int is_near, int func_pass [10], struct bolt beam [1])
 {
 
-	char brek = 0;
-	unsigned char p;
+	int brek = 0;
+	int p;
 
     switch(beam[0].colour) /* put in magic resistance */
     {
@@ -1898,7 +1898,7 @@ int mons_ench_f2(int o, char is_near, int func_pass [10], struct bolt beam [1])
 /*
 Puts the poison value into a monster's enchantment variable.
 */
-void poison_monster(int mn, char source)
+void poison_monster(int mn, int source)
 {
 
 	int p;
@@ -1954,7 +1954,7 @@ void poison_monster(int mn, char source)
 /*
 Like poison_monster; makes the monster burn if hit by napalm.
 */
-void sticky_flame_monster(int mn, char source, int power) /* modelled on the poison_monster function */
+void sticky_flame_monster(int mn, int source, int power) /* modelled on the poison_monster function */
 {
 
 	int long_last = 0;
@@ -2016,11 +2016,11 @@ Places a cloud with the given stats. May delete old clouds to make way if
 there are too many (30) on level, but won't place a cloud over another
 cloud.
 */
-void place_cloud(unsigned char cl_type, unsigned char ctarget_x, unsigned char ctarget_y, unsigned char cl_range) // if env[0].cloud_type > 100, it is a monster's cloud
+void place_cloud(int cl_type, int ctarget_x, int ctarget_y, int cl_range) // if env[0].cloud_type > 100, it is a monster's cloud
 {
- 	unsigned char ci = 0;
+ 	int ci = 0;
 
- 	char c_deleted = 100;
+ 	int c_deleted = 100;
 
  	if (env[0].cloud_no >= 30) c_deleted = random2(30);
 

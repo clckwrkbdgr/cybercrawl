@@ -57,10 +57,10 @@ void species_ability(void) /* Now handles all special abilities */
 
 	int ability [120];
 	int ability_fail [120];
-	unsigned char abil_c = 0;
-	unsigned char abil_used;
-	unsigned char spc, spc2;
-	char keyi;
+	int abil_c = 0;
+	int abil_used;
+	int spc, spc2;
+	int keyi;
 	int i = 0;
 
 	for (i = 0; i < 120; i ++)
@@ -564,7 +564,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 
 	if (keyin == '?' || keyin == '*')
 	{
-		char unthing = show_abilities(ability, ability_fail); //you[0].spells); //invent(0, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
+		int unthing = show_abilities(ability, ability_fail); //you[0].spells); //invent(0, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 		redraw_screen();
 
 		if (unthing == 2) return;
@@ -579,7 +579,7 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 		}
 	}
 
-	spc = (int) keyin;
+	spc = keyin;
 
 	if ((spc < 97 || spc > 121) && (spc < 65 || spc > 90))
 	{
@@ -1749,19 +1749,18 @@ if (you[0].duration [DUR_BREATH_WEAPON] != 0)
 	}
 
 }
+
 /*
 Lists any abilities the player may have.
 */
-char show_abilities(int ability [120], int ability_fail [120])
+int show_abilities(int ability [120], int ability_fail [120])
 {
    	int j;
-   	char lines = 0;
-   	unsigned char anything = 0;
-   	char strng [5] = "";
-   	char ft;
-   	char ki;
-   	char already = 0;
-   	char is_invocations = 0;
+   	int lines = 0;
+   	int anything = 0;
+   	int ki;
+   	int already = 0;
+   	int is_invocations = 0;
 
    	for (j = 0; j < 120; j ++)
    	{
@@ -1836,10 +1835,7 @@ char show_abilities(int ability [120], int ability_fail [120])
 			if (lines > 0) cprintf(EOL);
 			lines++;
 			cprintf(" ");
-			if (j < 26) ft = (char) j + 97;
-			else ft = (char) j + 65 - 26;
-			strng [0] = ft;
-			cprintf(strng);
+			cprintf("%c", (j < 26) ? (j + 97) : (j + 65 - 26));
 			cprintf(" - ");
 
 			switch(ability [j])

@@ -23,7 +23,7 @@
 /*
 Creates a disk record of a character.
 */
-char dump_char(char show_prices, const char fname [30])
+int dump_char(int show_prices, const char * fname)
 {
 	char st_prn [15];
 
@@ -335,10 +335,10 @@ char dump_char(char show_prices, const char fname [30])
 
    	char st_pass [60];
 
-    char lines = 0;
-    unsigned char anything = 0;
+    int lines = 0;
+    int anything = 0;
     char ft;
-    char yps = 0;
+    int yps = 0;
     char temp_id [4] [50];
 
     for (i = 0; i < 4; i ++)

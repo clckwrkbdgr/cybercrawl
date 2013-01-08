@@ -65,7 +65,7 @@ for (c = 0; c < MNST; c++)
  }
 }
 
-unsigned int udest = dest;
+int udest = dest;
 
 for (c = 0; c < ITEMS; c++)
 {
@@ -101,7 +101,7 @@ for (c = 2; c < 79; c ++)
 } // end void destroy_item(int dest)
 
 
-void place_chunks(int mcls, unsigned char rot_status, unsigned char chx, unsigned char chy, unsigned char ch_col)
+void place_chunks(int mcls, int rot_status, int chx, int chy, int ch_col)
 {
 
         int o;
@@ -248,8 +248,8 @@ if ((mcls == MONS_DRAGON || mcls == MONS_TROLL || mcls == MONS_ICE_DRAGON || mcl
 
 char search_around(void)
 {
-unsigned char srx = 0;
-unsigned char sry = 0;
+int srx = 0;
+int sry = 0;
 int i;
 
 //if (you[0].clas == 3) chance_found = 2;
@@ -407,7 +407,7 @@ switch(env[0].cloud_type [cl] % 100)
 void up_stairs(void)
 {
 
-unsigned char stair_find = grd [you[0].x_pos] [you[0].y_pos];
+int stair_find = grd [you[0].x_pos] [you[0].y_pos];
 char old_level_where = you[0].where_are_you;
 
 if (stair_find == 80)
@@ -442,7 +442,7 @@ if (you[0].your_level == 0)
  }
 }
 
-unsigned char old_level = you[0].your_level;
+int old_level = you[0].your_level;
 
 you[0].your_level--;
 
@@ -582,7 +582,7 @@ void down_stairs(char remove_stairs, int old_level)
 int i;
 char old_level_type = you[0].level_type;
 char was_a_labyrinth = 0;
-unsigned char stair_find = grd [you[0].x_pos] [you[0].y_pos];
+int stair_find = grd [you[0].x_pos] [you[0].y_pos];
 //int old_level = you[0].your_level;
 char leaving_abyss = 0;
 char old_where = you[0].where_are_you;
@@ -759,9 +759,9 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 97 || grd [you[0].x_pos] [you[0].y_pos]
 if (you[0].level_type == 0) you[0].your_level++;
 
 int stair_taken = stair_find;
-//unsigned char save_old = 1;
-unsigned char moving_level = 1;
-unsigned char want_followers = 1;
+//int save_old = 1;
+int moving_level = 1;
+int want_followers = 1;
 if (you[0].level_type == 1 || you[0].level_type == 2) stair_taken = 67; //81;
 if (you[0].level_type == 3) stair_taken = 101;
 
@@ -800,8 +800,8 @@ if (you[0].your_level == 65 || you[0].your_level == 84 || you[0].your_level == 7
  }
 } // end if*/
 
-unsigned char pc = 0;
-unsigned char pt = random2(10) + random2(10) + random2(10);
+int pc = 0;
+int pt = random2(10) + random2(10) + random2(10);
 
 if (you[0].level_type == 1)
 {
@@ -889,7 +889,7 @@ void new_level(void)
  if (you[0].level_type == 3)
  {
   cprintf("- Bioengineerings            ");
-  unsigned char pcol = 0;
+  int pcol = 0;
   pcol = mcolour [env[0].mons_alloc [9]];
   if (pcol == 0) pcol = LIGHTGREY;
   env[0].floor_colour = pcol;
@@ -900,7 +900,7 @@ void new_level(void)
  else if (you[0].level_type == 2)
  {
   cprintf("- The Dump               ");
-  unsigned char pcol = 0;
+  int pcol = 0;
   pcol = mcolour [env[0].mons_alloc [9]];
   if (pcol == 0) pcol = LIGHTGREY;
   env[0].floor_colour = pcol;
@@ -1419,7 +1419,7 @@ return;
 
 
 
-void fall_into_a_pool(char place, unsigned char grype)
+void fall_into_a_pool(char place, int grype)
 {
 
 char escape = 0;
@@ -1494,7 +1494,7 @@ return 1; // success
 
 
 
-void weird_colours(unsigned char coll, char wc [30])
+void weird_colours(int coll, char wc [30])
 {
 
 strcpy(wc, "");

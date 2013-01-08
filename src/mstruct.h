@@ -4,10 +4,6 @@
 
 // ****remeber***** must make an hardcopy of this sometime
 //#define 
-typedef char MYCHAR; // used for flags and the like
-typedef unsigned char MYUCHAR; // used for flags and the like
-typedef short MYSHORT; // used for flags and the like
-typedef int MYINT; // used for flags and the like
 // bitfield
 // leaves no skeleton? ("blob" monsters?)
 // if weight=0 or zombie_size=0, this is always true
@@ -83,23 +79,23 @@ typedef int MYINT; // used for flags and the like
 
 extern int mondatasize;
 extern struct monsterentry {
-	short mc; // monster number 
-	unsigned char showchar,colour;
+	int mc; // monster number 
+	int showchar,colour;
 	const char *name/*[32]*/; // longest is 23 till now (31 is max alowed here)
 	int bitfields;
-	short weight ;
+	int weight ;
 	// experience is calculated like this:
 	// ((((max_hp / 7) + 1) * (mHD * mHD) + 1) * exp_mod) / 10
 	//     ^^^^^^ see below at hpdice
         //   Note that this may make draining attacks less attractive (LH)
 	char exp_mod ;
 	
-	short charclass ; //
+	int charclass ; //
 	char holiness ; // -1=holy,0=normal,1=undead,2=very very evil
 	
-	short resist_magic ; // (positive is ??)
+	int resist_magic ; // (positive is ??)
 	// max damage in a turn is total of these four?
-	unsigned char damage[4] ;
+	int damage[4] ;
 	
 	// hpdice[4]: [0]=HD [1]=min_hp [2]=rand_hp [3]=add_hp
 	// min hp = [0]*[1]+[3] & max hp = [0]*([1]+[2])+[3]
@@ -108,11 +104,11 @@ extern struct monsterentry {
 	//       105 < hp < 165
 	// hp will be around 135 each time. (assuming an good random number generator)
 	// !!!!!!! The system is exactly the same as before, only the way of writing changed !!!!
-	unsigned char hpdice[4] ; // until we have monsters with 32767 hp,this is easily possible
+	int hpdice[4] ; // until we have monsters with 32767 hp,this is easily possible
 	char AC ; // armour class
 	char ev ; // evasion
 	char speed ,speed_inc ; // duh!
-	short sec ; // not used (250) most o/t time
+	int sec ; // not used (250) most o/t time
 	
 	// eating the corpse: 1=clean,2=might be contaminated,3=poison,4=very bad
 	char corpse_thingy ;
@@ -150,9 +146,9 @@ int mons_exp_mod(int mclass);
 int mons_skeleton(int mcls);
 int mons_res_elec(int mclass);
 int hit_points(int hit_dice, int min_hp, int rand_hp);
-void mons_spell_list(unsigned char sec, int splist [6]);
+void mons_spell_list(int sec, int splist [6]);
 //void def_letters(char letters [52] [1]);
-unsigned char mons_char(int mc);
+int mons_char(int mc);
 void moname(int mcl, char mench, char see_inv, char descrip, char glog [40]);
 int exper_value(int mclass, int mHD, int maxhp);
 

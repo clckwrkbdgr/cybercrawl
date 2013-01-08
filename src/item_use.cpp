@@ -56,20 +56,20 @@
 #include "view.h"
 
 void throw_it(struct bolt beam [1], int throw_2);
-void use_randart(unsigned char item_wield_2);
+void use_randart(int item_wield_2);
 char drink_fountain(void);
 
 extern int book_thing; /* defined in spells.cc */
-extern char wield_change; /* defined in output.cc */
+extern int wield_change; /* defined in output.cc */
 
 
 void wield_weapon(char auto_wield)
 {
 
-unsigned char nthing = 0;
-unsigned char i_dam = 0;
+int nthing = 0;
+int i_dam = 0;
 char str_pass [80];
-unsigned char keyin;
+int keyin;
 
 if (you[0].inv_no == 0)
 	{
@@ -510,7 +510,7 @@ if (you[0].inv_class [item_wield_2] == OBJ_STAVES)
 void wear_armour(void)
 {
 
-unsigned char nthing = 0;
+int nthing = 0;
 char armr = you[0].equip [EQ_BODY_ARMOUR];
 /*char ev_change = 0;*/
 char wh_equip = 0;
@@ -531,7 +531,7 @@ query : mpr("Wear which item?");
 
 // test relay_message();
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?')
 {
@@ -1133,7 +1133,7 @@ if (you[0].inv_dam [armour_wear_2] % 30 >= 25)
 void takeoff_armour(void)
 {
 
-unsigned char nthing = 0;
+int nthing = 0;
 
 if (you[0].berserker != 0)
 {
@@ -1145,7 +1145,7 @@ query : mpr("Take off which item?");
 
 // test relay_message();
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -1312,7 +1312,7 @@ unwear_armour(armour_wear_2);
 
 void throw_anything(void)
 {
-unsigned char nthing = 0;
+int nthing = 0;
 struct bolt beam [1];
 
 if (you[0].berserker != 0)
@@ -1329,7 +1329,7 @@ if (you[0].inv_no == 0)
 
 query : mpr("Throw which item?");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -1704,7 +1704,7 @@ you[0].turnover = 1;
 void puton_ring(void)
 {
 
-unsigned char nthing = 0;
+int nthing = 0;
 
 if (you[0].inv_no == 0)
 	{
@@ -1720,7 +1720,7 @@ if (you[0].berserker != 0)
 
 query : mpr("Put on which item?");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -2047,9 +2047,9 @@ if (you[0].inv_dam [ring_wear_2] == 200 || you[0].inv_dam [ring_wear_2] == 201)
 void remove_ring(void)
 {
 
-unsigned char nthing = 0;
+int nthing = 0;
 int hand_used = 10;
-unsigned char keyin;
+int keyin;
 int ring_wear_2;
 
 if (you[0].equip [EQ_LEFT_RING] == -1 && you[0].equip [EQ_RIGHT_RING] == -1 && you[0].equip [EQ_AMULET] == -1)
@@ -2294,7 +2294,7 @@ void zap_wand(void)
 {
 int zap_device_1;
 int zap_device_2;
-unsigned char nthing = 0;
+int nthing = 0;
 
 struct bolt beam [1];
 struct dist zap_wand [1];
@@ -2316,7 +2316,7 @@ if (you[0].berserker != 0)
 
 query : mpr("Shoot which item?");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -2430,7 +2430,7 @@ void eat_food(void)
 int food_eat_1;
 int food_eat_2;
 
-unsigned char nthing = 0;
+int nthing = 0;
 
 if (you[0].is_undead == 2)
 {
@@ -2459,7 +2459,7 @@ if (you[0].inv_no == 0)
 
 query : mpr("Eat which item?");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -2553,8 +2553,8 @@ void drink(void)
 {
 int drink_1;
 int drink_2;
-unsigned char nthing = 0;
-unsigned char keyin;
+int nthing = 0;
+int keyin;
 
 if (you[0].is_undead == 2)
 {
@@ -2718,9 +2718,9 @@ int sc_read_1;
 int sc_read_2;
 
 int id_used = 0;
-unsigned char nthing = 0;
+int nthing = 0;
 
-unsigned char affected = 0;
+int affected = 0;
 
 int i;
 struct bolt beam [1];
@@ -2740,7 +2740,7 @@ if (you[0].berserker != 0)
 
 query : mpr("Execute which item?");
 
-unsigned char keyin = get_ch();
+int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
@@ -2845,7 +2845,7 @@ if (you[0].inv_quant [sc_read_2] == 0)
 
 you[0].turnover = 1;
 
-unsigned char scroll = 0;
+int scroll = 0;
 
 scroll = sc_read_2;
 
@@ -3404,9 +3404,9 @@ return;
 void original_name(void)
 {
 char drink_1;
-unsigned char drink_2;
-unsigned char inn = 0;
-unsigned char nthing = 0;
+int drink_2;
+int inn = 0;
+int nthing = 0;
 
 query : mpr("Examine which item?");
 
@@ -3449,7 +3449,7 @@ redraw_screen();
 } // end original_name
 
 
-void use_randart(unsigned char item_wield_2)
+void use_randart(int item_wield_2)
 {
 
  if (randart_wpn_properties(you[0].inv_class [item_wield_2], you[0].inv_type [item_wield_2], you[0].inv_dam [item_wield_2], you[0].inv_plus [item_wield_2], you[0].inv_plus2 [item_wield_2], 0, RAP_AC) != 0)

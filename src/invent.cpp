@@ -16,10 +16,10 @@
 #include "stuff.h"
 
 void command_string(char comm [50], int i);
-//char invent(unsigned char inv_plus2 [52], int item_class_inv, int inv_quant [52], unsigned char inv_dam [52], unsigned char inv_class [52], unsigned char inv_type [52], unsigned char inv_plus [52], unsigned char inv_ident [52], char item_wielded, char body_armour, char shield_armour, char cloak_armour, char head_armour, char hand_armour, char foot_armour, char ring [2], char show_price);
+//char invent(int inv_plus2 [52], int item_class_inv, int inv_quant [52], int inv_dam [52], int inv_class [52], int inv_type [52], int inv_plus [52], int inv_ident [52], char item_wielded, char body_armour, char shield_armour, char cloak_armour, char head_armour, char hand_armour, char foot_armour, char ring [2], char show_price);
 char invent(int item_class_inv, char show_price);
 
-unsigned char get_invent(int invent_type)
+int get_invent(int invent_type)
 {
 
 char nothing;
@@ -34,7 +34,7 @@ return nothing;
 
 }
 
-//char invent(unsigned char inv_plus2 [52], int item_class_inv, int inv_quant [52], unsigned char inv_dam [52], unsigned char inv_class [52], unsigned char inv_type [52], unsigned char inv_plus [52], unsigned char inv_ident [52], char item_wielded, char body_armour, char shield_armour, char cloak_armour, char head_armour, char hand_armour, char foot_armour, char ring [2], char show_price)
+//char invent(int inv_plus2 [52], int item_class_inv, int inv_quant [52], int inv_dam [52], int inv_class [52], int inv_type [52], int inv_plus [52], int inv_ident [52], char item_wielded, char body_armour, char shield_armour, char cloak_armour, char head_armour, char hand_armour, char foot_armour, char ring [2], char show_price)
 char invent(int item_class_inv, char show_price)
 {
 
@@ -44,7 +44,7 @@ char invent(int item_class_inv, char show_price)
    int i;
    int j;
    char lines = 0;
-   unsigned char anything = 0;
+   int anything = 0;
    char strng [10] = "";
    char ft;
 
@@ -74,7 +74,7 @@ char invent(int item_class_inv, char show_price)
 
 int Inv_class2 [15];
 int inv_count = 0;
-unsigned char ki = 0;
+int ki = 0;
 
 //int ickyo = 0;
 
