@@ -67,7 +67,7 @@ public:
 		data->format.arg(value);
 	}
 private:
-	Message & operator=(const Message & other) { return * this; }
+	Message & operator=(const Message &) { return * this; }
 	MessageData * data;
 };
 template<class T>

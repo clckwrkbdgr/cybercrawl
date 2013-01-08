@@ -104,15 +104,15 @@ return traps_found;
 int corpse_rot(int power)
 {
 
-unsigned char adx = 0;
-unsigned char ady = 0;
+int adx = 0;
+int ady = 0;
 
-char minx = you[0].x_pos - 6;
-char maxx = you[0].x_pos + 7;
-char miny = you[0].y_pos - 6;
-char maxy = you[0].y_pos + 6;
-char xinc = 1;
-char yinc = 1;
+int minx = you[0].x_pos - 6;
+int maxx = you[0].x_pos + 7;
+int miny = you[0].y_pos - 6;
+int maxy = you[0].y_pos + 6;
+int xinc = 1;
+int yinc = 1;
 
 if (random2(2) == 0)
 {
@@ -181,17 +181,17 @@ return 0;
 int animate_dead(int power, int corps_beh, int corps_hit, int actual)
 {
 
-unsigned char adx = 0;
-unsigned char ady = 0;
+int adx = 0;
+int ady = 0;
 
-char minx = you[0].x_pos - 6;
-char maxx = you[0].x_pos + 7;
-char miny = you[0].y_pos - 6;
-char maxy = you[0].y_pos + 6;
-char xinc = 1;
-char yinc = 1;
+int minx = you[0].x_pos - 6;
+int maxx = you[0].x_pos + 7;
+int miny = you[0].y_pos - 6;
+int maxy = you[0].y_pos + 6;
+int xinc = 1;
+int yinc = 1;
 
-char number_raised = 0;
+int number_raised = 0;
 
 if (random2(2) == 0)
 {

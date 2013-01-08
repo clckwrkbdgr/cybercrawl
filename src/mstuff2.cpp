@@ -170,7 +170,7 @@ int func_pass [10];
 
 			} // end of switch
 
-	if ((20 + you[0].your_level * 2) * random2(200) / 100 >= menv [i].m_ev);
+	if ((20 + you[0].your_level * 2) * random2(200) / 100 >= menv [i].m_ev)
 	{
 		damage_taken = random2(beem[0].damage);
 		damage_taken -= random2 (menv [i].m_AC + 1);

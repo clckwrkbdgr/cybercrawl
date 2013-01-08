@@ -75,7 +75,7 @@ extern char wield_change; /* defined in output.cc */
 It all starts here. Some initialisations are run first, then straight to
 new_game and then input.
 */
-int main(int argc, char *argv[])
+int main(/*int argc, char *argv[]*/)
 {
 	lincurses_startup();
 	macro_init();

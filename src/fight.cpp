@@ -2934,7 +2934,7 @@ if (mons_near(it) == 1)
 
 
 
-void monster_polymorph(unsigned char monsc, unsigned char targetc, int power)
+void monster_polymorph(unsigned int monsc, unsigned int targetc, int power)
 {
 
 int k = power;
