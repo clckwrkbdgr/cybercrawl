@@ -25,6 +25,8 @@
 #include "spells2.h"
 #include "spells3.h"
 
+char info[200];
+
 void torment(void)
 {
  int dmi = 0;
@@ -239,110 +241,102 @@ switch(beam[0].type)
 } // end monster_direct_effect()
 
 
+std::string random_roaring_monster()
+{
+	switch(random2(8)) {
+		case 0: return "frog";
+		case 1: return "pill bug";
+		case 2: return "millipede";
+		case 3: return "eggplant";
+		case 4: return "albino dragon";
+		case 5: return "dragon";
+		case 6: return "human";
+		case 7: return "slug";
+	}
+	return "";
+}
+
+std::string random_smell()
+{
+	switch(random2(8)) {
+		case 0: return "coffee";
+		case 1: return "salt";
+		case 2: return "burning hair";
+		case 3: return "baking bread";
+		case 4: return "something weird";
+		case 5: return "wet wool";
+		case 6: return "sulphur";
+		case 7: return "fire and brimstone";
+	}
+	return "";
+}
+
+std::string random_itching()
+{
+	switch(random2(3)) {
+		case 0: return "ears itch";
+		case 1: return "brain hurts";
+		case 2: return "nose twitches suddenly";
+	}
+	return "";
+}
+
+std::string random_sound()
+{
+	switch(random2(9)) {
+		case 0: return "snatches of song";
+		case 1: return "a voice call someone else's name";
+		case 2: return "a very strange noise";
+		case 3: return "roaring flame";
+		case 4: return "a very strange noise indeed";
+		case 5: return "the chiming of a distant gong";
+		case 6: return "the bellowing of a yak";
+		case 7: return "a crunching sound";
+		case 8: return "the tinkle of an enormous bell";
+	}
+	return "";
+}
 
 void random_uselessness(int ru, int sc_read_2)
 {
-
-char wc [30];
-
-switch(ru)
-{
-	case 0:
-	weird_colours(random2(256), wc);
-	msg("The dust glows a @1 colour!") << wc;
-	break;
-
-	case 1:
-	mpr("The device reassembles itself in your hand!");
-	you[0].inv_quant [sc_read_2]++;
- burden_change();
-	break;
-
-	case 2:
-	if (you[0].equip [EQ_WEAPON] != -1)
-	{
-	in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
-	weird_colours(random2(256), wc);
-	msg("@1 glows @2 for a moment.") << str_pass << wc;
-	return;
-	} else
-	     {
-		mpr("Nothing appears to happen.");
-		return;
-	     }
-
-	case 3:
-	strcpy(info, "You hear the distant roaring of an enraged ");
-		switch(random2(8))
-		{
-			case 0: mpr("frog!"); break;
-			case 1: mpr("pill bug!"); break;
-			case 2: mpr("millipede!"); break;
-			case 3: mpr("eggplant!"); break;
-			case 4: mpr("albino dragon!"); break;
-			case 5: mpr("dragon!"); break;
-			case 6: mpr("human!"); break;
-			case 7: mpr("slug!"); break;
-		}
-	return;
-
-	case 4:
-	strcpy(info, "You smell ");
-		switch(random2(8))
-		{
-			case 0: mpr("coffee."); break;
-			case 1: mpr("salt."); break;
-			case 2: mpr("burning hair!"); break;
-			case 3: mpr("baking bread."); break;
-			case 4: mpr("something weird."); break;
-			case 5: mpr("wet wool."); break;
-			case 6: mpr("sulphur."); break;
-			case 7: mpr("fire and brimstone!"); break;
-		}
-	return;
-
-
-
-	case 5:
-	mpr("You experience a momentary feeling of inescapable doom!");
-	return;
-
-	case 6:
-	strcpy(info, "Your ");
- switch(random2(3))
- {
-			case 0: mpr("ears itch."); break;
-			case 1: mpr("brain hurts!"); break;
-			case 2: mpr("nose twitches suddenly!"); break;
- }
-	return;
-
- case 7:
- mpr("You hear the tinkle of a tiny bell.");
- summon_butter();
- return;
-
-	case 8:
-	strcpy(info, "You hear ");
-		switch(random2(9))
-		{
-			case 0: mpr("snatches of song."); break;
-			case 1: mpr("a voice call someone else's name."); break;
-			case 2: mpr("a very strange noise."); break;
-			case 3: mpr("roaring flame."); break;
-			case 4: mpr("a very strange noise indeed."); break;
-			case 5: mpr("the chiming of a distant gong."); break;
-			case 6: mpr("the bellowing of a yak."); break;
-			case 7: mpr("a crunching sound."); break;
-			case 8: mpr("the tinkle of an enormous bell."); break;
-		}
-	return;
-
-
-}
-
-//abort();
-
+	switch(ru) {
+		case 0:
+			msg("The dust glows a @1 colour!") << weird_colours(random2(256));
+			break;
+		case 1:
+			mpr("The device reassembles itself in your hand!");
+			you[0].inv_quant [sc_read_2]++;
+			burden_change();
+			break;
+		case 2:
+			if (you[0].equip [EQ_WEAPON] != -1) {
+				in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
+				msg("@1 glows @2 for a moment.") << str_pass << weird_colours(random2(256));
+				return;
+			} else {
+				msg("Nothing appears to happen.");
+				return;
+			}
+		case 3:
+			msg("You hear the distant roaring of an enraged @1!") << random_roaring_monster();
+			return;
+		case 4:
+			msg("You smell @1.") << random_smell();
+			return;
+		case 5:
+			mpr("You experience a momentary feeling of inescapable doom!");
+			return;
+		case 6:
+			msg("Your @1!") << random_itching();
+			return;
+		case 7:
+			mpr("You hear the tinkle of a tiny bell.");
+			summon_butter();
+			return;
+		case 8:
+			msg("You hear @1.") << random_sound();
+			return;
+	}
 }
 
 

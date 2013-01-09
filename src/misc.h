@@ -1,3 +1,5 @@
+#pragma once
+#include <string>
 
 void destroy_item(int dest);
 void place_chunks(int mcls, int rot_status, int chx, int chy, int ch_col);
@@ -14,7 +16,7 @@ int manage_clouds(void);
 void weird_writing(char stringy [40]);
 void fall_into_a_pool(char place, int grype);
 void new_level(void);
-void weird_colours(int coll, char wc [30]);
+std::string weird_colours(int coll);
 char go_berserk(void);
 
 

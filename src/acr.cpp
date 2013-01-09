@@ -868,14 +868,12 @@ void input(void)
 	   couldn't get it to work.
 	   */
 	if (visible [0] != 0) {
-		char wc [30];
 		if (visible [1] != 0) {
 			switch(visible [1]) {
 				case 0: break;
 				case 2:
 						if (random2(4) == 0) {
-							weird_colours(random2(200), wc);
-							msg("The silver statue's eyes glow a @1 colour.") << wc;
+							msg("The silver statue's eyes glow a @1 colour.") << weird_colours(random2(200));
 							create_monster(summon_any_demon(random2(2)), 25, 1, you[0].x_pos, you[0].y_pos, MHITYOU, 250);
 						}
 						break;

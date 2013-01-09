@@ -57,6 +57,8 @@
 #include "stuff.h"
 #include "view.h"
 
+extern char info[200];
+
 int jelly_divide(int jel);
 void place_monster_corpse(int mcr);
 extern int wield_change; /* defined in output.cc */

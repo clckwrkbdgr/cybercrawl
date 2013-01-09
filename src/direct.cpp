@@ -180,7 +180,14 @@ void check_ing(int xps, int yps)
 	}
 }
 
-char info[200];
+std::string monster_name(int mmov_x, int i)
+{
+	if (menv [i].m_class == 144) {
+		item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 2, str_pass);
+		return str_pass;
+	}
+	return monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 2);
+}
 
 void describe_monster(int xps, int yps)
 {
@@ -194,14 +201,7 @@ void describe_monster(int xps, int yps)
 
 		if (menv [i].m_ench [2] == 6 && player_see_invis() == 0) return;
 		int mmov_x = menv [i].m_inv [0];
-		if (menv [i].m_class == 144) {
-			item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 2, str_pass);
-			strcpy(info, str_pass);
-		} else {
-			strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 2));
-		}
-		strcat(info, ".");
-		mpr(info);
+		msg("@1.") << monster_name(mmov_x, i);
 
 		print_wounds(i);
 

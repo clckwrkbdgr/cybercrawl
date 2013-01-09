@@ -1494,72 +1494,53 @@ return 1; // success
 
 
 
-void weird_colours(int coll, char wc [30])
+std::string weird_colours(int coll)
 {
+	std::string result;
+	switch(coll / 16) {
+		case 0: result += "brilliant "; break;
+		case 1: result += "pale "; break;
+		case 2: result += "mottled "; break;
+		case 3: result += "shimmering "; break;
+		case 4: result += "bright "; break;
+		case 5: result += "dark "; break;
+		case 6: result += "shining "; break;
+		case 7: result += "brilliant "; break;
+		case 8: result += "pale "; break;
+		case 9: result += "mottled "; break;
+		case 10: result += "shimmering "; break;
+		case 11: result += "bright "; break;
+		case 12: result += "dark "; break;
+		case 13: result += "shining "; break;
+		default: result += "faint "; break;
+	}
 
-strcpy(wc, "");
+	while(coll > 17) {
+		coll -= 10;
+	}
 
-//if (coll > 15)
-//{
-switch(coll / 16)
-{
-	case 0: strcat(wc, "brilliant "); break;
-	case 1: strcat(wc, "pale "); break;
-	case 2: strcat(wc, "mottled "); break;
-	case 3: strcat(wc, "shimmering "); break;
-	case 4: strcat(wc, "bright "); break;
-	case 5: strcat(wc, "dark "); break;
-	case 6: strcat(wc, "shining "); break;
-	case 7: strcat(wc, "brilliant "); break;
-	case 8: strcat(wc, "pale "); break;
-	case 9: strcat(wc, "mottled "); break;
-	case 10: strcat(wc, "shimmering "); break;
-	case 11: strcat(wc, "bright "); break;
-	case 12: strcat(wc, "dark "); break;
-	case 13: strcat(wc, "shining "); break;
+	switch(coll) {
+		case 0: result += "red"; break;
+		case 1: result += "purple"; break;
+		case 2: result += "green"; break;
+		case 3: result += "orange"; break;
+		case 4: result += "magenta"; break;
+		case 5: result += "black"; break;
+		case 6: result += "grey"; break;
+		case 7: result += "silver"; break;
+		case 8: result += "gold"; break;
+		case 9: result += "pink"; break;
+		case 10: result += "yellow"; break;
+		case 11: result += "white"; break;
+		case 12: result += "brown"; break;
+		case 13: result += "aubergine"; break;
+		case 14: result += "ochre"; break;
+		case 15: result += "leaf green"; break;
+		case 16: result += "mauve"; break;
+		case 17: result += "azure"; break;
+	}
 
-	// Must start with a consonant!
-
-
-//	case 7: strcat(wc, " "); break;
-//	case 8: strcat(wc, " "); break;
-
-	default: strcat(wc, "faint "); break;
-}
-//} // end of if coll > 15
-
-while(coll > 17)
-{
-	coll -= 10;
-}
-
-switch(coll)
-{
-	case 0: strcat(wc, "red"); break;
-	case 1: strcat(wc, "purple"); break;
-	case 2: strcat(wc, "green"); break;
-	case 3: strcat(wc, "orange"); break;
-	case 4: strcat(wc, "magenta"); break;
-	case 5: strcat(wc, "black"); break;
-	case 6: strcat(wc, "grey"); break;
-	case 7: strcat(wc, "silver"); break;
-	case 8: strcat(wc, "gold"); break;
-	case 9: strcat(wc, "pink"); break;
-	case 10: strcat(wc, "yellow"); break;
-	case 11: strcat(wc, "white"); break;
-	case 12: strcat(wc, "brown"); break;
-	case 13: strcat(wc, "aubergine"); break;
-	case 14: strcat(wc, "ochre"); break;
-	case 15: strcat(wc, "leaf green"); break;
-	case 16: strcat(wc, "mauve"); break;
-	case 17: strcat(wc, "azure"); break;
-//	case 18: strcat(wc, ""); break;
-//	case 19: strcat(wc, ""); break;
-}
-
-
-return;
-
+	return result;
 }
 
 char go_berserk(void)
