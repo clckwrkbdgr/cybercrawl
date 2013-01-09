@@ -57,8 +57,6 @@
 #include "stuff.h"
 #include "view.h"
 
-extern char info[200];
-
 int jelly_divide(int jel);
 void place_monster_corpse(int mcr);
 extern int wield_change; /* defined in output.cc */
@@ -921,7 +919,15 @@ return;
 }
 
 
-
+std::string monster_name(int mmov_x, int monster_attacking)
+{
+	if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON) {
+		char str_pass [80];
+		item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
+		return str_pass;
+	}
+	return monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 1);
+}
 
 void monster_attack(int monster_attacking)
 {
@@ -1071,17 +1077,8 @@ mons_to_hit = random2(mons_to_hit);
 
 if (player_shield_class() > 0 && you[0].paralysis == 0 && you[0].conf == 0 && random2(menv [monster_attacking].m_HD + 10) <= random2(player_shield_class()))
 {
- strcpy(info, "You block ");
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         char str_pass [80];
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else  strcat(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 1));  //gmon_name [menv [monster_attacking].m_class]);
- strcat(info, "'s attack.");
- mpr(info);
+ msg("You block @1's attack.") << monster_name(mmov_x, monster_attacking);
  blocked = 1;
  hit = 0;
  if (you[0].equip [EQ_SHIELD] != -1 && random2(4) == 0) exercise(SK_SHIELDS, 1);
@@ -1133,370 +1130,311 @@ if (damage_taken < 1) damage_taken = 0;
         hit = 0;
 
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
- 	char str_pass [80];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));  //gmon_name [menv [monster_attacking].m_class]);
-        strcat(info, " misses you.");
-        mpr(info);
+        msg("@1 misses you.") << monster_name(mmov_x, monster_attacking);
  }
 
 
 if (damage_taken < 1 && hit == 1 && blocked == 0)
 {
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
-	char str_pass [80];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));  //gmon_name [menv [monster_attacking].m_class]);
-        strcat(info, " hits you but doesn't do any damage.");
-        mpr(info);
+        msg("@1 hits you but doesn't do any damage.") << monster_name(mmov_x, monster_attacking);
 }
 
 
 
 if ((int) damage_taken >= 1)
 {
- hit = 1;
-        mmov_x = menv [monster_attacking].m_inv [hand_used];
+	hit = 1;
+	mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-        mmov_x = menv [monster_attacking].m_inv [hand_used];
+	if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && mmov_x != 501 && mitm.iclass [mmov_x] == 0 && (mitm.itype [mmov_x] < 13 || mitm.itype [mmov_x] > 16))
+	{
+		item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3, str_pass);
+		msg("@1 hits you with @2!") << monster_name(mmov_x, monster_attacking) << str_pass;
+	} else {
+		msg("@1 hits you!") << monster_name(mmov_x, monster_attacking);
+	}
 
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " hits you");
-
-#ifdef DEBUG
-itoa(mmov_x, st_prn, 10);
-strcat(info, " it:");
-strcat(info, st_prn); // note: doesn't take account of special weapons etc
-#endif
-
-
-//        if (menv [monster_attacking].m_class != 144 && menv [monster_attacking].m_inv [hand_used] != 501 && mitm.iclass [menv [monster_attacking].m_inv [hand_used]] == 0 && mitm.itype [menv [monster_attacking].m_inv [hand_used]] < 13 || mitm.itype [menv [monster_attacking].m_inv [hand_used]] > 16)
-        if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && mmov_x != 501 && mitm.iclass [mmov_x] == 0 && (mitm.itype [mmov_x] < 13 || mitm.itype [mmov_x] > 16))
-        {
-        strcat(info, " with ");
-
-        item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3, str_pass); // was 7
-        strcat(info, str_pass);
- strcat(info, "!");
-
- } else
-   {
-    strcat(info, "!");
-   }
-
-mpr(info);
-
-if (hit == 1)
-{
- if (you[0].equip [EQ_BODY_ARMOUR] != -1)
-  if (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] > ARM_LEATHER_ARMOUR && !(you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= ARM_STEAM_DRAGON_HIDE && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= ARM_MOTTLED_DRAGON_ARMOUR) && random2(1000) <= mass(OBJ_ARMOUR, you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]]) && random2(2) == 0)
-   exercise(SK_ARMOUR, 1); /* practises armour */
-}
+	if (hit == 1)
+	{
+		if (you[0].equip [EQ_BODY_ARMOUR] != -1)
+			if (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] > ARM_LEATHER_ARMOUR && !(you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] >= ARM_STEAM_DRAGON_HIDE && you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] <= ARM_MOTTLED_DRAGON_ARMOUR) && random2(1000) <= mass(OBJ_ARMOUR, you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]]) && random2(2) == 0)
+				exercise(SK_ARMOUR, 1); /* practises armour */
+	}
 
 
-/* special attacks: */
+	/* special attacks: */
 
-        char brek = 0;
+	char brek = 0;
 
-        int mclas = menv [monster_attacking].m_class;
+	int mclas = menv [monster_attacking].m_class;
 
 	if (mclas == MONS_KILLER_KLOWN) /* Killer Klown */
 	{
-	 switch(random2(6))
-	 {
-	  case 0: mclas = MONS_SNAKE; break; /* scorp */
-	  case 1: mclas = MONS_NECROPHAGE; break; /* necrophage */
-	  case 2: mclas = MONS_WRAITH; break; /* wraith */
-	  case 3: mclas = MONS_FIRE_ELEMENTAL; break; /* fire elem */
-	  case 4: mclas = MONS_ICE_BEAST; break; /* ice beast */
-	  case 5: mclas = MONS_PHANTOM; break; /* phantom */
-	 }
+		switch(random2(6))
+		{
+			case 0: mclas = MONS_SNAKE; break; /* scorp */
+			case 1: mclas = MONS_NECROPHAGE; break; /* necrophage */
+			case 2: mclas = MONS_WRAITH; break; /* wraith */
+			case 3: mclas = MONS_FIRE_ELEMENTAL; break; /* fire elem */
+			case 4: mclas = MONS_ICE_BEAST; break; /* ice beast */
+			case 5: mclas = MONS_PHANTOM; break; /* phantom */
+		}
 	}
 
-        switch(mclas)
-        {
-        case MONS_GIANT_ANT: /* giant ant */
-        case MONS_WOLF_SPIDER: /* wolf spider */
-        case MONS_REDBACK: /* redback */
-        if (player_res_poison() != 0) break;
-        if ((damage_taken >= 4 && random2(4) == 0) || random2(20) == 0)
-        {
-        msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        you[0].poison++;
-        if (menv [monster_attacking].m_class == MONS_REDBACK) you[0].poison += 3 + random2(5) + random2(5);
-        }
-        break;
+	switch(mclas)
+	{
+		case MONS_GIANT_ANT: /* giant ant */
+		case MONS_WOLF_SPIDER: /* wolf spider */
+		case MONS_REDBACK: /* redback */
+			if (player_res_poison() != 0) break;
+			if ((damage_taken >= 4 && random2(4) == 0) || random2(20) == 0)
+			{
+				msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison++;
+				if (menv [monster_attacking].m_class == MONS_REDBACK) you[0].poison += 3 + random2(5) + random2(5);
+			}
+			break;
 
-        case MONS_KILLER_BEE: /* killer bee */
-        case MONS_BUMBLEBEE: /* bumblebee */
-        if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0))
-        {
-        msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        you[0].poison += 1;
-        if (menv [monster_attacking].m_class == MONS_BUMBLEBEE) you[0].poison += random2(3);
-        }
-        break;
+		case MONS_KILLER_BEE: /* killer bee */
+		case MONS_BUMBLEBEE: /* bumblebee */
+			if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0))
+			{
+				msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison += 1;
+				if (menv [monster_attacking].m_class == MONS_BUMBLEBEE) you[0].poison += random2(3);
+			}
+			break;
 
- case MONS_ROTTING_DEVIL: /* rotting devil */
- case MONS_NECROPHAGE: /* necrophage */
- case MONS_GHOUL: /* ghoul */
- case MONS_DEATH_OOZE: // death ooze
-        if (you[0].is_undead != 0) break;
-                if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
-                {
-                        mpr("You feel your flesh start to rot away!");
-                        you[0].rotting += random2(3) + 1;
-                }
-  if (random2(4) == 0)
-  {
-   mpr("You feel ill.");
-   if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
-  }
-                break;
+		case MONS_ROTTING_DEVIL: /* rotting devil */
+		case MONS_NECROPHAGE: /* necrophage */
+		case MONS_GHOUL: /* ghoul */
+		case MONS_DEATH_OOZE: // death ooze
+			if (you[0].is_undead != 0) break;
+			if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
+			{
+				mpr("You feel your flesh start to rot away!");
+				you[0].rotting += random2(3) + 1;
+			}
+			if (random2(4) == 0)
+			{
+				mpr("You feel ill.");
+				if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
+			}
+			break;
 
- case MONS_GIANT_MOSQUITO: // mosquito
- if (random2(3) != 0)
- mpr("You feel ill.");
- if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
- break;
+		case MONS_GIANT_MOSQUITO: // mosquito
+			if (random2(3) != 0)
+				mpr("You feel ill.");
+			if (you[0].disease > 100) you[0].disease = 210; else you[0].disease += 50 + random2(100);
+			break;
 
- case MONS_FIRE_VORTEX: /* fire vortex */
- menv [monster_attacking].m_hp = -10;
- case MONS_FIRE_ELEMENTAL: /* fire elemental */
- case MONS_BALRUG: /* balrug */
- case MONS_SUN_DEMON: /* sun demon */
-        mpr("You are engulfed in flame!");
-   if (player_res_fire() > 100)
-   {
-    damage_taken += (15 + random2(15)) / 2 + ((player_res_fire() - 100) * (player_res_fire() - 100));
-   }
-   if (player_res_fire() <= 100)
-   {
-        damage_taken += 15 + random2(15);
-   }
-   if (player_res_fire() < 100)
-   {
-        damage_taken += 8 + random2(8);
-   }
- scrolls_burn(1, 6);
- break;
-
-
-        case MONS_SNAKE: /* scorpion */
- case MONS_GIANT_MITE: /* giant mite */
- case MONS_GOLD_MIMIC:
- case MONS_WEAPON_MIMIC:
- case MONS_ARMOUR_MIMIC:
- case MONS_SCROLL_MIMIC:
- case MONS_POTION_MIMIC: /* Mimics */
-      /* case MONS_MIDGE: less demon */
-        if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(4) == 0) || random2(15) == 0))
-        {
-        msg("@1 poisons you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        mpr(info);
-        you[0].poison++;
-        }
-        break;
+		case MONS_FIRE_VORTEX: /* fire vortex */
+			menv [monster_attacking].m_hp = -10;
+		case MONS_FIRE_ELEMENTAL: /* fire elemental */
+		case MONS_BALRUG: /* balrug */
+		case MONS_SUN_DEMON: /* sun demon */
+			mpr("You are engulfed in flame!");
+			if (player_res_fire() > 100)
+			{
+				damage_taken += (15 + random2(15)) / 2 + ((player_res_fire() - 100) * (player_res_fire() - 100));
+			}
+			if (player_res_fire() <= 100)
+			{
+				damage_taken += 15 + random2(15);
+			}
+			if (player_res_fire() < 100)
+			{
+				damage_taken += 8 + random2(8);
+			}
+			scrolls_burn(1, 6);
+			break;
 
 
-
-        case MONS_QUEEN_BEE: /* Queen bee */
-        case MONS_GIANT_CENTIPEDE: /* giant centipede */
-        case MONS_SOLDIER_ANT: /* soldier ant */
-        case MONS_QUEEN_ANT: /* Queen ant */
-if (player_res_poison() == 0)
-{
-        msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        you[0].poison += 2;
-}
-        break;
-
-
-        case MONS_SCORPION: // snake
-        case MONS_BROWN_SNAKE: // br snake
-	case MONS_BLACK_SNAKE: // black snake
-	case MONS_YELLOW_SNAKE: // yellow snake
-        if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(4) == 0) || random2(20) == 0))
-        {
-        msg("@1 poisons you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        mpr(info);
-        you[0].poison++;
-        }
-        break;
-
- case MONS_SHADOW_DRAGON: // shadow dragon
- case MONS_SPECTRAL_THING: /* spectral thing */
- if (random2(2) == 0) break;
- case MONS_WIGHT: // Wight. Is less likely because wights do less damage
- case MONS_WRAITH: // wraith
- case MONS_SOUL_EATER: // shadow devil
- case MONS_SHADOW_FIEND: // shad fiend
- case MONS_SPECTRAL_WARRIOR: // spectre
- case MONS_ORANGE_RAT: // orange rat
- case MONS_SHADOW_WRAITH: // shadow wraith
- case MONS_ANCIENT_LICH: // ancient lich
-//        if (runthru != 0) break; // shadow fiends have multiple attacks
-        if (((damage_taken >= 6 && random2(2) == 0) || random2(30) == 0) && player_prot_life() == 0)
-        {
-/*        if (you[0].duration [DUR_PRAYER] != 0 && you[0].religion == GOD_ZIN && random2(150) < you[0].piety)
-        {
-         strcpy(info, "Knights Templar protects your life force!");
-         mpr(info);
-         brek = 0;
-         break;
-        }*/
-        mpr("You feel drained...");
-        brek = 1;
-        }
-        break;
-
-        case MONS_RED_WASP: // red wasp
-        if (player_res_poison() == 0)
-        {
-        you[0].poison += 1 + random2(2);
-        } // no break is intentional
-        case MONS_YELLOW_WASP: // yellow wasp
-        msg("@1 stings you.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(3) != 0) || random2(20) == 0))
-        {
-        if (you[0].paralysis > 0)
-        {
-                mpr("You still can't move!");
-        } else mpr("You suddenly lose the ability to move!");
-        you[0].paralysis += random2(3) + 1;
-        }
-        break;
-
-        case MONS_SPINY_WORM: // spiny worm
-        if (player_res_poison() == 0)
-        {
-        msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        you[0].poison += 2 + random2(4);
-        } // no break is intentional
-	case MONS_OOZE: // ooze
-	case MONS_ACID_BLOB: // acid blob
-	case MONS_ROYAL_JELLY: // royal jelly
-        case MONS_JELLY: // Jelly
-        mpr("You are splashed with acid!");
-        splash_with_acid(3);
-        break;
-
- case MONS_ICE_DEVIL: // ice devil
- case MONS_ICE_BEAST: // Ice beast
- case MONS_FREEZING_WRAITH: // blue wraith
- case MONS_ICE_FIEND: // I Fiend
- case MONS_WHITE_IMP: // lesser demon
- case MONS_ANTAEUS: // Antaeus
- case MONS_AZURE_JELLY: // azure jelly
-   if (player_res_cold() <= 100)
-   {
-        damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD * 2);
-        msg("@1 freezes you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-   } else
-   {
-        damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD * 2);
-        damage_taken /= (2 + (player_res_cold() - 100) * (player_res_cold() - 100));
-        msg("@1 chills you.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-   }
-
-   if (player_res_cold() < 100) damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD);
-
- scrolls_burn(1, 8);
- break;
-
- case MONS_VAMPIRE: // Vampire
- if (you[0].is_undead != 0) break;
-/*      if (damage_taken >= 7 && random2(3) == 0 || random2(20) == 0)
-      {
-        strcpy(info, "You feel less resilient.");
-        mpr(info);
-        you[0].hp_max -= random2(2) + 1;
-        you[0].hp_ch = 1;
-        if (you[0].hp >= you[0].hp_max) you[0].hp = you[0].hp_max;
-        menv [monster_attacking].m_hp += 5 + random2(8);
-        if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;
-      }*/
- msg("@1 is healed.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
- menv [monster_attacking].m_hp += random2(damage_taken);
- if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;
- break;
-
- case MONS_SHADOW: // shadow
- if (player_prot_life() != 0 || you[0].is_undead != 0) break;
-      if (((damage_taken >= 1 && random2(3)) == 0 || random2(20) == 0) && you[0].strength > 3 && player_sust_abil() == 0)
-      {
-        mpr("You feel weaker.");
-        you[0].strength --;
-        you[0].strength_ch = 1;
-      }
- break;
-
- case MONS_HUNGRY_GHOST: // hungry ghost
- if (you[0].is_undead == 2) break;
-      if ((damage_taken >= 1 && random2(2) == 0) || random2(20) == 0)
-      {
-        mpr("You feel hungry.");
-        you[0].hunger -= 400;
-        //strength_ch = 1;
-      }
- break;
+		case MONS_SNAKE: /* scorpion */
+		case MONS_GIANT_MITE: /* giant mite */
+		case MONS_GOLD_MIMIC:
+		case MONS_WEAPON_MIMIC:
+		case MONS_ARMOUR_MIMIC:
+		case MONS_SCROLL_MIMIC:
+		case MONS_POTION_MIMIC: /* Mimics */
+			/* case MONS_MIDGE: less demon */
+			if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(4) == 0) || random2(15) == 0))
+			{
+				msg("@1 poisons you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison++;
+			}
+			break;
 
 
-        case MONS_GUARDIAN_NAGA: // Naga
 
-        break;
-
- case MONS_PHANTOM: // phantom
- case MONS_INSUBSTANTIAL_WISP: // wisp
- case MONS_BLINK_FROG: // blink frog
- case MONS_MIDGE: // less demon
- if (random2(3) == 0)
- {
-   msg("@1 blinks.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-   monster_blink(monster_attacking);
- }
- break;
-
-        case MWATER3: // jellyfish
-        case MONS_ORANGE_DEMON:
-// if (random2(3) != 0) break;
- if (player_res_poison() != 0) break;
- if (menv [monster_attacking].m_class == MONS_ORANGE_DEMON && (random2(4) != 0 || runthru != 1)) break;
-        msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
-        you[0].poison++;
- if (player_sust_abil() == 0 && you[0].strength > 3)
- {
-  mpr("You feel weaker.");
-  you[0].strength_ch = 1;
-                you[0].strength --;
- }
-        break;
-
-	case MONS_PULSATING_LUMP: // pulsating lump
-	if (random2(3) == 0) mutate(100);
-	break;
+		case MONS_QUEEN_BEE: /* Queen bee */
+		case MONS_GIANT_CENTIPEDE: /* giant centipede */
+		case MONS_SOLDIER_ANT: /* soldier ant */
+		case MONS_QUEEN_ANT: /* Queen ant */
+			if (player_res_poison() == 0)
+			{
+				msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison += 2;
+			}
+			break;
 
 
-        } // end of switch for special attacks.
+		case MONS_SCORPION: // snake
+		case MONS_BROWN_SNAKE: // br snake
+		case MONS_BLACK_SNAKE: // black snake
+		case MONS_YELLOW_SNAKE: // yellow snake
+			if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(4) == 0) || random2(20) == 0))
+			{
+				msg("@1 poisons you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison++;
+			}
+			break;
 
-        /* use brek for level drain, maybe with beam variables, because so many creatures use it. */
+		case MONS_SHADOW_DRAGON: // shadow dragon
+		case MONS_SPECTRAL_THING: /* spectral thing */
+			if (random2(2) == 0) break;
+		case MONS_WIGHT: // Wight. Is less likely because wights do less damage
+		case MONS_WRAITH: // wraith
+		case MONS_SOUL_EATER: // shadow devil
+		case MONS_SHADOW_FIEND: // shad fiend
+		case MONS_SPECTRAL_WARRIOR: // spectre
+		case MONS_ORANGE_RAT: // orange rat
+		case MONS_SHADOW_WRAITH: // shadow wraith
+		case MONS_ANCIENT_LICH: // ancient lich
+			//        if (runthru != 0) break; // shadow fiends have multiple attacks
+			if (((damage_taken >= 6 && random2(2) == 0) || random2(30) == 0) && player_prot_life() == 0)
+			{
+				mpr("You feel drained...");
+				brek = 1;
+			}
+			break;
 
-if (brek == 1)
-{
-	drain_exp();
-}
+		case MONS_RED_WASP: // red wasp
+			if (player_res_poison() == 0)
+			{
+				you[0].poison += 1 + random2(2);
+			} // no break is intentional
+		case MONS_YELLOW_WASP: // yellow wasp
+			msg("@1 stings you.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			if (player_res_poison() == 0 && ((damage_taken >= 3 && random2(3) != 0) || random2(20) == 0))
+			{
+				if (you[0].paralysis > 0)
+				{
+					mpr("You still can't move!");
+				} else mpr("You suddenly lose the ability to move!");
+				you[0].paralysis += random2(3) + 1;
+			}
+			break;
+
+		case MONS_SPINY_WORM: // spiny worm
+			if (player_res_poison() == 0)
+			{
+				msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				you[0].poison += 2 + random2(4);
+			} // no break is intentional
+		case MONS_OOZE: // ooze
+		case MONS_ACID_BLOB: // acid blob
+		case MONS_ROYAL_JELLY: // royal jelly
+		case MONS_JELLY: // Jelly
+			mpr("You are splashed with acid!");
+			splash_with_acid(3);
+			break;
+
+		case MONS_ICE_DEVIL: // ice devil
+		case MONS_ICE_BEAST: // Ice beast
+		case MONS_FREEZING_WRAITH: // blue wraith
+		case MONS_ICE_FIEND: // I Fiend
+		case MONS_WHITE_IMP: // lesser demon
+		case MONS_ANTAEUS: // Antaeus
+		case MONS_AZURE_JELLY: // azure jelly
+			if (player_res_cold() <= 100)
+			{
+				damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD * 2);
+				msg("@1 freezes you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			} else
+			{
+				damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD * 2);
+				damage_taken /= (2 + (player_res_cold() - 100) * (player_res_cold() - 100));
+				msg("@1 chills you.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			}
+
+			if (player_res_cold() < 100) damage_taken += menv [monster_attacking].m_HD + random2(menv [monster_attacking].m_HD);
+
+			scrolls_burn(1, 8);
+			break;
+
+		case MONS_VAMPIRE: // Vampire
+			if (you[0].is_undead != 0) break;
+			msg("@1 is healed.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			menv [monster_attacking].m_hp += random2(damage_taken);
+			if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;
+			break;
+
+		case MONS_SHADOW: // shadow
+			if (player_prot_life() != 0 || you[0].is_undead != 0) break;
+			if (((damage_taken >= 1 && random2(3)) == 0 || random2(20) == 0) && you[0].strength > 3 && player_sust_abil() == 0)
+			{
+				mpr("You feel weaker.");
+				you[0].strength --;
+				you[0].strength_ch = 1;
+			}
+			break;
+
+		case MONS_HUNGRY_GHOST: // hungry ghost
+			if (you[0].is_undead == 2) break;
+			if ((damage_taken >= 1 && random2(2) == 0) || random2(20) == 0)
+			{
+				mpr("You feel hungry.");
+				you[0].hunger -= 400;
+				//strength_ch = 1;
+			}
+			break;
+
+
+		case MONS_GUARDIAN_NAGA: // Naga
+
+			break;
+
+		case MONS_PHANTOM: // phantom
+		case MONS_INSUBSTANTIAL_WISP: // wisp
+		case MONS_BLINK_FROG: // blink frog
+		case MONS_MIDGE: // less demon
+			if (random2(3) == 0)
+			{
+				msg("@1 blinks.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+				monster_blink(monster_attacking);
+			}
+			break;
+
+		case MWATER3: // jellyfish
+		case MONS_ORANGE_DEMON:
+			// if (random2(3) != 0) break;
+			if (player_res_poison() != 0) break;
+			if (menv [monster_attacking].m_class == MONS_ORANGE_DEMON && (random2(4) != 0 || runthru != 1)) break;
+			msg("@1 stings you!") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			you[0].poison++;
+			if (player_sust_abil() == 0 && you[0].strength > 3)
+			{
+				mpr("You feel weaker.");
+				you[0].strength_ch = 1;
+				you[0].strength --;
+			}
+			break;
+
+		case MONS_PULSATING_LUMP: // pulsating lump
+			if (random2(3) == 0) mutate(100);
+			break;
+
+
+	} // end of switch for special attacks.
+
+	/* use brek for level drain, maybe with beam variables, because so many creatures use it. */
+
+	if (brek == 1)
+	{
+		drain_exp();
+	}
 
 }
 
@@ -1551,16 +1489,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
     {
         mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else  strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " burns you");
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("@1 burns you@2") << monster_name(mmov_x, monster_attacking) << sentence_ending_for_spec_damage(specdam);
     }
    break;
 
@@ -1583,16 +1512,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
     {
         mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " freezes you");
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        mpr(info);
+        msg("@1 freezes you@2") << monster_name(mmov_x, monster_attacking) << sentence_ending_for_spec_damage(specdam);
     }
    break;
 
@@ -1639,15 +1559,11 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    if (random2(3) == 0 && player_res_poison() == 0)
    {
         mmov_x = menv [monster_attacking].m_inv [hand_used];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON)
-        strcat(info, "'s weapon is poisoned!");
-        else strcat(info, " is poisoned!");
+        if(menv[monster_attacking].m_class != MONS_DANCING_WEAPON) {
+			msg("@1's weapon is poisoned!") << monster_name(mmov_x, monster_attacking);
+		} else {
+			msg("@1 is poisoned!") << monster_name(mmov_x, monster_attacking);
+		}
 
                                         you[0].poison += 2;
    }
@@ -1679,13 +1595,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
 //   if (you[0].hunger <= 11000) you[0].hunger += random() % 30;
    if (menv [monster_attacking].m_ench [2] != 6 || player_see_invis() != 0)
    {
-    if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-    {
-     item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-     strcpy(info, str_pass);
-    } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-    strcat(info, " is healed.");
-    mpr(info);
+    msg("@1 is healed.") << monster_name(mmov_x, monster_attacking);
    }
    break;
 
@@ -1959,321 +1869,246 @@ if (damage_taken < 1) damage_taken = 0;
 
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-	char str_pass [80];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else  strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));  //gmon_name [menv [monster_attacking].m_class]);
-        strcat(info, " misses ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-   strcat(info, ".");
-   if (sees == 1) mpr(info);
+   if (sees == 1) {
+        msg("@1 misses @2.") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+   }
  }
 
 
 if (damage_taken < 1 && hit == 1)
 {
-//if (78 - strlen(info) < strlen(gmon_name [menv [monster_attacking].m_class]) + 17)
-//      {
-        //mpr(info);
-//      strcpy(info, "The ");
-        //} else
-        //strcat(info, "The ");
-
-
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
-	char str_pass [80];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else  strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));  //gmon_name [menv [monster_attacking].m_class]);
-        strcat(info, " hits ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-#ifdef DEBUG
-itoa(damage_taken, st_prn, 10);
-strcat(info, " for ");
-strcat(info, st_prn); // note: doesn't take account of special weapons etc
-#endif
-        strcat(info, ".");// but doesn't do any you[0].damage.");
- if (sees == 1) mpr(info);
+ if (sees == 1) {
+        msg("@1 hits @2.") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+ }
 }
 
 
 
 if (hit == 1) //(int) damage_taken >= 1)
 {
-//if (78 - strlen(info) < strlen(gmon_name [menv [monster_attacking].m_class]) + 15)
-//      {
-//      mpr(info);
-//      strcpy(info, "The ");
-//      } else
-//      strcpy(info, "The ");
+	int mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-        int mmov_x = menv [monster_attacking].m_inv [hand_used];
+	if (sees == 1) {
 
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         char str_pass [80];
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " hits ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
+		if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && menv [monster_attacking].m_inv [hand_used] != 501 && mitm.iclass [menv [monster_attacking].m_inv [hand_used]] == OBJ_WEAPONS && (mitm.itype [menv [monster_attacking].m_inv [hand_used]] < WPN_SLING || mitm.itype [menv [monster_attacking].m_inv [hand_used]] > WPN_HAND_CROSSBOW)) {
+			item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3, str_pass);
+			msg("@1 hits @2 with @3!") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << str_pass;
+		} else {
+			msg("@1 hits @2!") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+		}
 
+	}
 
-/*        strcat(info, " for ");
-        itoa(damage_taken, st_prn, 10);
-        strcat(info, st_prn);
-*/
+	// special attacks:
 
+	/* brek = 0; */
 
-//      itoa(
+	switch(menv [monster_attacking].m_class)
+	{
+		case MONS_GIANT_ANT: // giant ant
+		case MONS_WOLF_SPIDER:
+		case MONS_REDBACK:
+		case MONS_SPINY_WORM: // spiny worm
+		case MWATER3: // jellyfish
+		case MONS_ORANGE_DEMON: // demon
+			if ((damage_taken >= 4 && random2(4) == 0) || random2(20) == 0 || menv [monster_attacking].m_class == MONS_SPINY_WORM)
+			{
+				if (sees == 1) {
+					msg("@1 stings @2.")
+						<< monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0)
+						<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+				}
+				//        you[0].poison++;
+				poison_monster(monster_attacked, 1);
+			}
+			break;
 
-        if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && menv [monster_attacking].m_inv [hand_used] != 501 && mitm.iclass [menv [monster_attacking].m_inv [hand_used]] == OBJ_WEAPONS && (mitm.itype [menv [monster_attacking].m_inv [hand_used]] < WPN_SLING || mitm.itype [menv [monster_attacking].m_inv [hand_used]] > WPN_HAND_CROSSBOW))
-        {
-        strcat(info, " with ");
+		case MONS_CENTAUR: // cockatrice.
+			break;
 
-        item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3, str_pass); // was 7
-        strcat(info, str_pass);
-        }
-        strcat(info, "! "); // put something for '.', '!', '!!' etc depending on what % of you[0].damage you took.
+		case MONS_KILLER_BEE: // killer bee
+		case MONS_BUMBLEBEE:
+			if (((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0))
+			{
+				if (sees == 1) {
+					msg("@1 stings @2.")
+						<< monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0)
+						<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+				}
+				// you[0].poison += 1;
+				poison_monster(monster_attacked, 1);
+			}
+			break;
 
- if (sees == 1) mpr(info);
+		case MONS_NECROPHAGE: // necrophage
+		case MONS_ROTTING_DEVIL: /* rotting devil */
+		case MONS_GHOUL: /* ghoul */
+		case MONS_DEATH_OOZE: // death ooze
+			if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
+			if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
+			{
+				menv [monster_attacked].m_hp_max -= random2(3) + 1;
+				if (menv [monster_attacked].m_hp > menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
+			}
+			break;
 
-        // special attacks:
+		case MONS_FIRE_VORTEX: // fire_vortex
+			menv [monster_attacking].m_hp = -10;
+		case MONS_FIRE_ELEMENTAL: // fire elem
+		case MONS_BALRUG: // balrug
+		case MONS_SUN_DEMON: // sun demon
+			specdam = 0;
+			if (mons_res_fire(menv [monster_attacked].m_class) == 0)
+			{
+				specdam = random2(15) + 15;
+				if (menv [monster_attacked].m_inv [2] != 501 && mitm.idam [menv [monster_attacked].m_inv [2]] % 30 == 2)
+					specdam /= 3;
+			}
+			if (mons_res_fire(menv [monster_attacked].m_class) == -1 || (menv [monster_attacked].m_inv [2] == 501 || mitm.idam [menv [monster_attacked].m_inv [2]] % 30 != 2))
+			{
+				specdam = random2(25) + 20;
+			}
+			if (specdam != 0)
+			{
+				if (sees == 1)
+				{
+					msg(" is engulfed in flame!") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
+				}
+			}
+			damage_taken += specdam;
+			break;
 
-        /* brek = 0; */
-
-
-
-        switch(menv [monster_attacking].m_class)
-        {
-        case MONS_GIANT_ANT: // giant ant
-        case MONS_WOLF_SPIDER:
-        case MONS_REDBACK:
-        case MONS_SPINY_WORM: // spiny worm
-        case MWATER3: // jellyfish
-        case MONS_ORANGE_DEMON: // demon
-        if ((damage_taken >= 4 && random2(4) == 0) || random2(20) == 0 || menv [monster_attacking].m_class == MONS_SPINY_WORM)
-        {
-      strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-      strcat(info, " stings ");
-      strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-      strcat(info, ".");
-      if (sees == 1) mpr(info);
-      //        you[0].poison++;
-      poison_monster(monster_attacked, 1);
-   }
-        break;
-
-        case MONS_CENTAUR: // cockatrice.
-        break;
-
-        case MONS_KILLER_BEE: // killer bee
-        case MONS_BUMBLEBEE:
-        if (((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0))
-        {
-     strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-     strcat(info, " stings ");
-     strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-     strcat(info, ".");
-     if (sees == 1) mpr(info);
-     // you[0].poison += 1;
-     poison_monster(monster_attacked, 1);
-   }
-        break;
-
-        case MONS_NECROPHAGE: // necrophage
-	case MONS_ROTTING_DEVIL: /* rotting devil */
-	case MONS_GHOUL: /* ghoul */
-	case MONS_DEATH_OOZE: // death ooze
-        if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
-	if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
-        {
-                //strcpy(info, "You feel your flesh start to rot away!");
-                //mpr(info);
-                //you[0].poison += random2(3) + 1;
-      menv [monster_attacked].m_hp_max -= random2(3) + 1;
-      if (menv [monster_attacked].m_hp > menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
-        }
-        break;
-
- case MONS_FIRE_VORTEX: // fire_vortex
- menv [monster_attacking].m_hp = -10;
- case MONS_FIRE_ELEMENTAL: // fire elem
- case MONS_BALRUG: // balrug
- case MONS_SUN_DEMON: // sun demon
-   specdam = 0;
-   if (mons_res_fire(menv [monster_attacked].m_class) == 0)
-   {
-    specdam = random2(15) + 15;
-    if (menv [monster_attacked].m_inv [2] != 501 && mitm.idam [menv [monster_attacked].m_inv [2]] % 30 == 2)
-     specdam /= 3;
-   }
-   if (mons_res_fire(menv [monster_attacked].m_class) == -1 || (menv [monster_attacked].m_inv [2] == 501 || mitm.idam [menv [monster_attacked].m_inv [2]] % 30 != 2))
-   {
-    specdam = random2(25) + 20;
-   }
-    if (specdam != 0)
-    {
-      if (sees == 1)
-      {
-        strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-        strcat(info, " is engulfed in flame!");
-        //if (sees == 1)
-                                                                mpr(info);
-      }
-    }
-   damage_taken += specdam;
- break;
-
-        case MONS_QUEEN_BEE: // queen bee
-        case MONS_GIANT_CENTIPEDE: // giant centipede
-        case MONS_SOLDIER_ANT: // soldier ant
-        case MONS_QUEEN_ANT: /* Queen ant */
-//      if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
-//      {
-          strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-	      strcat(info, " stings ");
-	      strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-	      strcat(info, ".");
-	      if (sees == 1) mpr(info);
-	      poison_monster(monster_attacked, 1);
-//      you[0].poison += 2;
-//      }
-        break;
+		case MONS_QUEEN_BEE: // queen bee
+		case MONS_GIANT_CENTIPEDE: // giant centipede
+		case MONS_SOLDIER_ANT: // soldier ant
+		case MONS_QUEEN_ANT: /* Queen ant */
+			//      if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
+			//      {
+			if (sees == 1) {
+				msg("@1 stings @2.")
+					<< monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0)
+					<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+			}
+			poison_monster(monster_attacked, 1);
+			//      you[0].poison += 2;
+			//      }
+			break;
 
 
-    case MONS_SCORPION: // snake
-    case MONS_BROWN_SNAKE: // br snake
-	case MONS_BLACK_SNAKE: // black snake
-	case MONS_YELLOW_SNAKE: // yellow snake
-    case MONS_GOLD_MIMIC:
-    case MONS_WEAPON_MIMIC:
-    case MONS_ARMOUR_MIMIC:
-    case MONS_SCROLL_MIMIC:
-    case MONS_POTION_MIMIC: /* Mimics */
-        if ((damage_taken >= 3 && random2(4) == 0) || random2(20) == 0)
-        {
-   strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-   strcat(info, " is poisoned.");
-   if (sees == 1) mpr(info);
-        poison_monster(monster_attacked, 1);
-        }
-        break;
+		case MONS_SCORPION: // snake
+		case MONS_BROWN_SNAKE: // br snake
+		case MONS_BLACK_SNAKE: // black snake
+		case MONS_YELLOW_SNAKE: // yellow snake
+		case MONS_GOLD_MIMIC:
+		case MONS_WEAPON_MIMIC:
+		case MONS_ARMOUR_MIMIC:
+		case MONS_SCROLL_MIMIC:
+		case MONS_POTION_MIMIC: /* Mimics */
+			if ((damage_taken >= 3 && random2(4) == 0) || random2(20) == 0)
+			{
+				if (sees == 1) {
+					msg("@1 is poisoned.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
+				}
+				poison_monster(monster_attacked, 1);
+			}
+			break;
 
-        case MONS_SHADOW_DRAGON: // shadow dragon
-        case MONS_SPECTRAL_THING: /* spectral thing */
-        if (random2(2) == 0) break;
-	    case MONS_WIGHT: // wight
-        case MONS_WRAITH: // wraith
-        case MONS_SOUL_EATER: // soul eater
-        case MONS_SHADOW_FIEND: // sh F
-        case MONS_SPECTRAL_WARRIOR: // spectre
-	    case MONS_ORANGE_RAT: // orange rat
+		case MONS_SHADOW_DRAGON: // shadow dragon
+		case MONS_SPECTRAL_THING: /* spectral thing */
+			if (random2(2) == 0) break;
+		case MONS_WIGHT: // wight
+		case MONS_WRAITH: // wraith
+		case MONS_SOUL_EATER: // soul eater
+		case MONS_SHADOW_FIEND: // sh F
+		case MONS_SPECTRAL_WARRIOR: // spectre
+		case MONS_ORANGE_RAT: // orange rat
 		case MONS_ANCIENT_LICH: // ancient lich
-        if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
-        if ((damage_taken >= 6 && random2(2) == 0) || random2(30) == 0)
-        {
-      strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-      strcat(info, " is drained.");
-      if (sees == 1) mpr(info);
-      if (random2(5) == 0) menv [monster_attacked].m_HD --;
-      menv [monster_attacked].m_hp_max -= 2 + random2(3);
-      menv [monster_attacked].m_hp -= 2 + random2(3);
-      if (menv [monster_attacked].m_hp >= menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
-      if (menv [monster_attacked].m_hp <= 0 || menv [monster_attacked].m_HD <= 0)
-      {
-            monster_die(monster_attacked, 2, monster_attacking);
-            return 1;
-      }
-      //brek = 1;
-        }
-        break;
+			if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
+			if ((damage_taken >= 6 && random2(2) == 0) || random2(30) == 0)
+			{
+				if (sees == 1) {
+					msg("@1 is drained.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
+				}
+				if (random2(5) == 0) menv [monster_attacked].m_HD --;
+				menv [monster_attacked].m_hp_max -= 2 + random2(3);
+				menv [monster_attacked].m_hp -= 2 + random2(3);
+				if (menv [monster_attacked].m_hp >= menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
+				if (menv [monster_attacked].m_hp <= 0 || menv [monster_attacked].m_HD <= 0)
+				{
+					monster_die(monster_attacked, 2, monster_attacking);
+					return 1;
+				}
+				//brek = 1;
+			}
+			break;
 
-        case MONS_WORM: // giant wasp
-/*      if ((damage_taken >= 3 && random2(3) == 0) || random2(20) == 0)
-        {
-        if (you[0].paralysis > 0)
-        {
-                strcpy(info, "You still can't move!");
-        } else strcpy(info, "You suddenly lose the ability to move!");
-        mpr(info);
-        you[0].paralysis += random2(3) + 1;
-        }*/
-        break;
+		case MONS_WORM: // giant wasp
+			break;
 
-        case MONS_JELLY: // Jelly
-//      strcpy(info, "You are splashed with acid!");
-//      mpr(info);
-//      splash_with_acid(10);
-        break;
+		case MONS_JELLY: // Jelly
+			break;
 
 
 
 
- case MONS_ICE_DEVIL: // ice devil
- case MONS_ICE_BEAST: // Ice beast
- case MONS_FREEZING_WRAITH: // blue wraith
- case MONS_ICE_FIEND: // I Fiend
- case MONS_WHITE_IMP: // lesser demon
- case MONS_AZURE_JELLY: // azure jelly
- case MONS_ANTAEUS: // Antaeus
- specdam = 0;
-   if (mons_res_cold(menv [monster_attacked].m_class) == 0)
-   {
-    specdam = random2(menv [monster_attacking].m_HD * 2) + menv [monster_attacking].m_HD;
-    if (menv [monster_attacked].m_inv [2] != 501 && mitm.idam [menv [monster_attacked].m_inv [2]] % 30 == 3)
-     specdam = (random2(menv [monster_attacking].m_HD * 2) + menv [monster_attacking].m_HD) / 3;
-   }
-   if (mons_res_cold(menv [monster_attacked].m_class) == -1 && (menv [monster_attacked].m_inv [2] == 501 || mitm.idam [menv [monster_attacked].m_inv [2]] % 30 != 3))
-   {
-    specdam = random2(menv [monster_attacking].m_HD * 3) + menv [monster_attacking].m_HD * 2;
-   }
-    if (specdam != 0)
-    {
-      if (sees == 1)
-      {
-        strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " freezes ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-        strcat(info, ".");
-        if (sees == 1) mpr(info);
-      }
-    }
-   damage_taken += specdam;
- break;
+		case MONS_ICE_DEVIL: // ice devil
+		case MONS_ICE_BEAST: // Ice beast
+		case MONS_FREEZING_WRAITH: // blue wraith
+		case MONS_ICE_FIEND: // I Fiend
+		case MONS_WHITE_IMP: // lesser demon
+		case MONS_AZURE_JELLY: // azure jelly
+		case MONS_ANTAEUS: // Antaeus
+			specdam = 0;
+			if (mons_res_cold(menv [monster_attacked].m_class) == 0)
+			{
+				specdam = random2(menv [monster_attacking].m_HD * 2) + menv [monster_attacking].m_HD;
+				if (menv [monster_attacked].m_inv [2] != 501 && mitm.idam [menv [monster_attacked].m_inv [2]] % 30 == 3)
+					specdam = (random2(menv [monster_attacking].m_HD * 2) + menv [monster_attacking].m_HD) / 3;
+			}
+			if (mons_res_cold(menv [monster_attacked].m_class) == -1 && (menv [monster_attacked].m_inv [2] == 501 || mitm.idam [menv [monster_attacked].m_inv [2]] % 30 != 3))
+			{
+				specdam = random2(menv [monster_attacking].m_HD * 3) + menv [monster_attacking].m_HD * 2;
+			}
+			if (specdam != 0)
+			{
+				if (sees == 1)
+				{
+					msg("@1 freezes @2.")
+						<< monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0)
+						<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+				}
+			}
+			damage_taken += specdam;
+			break;
 
- case MONS_VAMPIRE: // Vampire
-/* if (damage_taken >= 7 && random2(2) == 0 || random2(10) == 0)
- menv [monster_attacked].m_hp_max -= 3;
- if (menv [monster_attacked].m_hp >= menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
- menv [monster_attacking].m_hp += random2(8);
- if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;*/
- if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
- strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
- strcat(info, " is healed.");
- if (mons_near(monster_attacking)) mpr(info);
- menv [monster_attacking].m_hp += random2(damage_taken);
- if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;
- break;
+		case MONS_VAMPIRE: // Vampire
+			/* if (damage_taken >= 7 && random2(2) == 0 || random2(10) == 0)
+			   menv [monster_attacked].m_hp_max -= 3;
+			   if (menv [monster_attacked].m_hp >= menv [monster_attacked].m_hp_max) menv [monster_attacked].m_hp = menv [monster_attacked].m_hp_max;
+			   menv [monster_attacking].m_hp += random2(8);
+			   if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;*/
+			if (mons_holiness(menv [monster_attacked].m_class) >= MH_UNDEAD) break;
+			if (mons_near(monster_attacking)) {
+				msg("@1 is healed.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
+			}
+			menv [monster_attacking].m_hp += random2(damage_taken);
+			if (menv [monster_attacking].m_hp > menv [monster_attacking].m_hp_max) menv [monster_attacking].m_hp = menv [monster_attacking].m_hp_max;
+			break;
 
 
 
 
-        case MONS_GUARDIAN_NAGA: // Naga
+		case MONS_GUARDIAN_NAGA: // Naga
 
-        break;
+			break;
 
 
-        } // end of switch for special attacks.
+	} // end of switch for special attacks.
 
 
 }
+
 /* special weapons */
 if (hit == 1 && (menv [monster_attacking].m_inv [hand_used] != 501 || ((menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attacking].m_class == MONS_PANDEMONIUM_DEMON) && ghost.ghs [8] != 0)))
 {
@@ -2314,20 +2149,9 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
       if (sees == 1)
       {
         int mmov_x = menv [monster_attacking].m_inv [hand_used];
- 	char str_pass [80];
-
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else  strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " burns ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        //    strcat(info, " is burned.");
-        mpr(info);
+        msg("@1 burns @2@3") << monster_name(mmov_x, monster_attacking)
+			<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1)
+			<< sentence_ending_for_spec_damage(specdam);
       }
     }
    break;
@@ -2350,18 +2174,9 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
       {
         mmov_x = menv [monster_attacking].m_inv [hand_used];
 
-        if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-        {
-         item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-         strcpy(info, str_pass);
-        } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-        strcat(info, " freezes ");
-        strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-        if (specdam < 3) strcat(info, ".");
-        if (specdam >= 3 && specdam < 7) strcat(info, "!");
-        if (specdam >= 7) strcat(info, "!!");
-        //    strcat(info, " is burned.");
-        mpr(info);
+        msg("@1 freezes @2@3") << monster_name(mmov_x, monster_attacking)
+			<< monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1)
+			<< sentence_ending_for_spec_damage(specdam);
       }
     }
    break;
@@ -2372,7 +2187,6 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    switch(mons_holiness(menv [monster_attacked].m_class))
    {
     case -1:
-//    strcpy(info, "
       damage_taken -= 5 + random2(5);
     break;
 
@@ -2418,9 +2232,9 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
  case SPWPN_DRAINING:
         if (mons_holiness(menv [monster_attacked].m_class) > MH_NORMAL && ((damage_taken >= 6 && random2(2) == 0) || random2(30) == 0))
         {
-      strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-      strcat(info, " is drained.");
-      if (sees == 1) mpr(info);
+      if (sees == 1) {
+		  msg("@1 is drained.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
+	  }
       if (random2(5) == 0) menv [monster_attacked].m_HD --;
       menv [monster_attacked].m_hp_max -= 2 + random2(3);
       menv [monster_attacked].m_hp -= 2 + random2(3);
@@ -2451,13 +2265,7 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
 //   if (you[0].hunger <= 11000) you[0].hunger += random() % 30;
    if (mons_near(monster_attacking) == 1 && (menv [monster_attacking].m_ench [2] != 6 || player_see_invis() != 0))
    {
-    if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON)
-    {
-     item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0, str_pass);
-     strcpy(info, str_pass);
-    } else strcpy(info, monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0));
-    strcat(info, " is healed.");
-    mpr(info);
+    msg("@1 is healed.") << monster_name(mmov_x, monster_attacking);
    }
    break;
 
@@ -2466,9 +2274,9 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
    specdam = 0;
    if (mons_holiness(menv [monster_attacked].m_class) == MH_UNDEAD && random2(3) != 0)
    {
-    strcpy(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0));
-    strcat(info, " shudders.");
-    if (mons_near(monster_attacked) == 1) mpr(info);
+    if (mons_near(monster_attacked) == 1) {
+		msg("@1 shudders.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 0);
+	}
     specdam += random2(damage_taken + 1);
     specdam += random2(damage_taken + 1);
     specdam += random2(damage_taken + 1);
@@ -2483,19 +2291,17 @@ if (menv [monster_attacking].m_class == MONS_PLAYER_GHOST || menv [monster_attac
 //   if (random2(3) != 0) break;
    if (random2(3) == 0)
    {
-    strcpy(info, "Space bends around ");
-    strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-    strcat(info, ".");
-    if (mons_near(monster_attacked) == 1) mpr(info);
+    if (mons_near(monster_attacked) == 1) {
+		msg("Space bends around @1.") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+	}
     specdam += random2(5) + random2(3) + 1;
     break;
    }
    if (random2(3) == 0)
    {
-    strcpy(info, "Space warps horribly around ");
-    strcat(info, monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1));
-    strcat(info, "!");
-    if (mons_near(monster_attacked) == 1) mpr(info);
+    if (mons_near(monster_attacked) == 1) {
+    msg("Space warps horribly around @1!") << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
+	}
     specdam += random2(12) + random2(13) + 3;
     break;
    }
@@ -2582,9 +2388,9 @@ if (menv [monster_killed].m_class == MONS_GIANT_SPORE)
 
 if (menv [monster_killed].m_class == MONS_FIRE_VORTEX || menv [monster_killed].m_class == MONS_SPATIAL_VORTEX)
 {
-strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0));
-strcat(info, " dissipates!"); // <- spelling?
-if (mons_near(monster_killed) == 1) mpr(info);
+if (mons_near(monster_killed) == 1) {
+	msg("@1 dissipates!") << monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0); // <- spelling?
+}
 if (killer == 1 || killer == 3)
 {
  gain_exp(exper_value(menv [monster_killed].m_class, menv [monster_killed].m_HD, menv [monster_killed].m_hp_max));
@@ -2595,9 +2401,9 @@ goto out_of_switch;
 
 if (menv [monster_killed].m_class == MONS_DANCING_WEAPON)
 {
-strcpy(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0));
-strcat(info, " falls from the air.");
-if (mons_near(monster_killed) == 1) mpr(info);
+if (mons_near(monster_killed) == 1) {
+msg("@1 falls from the air.") << monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
+}
 if (killer == 1 || killer == 3)
 {
  gain_exp(exper_value(menv [monster_killed].m_class, menv [monster_killed].m_HD, menv [monster_killed].m_hp_max));
@@ -2609,12 +2415,8 @@ switch(killer)
 {
 case 1: /* You kill in combat. */
 case 3: /* You kill by missile or beam. */
-strcpy(info, "You kill ");
-if (wounded_damaged(menv[monster_killed].m_class) == 1)
- strcpy(info, "You destroy ");
-strcat(info, monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 1));  //gmon_name [menv [monster_killed].m_class]);
-strcat(info, "!");
-mpr(info);
+	msg("You @1 @2!") << ((wounded_damaged(menv[monster_killed].m_class) == 1) ? "kill" : "destroy")
+		<< monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 1);
 gain_exp(exper_value(menv [monster_killed].m_class, menv [monster_killed].m_HD, menv [monster_killed].m_hp_max));
 if (you[0].religion == GOD_XOM && random2(70) <= 10 + menv [monster_killed].m_HD) Xom_acts(1, random2(menv [monster_killed].m_HD) + 1, 0);
 if (you[0].duration [DUR_PRAYER] > 0)
@@ -2706,7 +2508,6 @@ case 6: /* Monster doesn't die, just goes back to wherever it came from
 if (mons_near(monster_killed))
 {
  msg("@1 disappears in a puff of smoke!") << monam (menv[monster_killed].m_sec,menv[monster_killed].m_class, menv [monster_killed].m_ench [2], 0);
- mpr(info);
  place_cloud(random2(3) + 105, menv [monster_killed].m_x, menv [monster_killed].m_y, 1 + random2(3));
 }
 for (dmi = 7; dmi >= 0; dmi --) /* takes whatever it's carrying back home */

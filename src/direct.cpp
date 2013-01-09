@@ -180,7 +180,7 @@ void check_ing(int xps, int yps)
 	}
 }
 
-std::string monster_name(int mmov_x, int i)
+std::string monster_name_for_direct(int mmov_x, int i)
 {
 	if (menv [i].m_class == 144) {
 		item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 2, str_pass);
@@ -201,7 +201,7 @@ void describe_monster(int xps, int yps)
 
 		if (menv [i].m_ench [2] == 6 && player_see_invis() == 0) return;
 		int mmov_x = menv [i].m_inv [0];
-		msg("@1.") << monster_name(mmov_x, i);
+		msg("@1.") << monster_name_for_direct(mmov_x, i);
 
 		print_wounds(i);
 

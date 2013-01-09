@@ -25,8 +25,6 @@
 #include "spells2.h"
 #include "spells3.h"
 
-char info[200];
-
 void torment(void)
 {
  int dmi = 0;

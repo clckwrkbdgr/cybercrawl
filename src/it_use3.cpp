@@ -26,6 +26,8 @@
 #include "items.h"
 #include "misc.h"
 
+char info[200];
+
 void ball_of_seeing(void);
 void efreet_flask(void);
 void disc_of_storms(void);
