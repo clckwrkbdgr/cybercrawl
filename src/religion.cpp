@@ -1184,16 +1184,14 @@ switch(you[0].religion)
  case GOD_OKAWARU:
  case GOD_MAKHLEB:
  case GOD_NEMELEX_XOBEH:
- it_name(i, 0, str_pass);
- msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
+ msg("@1@2") << it_name(i, 0) << sacrifice[you[0].religion - 1];
  if (mitm.iclass [i] == OBJ_CORPSES || random2(item_value(mitm.iclass [i], mitm.itype [i], mitm.idam [i], mitm.iplus [i], mitm.iplus2 [i], mitm.iquant [i], 3, subst_id)) >= 50)
      gain_piety(1);
  destroy_item(i);
  break;
 
  case GOD_SIF_MUNA:
- it_name(i, 0, str_pass);
- msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
+ msg("@1@2") << it_name(i, 0) << sacrifice[you[0].religion - 1];
  if (item_value(mitm.iclass [i], mitm.itype [i], mitm.idam [i], mitm.iplus [i], mitm.iplus2 [i], mitm.iquant [i], 3, subst_id) >= 150)
      gain_piety(1 + random2(3));
  destroy_item(i);
@@ -1202,16 +1200,14 @@ switch(you[0].religion)
  case GOD_KIKUBAAQUDGHA:
  case GOD_TROG:
  if (mitm.iclass [i] != OBJ_CORPSES) break;
- it_name(i, 0, str_pass);
- msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
+ msg("@1@2") << it_name(i, 0) << sacrifice[you[0].religion - 1];
  gain_piety(1);
  destroy_item(i);
  break;
 
  case GOD_ELYVILON:
  if (mitm.iclass [i] != OBJ_WEAPONS && mitm.iclass [i] != OBJ_MISSILES) break;
- it_name(i, 0, str_pass);
- msg("@1@2") << str_pass << sacrifice[you[0].religion - 1];
+ msg("@1@2") << it_name(i, 0) << sacrifice[you[0].religion - 1];
  gain_piety(1);
  destroy_item(i);
  break;
@@ -1259,8 +1255,7 @@ you[0].piety = 15;
 
 void offer_corpse(int corpse)
 {
- it_name(corpse, 0, str_pass);
- msg("@1@2") << str_pass << sacrifice [you[0].religion - 1];
+ msg("@1@2") << it_name(corpse, 0) << sacrifice [you[0].religion - 1];
  done_good(6, 10);
 }
 

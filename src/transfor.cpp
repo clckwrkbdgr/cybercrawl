@@ -35,8 +35,7 @@ for (i = EQ_CLOAK; i < EQ_LEFT_RING; i ++)
 {
  if (remove_stuff [i] == 0) continue;
  if (you[0].equip [i] == -1) continue;
- in_name(you[0].equip [i], 4, str_pass);
- msg("@1 falls away.") << str_pass;
+ msg("@1 falls away.") << in_name(you[0].equip [i], 4);
  unwear_armour(you[0].equip [i]);
  you[0].equip [i] = -1;
 }

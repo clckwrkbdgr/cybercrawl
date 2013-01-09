@@ -155,11 +155,11 @@ if (items_here == 1)
 {
    if (mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 4) goto out_of_eating;// && mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14) return 0;
 
-   it_name(igrd [you[0].x_pos] [you[0].y_pos], 3, str_pass);
+   std::string name = it_name(igrd [you[0].x_pos] [you[0].y_pos], 3);
    if (mitm.iquant [igrd [you[0].x_pos] [you[0].y_pos]] > 1) {
-	   msg("Eat one of @1\?") << str_pass;
+	   msg("Eat one of @1\?") << name;
    } else {
-	   msg("Eat @1\?") << str_pass;
+	   msg("Eat @1\?") << name;
    }
    int keyin = getch();
    if (keyin == 0)
@@ -241,11 +241,10 @@ if (items_here > 1)
 	for (k = 0; k < items_here; k++) // use k because of call to relay_message()
 	{
    if (mitm.iclass [o] != 4) goto out_of_eating; // && mitm.iclass [o] != 14) goto out_of_eating;
-   it_name(o, 3, str_pass);
    if (mitm.iquant [o] > 1) {
-	   msg("Eat one of @1\?") << str_pass;
+	   msg("Eat one of @1\?") << it_name(o, 3);
    } else {
-	   msg("Eat @1\?") << str_pass;
+	   msg("Eat @1\?") << it_name(o, 3);
    }
    keyin = getch();
    if (keyin == 0)
@@ -426,8 +425,7 @@ if (counter > 1000)
 if (items_here == 1)
 {
    if (mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14 || mitm.itype [igrd [you[0].x_pos] [you[0].y_pos]] != 0) goto out_of_eating;// && mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14) return 0;
-			it_name(igrd [you[0].x_pos] [you[0].y_pos], 3, str_pass);
-			msg("Butcher @1\?") << str_pass;
+			msg("Butcher @1\?") << it_name(igrd [you[0].x_pos] [you[0].y_pos], 3);
    int keyin = getch();
    if (keyin == 0)
    {
@@ -475,8 +473,7 @@ if (items_here > 1)
 	for (k = 0; k < items_here; k++)
 	{
 		    if (mitm.iclass [o] != 14 || mitm.itype [o] != 0) goto out_of_eating; // && mitm.iclass [o] != 14) goto out_of_eating;
-			it_name(o, 3, str_pass);
-			msg("Butcher @1\?") << str_pass;
+			msg("Butcher @1\?") << it_name(o, 3);
    keyin = getch();
    if (keyin == 0)
    {

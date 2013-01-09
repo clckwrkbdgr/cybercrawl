@@ -388,8 +388,7 @@ for (i = 0; i < ITEMS; i++)
 	}
 } /* end of i loop */
 
-item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-msg("@1 dances into the air!") << str_pass;
+msg("@1 dances into the air!") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
 
 unwield_item(you[0].equip [EQ_WEAPON]);
 
@@ -567,11 +566,11 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
  return;
 }
 
-item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
+std::string name = item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
 if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 1) {
-	msg("@1 is covered in a thin film of poison.") << str_pass;
+	msg("@1 is covered in a thin film of poison.") << name;
 } else {
-	msg("@1 are covered in a thin film of poison.") << str_pass;
+	msg("@1 are covered in a thin film of poison.") << name;
 }
 
 you[0].inv_dam [you[0].equip [EQ_WEAPON]] = 3;

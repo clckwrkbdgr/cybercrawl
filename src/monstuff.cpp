@@ -964,8 +964,7 @@ if (menv [i].m_inv [1] != 501) // manticore
 {
 		hand_used = menv [i].m_inv [1];
 		beem[0].range = 6;
-		item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6, str_pass);
-		strcpy(beem[0].beam_name, str_pass);
+		strcpy(beem[0].beam_name, item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6).c_str());
 		mons_throw(i, beem, hand_used);
 		//mmov_x = 0;
 /*		if (brek == 1)
@@ -1540,8 +1539,7 @@ if (random2(10) < 8)
 		if (beem[0].tracer != 0 || (beem[0].trac_targ != MHITYOU && beem[0].trac_hit_mons != 0)) // doesn't need to worry about you[0].haste
 		{
  		beem[0].range = 6;
- 		item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6, str_pass);
- 		strcpy(beem[0].beam_name, str_pass);
+ 		strcpy(beem[0].beam_name, item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6).c_str());
  		mons_throw(i, beem, hand_used);
 		continue;
 /* 		if (brek == 1)
@@ -1730,8 +1728,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  if (mitm.idam [menv [i].m_inv [0]] % 30 == SPWPN_PROTECTION) menv [i].m_AC += 3;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " picks up ");
- it_name(menv [i].m_inv [0], 3, str_pass);
-	strcat(info, str_pass);
+	strcat(info, it_name(menv [i].m_inv [0], 3).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
 /*	mmov_x = 0; mmov_y = 0;*/
@@ -1743,8 +1740,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	{
 		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
 		strcat(info, " picks up ");
-		it_name(igrd [menv [i].m_x] [menv [i].m_y], 3, str_pass);
-		strcat(info, str_pass);
+		strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 3).c_str());
 		strcat(info, ".");
 		if (mons_near(i)) mpr(info);
 		mitm.iquant [menv [i].m_inv [1]] += mitm.iquant [igrd [menv [i].m_x] [menv [i].m_y]];
@@ -1762,8 +1758,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  mitm.ilink [menv [i].m_inv [0]] = 501;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " picks up ");
- it_name(menv [i].m_inv [1], 3, str_pass);
-	strcat(info, str_pass);
+	strcat(info, it_name(menv [i].m_inv [1], 3).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
 /*	mmov_x = 0; mmov_y = 0;*/
@@ -1777,8 +1772,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  mitm.ilink [menv [i].m_inv [0]] = 501;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " picks up ");
- it_name(menv [i].m_inv [5], 3, str_pass);
-	strcat(info, str_pass);
+	strcat(info, it_name(menv [i].m_inv [5], 3).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
 /*	mmov_x = 0; mmov_y = 0;*/
@@ -1792,8 +1786,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  mitm.ilink [menv [i].m_inv [0]] = 501;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " picks up ");
- it_name(menv [i].m_inv [6], 3, str_pass);
-	strcat(info, str_pass);
+	strcat(info, it_name(menv [i].m_inv [6], 3).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
 /*	mmov_x = 0; mmov_y = 0;*/
@@ -1807,8 +1800,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  mitm.ilink [menv [i].m_inv [0]] = 501;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " picks up ");
- it_name(menv [i].m_inv [4], 3, str_pass);
-	strcat(info, str_pass);
+	strcat(info, it_name(menv [i].m_inv [4], 3).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
 /*	mmov_x = 0; mmov_y = 0;*/
@@ -1822,8 +1814,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  if (menv [i].m_hp > menv [i].m_hp_max) menv [i].m_hp_max = menv [i].m_hp;
 	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
  strcat(info, " eats ");
- it_name(igrd [menv [i].m_x] [menv [i].m_y], 1, str_pass);
- strcat(info, str_pass);
+ strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 1).c_str());
  strcat(info, ".");
  if (mons_near(i)) mpr(info);
  destroy_item(igrd [menv [i].m_x] [menv [i].m_y]);

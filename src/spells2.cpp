@@ -391,32 +391,32 @@ if (you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 != 0 || you[0].inv_dam [you[0
  return 0;
 }
 
-item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
+std::string name = item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
 
 switch(which_brand)
 {
  case 1: // flaming
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 1;
- msg("@1 bursts into flame!") << str_pass;
+ msg("@1 bursts into flame!") << name;
  duration_affected = 6;
  break;
 
  case 2: // freezing
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 2;
- msg("@1 glows blue.") << str_pass;
+ msg("@1 glows blue.") << name;
  duration_affected = 7;
  break;
 
  case 6: // venom
  if (damage_type(you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]]) == 0) return 0;
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 6;
- msg("@1 starts dripping with poison.") << str_pass;
+ msg("@1 starts dripping with poison.") << name;
  duration_affected = 15;
  break;
 
  case 7: // draining
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 8;
- msg("@1 crackles with corrupted data.") << str_pass;
+ msg("@1 crackles with corrupted data.") << name;
  duration_affected = 8;
  break;
 
@@ -426,7 +426,7 @@ switch(which_brand)
   return 0;
  }
  you[0].inv_dam [you[0].equip [EQ_WEAPON]] += 10;
- msg("@1 glows silver and looks extremely sharp.") << str_pass;
+ msg("@1 glows silver and looks extremely sharp.") << name;
  duration_affected = 5;
  break;
 

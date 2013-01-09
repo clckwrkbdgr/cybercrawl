@@ -27,90 +27,15 @@ int mss [20] [50];
 
 
 
-void it_name(int itn, char des, char str_pass [80])
+std::string it_name(int itn, char des)
 {
-		item_name(mitm.iplus2 [itn], mitm.iclass [itn], mitm.itype [itn], mitm.idam [itn], mitm.iplus [itn], mitm.iquant [itn], mitm.iid [itn], des, str_pass);
+	return item_name(mitm.iplus2 [itn], mitm.iclass [itn], mitm.itype [itn], mitm.idam [itn], mitm.iplus [itn], mitm.iquant [itn], mitm.iid [itn], des);
 }
 
-void in_name(int inn, char des, char str_pass [80])
+std::string in_name(int inn, char des)
 {
-		item_name(you[0].inv_plus2 [inn], you[0].inv_class [inn], you[0].inv_type [inn], you[0].inv_dam [inn], you[0].inv_plus [inn], you[0].inv_quant [inn], you[0].inv_ident [inn], des, str_pass);
+	return item_name(you[0].inv_plus2 [inn], you[0].inv_class [inn], you[0].inv_type [inn], you[0].inv_dam [inn], you[0].inv_plus [inn], you[0].inv_quant [inn], you[0].inv_ident [inn], des);
 }
-
-char item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip, char glag [60])
-{
-
-char itm_name [60] = "";
-char tmp_quant [5];
-
-strcpy(glag, "");
-
-strcpy(itm_name, item_name_2(item_plus2, item_clas, item_typ, item_da, it_plus, it_quant, ident_lev).c_str());
-
-
-if (item_clas == OBJ_ORBS || (item_clas == OBJ_WEAPONS && item_da > 180 && ident_lev > 0) || (item_clas == OBJ_MISCELLANY && item_typ == MISC_HORN_OF_GERYON && ident_lev > 0) || (item_clas == OBJ_JEWELLERY && (item_da == 200 || item_da == 201) && ident_lev >= 2) || ((item_clas == OBJ_WEAPONS || item_clas == OBJ_ARMOUR) && item_da % 30 >= 25 && ident_lev > 0))
-{
- switch(descrip)
- {
-  case 2:
-  case 4:
- 	case 0: strcat(glag, "The "); break;
-  case 3:
-  case 5:
-  case 7: // !
- 	case 1: strcat(glag, "the "); break;
- }
-} else
-if (it_quant > 1)
-{
-switch(descrip)
-{
-	case 0: strcat(glag, "The "); break;
-	case 1: strcat(glag, "the "); break;
-	case 2: break; // A/An
-	case 3: break; // a/an
-	case 4: strcat(glag, "Your "); break;
-	case 5: strcat(glag, "your "); break;
-/*	case 6: nothing */
-	case 7: strcat(glag, "its "); break;
-}
-
-	itoa(it_quant, tmp_quant, 10);
-	strcat(glag, tmp_quant);
-	strcat(glag, " ");
-	} else
-{
-	switch(descrip)
-	{
-		case 0: strcat(glag, "The "); break;
-		case 1: strcat(glag, "the "); break;
-		case 2: strcat(glag, "A");
-			if ((itm_name [0] == 97) ^ (itm_name [0] == 101) ^ (itm_name [0] == 105) ^ (itm_name [0] == 111) ^ (itm_name [0] == 117))
-			{
-				strcat(glag, "n");
-			}
-		strcat(glag, " ");
-		break; // A/An
-		case 3:strcat(glag, "a");
-			if ((itm_name [0] == 97) ^ (itm_name [0] == 101) ^ (itm_name [0] == 105) ^ (itm_name [0] == 111) ^ (itm_name [0] == 117))
-			{
-				strcat(glag, "n");
-			}
-		strcat(glag, " ");
-		break; // a/an
-		case 4: strcat(glag, "Your "); break;
-		case 5: strcat(glag, "your "); break;
-/*		case 6: nothing */
-		case 7: strcat(glag, "its "); break;
-	}
-
-} // end of else
-
-strcat(glag, itm_name);
-
-return 1;
-
-} // end of char name_item
 
 struct ItemInfo {
 	int item_plus2;
@@ -121,6 +46,46 @@ struct ItemInfo {
 	int it_quant;
 	int ident_lev;
 };
+
+std::string item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip)
+{
+	std::string result = item_name_2(item_plus2, item_clas, item_typ, item_da, it_plus, it_quant, ident_lev);
+	bool is_orb = (item_clas == OBJ_ORBS);
+	bool is_extra_weapon = (item_clas == OBJ_WEAPONS && item_da > 180 && ident_lev > 0);
+	bool is_extra_misc = (item_clas == OBJ_MISCELLANY && item_typ == MISC_HORN_OF_GERYON && ident_lev > 0);
+	bool is_extra_implant = (item_clas == OBJ_JEWELLERY && (item_da == 200 || item_da == 201) && ident_lev >= 2);
+	bool is_extra_weapon_or_armour = ((item_clas == OBJ_WEAPONS || item_clas == OBJ_ARMOUR) && item_da % 30 >= 25 && ident_lev > 0);
+	bool is_extraodinary = is_orb || is_extra_weapon || is_extra_misc || is_extra_implant || is_extra_weapon_or_armour;
+	bool starts_with_vowel = ((result [0] == 97) || (result [0] == 101) || (result [0] == 105) || (result [0] == 111) || (result [0] == 117));
+	bool is_more_than_one = (!is_extraodinary && it_quant > 1);
+
+	std::string article;
+	switch(descrip / 2) {
+		case 0: article = "the"; break;
+		case 1: article = starts_with_vowel ? "an" : "a"; break;
+		case 2: article = "your"; break;
+		case 3: article = "its"; break;
+	}
+
+	if(is_extraodinary) {
+		article = "the";
+	} else if(is_more_than_one) {
+		if(article.size() > 0) {
+			article += " ";
+		}
+		Format format("@1");
+		format << it_quant;
+		article += format.str();
+	}
+	if(descrip % 2 == 0) {
+		if(article.size() != 0) {
+			article[0] = toupper(article[0]);
+		}
+	}
+	
+	result = article + " " + result;
+	return result;
+}
 
 std::string unrandart_weapon_name(int item_id)
 {

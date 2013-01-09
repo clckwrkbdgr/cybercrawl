@@ -308,8 +308,7 @@ void random_uselessness(int ru, int sc_read_2)
 			break;
 		case 2:
 			if (you[0].equip [EQ_WEAPON] != -1) {
-				in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
-				msg("@1 glows @2 for a moment.") << str_pass << weird_colours(random2(256));
+				msg("@1 glows @2 for a moment.") << in_name(you[0].equip [EQ_WEAPON], 4) << weird_colours(random2(256));
 				return;
 			} else {
 				msg("Nothing appears to happen.");
@@ -642,8 +641,7 @@ if (you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_FIRE || you[0].inv_type [
 if (you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_FIREBALL || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_LIGHTNING || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WAND_DRAINING)
  charge_gain = 4;
 
-item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4, str_pass);
-msg("@1 glows for a moment.") << str_pass;
+msg("@1 glows for a moment.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
 
 you[0].inv_plus [you[0].equip [EQ_WEAPON]] += random2(charge_gain) + random2(charge_gain) + random2(charge_gain) + 1;
 

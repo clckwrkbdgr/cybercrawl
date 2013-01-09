@@ -1075,7 +1075,7 @@ if (you[0].inv_class [unw] == 0 && you[0].inv_dam [unw] != 0)
 
 if (you[0].inv_ident [unw] == 1) you[0].inv_ident [unw] = 2;
 
-item_name(you[0].inv_plus2 [unw], you[0].inv_class [unw], you[0].inv_type [unw], you[0].inv_dam [unw], you[0].inv_plus [unw], you[0].inv_quant [unw], you[0].inv_ident [unw], 4, str_pass);
+std::string name = item_name(you[0].inv_plus2 [unw], you[0].inv_class [unw], you[0].inv_type [unw], you[0].inv_dam [unw], you[0].inv_plus [unw], you[0].inv_quant [unw], you[0].inv_ident [unw], 4);
 
 char i_dam = you[0].inv_dam [unw] % 30;
 
@@ -1088,23 +1088,23 @@ switch(i_dam)
 {
 
   case SPWPN_FLAMING:
-  msg("@1 stops flaming.") << str_pass;
+  msg("@1 stops flaming.") << name;
   break;
 
   case SPWPN_FREEZING:
-  msg("@1 stops glowing.") << str_pass;
+  msg("@1 stops glowing.") << name;
   break;
 
   case SPWPN_HOLY_WRATH:
-  msg("@1 stops glowing.") << str_pass;
+  msg("@1 stops glowing.") << name;
   break;
 
   case SPWPN_ELECTROCUTION:
-  msg("@1 stops crackling.") << str_pass;
+  msg("@1 stops crackling.") << name;
   break;
 
   case SPWPN_VENOM:
-  msg("@1 stops dripping with poison.") << str_pass;
+  msg("@1 stops dripping with poison.") << name;
   break;
 
   case SPWPN_PROTECTION:

@@ -171,8 +171,7 @@ void check_ing(int xps, int yps)
 		if (mitm.iclass [igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] == 15) {
 			mpr("You see some credit chips here.");
 		} else {
-			it_name(igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9], 3, str_pass);
-			msg("You see @1 here.") << str_pass;
+			msg("You see @1 here.") << it_name(igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9], 3);
 		}
 		if (mitm.ilink [igrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]] != 501) {
 			mpr("There is something else lying underneath.");
@@ -183,8 +182,7 @@ void check_ing(int xps, int yps)
 std::string monster_name_for_direct(int mmov_x, int i)
 {
 	if (menv [i].m_class == 144) {
-		item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 2, str_pass);
-		return str_pass;
+		return item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 2);
 	}
 	return monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 2);
 }

@@ -160,8 +160,7 @@ void adjust_item(void)
 	}
 
    	char slot = (throw_2 <= 25) ? (throw_2 + 97) :(throw_2 + 39);
-	in_name(throw_2, 3, str_pass);
-	msg("@1 - @2") << slot << str_pass;
+	msg("@1 - @2") << slot << in_name(throw_2, 3);
 	mpr("Adjust to which letter?");
 
 	keyin = get_ch();
@@ -213,9 +212,8 @@ void adjust_item(void)
 
 	you[0].inv_quant [throw_2] = 0;
 
-	in_name(throw_3, 3, str_pass);
 	slot = (throw_3 <= 25) ? (throw_3 + 97) : (throw_3 + 39);
-	msg("@1 - @2") << slot << str_pass;
+	msg("@1 - @2") << slot << in_name(throw_3, 3);
 
 	if (throw_3 == you[0].equip [EQ_WEAPON]) wield_change = 1;
 

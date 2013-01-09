@@ -157,8 +157,7 @@ break;
 case 51: /* randart makes noises */
 if (random2(20) == 0)
 {
- in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
- msg("@1 lets out a weird humming sound.") << str_pass;
+ msg("@1 lets out a weird humming sound.") << in_name(you[0].equip [EQ_WEAPON], 4);
  noisy(25, you[0].x_pos, you[0].y_pos);
 }
 break;
@@ -166,8 +165,7 @@ break;
 case 52: /* randart makes noises */
 if (random2(20) == 0)
 {
- in_name(you[0].equip [EQ_WEAPON], 4, str_pass);
- msg("@1 chimes like a gong.") << str_pass;
+ msg("@1 chimes like a gong.") << in_name(you[0].equip [EQ_WEAPON], 4);
  noisy(25, you[0].x_pos, you[0].y_pos);
 }
 break;

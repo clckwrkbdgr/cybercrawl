@@ -181,9 +181,7 @@ char temp_quant [15];
             if (you[0].equip [EQ_WEAPON] <= 25) putch(you[0].equip [EQ_WEAPON] + 97);
 		else putch(you[0].equip [EQ_WEAPON] + 39);
 		cprintf(" - ");
-		in_name(you[0].equip [EQ_WEAPON], 3, str_pass);
- 		str_pass [35] = 0;
-		cprintf(str_pass);
+		cprintf(std::string(in_name(you[0].equip [EQ_WEAPON], 3), 0, 34).c_str());
 	    textcolor(LIGHTGREY);
       } else
       {

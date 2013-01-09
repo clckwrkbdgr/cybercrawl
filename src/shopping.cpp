@@ -188,10 +188,9 @@ itty = igrd [0] [5 + shoppy];
 
        if (i % 2 == 0) textcolor(LIGHTGREY); else textcolor(WHITE);
 
-	   item_name(mitm.iplus2 [itty], mitm.iclass [itty], mitm.itype [itty], mitm.idam [itty], mitm.iplus [itty], mitm.iquant [itty], mitm.iid [itty], 3, st_pass);
        putch(i + 96);
        cprintf(" - ");
-       cprintf(st_pass);
+       cprintf(item_name(mitm.iplus2 [itty], mitm.iclass [itty], mitm.itype [itty], mitm.idam [itty], mitm.iplus [itty], mitm.iquant [itty], mitm.iid [itty], 3).c_str());
 
        gp_value = greedy * item_value(mitm.iclass [itty], mitm.itype [itty], mitm.idam [itty], mitm.iplus [itty], mitm.iplus2 [itty], mitm.iquant [itty], mitm.iid [itty], id);
        gp_value /= 10;

@@ -240,8 +240,7 @@ for (i = 0; i < 15; i ++)
 
    yps = wherey();
 
-			item_name(you[0].inv_plus2 [j], you[0].inv_class [j], you[0].inv_type [j], you[0].inv_dam [j], you[0].inv_plus [j], you[0].inv_quant [j], you[0].inv_ident [j], 3, st_pass);
-			cprintf(st_pass);
+			cprintf(item_name(you[0].inv_plus2 [j], you[0].inv_class [j], you[0].inv_type [j], you[0].inv_dam [j], you[0].inv_plus [j], you[0].inv_quant [j], you[0].inv_ident [j], 3).c_str());
 
          inv_count --;
 

@@ -39,7 +39,6 @@ void item_check(int keyin)
 {
 char item_show [50] [50];
 char temp_quant [10];
-char str_pass [50];
 
 int counter = 0;
 int counter_max = 0;
@@ -152,8 +151,7 @@ while(objl != 501)
 			  else strcat(item_show [counter], " credit chip");
 			 goto linking; //continue;
 			}
-		it_name(objl, 3, str_pass);
-		strcpy(item_show [counter], str_pass);
+		strcpy(item_show [counter], it_name(objl, 3).c_str());
 linking : hrg = mitm.ilink [objl];
 objl = hrg;
 }
@@ -202,7 +200,6 @@ int o = 0;
 int k = 0;
 int m = 0;
 int nothing = 0;
-char str_pass [50];
 int keyin = 0;
 
 if (you[0].lev != 0 && wearing_amulet(AMU_CONTROLLED_FLIGHT) == 0)
@@ -236,8 +233,7 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 190 && you[0].where_are_you != 18)
 			you[0].inv_quant [m] = 1;
 		    you[0].inv_no++;
 			burden_change();
-		    in_name(m, 3, str_pass);
-			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << in_name(m, 3);
 		    break;
           }
      }
@@ -312,8 +308,7 @@ if (items_here > 1)
 				if (mitm.iclass [o] == 15) {
 					msg("pick up @1 credit chip@2\? (y,n,a,q)") << mitm.iquant [o] << (mitm.iquant [o] > 1 ? "s" : "");
 				} else {
-					it_name(o, 3, str_pass);
-					msg("pick up @1 \? (y,n,a,q)") << str_pass;
+					msg("pick up @1 \? (y,n,a,q)") << it_name(o, 3);
 				}
 			}
 
@@ -395,7 +390,6 @@ int retval = 1;
 int brek = 0;
 //int last_item = ING;
 int m = 0;
-char str_pass [50];
 
 if (you[0].inv_no >= 52)
 {
@@ -473,8 +467,7 @@ for (m = 0; m < 52; m++)
 		you[0].inv_quant [m] += quant_got;//mitm.iquant [item_got];
 
 		burden_change();
-				in_name(m, 3, str_pass);
-			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << in_name(m, 3);
 
 		you[0].turnover = 1;
   alert();
@@ -500,8 +493,7 @@ for (m = 0; m < 52; m++)
 		you[0].inv_quant [m] = quant_got;
 		burden_change();
 
-				in_name(m, 3, str_pass);
-			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << str_pass;
+			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << in_name(m, 3);
 
 			mpr(info);
 
@@ -639,7 +631,6 @@ int nthing;
 int i;
 int item_drop_1;
 int item_drop_2;
-char str_pass [80];
 
 if (you[0].inv_no == 0)
 	{
@@ -773,8 +764,7 @@ if ((item_drop_1 < 65 || (item_drop_1 > 90 && item_drop_1 < 97) || item_drop_1 >
 
 	if (quant_drop > you[0].inv_quant [item_drop_2]) quant_drop = you[0].inv_quant [item_drop_2];
 
-	item_name(you[0].inv_plus2 [item_drop_2], you[0].inv_class [item_drop_2], you[0].inv_type [item_drop_2], you[0].inv_dam [item_drop_2], you[0].inv_plus [item_drop_2], quant_drop, you[0].inv_ident [item_drop_2], 3, str_pass);
-	msg("You drop @1.") << str_pass;
+	msg("You drop @1.") << item_name(you[0].inv_plus2 [item_drop_2], you[0].inv_class [item_drop_2], you[0].inv_type [item_drop_2], you[0].inv_dam [item_drop_2], you[0].inv_plus [item_drop_2], quant_drop, you[0].inv_ident [item_drop_2], 3);
 
 	if (item_drop_2 == you[0].equip [EQ_WEAPON])
 	{
