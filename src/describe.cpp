@@ -1,27 +1,9 @@
-
-#include "linuxlib.h"
-
-//#include "defines.h"
-/*#define MLAVA0 220
-#define MLAVA1 221
-#define MLAVA2 222
-#define MLAVA3 223
-#define MLAVA4 224
-#define MLAVA5 225
-#define MWATER0 230
-#define MWATER1 231
-#define MWATER2 232
-#define MWATER3 233
-#define MWATER4 234
-#define MWATER5 235
-*/
-
-#include "externs.h"
-#include "enum.h"
-
 #include <stdlib.h>
 #include <string.h>
+#include "enum.h"
+#include "externs.h"
 #include "itemname.h"
+#include "linuxlib.h"
 #include "macro.h"
 #include "mstruct.h"
 #include "player.h"
@@ -40,7 +22,6 @@ struct ItemInfo {
 
 void print_description(const std::string & description);
 std::string print_ench(int item_plus);
-void append_value(char descpr [1000], int valu, int plussed);
 std::string randart_descpr(ItemInfo item);
 std::string describe_demon();
 
@@ -387,7 +368,7 @@ std::string monster_description(int monster_class)
 	return "";
 }
 
-void describe_monsters(int class_described, int /*which_mons*/)
+void describe_monsters(int class_described)
 {
 	clrscr();
 	print_description(monster_description(class_described));
@@ -1164,575 +1145,236 @@ std::string print_ench(int item_plus)
 	return "extremely heavily enchanted ";
 }
 
+std::string program_description(int program_id)
+{
+	switch(program_id) {
+		case 0: return " allows the caster to determine the properties of an otherwise inscrutable magic item. ";
+		case 1: return " teleports the caster to a random location. ";
+		case 2: return " causes fear in those near to the caster. ";
+		case 3: return " causes a loud noise to be heard. ";
+		case 4: return " removes curses from any items which are being used by the caster. ";
+		case 5: return " hurls a small bolt of magical energy. ";
+		case 6: return " hurls an exploding bolt of fire. ";
+		case 13: return " creates a column of roaring flame. ";
+		case 14: return " digs a tunnel through unworked rock. ";
+		case 15: return " hurls a great bolt of flames. ";
+		case 16: return " hurls a great bolt of ice and frost. ";
+		case 17: return " hurls a mighty bolt of lightning. Although this spell causes less damage than the similar fire and ice spells, it can rip through whole rows of creatures. ";
+		case 20: return " randomly alters the form of another creature. ";
+		case 21: return " slows the actions of a creature. ";
+		case 22: return " speeds the actions of a creature. ";
+		case 23: return " prevents a creature from moving. ";
+		case 24: return " induces a state of bewilderment and confusion in a creature's mind. ";
+		case 25: return " hides a creature from the sight of others. ";
+		case 26: return " throws a small bolt of flame. ";
+		case 27: return " throws a small bolt of frost. ";
+		case 28: return " allows a short-range translocation, with precise control. ";
+		case 29: return " conjures up a large cloud of lethally cold vapour. ";
+		case 30: return " conjures up a large but short-lived cloud of vile fumes. ";
+		case 31: return " surrounds the caster with a mobile ring of searing flame. It is not recommended for those vulnerable to the effects of fire. ";
+		case 32: return " restores the physical strength of the caster. ";
+		case 33: return " restores the intelligence of the caster. ";
+		case 34: return " restores the dexterity of the caster. ";
+		case 35: return " throws a bolt of deadly poison. ";
+		case 36: return " bathes the caster's surroundings with a poisonous green light. ";
+		case 37: return " randomly translocates another creature. ";
+		case 38: return " heals a small amount of damage to the caster's body. ";
+		case 39: return " heals a large amount of damage to the caster's body. ";
+		case 40: return " removes poison from the caster's system. ";
+		case 41: return " purifies the caster's body, removing poison, disease, and some malign enchantments. ";
+		case 42: return " is extremely powerful, but carries a degree of risk. It renders a living caster almost invulnerable to harm for a brief period of time, but can bring them dangerously close to death (how close depends on their necromantic abilities). The spell can be cancelled at any time by any healing effect, and the caster will recieve one warning shortly before the spell expires. Undead cannot use this spell. ";
+		case 43: return " allows the caster to selectively erase a spell from memory and regain the magical energy bound up in it. One will be able to memorise this spell even if their mind is otherwise full of magic (ie you have the maximum number of spells already; mere lack of spell levels is insufficient). ";
+		case 44: return " causes confusion in all who see the caster. ";
+		case 45: return " smites a creature of the caster's choice. ";
+		case 46: return " calls on divine power to repel the unholy. ";
+		case 47: return " involves the speaking of a word of power which repels and can destroy unholy creatures. ";
+		case 48: return " alerts the caster to the presence of curses on his or her possessions. ";
+		case 49: return " summons a small creature to the caster's aid. ";
+		case 50: return " attempts to send hostile summoned creatures to the place from whence they came, or at least reduce the duration of their presence in the caster's locality. ";
+		case 51: return " summons one or more giant scorpions to the caster's assistance. ";
+		case 52: return " allows the caster to float in the air. ";
+		case 53: return " hurls a deadly bolt of negative energy, which drains the life of any living creature which it strikes. ";
+		case 54: return " hurls a lethally sharp bolt of crystal. ";
+		case 55: return " causes enormous damage to any creature struck by the bolt of incandescent energy that it conjures into existence. Unfortunately, it is very difficult to aim and very rarely hits anything. Pity, that. ";
+		case 56: return " conjures forth a great cloud of lethal gasses. ";
+		case 57: return " creates a mighty storm of roaring flame. ";
+		case 58: return " detects any traps in the caster's vicinity. ";
+		case 59: return " randomly translocates the caster a short distance. ";
+		case 60: return " throws a crackling sphere of destructive energy. ";
+		case 61: return " summons forth a pestilential swarm. ";
+		case 62: return " opens a gate to the Abyss and calls through one or more hideous abominations from that dreadful place. The powers who supervise this invocation require the caster to surrender some of his or her intelligence in exchange for their service. ";
+		case 63: return " causes an otherwise hostile creature to fight on your side for a while. ";
+		case 64: return " reveals your surroundings. ";
+		case 65: return " heals another creature from a distance. ";
+		case 66: return " causes the dead to rise up and serve the caster; all corpses within a certain distance of the caster are affected. A powerful magician can create an army of mindless undead slaves with this spell. ";
+		case 67: return " causes an extremely painful injury to a living creature. ";
+		case 68: return " extends the durations of most beneficial enchantments affecting the caster. ";
+		case 69: return " attempts to charm any undead in the vicinity of the caster. ";
+		case 70: return " raises a skeleton to a state of unlife. ";
+		case 71: return " steals the life of a living creature and grants it to the caster. It will not drain more life than the caster is capable of absorbing. ";
+		case 72: return " calls on the powers of the undead to aid the caster. ";
+		case 73: return " detects any items lying in the caster's general vicinity. ";
+		case 74: return " instantly heals any and all wounds suffered by the caster, but permanently reduces their resilience by an amount dependent on their magical skill. ";
+		case 75: return " burns a creature. ";
+		case 76: return " freezes a creature. ";
+		case 77: return " calls forth a spirit from the elemental planes to aid the caster. A large quantity of the desired element must be available; this is rarely a problem for earth and air, but may be for fire or water. The elemental will usually be friendly to the caster (especially if they are skilled in the appropriate form of elemental magic). ";
+		case 78: return " drains the heat from the caster and the caster's surroundings, causing harm to all creatures not resistant to cold. ";
+		case 79: return " conjures a sticky glob of liquid fire, which adheres to any creature it strikes and burns. ";
+		case 80: return " calls forth a beast of ice to serve the caster. ";
+		case 81: return " covers the caster's body with a protective layer of ice, the power of which depends on his or her skill with Ice magic. The caster and the caster's equipment are protected from the cold, but this spell will not function if the caster is already wearing heavy armour. ";
+		case 82: return " calls forth a minor demon from the pits of Hell. ";
+		case 83: return " reduces the chance of projectile attacks striking the caster. Even powerful attacks such as lightning bolts or dragon breath are affected, although smaller missiles are repelled to a much greater degree.";
+		case 84: return " sends the caster into a temporary psychotic rage. ";
+		case 85: return " inflicts a great deal of damage on an undead creature. ";
+		case 110: return " allows its caster to imbue a mass of deceased flesh with a magical life force. Casting this spell involves the assembling of a heap of several corpses; the greater the mass of flesh available, the greater the chances of success. ";
+		case 111: return " dramatically but temporarily increases the caster's recuperative abilities, while also increasing the rate at which he or she consumes food. ";
+		case 112: return " uses the bones of a skeleton (or the bone-like exoskeleton of, for example, an insect) as the raw materials for a lethal spray of slicing bone fragments, allowing its creator to dispense with conjuration magic entirely and use necromancy alone for a low-level but very powerful combat spell. Using a large and heavy skeleton (by wielding it) results in a more powerful effect. ";
+		case 113: return " banishes a creature to the Abyss. Magicians wishing to visit that unpleasant place may use it to banish themselves. ";
+		case 114: return " mutates a creature into a pulsating mass of flesh. ";
+		case 115: return " throws a magical dart of poison. ";
+		case 116: return " converts flesh, blood, and other bodily fluids into magical energy. The caster may use his or her own body as the focus for this spell (which can be dangerous but never directly lethal), or can wield a piece of butchered flesh and draw power from that. ";
+		case 117: return " causes a weapon held in the caster's hand to dance into the air and strike the caster's enemies. It will not function on magical staves or certain items of a unique nature. ";
+		case 118: return " should only be available from Dispater's staff. So how are you reading this? ";
+		case 119: return " opens a gate to the realm of Pandemonium and draws forth one of its inhabitants to serve the caster for a time. ";
+		case 120: return " draws a small swarm of small demons to do battle with the caster's foes. ";
+		case 121: return " calls one of the greater demons of Pandemonium forth to serve the caster. Beware, for the spell binding it to service may not outlast the spell binding it to this world! ";
+		case 122: return " rapidly accelerates the process of decay in any corpses lying around the caster, in the process emitting a foul miasmic vapour which eats away at the life force of any creature within it. ";
+		case 123: return " bestows a lethal but temporary sharpness on a sword held by the caster. It will not affect weapons which are otherwise affected by special enchantments. ";
+		case 124: return " sets a weapon held by the caster on fire. It will not affect weapons which are otherwise affected by special enchantments. ";
+		case 125: return " infuses a weapon held by the caster with an aura of freezing cold. It will not affect weapons which are otherwise affected by special enchantments. ";
+		case 126: return " infuses a weapon held by the caster with unholy energies. It will not affect weapons which are otherwise affected by special enchantments. ";
+		case 127: return " crushes a nearby creature with waves of gravitational force. ";
+		case 128: return " hurls a large and heavy metal bolt at the caster's foes. ";
+		case 129: return " hurls a sharp spine of rock. ";
+		case 130: return " entombs the caster within four walls of rock. These walls will destroy most objects in their way, but their growth is obstructed by the presence of any creatures. Beware - one would be unwise to use this spell without a reliable escape route. ";
+		case 131: return " protects the caster with chunky scales of stone, the power of which depends on his or her Earth magic skill. These scales can coexist with other forms of armour, but are extremely heavy and cumbersome. ";
+		case 132: return " throws a bolt of electricity. ";
+		case 133: return " imbues its caster with the ability to run extremely fast. It will not increase the speed of those who are fleet of foot anyway (such as centaurs). ";
+		case 134: return " grants its caster the ability to fly through the air. ";
+		case 135: return " protects its caster from electric shocks. ";
+		case 136: return " hurls a crackling orb of electrical energy which causes a huge explosion on impact. ";
+		case 137: return " allows the caster to detect any creatures within a certain radius. ";
+		case 138: return " removes some or all of any poisons from the caster's system. ";
+		case 139: return " allows the caster to control his or her translocations. ";
+		case 140: return " poisons missile ammunition held by the caster. ";
+		case 141: return " covers a sharp bladed weapon with poison for a while. ";
+		case 142: return " protects your body from any poisons which may enter it for a period of time. ";
+		case 143: return " produces a noise emanating from a place of the caster's choice. ";
+		case 144: return " causes a weird alteration in the caster's body, leaving the caster in a weakened state (but never killing them). It may fail to affect those who are heavily mutated already. ";
+		case 146: return " is greatly prized by summoners and necromancers, as it allows the caster to recall any friendly creatures who may be nearby to a position adjacent to the caster.";
+		case 147: return " creates a gate allowing long-distance travel through a relatively ordinary environment (ie the Dungeon only). It lasts long enough for the caster and nearby creatures to enter. It will not take you past the level limits of your current area.";
+		case 148: return " cuts the resilience of a target creature in half, although it will never cause death directly.";
+		case 149: return " temporarily transforms the caster into a venomous spider-like creature.";
+		case 150: return " disrupts the matter of a creature's body, causing injury.";
+		case 151: return " tears apart the matter making up an object (especially a creature's body), causing severe damage.";
+		case 152: return " causes long, scythe-shaped blades to grow from the caster's hands. It makes spellcasting a little difficult.";
+		case 153: return " temporarily transforms the caster into a slow-moving but extremely robust stone statue.";
+		case 154: return " temporarily transform's the caster's body into a frozen ice-creature.";
+		case 155: return " temporarily transforms the caster into a great fire-breathing dragon.";
+		case 156: return " first transforms the caster into a semi-corporeal apparition receptive to negative energy, then infuses that form with the powers of Death. The caster becomes resistant to cold, poison, magic and hostile negative energies.";
+		case 157: return " raises living creatures slain by the caster into a state of unliving slavery as spectral horrors.";
+		case 158: return " calls on the powers of Hell to cause agonising injuries to anyone or anything living in the caster's vicinity. It carries a degree of danger for any necromancer brave enough to invoke it, for the Symbol also affects its caller and indeed will not function if they are immune to its terrible effects. Despite its power, however, it is never lethal.";
+		case 159: return " protects the caster from any kind of projectile attack, although particular powerful attacks (lightning bolts, etcetera) are deflected less than lighter missiles. ";
+		case SPELL_ORB_OF_FRAGMENTATION: return " throws a heavy sphere of metal which explodes on impact into a blast of deadly jagged fragments. It can rip a creature to shreds, but is ineffective against heavily armoured targets.";
+		case SPELL_ICE_BOLT: return " throws a chunk of ice. It is particularly effective against those creatures not immune to the effects of freezing temperatures, but half of its destructive potential comes from its weight and sharp edges and cannot be ignored even by cold-resistant creatures.";
+		case SPELL_ICE_STORM: return " conjures forth a raging blizzard of ice, sleet and freezing gasses.";
+		case SPELL_ARC: return " zaps a nearby creature with a powerful electrical current.";
+		case SPELL_AIRSTRIKE: return " causes the air around a creature to twist itself into a whirling vortex and attack.";
+		case SPELL_SHADOW_CREATURES: return " weaves a creature from shadows and threads of Abyssal matter. The creature thus brought into existence will be a recreation of some type of creature found in the caster's immediate vicinity. The spell even creates appropriate pieces of equipment for the creature, which are given a lasting substance by their contact with firm reality.";
+		default: return "This program apparently does not exist. Casting it may therefore be unwise. ";
+	}
+}
 
-
-
-/*
-Describes every spell in the game.
-*/
 void describe_spell(int spelled)
 {
+	std::string description = "This program" + program_description(spelled);
 
-   char descpr [1000];
-
-//   strcpy(st_pass, "");
-
-   clrscr();
-
-   strcpy(descpr, "");
-
-strcat(descpr, "This program");
-switch(spelled)
-{
-case 0:
-strcat(descpr, " allows the caster to determine the properties of an otherwise inscrutable magic item. ");
-break;
-case 1:
-strcat(descpr, " teleports the caster to a random location. ");
-break;
-case 2:
-strcat(descpr, " causes fear in those near to the caster. ");
-break;
-case 3:
-strcat(descpr, " causes a loud noise to be heard. ");
-break;
-case 4:
-strcat(descpr, " removes curses from any items which are being used by the caster. ");
-break;
-case 5:
-strcat(descpr, " hurls a small bolt of magical energy. ");
-break;
-case 6:
-strcat(descpr, " hurls an exploding bolt of fire. ");
-break;
-case 13:
-strcat(descpr, " creates a column of roaring flame. ");
-break;
-case 14:
-strcat(descpr, " digs a tunnel through unworked rock. ");
-break;
-case 15:
-strcat(descpr, " hurls a great bolt of flames. ");
-break;
-case 16:
-strcat(descpr, " hurls a great bolt of ice and frost. ");
-break;
-case 17:
-strcat(descpr, " hurls a mighty bolt of lightning. Although this spell causes less damage than the similar fire and ice spells, it can rip through whole rows of creatures. ");
-break;
-case 20:
-strcat(descpr, " randomly alters the form of another creature. ");
-break;
-case 21:
-strcat(descpr, " slows the actions of a creature. ");
-break;
-case 22:
-strcat(descpr, " speeds the actions of a creature. ");
-break;
-case 23:
-strcat(descpr, " prevents a creature from moving. ");
-break;
-case 24:
-strcat(descpr, " induces a state of bewilderment and confusion in a creature's mind. ");
-break;
-case 25:
-strcat(descpr, " hides a creature from the sight of others. ");
-break;
-case 26:
-strcat(descpr, " throws a small bolt of flame. ");
-break;
-case 27:
-strcat(descpr, " throws a small bolt of frost. ");
-break;
-case 28:
-strcat(descpr, " allows a short-range translocation, with precise control. ");
-break;
-case 29:
-strcat(descpr, " conjures up a large cloud of lethally cold vapour. ");
-break;
-case 30:
-strcat(descpr, " conjures up a large but short-lived cloud of vile fumes. ");
-break;
-case 31:
-strcat(descpr, " surrounds the caster with a mobile ring of searing flame. It is not recommended for those vulnerable to the effects of fire. ");
-break;
-case 32:
-strcat(descpr, " restores the physical strength of the caster. ");
-break;
-case 33:
-strcat(descpr, " restores the intelligence of the caster. ");
-break;
-case 34:
-strcat(descpr, " restores the dexterity of the caster. ");
-break;
-case 35:
-strcat(descpr, " throws a bolt of deadly poison. ");
-break;
-case 36:
-strcat(descpr, " bathes the caster's surroundings with a poisonous green light. ");
-break;
-case 37:
-strcat(descpr, " randomly translocates another creature. ");
-break;
-case 38:
-strcat(descpr, " heals a small amount of damage to the caster's body. ");
-break;
-case 39:
-strcat(descpr, " heals a large amount of damage to the caster's body. ");
-break;
-case 40:
-strcat(descpr, " removes poison from the caster's system. ");
-break;
-case 41:
-strcat(descpr, " purifies the caster's body, removing poison, disease, and some malign enchantments. ");
-break;
-case 42:
-//strcat(descpr, " is extremely powerful, but carries a degree of risk. It renders a living caster almost invulnerable to harm for a brief period of time, but brings them to the very brink of death in doing so. When the duration expires, the caster will be returned to a state of near-death. The spell can be cancelled at any time by any healing effect, and the caster will recieve one warning shortly before the spell expires. Undead cannot use this spell. ");
-strcat(descpr, " is extremely powerful, but carries a degree of risk. It renders a living caster almost invulnerable to harm for a brief period of time, but can bring them dangerously close to death (how close depends on their necromantic abilities). The spell can be cancelled at any time by any healing effect, and the caster will recieve one warning shortly before the spell expires. Undead cannot use this spell. ");break;
-case 43:
-strcat(descpr, " allows the caster to selectively erase a spell from memory and regain the magical energy bound up in it. One will be able to memorise this spell even if their mind is otherwise full of magic (ie you have the maximum number of spells already; mere lack of spell levels is insufficient). ");
-break;
-case 44:
-strcat(descpr, " causes confusion in all who see the caster. ");
-break;
-case 45:
-strcat(descpr, " smites a creature of the caster's choice. ");
-break;
-case 46:
-strcat(descpr, " calls on divine power to repel the unholy. ");
-break;
-case 47:
-strcat(descpr, " involves the speaking of a word of power which repels and can destroy unholy creatures. ");
-break;
-case 48:
-strcat(descpr, " alerts the caster to the presence of curses on his or her possessions. ");
-break;
-case 49:
-strcat(descpr, " summons a small creature to the caster's aid. ");
-break;
-case 50:
-strcat(descpr, " attempts to send hostile summoned creatures to the place from whence they came, or at least reduce the duration of their presence in the caster's locality. ");
-break;
-case 51:
-strcat(descpr, " summons one or more giant scorpions to the caster's assistance. ");
-break;
-case 52:
-strcat(descpr, " allows the caster to float in the air. ");
-break;
-case 53:
-strcat(descpr, " hurls a deadly bolt of negative energy, which drains the life of any living creature which it strikes. ");
-break;
-case 54:
-//strcat(descpr, " hurls a swarm of large and heavy metal splinters, to cut the caster's enemies into shreds. ");
-strcat(descpr, " hurls a lethally sharp bolt of crystal. ");
-break;
-case 55:
-strcat(descpr, " causes enormous damage to any creature struck by the bolt of incandescent energy that it conjures into existence. Unfortunately, it is very difficult to aim and very rarely hits anything. Pity, that. ");
-break;
-case 56:
-strcat(descpr, " conjures forth a great cloud of lethal gasses. ");
-break;
-case 57:
-strcat(descpr, " creates a mighty storm of roaring flame. ");
-break;
-case 58:
-strcat(descpr, " detects any traps in the caster's vicinity. ");
-break;
-case 59:
-strcat(descpr, " randomly translocates the caster a short distance. ");
-break;
-case 60:
-strcat(descpr, " throws a crackling sphere of destructive energy. ");
-break;
-case 61:
-strcat(descpr, " summons forth a pestilential swarm. ");
-break;
-case 62:
-strcat(descpr, " opens a gate to the Abyss and calls through one or more hideous abominations from that dreadful place. The powers who supervise this invocation require the caster to surrender some of his or her intelligence in exchange for their service. ");
-break;
-case 63:
-strcat(descpr, " causes an otherwise hostile creature to fight on your side for a while. ");
-break;
-case 64:
-strcat(descpr, " reveals your surroundings. ");
-break;
-case 65:
-strcat(descpr, " heals another creature from a distance. ");
-break;
-case 66:
-strcat(descpr, " causes the dead to rise up and serve the caster; all corpses within a certain distance of the caster are affected. A powerful magician can create an army of mindless undead slaves with this spell. ");
-break;
-case 67:
-strcat(descpr, " causes an extremely painful injury to a living creature. ");
-break;
-case 68:
-strcat(descpr, " extends the durations of most beneficial enchantments affecting the caster. ");
-break;
-case 69:
-strcat(descpr, " attempts to charm any undead in the vicinity of the caster. ");
-break;
-case 70:
-strcat(descpr, " raises a skeleton to a state of unlife. ");
-break;
-case 71:
-strcat(descpr, " steals the life of a living creature and grants it to the caster. It will not drain more life than the caster is capable of absorbing. ");
-break;
-case 72:
-strcat(descpr, " calls on the powers of the undead to aid the caster. ");
-break;
-case 73:
-strcat(descpr, " detects any items lying in the caster's general vicinity. ");
-break;
-case 74:
-strcat(descpr, " instantly heals any and all wounds suffered by the caster, but permanently reduces their resilience by an amount dependent on their magical skill. ");
-break;
-case 75:
-strcat(descpr, " burns a creature. ");
-break;
-case 76:
-strcat(descpr, " freezes a creature. ");
-break;
-case 77:
-strcat(descpr, " calls forth a spirit from the elemental planes to aid the caster. A large quantity of the desired element must be available; this is rarely a problem for earth and air, but may be for fire or water. The elemental will usually be friendly to the caster (especially if they are skilled in the appropriate form of elemental magic). ");
-break;
-case 78:
-strcat(descpr, " drains the heat from the caster and the caster's surroundings, causing harm to all creatures not resistant to cold. ");
-break;
-case 79:
-strcat(descpr, " conjures a sticky glob of liquid fire, which adheres to any creature it strikes and burns. ");
-break;
-case 80:
-strcat(descpr, " calls forth a beast of ice to serve the caster. ");
-break;
-case 81:
-strcat(descpr, " covers the caster's body with a protective layer of ice, the power of which depends on his or her skill with Ice magic. The caster and the caster's equipment are protected from the cold, but this spell will not function if the caster is already wearing heavy armour. ");
-break;
-case 82:
-strcat(descpr, " calls forth a minor demon from the pits of Hell. ");
-break;
-case 83:
-strcat(descpr, " reduces the chance of projectile attacks striking the caster. Even powerful attacks such as lightning bolts or dragon breath are affected, although smaller missiles are repelled to a much greater degree.");
-break;
-case 84:
-strcat(descpr, " sends the caster into a temporary psychotic rage. ");
-break;
-case 85:
-strcat(descpr, " inflicts a great deal of damage on an undead creature. ");
-break;
-
-case 110:
-strcat(descpr, " allows its caster to imbue a mass of deceased flesh with a magical life force. Casting this spell involves the assembling of a heap of several corpses; the greater the mass of flesh available, the greater the chances of success. ");
-break;
-case 111:
-strcat(descpr, " dramatically but temporarily increases the caster's recuperative abilities, while also increasing the rate at which he or she consumes food. ");
-break;
-case 112:
-strcat(descpr, " uses the bones of a skeleton (or the bone-like exoskeleton of, for example, an insect) as the raw materials for a lethal spray of slicing bone fragments, allowing its creator to dispense with conjuration magic entirely and use necromancy alone for a low-level but very powerful combat spell. Using a large and heavy skeleton (by wielding it) results in a more powerful effect. ");
-break;
-case 113:
-strcat(descpr, " banishes a creature to the Abyss. Magicians wishing to visit that unpleasant place may use it to banish themselves. ");
-break;
-case 114:
-strcat(descpr, " mutates a creature into a pulsating mass of flesh. ");
-break;
-case 115:
-strcat(descpr, " throws a magical dart of poison. ");
-break;
-case 116:
-//strcat(descpr, " converts flesh, blood, and other bodily fluids into magical energy. The caster must hold a piece of butchered flesh in his or her hand when casting, or the spell will feed directly on the caster's body; although never directly fatal, this could leave one very near death. ");
-strcat(descpr, " converts flesh, blood, and other bodily fluids into magical energy. The caster may use his or her own body as the focus for this spell (which can be dangerous but never directly lethal), or can wield a piece of butchered flesh and draw power from that. ");
-break;
-case 117:
-strcat(descpr, " causes a weapon held in the caster's hand to dance into the air and strike the caster's enemies. It will not function on magical staves or certain items of a unique nature. ");
-break;
-case 118:
-strcat(descpr, " should only be available from Dispater's staff. So how are you reading this? ");
-break;
-case 119:
-strcat(descpr, " opens a gate to the realm of Pandemonium and draws forth one of its inhabitants to serve the caster for a time. ");
-break;
-case 120:
-strcat(descpr, " draws a small swarm of small demons to do battle with the caster's foes. ");
-break;
-case 121:
-strcat(descpr, " calls one of the greater demons of Pandemonium forth to serve the caster. Beware, for the spell binding it to service may not outlast the spell binding it to this world! ");
-break;
-case 122:
-strcat(descpr, " rapidly accelerates the process of decay in any corpses lying around the caster, in the process emitting a foul miasmic vapour which eats away at the life force of any creature within it. ");
-break;
-case 123:
-strcat(descpr, " bestows a lethal but temporary sharpness on a sword held by the caster. It will not affect weapons which are otherwise affected by special enchantments. ");
-break;
-case 124:
-strcat(descpr, " sets a weapon held by the caster on fire. It will not affect weapons which are otherwise affected by special enchantments. ");
-break;
-case 125:
-strcat(descpr, " infuses a weapon held by the caster with an aura of freezing cold. It will not affect weapons which are otherwise affected by special enchantments. ");
-break;
-case 126:
-strcat(descpr, " infuses a weapon held by the caster with unholy energies. It will not affect weapons which are otherwise affected by special enchantments. ");
-break;
-case 127:
-strcat(descpr, " crushes a nearby creature with waves of gravitational force. ");
-break;
-case 128:
-strcat(descpr, " hurls a large and heavy metal bolt at the caster's foes. ");
-break;
-case 129:
-strcat(descpr, " hurls a sharp spine of rock. ");
-break;
-case 130:
-strcat(descpr, " entombs the caster within four walls of rock. These walls will destroy most objects in their way, but their growth is obstructed by the presence of any creatures. Beware - one would be unwise to use this spell without a reliable escape route. ");
-break;
-case 131:
-strcat(descpr, " protects the caster with chunky scales of stone, the power of which depends on his or her Earth magic skill. These scales can coexist with other forms of armour, but are extremely heavy and cumbersome. ");
-break;
-case 132:
-strcat(descpr, " throws a bolt of electricity. ");
-break;
-case 133:
-strcat(descpr, " imbues its caster with the ability to run extremely fast. It will not increase the speed of those who are fleet of foot anyway (such as centaurs). ");
-break;
-case 134:
-strcat(descpr, " grants its caster the ability to fly through the air. ");
-break;
-case 135:
-strcat(descpr, " protects its caster from electric shocks. ");
-break;
-case 136:
-strcat(descpr, " hurls a crackling orb of electrical energy which causes a huge explosion on impact. ");
-break;
-case 137:
-strcat(descpr, " allows the caster to detect any creatures within a certain radius. ");
-break;
-case 138:
-strcat(descpr, " removes some or all of any poisons from the caster's system. ");
-break;
-case 139:
-strcat(descpr, " allows the caster to control his or her translocations. ");
-break;
-case 140:
-strcat(descpr, " poisons missile ammunition held by the caster. ");
-break;
-case 141:
-strcat(descpr, " covers a sharp bladed weapon with poison for a while. ");
-break;
-case 142:
-strcat(descpr, " protects your body from any poisons which may enter it for a period of time. ");
-break;
-case 143:
-strcat(descpr, " produces a noise emanating from a place of the caster's choice. ");
-break;
-case 144:
-strcat(descpr, " causes a weird alteration in the caster's body, leaving the caster in a weakened state (but never killing them). It may fail to affect those who are heavily mutated already. ");
-break;
-/* 145 - debugging ray */
-case 146:
-strcat(descpr, " is greatly prized by summoners and necromancers, as it allows the caster to recall any friendly creatures who may be nearby to a position adjacent to the caster.");
-break;
-case 147:
-strcat(descpr, " creates a gate allowing long-distance travel through a relatively ordinary environment (ie the Dungeon only). It lasts long enough for the caster and nearby creatures to enter. It will not take you past the level limits of your current area.");
-break;
-case 148:
-strcat(descpr, " cuts the resilience of a target creature in half, although it will never cause death directly.");
-break;
-case 149:
-strcat(descpr, " temporarily transforms the caster into a venomous spider-like creature.");
-break;
-case 150:
-strcat(descpr, " disrupts the matter of a creature's body, causing injury.");
-break;
-case 151:
-strcat(descpr, " tears apart the matter making up an object (especially a creature's body), causing severe damage.");
-break;
-case 152:
-strcat(descpr, " causes long, scythe-shaped blades to grow from the caster's hands. It makes spellcasting a little difficult.");
-break;
-case 153:
-strcat(descpr, " temporarily transforms the caster into a slow-moving but extremely robust stone statue.");
-break;
-case 154:
-strcat(descpr, " temporarily transform's the caster's body into a frozen ice-creature.");
-break;
-case 155:
-strcat(descpr, " temporarily transforms the caster into a great fire-breathing dragon.");
-break;
-case 156:
-strcat(descpr, " first transforms the caster into a semi-corporeal apparition receptive to negative energy, then infuses that form with the powers of Death. The caster becomes resistant to cold, poison, magic and hostile negative energies.");
-break;
-case 157:
-strcat(descpr, " raises living creatures slain by the caster into a state of unliving slavery as spectral horrors.");
-break;
-case 158:
-strcat(descpr, " calls on the powers of Hell to cause agonising injuries to anyone or anything living in the caster's vicinity. It carries a degree of danger for any necromancer brave enough to invoke it, for the Symbol also affects its caller and indeed will not function if they are immune to its terrible effects. Despite its power, however, it is never lethal.");
-break;
-case 159:
-strcat(descpr, " protects the caster from any kind of projectile attack, although particular powerful attacks (lightning bolts, etcetera) are deflected less than lighter missiles. ");
-break;
-case SPELL_ORB_OF_FRAGMENTATION:
-strcat(descpr, " throws a heavy sphere of metal which explodes on impact into a blast of deadly jagged fragments. It can rip a creature to shreds, but is ineffective against heavily armoured targets.");
-break;
-case SPELL_ICE_BOLT:
-strcat(descpr, " throws a chunk of ice. It is particularly effective against those creatures not immune to the effects of freezing temperatures, but half of its destructive potential comes from its weight and sharp edges and cannot be ignored even by cold-resistant creatures.");
-break;
-case SPELL_ICE_STORM:
-strcat(descpr, " conjures forth a raging blizzard of ice, sleet and freezing gasses.");
-break;
-case SPELL_ARC:
-strcat(descpr, " zaps a nearby creature with a powerful electrical current.");
-break;
-case SPELL_AIRSTRIKE:
-strcat(descpr, " causes the air around a creature to twist itself into a whirling vortex and attack.");
-break;
-case SPELL_SHADOW_CREATURES:
-strcat(descpr, " weaves a creature from shadows and threads of Abyssal matter. The creature thus brought into existence will be a recreation of some type of creature found in the caster's immediate vicinity. The spell even creates appropriate pieces of equipment for the creature, which are given a lasting substance by their contact with firm reality.");
-break;
-
-/*
-case 0:
-strcat(descpr, ". ");
-break;
-*/
-default:
-strcpy(descpr, "This program apparently does not exist. Casting it may therefore be unwise. ");
-break;
-
+	clrscr();
+	print_description(description);
+	if (getch() == 0) getch();
 }
 
-print_description(descpr);
+std::string corporation_description(int corporation_id)
+{
+	bool kiku_protects = (you[0].piety >= 50 && you[0].religion == GOD_KIKUBAAQUDGHA);
+	bool vehu_sacrifice = (you[0].piety >= 30 && you[0].religion == GOD_VEHUMET);
+	bool vehu_not_fail = (you[0].piety >= 50 && you[0].religion == GOD_VEHUMET);
+	bool vehu_protects = (you[0].piety >= 75 && you[0].religion == GOD_VEHUMET);
+	bool makh_sacrifice = (you[0].piety >= 30 && you[0].religion == GOD_MAKHLEB);
+	bool sif_protects = (you[0].piety >= 100 && you[0].religion == GOD_SIF_MUNA);
+	switch(corporation_id) {
+		case 1: return "Zin is an ancient and revered God, dedicated to the "
+				"establishment of order and the destruction of the forces of chaos and night. "
+					"Valued "
+					"worshippers can gain a variety of powers useful in the fight against evil, "
+					"but must abstain from the use of necromancy and other forms of unholy magic. "
+					"Zin appreciates long-standing faith as well as sacrifices of valued objects "
+					"and the slaying of demons and the undead.";
+		case 2: return "The Shining One is a powerful crusading diety, allied with "
+				"Zin in the fight against evil. Followers may be granted with the ability to "
+					"summarily dispense the wrath of heaven, but must never use any form of evil "
+					"magic and should fight honourably. The Shining One appreciates long-standing persistence in the endless "
+					"crusade, as well as the dedicated destruction of unholy creatures.";
+		case 3: return "Kikubaaqudgha is a terrible Demon-God, served by those who "
+				"seek knowledge of the powers of death. Followers gain special powers "
+					"over the undead, and especially favoured servants can call on mighty demons "
+					"to slay their foes. $Kikubaaqudgha requires the deaths of living creatures "
+					"as often as possible, but is not interested in the offering of corpses except "
+					"at an appropriate altar." + kiku_protects ? "$Kikubaaqudgha is protecting you from the side-effects of death magic." : "";
+		case 4: return "Yredelemnul is worshipped by those who seek powers over "
+				"death and the undead without having to learn to use necromancy. Followers "
+					"can raise legions of servile undead and gain a number of other useful (if "
+					"unpleasant) powers. Yredelemnul appreciates killing, but prefers corpses "
+					"to be put to use rather than sacrificed.";
+		case 5: return "Xom is a wild and unpredictable God of chaos, who seeks not "
+				"worshippers but playthings to toy with. Many choose to follow Xom in the "
+					"hope of receiving fabulous rewards and mighty powers, but Xom is nothing if "
+					"not capricious.";
+		case 6: return "Vehumet is a God of the destructive powers of magic. "
+				"Followers gain various useful powers to enhance their command of "
+					"the hermetic arts, and the most favoured stand to gain access to "
+					"some of the fearsome spells in Vehumet's library. One's devotion to Vehumet "
+					"can be proved by the causing of as much carnage and destruction as possible."
+					+ vehu_sacrifice ? "$You can gain power from the those you kill in Vehumet's name, or those slain by your servants." : ""
+					+ vehu_not_fail ? "$Your conjurations and summonings cast in Vehumet's name rarely fail." : ""
+					+ vehu_protects ? "$During prayer you are protected from summoned creatures." : "";
+		case 7: return "Okawaru is a dangerous and powerful God of battle. Followers "
+				"can gain a number of powers useful in combat as well as various rewards, "
+					"but must constantly prove "
+					"themselves through battle and the sacrifice of corpses and valuable items.";
+		case 8: return "Makhleb the Destroyer is a fearsome God of chaos and violent "
+				"death. Followers, who must constantly appease Makhleb with blood, stand to "
+					"gain various powers of death and destruction. The Destroyer appreciates "
+					"sacrifices of corpses and valuable items."
+					+ makh_sacrifice ? "$You can gain power from the deaths of those killed in Makhleb's name." : "";
+		case 9: return "Sif Muna is a contemplative but powerful deity, served by "
+				"those who seek magical knowledge. Sif Muna appreciates sacrifices of valuable "
+					"items, and the casting of spells as often as possible."
+					+ sif_protects ? "$Sif Muna is protecting you from some of the side-effects of magic." : "";
+		case 10: return "Trog is an ancient God of anger and violence. Followers are "
+				 "expected to kill in Trog's name and sacrifice the dead, and in return gain "
+					 "power in battle and occasional rewards. Trog hates wizards, and followers "
+					 "are forbidden the use of spell magic.";
+		case 11: return "Nemelex is a strange and unpredictable trickster God, whose "
+				 "powers can be invoked through the magical packs of cards which Nemelex "
+					 "paints in the ichor of demons. Followers receive occasional gifts, and "
+					 "should use these gifts as much as possible. Offerings of items are also "
+					 "appreciated.";
+		case 12: return "Elyvilon the Healer is worshipped by the healers (among "
+				 "others), who gain their healing powers by long worship and devotion. Although Elyvilon "
+					 "prefers a creed of pacifism, those who crusade against evil are not "
+					 "excluded. Elyvilon appreciates the offering of weapons.";
 
+	}
+	return "";
+}
 
-if (getch() == 0) getch();
-
-
-} // end void describe_item
-
-/*
-Describes all gods. Accessible through altars (by praying), or by the ^ key
-if player is a worshipper.
-*/
 void describe_god(int which_god)
 {
-
-   char descpr [1000];
-
-//   strcpy(st_pass, "");
-
-   clrscr();
-
-   strcpy(descpr, "");
-
-switch(which_god)
-{
-case 1:
-strcpy(descpr, "Zin is an ancient and revered God, dedicated to the \
-establishment of order and the destruction of the forces of chaos and night. \
-Valued \
-worshippers can gain a variety of powers useful in the fight against evil, \
-but must abstain from the use of necromancy and other forms of unholy magic. \
-Zin appreciates long-standing faith as well as sacrifices of valued objects \
-and the slaying of demons and the undead.");
-break;
-case 2:
-strcpy(descpr, "The Shining One is a powerful crusading diety, allied with \
-Zin in the fight against evil. Followers may be granted with the ability to \
-summarily dispense the wrath of heaven, but must never use any form of evil \
-magic and should fight honourably. The Shining One appreciates long-standing persistence in the endless \
-crusade, as well as the dedicated destruction of unholy creatures.");
-break;
-case 3:
-strcpy(descpr, "Kikubaaqudgha is a terrible Demon-God, served by those who \
-seek knowledge of the powers of death. Followers gain special powers \
-over the undead, and especially favoured servants can call on mighty demons \
-to slay their foes. $Kikubaaqudgha requires the deaths of living creatures \
-as often as possible, but is not interested in the offering of corpses except \
- at an appropriate altar.");
-if (you[0].piety >= 50 && you[0].religion == GOD_KIKUBAAQUDGHA)
- strcat(descpr, "$Kikubaaqudgha is protecting you from the side-effects of death magic.");
-break;
-case 4:
-strcpy(descpr, "Yredelemnul is worshipped by those who seek powers over \
-death and the undead without having to learn to use necromancy. Followers \
-can raise legions of servile undead and gain a number of other useful (if \
-unpleasant) powers. Yredelemnul appreciates killing, but prefers corpses \
-to be put to use rather than sacrificed.");
-break;
-case 5:
-strcpy(descpr, "Xom is a wild and unpredictable God of chaos, who seeks not \
-worshippers but playthings to toy with. Many choose to follow Xom in the \
-hope of receiving fabulous rewards and mighty powers, but Xom is nothing if \
-not capricious.");
-break;
-case 6:
-strcpy(descpr, "Vehumet is a God of the destructive powers of magic. \
-Followers gain various useful powers to enhance their command of \
-the hermetic arts, and the most favoured stand to gain access to \
-some of the fearsome spells in Vehumet's library. One's devotion to Vehumet \
-can be proved by the causing of as much carnage and destruction as possible.");
-if (you[0].religion == GOD_VEHUMET)
-{
- if (you[0].piety >= 30)
-  strcat(descpr, "$You can gain power from the those you kill in Vehumet's name, or those slain by your servants.");
- if (you[0].piety >= 50)
-  strcat(descpr, "$Your conjurations and summonings cast in Vehumet's name rarely fail.");
- if (you[0].piety >= 75)
-  strcat(descpr, "$During prayer you are protected from summoned creatures.");
+	clrscr();
+	print_description(corporation_description(which_god));
+	if (getch() == 0) getch();
 }
-break;
-case 7:
-strcpy(descpr, "Okawaru is a dangerous and powerful God of battle. Followers \
-can gain a number of powers useful in combat as well as various rewards, \
-but must constantly prove \
-themselves through battle and the sacrifice of corpses and valuable items.");
-break;
-case 8:
-strcpy(descpr, "Makhleb the Destroyer is a fearsome God of chaos and violent \
-death. Followers, who must constantly appease Makhleb with blood, stand to \
-gain various powers of death and destruction. The Destroyer appreciates \
-sacrifices of corpses and valuable items.");
-if (you[0].piety >= 30 && you[0].religion == GOD_MAKHLEB)
- strcat(descpr, "$You can gain power from the deaths of those killed in Makhleb's name.");
-break;
-case 9:
-strcpy(descpr, "Sif Muna is a contemplative but powerful deity, served by \
-those who seek magical knowledge. Sif Muna appreciates sacrifices of valuable \
-items, and the casting of spells as often as possible.");
-if (you[0].piety >= 100 && you[0].religion == GOD_SIF_MUNA)
- strcat(descpr, "$Sif Muna is protecting you from some of the side-effects of magic.");
-break;
-case 10:
-strcpy(descpr, "Trog is an ancient God of anger and violence. Followers are \
-expected to kill in Trog's name and sacrifice the dead, and in return gain \
-power in battle and occasional rewards. Trog hates wizards, and followers \
-are forbidden the use of spell magic.");
-break;
-case 11:
-strcpy(descpr, "Nemelex is a strange and unpredictable trickster God, whose \
-powers can be invoked through the magical packs of cards which Nemelex \
-paints in the ichor of demons. Followers receive occasional gifts, and \
-should use these gifts as much as possible. Offerings of items are also \
-appreciated.");
-break;
-case 12:
-strcpy(descpr, "Elyvilon the Healer is worshipped by the healers (among \
-others), who gain their healing powers by long worship and devotion. Although Elyvilon \
-prefers a creed of pacifism, those who crusade against evil are not \
-excluded. Elyvilon appreciates the offering of weapons.");
-break;
-
-}
-
-
-print_description(descpr);
-
-
-if (getch() == 0) getch();
-
-
-
-}
-
-
 
 /*
 Takes a descpr string filled up with stuff from other functions, and
@@ -1757,21 +1399,6 @@ void print_description(const std::string & description)
 		j ++;
 	}
 }
-
-
-
-/*
-Appends a value to the string. If plussed == 1, will add a + to positive
-values (itoa always adds - to -ve ones).
-*/
-void append_value(char descpr [1000], int valu, int plussed)
-{
-char value_str [5];
-if (valu >= 0 && plussed == 1) strcat(descpr, "+");
-itoa(valu, value_str, 10);
-strcat(descpr, value_str);
-}
-
 
 class LocalRandSeed {
 public:

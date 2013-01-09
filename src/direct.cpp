@@ -231,7 +231,7 @@ bool describe_verbose(int xps, int yps)
 	if (menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_class >= MLAVA0 && menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_sec == 1) {
 		return false;
 	}
-	describe_monsters(menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_class, mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]);
+	describe_monsters(menv[mgrd [you[0].x_pos + xps - 17] [you[0].y_pos + yps - 9]].m_class);
 	redraw_screen();
 	return true;
 }
