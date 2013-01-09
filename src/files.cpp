@@ -1609,9 +1609,7 @@ for (rdem = 0; rdem < MNST + 1; rdem ++)
  if (menv [rdem].m_class == 401) break; /* found one! */
 }
 
-char st_prn[200];
-make_name(random2(250), random2(250), random2(250), 3, st_prn);
-strcpy(ghost.gname, st_prn);
+strcpy(ghost.gname, make_name(random2(250), random2(250), random2(250), 3).c_str());
 
 ghost.ghs [0] = 50 + random2(50) + random2(50) + random2(50) + random2(50);
 if (random2(3) == 0) ghost.ghs [0] += random2(50) + random2(50);

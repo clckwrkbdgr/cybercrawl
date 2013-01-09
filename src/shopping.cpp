@@ -107,9 +107,7 @@ char sh_name [40];
 //char *make_name(int var1, int var2, int var3, char ncase)
 
       strcpy(sh_name, "Welcome to ");
-      char str_pass [50];
-      make_name(env[0].keeper_name [shoppy] [0], env[0].keeper_name [shoppy] [1], env[0].keeper_name [shoppy] [2], 3, str_pass);
-      strcat(sh_name, str_pass);
+      strcat(sh_name, make_name(env[0].keeper_name [shoppy] [0], env[0].keeper_name [shoppy] [1], env[0].keeper_name [shoppy] [2], 3).c_str());
       strcat(sh_name, "'s ");
       switch(env[0].sh_type [shoppy])
       {

@@ -1026,8 +1026,6 @@ if (ident_lev == 0)
  return art_n;
 }
 
-char st_p [50];
-
 if (random4(2) == 0)
 {
  char st_p [80];
@@ -1038,18 +1036,17 @@ if (random4(2) == 0)
  else
 {
  char st_p2 [80];
- make_name(random4(250), random4(250), random4(250), 3, st_p);
  standard_name_weap(atype, st_p2);
  strcat(art_n, st_p2);
  if (random4(3) == 0)
   {
    strcat(art_n, " of ");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
   }
   else
   {
    strcat(art_n, " \"");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
    strcat(art_n, "\"");
   }
 }
@@ -1119,8 +1116,6 @@ if (ident_lev == 0)
  return art_n;
 }
 
-char st_p [50];
-
 if (random4(2) == 0)
 {
  char st_p [80];
@@ -1131,18 +1126,17 @@ if (random4(2) == 0)
  else
 {
  char st_p2 [80];
- make_name(random4(250), random4(250), random4(250), 3, st_p);
  standard_name_armour(atype, aplus2, st_p2);
  strcat(art_n, st_p2);
  if (random4(3) == 0)
   {
    strcat(art_n, " of ");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
   }
   else
   {
    strcat(art_n, " \"");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
    strcat(art_n, "\"");
   }
 }
@@ -1163,8 +1157,6 @@ if (adam == 201)
  if (ident_lev == 0) return search_unrandarts->unid_name;
   else return search_unrandarts->name;
 }
-
-char st_p [80];
 
 free(art_n);
 art_n = (char *)malloc(sizeof(char) * 80);
@@ -1217,17 +1209,16 @@ if (random4(5) == 0)
 }
  else
 {
- make_name(random4(250), random4(250), random4(250), 3, st_p);
  if (atype < AMU_RAGE) strcat(art_n, "ring"); else strcat(art_n, "amulet");
  if (random4(3) == 0)
   {
    strcat(art_n, " of ");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
   }
   else
   {
    strcat(art_n, " \"");
-   strcat(art_n, st_p);
+   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
    strcat(art_n, "\"");
   }
 }
