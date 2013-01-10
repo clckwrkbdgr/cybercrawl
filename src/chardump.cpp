@@ -533,9 +533,8 @@ int dump_char(int show_prices, const char * fname)
 			strng [1] = 0;
 			strcat(dmp [lin], strng);
 			strcat(dmp [lin], " - ");
-			spell_name(you[0].spells [j], st_pass);
 
-			strcat(dmp [lin], st_pass);
+			strcat(dmp [lin], spell_name(you[0].spells [j]).c_str());
 			lin ++;
 
     	}

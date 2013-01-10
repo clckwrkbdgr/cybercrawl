@@ -1,3 +1,4 @@
+#include "spells0.h"
 #include <string.h>
 #include "linuxlib.h"
 
@@ -15,7 +16,6 @@
 int spell_hunger(int spell_value, int spell);
 int which_spell_in_book(int sbook_type, int spl);
 char spellbook_contents(int plus, int type);
-void spell_name(int spell, char spln [60]);
 char spell_value(int spell);
 int spell_type(int spell, int typy);
 int spell_spec(int spell, int power);
@@ -100,9 +100,8 @@ lines++;
 				strng [0] = ft;
 				cprintf(strng);
 			cprintf(" - ");
-			spell_name(you[0].spells [j], st_pass);
 
-			cprintf(st_pass);
+			cprintf(spell_name(you[0].spells [j]).c_str());
 
    gotoxy(35, wherey());
    already = 0;
@@ -1148,187 +1147,165 @@ return 1;
 }
 
 
-void spell_name(int spell, char spln [60])
+std::string spell_name(int spell)
 {
-	//char spln [30] = "";
-
-	strcpy(spln, "Hello!");
-
-	switch(spell)
-	{
-		case 0: strcpy(spln, "Identify"); break;
-		case 1: strcpy(spln, "Use Ventilation"); break;
-		case 2: strcpy(spln, "Cause Fear"); break;
-		case 3: strcpy(spln, "Create Noise"); break;
-		case 4: strcpy(spln, "Remove Virus"); break;
-		case 5: strcpy(spln, "Energy Dart"); break;
-		case 6: strcpy(spln, "Fireball"); break;
-		case 13: strcpy(spln, "Conjure Flame"); break;
-      case 14: strcpy(spln, "Dig"); break;
-      case 15: strcpy(spln, "Bolt of Fire"); break;
-      case 16: strcpy(spln, "Bolt of Cold"); break;
-      case 17: strcpy(spln, "Lightning Bolt"); break;
-      case 20: strcpy(spln, "Polymorph Other"); break;
-      case 21: strcpy(spln, "Slow"); break;
-      case 22: strcpy(spln, "Haste"); break;
-      case 23: strcpy(spln, "Paralyze"); break;
-      case 24: strcpy(spln, "Confuse"); break;
-      case 25: strcpy(spln, "Invisibility"); break;
-      case 26: strcpy(spln, "Throw Flame"); break;
-      case 27: strcpy(spln, "Throw Frost"); break;
-      case 28: strcpy(spln, "Controlled Jump"); break;
-      case 29: strcpy(spln, "Freezing Cloud"); break;
-      case 30: strcpy(spln, "Mephitic Cloud"); break;
-      case 31: strcpy(spln, "Ring of Flames"); break;
-      case 32: strcpy(spln, "Restore Strength"); break;
-      case 33: strcpy(spln, "Restore Intelligence"); break;
-      case 34: strcpy(spln, "Restore Dexterity"); break;
-      case 35: strcpy(spln, "Venom Bolt"); break;
-      case 36: strcpy(spln, "Olgreb's Toxic Radiance"); break;
-      case 37: strcpy(spln, "Use Maintenace On Other"); break;
-      case 38: strcpy(spln, "Lesser Healing"); break;
-      case 39: strcpy(spln, "Greater Healing"); break;
-      case 40: strcpy(spln, "Cure Poison"); break;
-      case 41: strcpy(spln, "Purification"); break;
-      case 42: strcpy(spln, "Death's Door"); break;
-      case 43: strcpy(spln, "Selective Amnesia"); break;
-      case 44: strcpy(spln, "Mass Confusion"); break;
-      case 45: strcpy(spln, "Smiting"); break;
-	case 46: strcpy(spln, "Repel Cyborgs"); break;
-        case 47: strcpy(spln, "Holy Word"); break;
-      case 48: strcpy(spln, "Detect Virus"); break;
-      case 49: strcpy(spln, "Summon Small Mammal"); break;
-      case 50: strcpy(spln, "Abjuration"); break;
-      case 51: strcpy(spln, "Summon Scorpions"); break;
-      case 52: strcpy(spln, "Levitation"); break;
-      case 53: strcpy(spln, "Bolt of Draining"); break;
-      case 54: strcpy(spln, "Lehudib's Crystal Spear"); break;
-      case 55: strcpy(spln, "Bolt of Inaccuracy"); break;
-                                          // spelling?
-      case 56: strcpy(spln, "Poisonous Cloud"); break;
-      case 57: strcpy(spln, "Fire Storm"); break;
-      case 58: strcpy(spln, "Detect Traps"); break;
-      case 59: strcpy(spln, "Blink"); break;
-      case 60: strcpy(spln, "Iskenderun's Mystic Blast"); break; // this name was found in the hack.exe file of an early version of PCHACK. Credit goes to its creator (whoever that may be).
-      case 61: strcpy(spln, "Swarm"); break;
-      case 62: strcpy(spln, "Summon Horrible Things"); break;
-      case 63: strcpy(spln, "Enslavement"); break;
-      case 64: strcpy(spln, "Magic Mapping"); break;
-      case 65: strcpy(spln, "Heal Other"); break;
-      case 66: strcpy(spln, "Cybernitize Dead"); break;
-      case 67: strcpy(spln, "Pain"); break;
-      case 68: strcpy(spln, "Extension"); break;
-      case 69: strcpy(spln, "Control Cyborg"); break;
-      case 70: strcpy(spln, "Cybernitize Skeleton"); break;
-      case 71: strcpy(spln, "Chemical Draining"); break;
-      case 72: strcpy(spln, "Summon Robots"); break;
-      case 73: strcpy(spln, "Detect Items"); break;
-      case 74: strcpy(spln, "Borgnjor's Revivification"); break;
-
-      case 75: strcpy(spln, "Burn"); break;
-      case 76: strcpy(spln, "Freeze"); break;
-      case 77: strcpy(spln, "Summon Nanorg"); break;
-      case 78: strcpy(spln, "Ozocubu's Refrigeration"); break;
-      case 79: strcpy(spln, "Sticky Flame"); break;
-      case 80: strcpy(spln, "Summon Refrigerator"); break;
-      case 81: strcpy(spln, "Ozocubu's Armour"); break;
-      case 82: strcpy(spln, "Call Imp"); break;
-      case 83: strcpy(spln, "Repel Missiles"); break;
-      case 84: strcpy(spln, "Berserker Rage"); break;
-      case 85: strcpy(spln, "Dispel Cyborg"); break;
-
-      case 86: strcpy(spln, "Guardian"); break;
-      case 87: strcpy(spln, "Pestilence"); break;
-      case 88: strcpy(spln, "Thunderbolt"); break;
-      case 89: strcpy(spln, "Flame of Cleansing"); break;
-      case 90: strcpy(spln, "Shining Light"); break;
-      case 91: strcpy(spln, "Summon Daeva"); break;
-      case 92: strcpy(spln, "Abjuration"); break;
-
-      case 110: strcpy(spln, "Twisted Resurrection"); break;
-      case 111: strcpy(spln, "Regeneration"); break;
-      case 112: strcpy(spln, "Bone Shards"); break;
-      case 113: strcpy(spln, "Banishment"); break;
-      case 114: strcpy(spln, "Cigotuvi's Degeneration"); break;
-      case 115: strcpy(spln, "Sting"); break;
-      case 116: strcpy(spln, "Sublimation of Blood"); break;
-      case 117: strcpy(spln, "Tukima's Dance"); break;
-      case 118: strcpy(spln, "Hellfire"); break; // Staff of Dispater
-      case 119: strcpy(spln, "Summon Biomutant"); break;
-      case 120: strcpy(spln, "Mutant Horde"); break;
-      case 121: strcpy(spln, "Summon Greater Mutant"); break;
-      case 122: strcpy(spln, "Corpse Rot"); break;
-      case 123: strcpy(spln, "Tukima's Vorpal Blade"); break;
-      case 124: strcpy(spln, "Fire Brand"); break;
-      case 125: strcpy(spln, "Freezing Aura"); break;
-      case 126: strcpy(spln, "Lethal Infusion"); break;
-
-      case 127: strcpy(spln, "Crush"); break;
-      case 128: strcpy(spln, "Bolt of Iron"); break;
-      case 129: strcpy(spln, "Stone Arrow"); break;
-      case 130: strcpy(spln, "Tomb of Doroklohe"); break;
-      case 131: strcpy(spln, "Stonemail"); break;
-
-      case 132: strcpy(spln, "Shock"); break;
-      case 133: strcpy(spln, "Swiftness"); break;
-      case 134: strcpy(spln, "Fly"); break;
-      case 135: strcpy(spln, "Insulation"); break;
-      case 136: strcpy(spln, "Orb of Electrocution"); break;
-      case 137: strcpy(spln, "Detect creatures"); break;
-      case 138: strcpy(spln, "Cure Poison"); break;
-      case 139: strcpy(spln, "Control Maintenance"); break;
-      case 140: strcpy(spln, "Poison Ammunition"); break;
-      case 141: strcpy(spln, "Poison Weapon"); break;
-      case 142: strcpy(spln, "Resist Poison"); break;
-      case 143: strcpy(spln, "Projected Noise"); break;
-      case 144: strcpy(spln, "Alter Self"); break;
-      case 145: strcpy(spln, "Debugging ray"); break;
-      case 146: strcpy(spln, "Recall"); break;
-      case 147: strcpy(spln, "Portal"); break;
-      case 148: strcpy(spln, "Agony"); break;
-
-      case 149: strcpy(spln, "Spider Form"); break;
-      case 150: strcpy(spln, "Disrupt"); break;
-      case 151: strcpy(spln, "Disintegrate"); break;
-      case 152: strcpy(spln, "Blade Hands"); break;
-      case 153: strcpy(spln, "Statue Form"); break;
-      case 154: strcpy(spln, "Ice Form"); break;
-      case 155: strcpy(spln, "Dragon Form"); break;
-      case 156: strcpy(spln, "Cybermutation"); break;
-      case 157: strcpy(spln, "Death Channel"); break;
-      case 158: strcpy(spln, "Symbol of Torment"); break;
-      case 159: strcpy(spln, "Deflect Missiles"); break;
-      case 160: strcpy(spln, "Orb of Fragmentation"); break;
-      case 161: strcpy(spln, "Ice Bolt"); break;
-      case 162: strcpy(spln, "Ice Storm"); break;
-      case 163: strcpy(spln, "Arc"); break;
-      case 164: strcpy(spln, "Airstrike"); break;
-      case 165: strcpy(spln, "Shadow Creatures"); break;
-
-
-/* When adding enchantments, must add them to extension as well */
-
-/*
-spells to do:
-Contingency?
-Trigger contingency
-Preserve Corpses
-Permanency
-Ball Lightning
-Explosive rune?
-Fennel wands
-More summonings!
-*/
-
-default: strcpy(spln, "another program"); break;
+	switch(spell) {
+		case 0: return "Identify";
+		case 1: return "Use Ventilation";
+		case 2: return "Cause Fear";
+		case 3: return "Create Noise";
+		case 4: return "Remove Virus";
+		case 5: return "Energy Dart";
+		case 6: return "Fireball";
+		case 13: return "Conjure Flame";
+		case 14: return "Dig";
+		case 15: return "Bolt of Fire";
+		case 16: return "Bolt of Cold";
+		case 17: return "Lightning Bolt";
+		case 20: return "Polymorph Other";
+		case 21: return "Slow";
+		case 22: return "Haste";
+		case 23: return "Paralyze";
+		case 24: return "Confuse";
+		case 25: return "Invisibility";
+		case 26: return "Throw Flame";
+		case 27: return "Throw Frost";
+		case 28: return "Controlled Jump";
+		case 29: return "Freezing Cloud";
+		case 30: return "Mephitic Cloud";
+		case 31: return "Ring of Flames";
+		case 32: return "Restore Strength";
+		case 33: return "Restore Intelligence";
+		case 34: return "Restore Dexterity";
+		case 35: return "Venom Bolt";
+		case 36: return "Olgreb's Toxic Radiance";
+		case 37: return "Use Maintenace On Other";
+		case 38: return "Lesser Healing";
+		case 39: return "Greater Healing";
+		case 40: return "Cure Poison";
+		case 41: return "Purification";
+		case 42: return "Death's Door";
+		case 43: return "Selective Amnesia";
+		case 44: return "Mass Confusion";
+		case 45: return "Smiting";
+		case 46: return "Repel Cyborgs";
+		case 47: return "Holy Word";
+		case 48: return "Detect Virus";
+		case 49: return "Summon Small Mammal";
+		case 50: return "Abjuration";
+		case 51: return "Summon Scorpions";
+		case 52: return "Levitation";
+		case 53: return "Bolt of Draining";
+		case 54: return "Lehudib's Crystal Spear";
+		case 55: return "Bolt of Inaccuracy"; // spelling?
+		case 56: return "Poisonous Cloud";
+		case 57: return "Fire Storm";
+		case 58: return "Detect Traps";
+		case 59: return "Blink";
+		case 60: return "Iskenderun's Mystic Blast"; // this name was found in the hack.exe file of an early version of PCHACK. Credit goes to its creator (whoever that may be).
+		case 61: return "Swarm";
+		case 62: return "Summon Horrible Things";
+		case 63: return "Enslavement";
+		case 64: return "Magic Mapping";
+		case 65: return "Heal Other";
+		case 66: return "Cybernitize Dead";
+		case 67: return "Pain";
+		case 68: return "Extension";
+		case 69: return "Control Cyborg";
+		case 70: return "Cybernitize Skeleton";
+		case 71: return "Chemical Draining";
+		case 72: return "Summon Robots";
+		case 73: return "Detect Items";
+		case 74: return "Borgnjor's Revivification";
+		case 75: return "Burn";
+		case 76: return "Freeze";
+		case 77: return "Summon Nanorg";
+		case 78: return "Ozocubu's Refrigeration";
+		case 79: return "Sticky Flame";
+		case 80: return "Summon Refrigerator";
+		case 81: return "Ozocubu's Armour";
+		case 82: return "Call Imp";
+		case 83: return "Repel Missiles";
+		case 84: return "Berserker Rage";
+		case 85: return "Dispel Cyborg";
+		case 86: return "Guardian";
+		case 87: return "Pestilence";
+		case 88: return "Thunderbolt";
+		case 89: return "Flame of Cleansing";
+		case 90: return "Shining Light";
+		case 91: return "Summon Daeva";
+		case 92: return "Abjuration";
+		case 110: return "Twisted Resurrection";
+		case 111: return "Regeneration";
+		case 112: return "Bone Shards";
+		case 113: return "Banishment";
+		case 114: return "Cigotuvi's Degeneration";
+		case 115: return "Sting";
+		case 116: return "Sublimation of Blood";
+		case 117: return "Tukima's Dance";
+		case 118: return "Hellfire"; // Staff of Dispater
+		case 119: return "Summon Biomutant";
+		case 120: return "Mutant Horde";
+		case 121: return "Summon Greater Mutant";
+		case 122: return "Corpse Rot";
+		case 123: return "Tukima's Vorpal Blade";
+		case 124: return "Fire Brand";
+		case 125: return "Freezing Aura";
+		case 126: return "Lethal Infusion";
+		case 127: return "Crush";
+		case 128: return "Bolt of Iron";
+		case 129: return "Stone Arrow";
+		case 130: return "Tomb of Doroklohe";
+		case 131: return "Stonemail";
+		case 132: return "Shock";
+		case 133: return "Swiftness";
+		case 134: return "Fly";
+		case 135: return "Insulation";
+		case 136: return "Orb of Electrocution";
+		case 137: return "Detect creatures";
+		case 138: return "Cure Poison";
+		case 139: return "Control Maintenance";
+		case 140: return "Poison Ammunition";
+		case 141: return "Poison Weapon";
+		case 142: return "Resist Poison";
+		case 143: return "Projected Noise";
+		case 144: return "Alter Self";
+		case 145: return "Debugging ray";
+		case 146: return "Recall";
+		case 147: return "Portal";
+		case 148: return "Agony";
+		case 149: return "Spider Form";
+		case 150: return "Disrupt";
+		case 151: return "Disintegrate";
+		case 152: return "Blade Hands";
+		case 153: return "Statue Form";
+		case 154: return "Ice Form";
+		case 155: return "Dragon Form";
+		case 156: return "Cybermutation";
+		case 157: return "Death Channel";
+		case 158: return "Symbol of Torment";
+		case 159: return "Deflect Missiles";
+		case 160: return "Orb of Fragmentation";
+		case 161: return "Ice Bolt";
+		case 162: return "Ice Storm";
+		case 163: return "Arc";
+		case 164: return "Airstrike";
+		case 165: return "Shadow Creatures";
+		default: return "another program";
 	}
+	/* When adding enchantments, must add them to extension as well */
 
-// purify food?
-
-	//itoa(spell, spln, 10);
-
-//return spln;
-
+	/*
+	   spells to do:
+	   Contingency?
+	   Trigger contingency
+	   Preserve Corpses
+	   Permanency
+	   Ball Lightning
+	   Explosive rune?
+	   Fennel wands
+	   More summonings!
+	   */
 }
 
 
@@ -1389,9 +1366,8 @@ cprintf(" Programs                           Type                      Level"EOL
 
 //			cprintf(st_pass);
 
-			spell_name(spell_types [j], st_pass);
 
-			cprintf(st_pass);
+			cprintf(spell_name(spell_types [j]).c_str());
 
          //cprintf("A spell");
 

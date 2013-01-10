@@ -271,9 +271,7 @@ std::string base_weapon_name(ItemInfo item)
 		}
 	}
 
-	char str_pass2 [80];
-	standard_name_weap(item.item_typ, str_pass2); /* in randart.cc */
-	result += str_pass2;
+	result += standard_name_weap(item.item_typ);
 
 	if (item.ident_lev > 1) {
 		result += damage_type_name(item.item_da % 30, item.item_clas, item.item_typ);
@@ -427,9 +425,7 @@ std::string armour_name(ItemInfo item)
 			result += helmet_type(item.item_da / 30);
 		}
 	}
-	char str_pass2 [80];
-	standard_name_armour(item.item_typ, item.item_plus2, str_pass2); /* in randart.cc */
-	result += str_pass2;
+	result += standard_name_armour(item.item_typ, item.item_plus2);
 	if (item.ident_lev > 1) {
 		result += armour_ability(item.item_da % 30);
 	}
@@ -622,10 +618,8 @@ std::string vial_name(ItemInfo item)
 
 std::string chunk_name(ItemInfo item)
 {
-	char gmo_n2[80];
-	moname(item.it_plus, 0, 1, 100, gmo_n2);
 	Format format("@1chunk@2 of @3 flesh");
-	format << ((item.item_da < 100) ? "rotting " : "") << ((item.it_quant > 1) ? "s" : "") << gmo_n2;
+	format << ((item.item_da < 100) ? "rotting " : "") << ((item.it_quant > 1) ? "s" : "") << moname(item.it_plus, 0, 1, 100);
 	return format.str();
 }
 
@@ -1126,9 +1120,8 @@ std::string rom_device_name(ItemInfo item)
 
 std::string corpse_name(ItemInfo item)
 {
-	char gmo_n [80];
 	bool is_skeleton = (item.item_typ == 1);
-	moname(item.it_plus, 0, 1, 100, gmo_n);
+	std::string gmo_n = moname(item.it_plus, 0, 1, 100);
 	if(is_skeleton) {
 		return std::string(gmo_n) + " skeleton";
 	}

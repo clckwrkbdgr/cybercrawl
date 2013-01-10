@@ -18,7 +18,6 @@
 #include "player.h"
 
 int mcolour [1000];
-char *gmo_n; /* used in monam - could possibly be static to that function */
 
 int local_toupper(int c) {
 	if(c<='z' && c>='a') return (c-32);
@@ -545,109 +544,63 @@ int x; //char temp[2]={0,0};
 
 
 /* Note: the arguments to this function are very messed up */
-const char *monam(int mons_cla, int mons_e, char desc, char see_invis)
+std::string monam(int mons_cla, int mons_e, char desc, char see_invis)
 {
-
- char gmo_n2 [40];
- free(gmo_n);
- gmo_n = (char *)malloc(sizeof(char) * 40);
- if (gmo_n == NULL)
- {
-  return "Malloc Failed Error";
- }
- strcpy(gmo_n, "");
-
-// moname(mons_cla, mons_e, see_invis, desc, gmo_n);
- if (mons_e == 25 || mons_e == 51)
- {
-  moname(mons_cla, desc, player_see_invis(), see_invis, gmo_n);
-  strcat(gmo_n, " zombie");
-  return gmo_n;
- }
- if (mons_e == 107 || mons_e == 108)
- {
-  moname(mons_cla, desc, player_see_invis(), see_invis, gmo_n);
-  strcat(gmo_n, " skeleton");
-  return gmo_n;
- }
- if (mons_e == 367)
- {
-  switch(see_invis)
-  {
-   case 0: strcpy(gmo_n, "The "); break;
-   case 1: strcpy(gmo_n, "the "); break;
-   case 2: strcpy(gmo_n, "A "); break;
-   case 3: strcpy(gmo_n, "a "); break;
-   /* case 4: do nothing - 4 is empty */
-  }
-  strcat(gmo_n, "spectral ");
-  moname(mons_cla, desc, player_see_invis(), 4, gmo_n2);
-  strcat(gmo_n, gmo_n2);
-  return gmo_n;
- }
- if (mons_e == 400)
- {
-  strcpy(gmo_n, ghost.gname);
-  strcat(gmo_n, "'s corpse");
-  return gmo_n;
- }
- if (mons_e == 401)
- {
-  strcpy(gmo_n, ghost.gname);
-  return gmo_n;
- }
- moname(mons_e, desc, player_see_invis(), see_invis, gmo_n);
- return gmo_n;
-
-}
-//monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 2)
-
-
-void moname(int mcl, char mench, char see_inv, char descrip, char glog [40])
-{
-char gmon_name [40] = "";
-
-strcpy(gmon_name, mons_name(mcl));
-strcpy(glog, "");
-
-if (mench == 6 && see_inv == 0)
-{
-	switch(descrip)
-	{
-	case 0:
-	case 2: strcpy(glog, "It"); break;
-	case 1:
-	case 3: strcpy(glog, "it"); break;
+	if (mons_e == 25 || mons_e == 51) {
+		return moname(mons_cla, desc, player_see_invis(), see_invis) + " zombie";
 	}
-
-	strcpy(gmon_name, glog);
-	return;
+	if (mons_e == 107 || mons_e == 108) {
+		return moname(mons_cla, desc, player_see_invis(), see_invis) + " skeleton";
+	}
+	if (mons_e == 367) {
+		std::string article;
+		switch(see_invis) {
+			case 0: article = "The "; break;
+			case 1: article = "the "; break;
+			case 2: article = "A "; break;
+			case 3: article = "a "; break;
+		}
+		return article + "spectral " + moname(mons_cla, desc, player_see_invis(), 4);
+	}
+	if (mons_e == 400) {
+		return std::string(ghost.gname) + "'s corpse";
+	}
+	if (mons_e == 401) {
+		return ghost.gname;
+	}
+	return moname(mons_e, desc, player_see_invis(), see_invis);
 }
 
-if (mcl < 250 || mcl > 355 || (mcl >= 260 && mcl < 280)) // note is also a limit for uniques below.
-switch(descrip)
+
+std::string moname(int mcl, char mench, char see_inv, char descrip)
 {
-case 0: strcpy(glog, "The "); break;
-case 1: strcpy(glog, "the "); break;
-case 2: strcpy(glog, "A"); break;
-case 3: strcpy(glog, "a"); break;
-//case 4: do nothing - 4 is empty
-}
-
-if ((descrip == 2 || descrip == 3 || descrip == 99) && (mcl < 250 || mcl > 355 || (mcl >= 260 && mcl < 280))) // 99 from ouch(...)
-	switch(local_toupper(gmon_name[0])) {
-		case 'A': case 'E': case 'I': case 'O': case 'U': // case 'Y':
-			strcat(glog, "n "); break;
-		default: strcat(glog, " "); break;
-	};	
-
-
-if ((descrip == 2 || descrip == 3) && (glog [1] != 110) && mench == 6 && see_inv == 0)
-{
-	strcat(glog, "n ");
-}
-
-strcat(glog, gmon_name);
+	bool titlecase = (descrip % 2 == 0);
+	std::string gmon_name = mons_name(mcl);
+	if (mench == 6 && see_inv == 0) {
+		return std::string(titlecase ? "It" : "it") + " " + mons_name(mcl);
+	}
+	std::string article;
+	if (mcl < 250 || mcl > 355 || (mcl >= 260 && mcl < 280)) {
+		switch(descrip / 2) {
+			case 0: article = "the"; break;
+			case 1: article = "a"; break;
+		}
+	}
+	if ((descrip == 2 || descrip == 3 || descrip == 99) && (mcl < 250 || mcl > 355 || (mcl >= 260 && mcl < 280))) {
+		switch(local_toupper(gmon_name[0])) {
+			case 'A': case 'E': case 'I': case 'O': case 'U':
+				article += "n"; break;
+		};
+	}
+	if ((descrip == 2 || descrip == 3) && (article[article.size() - 1] != 'n') && mench == 6 && see_inv == 0) {
+		article += "n";
+	}
+	if(article.size() > 0) {
+		if(titlecase) {
+			article[0] = toupper(article[0]);
+		}
+	}
+	return ((article.size() > 0) ? (article + " ") : "") + gmon_name;
 }
 
 int exper_value(int mclass, int mHD, int maxhp)

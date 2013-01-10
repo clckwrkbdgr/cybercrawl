@@ -492,7 +492,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 
 	beem[0].source_x = menv [i].m_x; beem[0].source_y = menv [i].m_y;
 
-		strcpy(beem[0].beam_name, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4)); //gmon_name [mons_class [i]]);
+		strcpy(beem[0].beam_name, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4).c_str()); //gmon_name [mons_class [i]]);
   switch(menv [i].m_class)
   {
   case 73:
@@ -640,7 +640,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 	}
 
 
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
+		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
 
 		if (shoot == 1)
 		{

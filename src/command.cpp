@@ -18,7 +18,6 @@ void adjust_spells(void);
 
 extern int wield_change;
 
-
 #ifdef DEBUG
 
 void stethoscope(int mwh)
@@ -268,8 +267,7 @@ void adjust_spells(void)
 		return;
 	}
 
-	spell_name(you[0].spells [throw_2], str_pass);
-	msg("@1 - @2") << char(throw_2 + 97) << str_pass;
+	msg("@1 - @2") << char(throw_2 + 97) << spell_name(you[0].spells [throw_2]);
 
 	mpr("Adjust to which letter?");
 
@@ -303,14 +301,10 @@ void adjust_spells(void)
 	you[0].spells [throw_3] = you[0].spells [throw_2];
 	you[0].spells [throw_2] = backup;
 
-	spell_name(you[0].spells [throw_3], str_pass);
-	msg("@1 - @2") << char(throw_3 + 97) << str_pass;
+	msg("@1 - @2") << char(throw_3 + 97) << spell_name(you[0].spells [throw_3]);
 
-	if (you[0].spells [throw_2] != 210)
-	{
-		spell_name(you[0].spells [throw_2], str_pass);
-		msg("@1 - @2") << char(throw_2 + 97) << str_pass;
+	if (you[0].spells [throw_2] != 210) {
+		msg("@1 - @2") << char(throw_2 + 97) << spell_name(you[0].spells [throw_2]);
 	}
-
 }
 

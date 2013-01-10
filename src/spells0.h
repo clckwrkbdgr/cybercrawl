@@ -1,8 +1,10 @@
+#pragma once
+#include <string>
 
 int spell_hunger(int spell_value, int spell);
 int which_spell_in_book(int sbook_type, int spl);
 char spellbook_contents(int plus, int type);
-void spell_name(int spell, char spln [60]);
+std::string spell_name(int spell);
 char spell_value(int spell);
 int spell_type(int spell, int typy);
 int spell_spec(int spell, int power);

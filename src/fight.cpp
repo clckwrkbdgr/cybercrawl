@@ -97,8 +97,8 @@ void you_attack(int monster_attacked)
 {
 int your_to_hit;
 int damage_done = 0;
-char hit = 0;
-char stabbed = 0;
+int hit = 0;
+int stabbed = 0;
 int special_brand = 0;
 
 /*
@@ -210,7 +210,7 @@ if (you[0].hung_state == 1)
  your_to_hit -= 3;
 }
 
-char heavy_armour = 0;
+int heavy_armour = 0;
 
 if (you[0].equip [EQ_SHIELD] != -1)
 {
@@ -757,7 +757,7 @@ if (you[0].invis != 0 && random2(2) == 0)
 
 
 int scount = -1;
-char attack_name [20];
+std::string attack_name;
 int sc_dam = 0;
 
 int unarmed_attack = 0;
@@ -779,15 +779,18 @@ switch(scount)
       if (unarmed_attack != UNAT_KICK)
        if (you[0].species != SP_CENTAUR || random2(2) == 0) continue;
  	  if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_SPIDER || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_ICE_BEAST || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_DRAGON) continue;
-      strcpy(attack_name, "kick");
+      attack_name = "kick";
       sc_dam = 5 + (you[0].species == SP_CENTAUR) * 5;
       break;
  case 1:
       if (unarmed_attack != UNAT_HEADBUTT)
        if ((you[0].species != SP_MINOTAUR && (you[0].mutation [MUT_HORNS] == 0 && you[0].species != SP_KENKU)) || random2(3) != 0) continue;
  	  if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_SPIDER || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_ICE_BEAST || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_DRAGON) continue;
-      if (you[0].species == SP_KENKU) strcpy(attack_name, "peck"); else /* Kenku */
-       strcpy(attack_name, "head-butt");
+	  if (you[0].species == SP_KENKU) {
+		  attack_name = "peck";
+	  } else {
+		  attack_name = "head-butt";
+	  }
       sc_dam = 5 + you[0].mutation [MUT_HORNS] * 3;
       if (you[0].species == SP_MINOTAUR) sc_dam += 5;
 	  if (you[0].equip [EQ_HELMET] != -1 && you[0].inv_plus2 [you[0].equip [EQ_HELMET]] <= 1)
@@ -801,7 +804,7 @@ switch(scount)
       if (unarmed_attack != UNAT_TAILSLAP)
        if (you[0].species < SP_RED_DRACONIAN || you[0].species > SP_UNK2_DRACONIAN || random2(4) != 0) continue;
  	  if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_SPIDER || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_ICE_BEAST) continue;
-      strcpy(attack_name, "tail-slap");
+      attack_name = "tail-slap";
       sc_dam = 6;
       if (you[0].species == SP_GREY_DRACONIAN && you[0].xl >= 6) sc_dam = 12; /* grey dracs have spiny tails, or something */
       break;
@@ -810,11 +813,11 @@ switch(scount)
  	  if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_SPIDER || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_ICE_BEAST || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_DRAGON) continue;
       if (random2(2) == 0 || you[0].equip [EQ_SHIELD] != -1 || (you[0].equip [EQ_WEAPON] != -1 && (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && (you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_GREAT_SWORD || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_BATTLEAXE || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_HALBERD || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_GLAIVE || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_SCYTHE || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_EXECUTIONERS_AXE || you[0].inv_type [you[0].equip [EQ_WEAPON]] == WPN_TRIPLE_SWORD)))) continue;
       /* no punching with a shield or 2-handed wpn, except staves */
-      strcpy(attack_name, "punch");
+      attack_name = "punch";
       sc_dam = 5 + you[0].skills [SK_UNARMED_COMBAT] / 3; /* applied twice */
       if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_BLADE_HANDS)
       {
-       strcpy(attack_name, "slash");
+       attack_name = "slash";
        sc_dam += 6;
       }
       break;
@@ -927,13 +930,13 @@ std::string monster_name(int mmov_x, int monster_attacking)
 void monster_attack(int monster_attacking)
 {
 int damage_taken = 0;
-char blocked = 0;
-char hit = 0;
+int blocked = 0;
+int hit = 0;
 int mmov_x = 0;
-char water_attack = 0; /* Is the player being attacked by a water creature while standing in water? */
+int water_attack = 0; /* Is the player being attacked by a water creature while standing in water? */
 int specdam = 0;
 
-char heads = 0;
+int heads = 0;
 if (menv [monster_attacking].m_class == MONS_HYDRA) heads = menv [monster_attacking].m_sec;
 
 int hand_used = 0;
@@ -977,9 +980,7 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 65 && you[0].lev == 0 && menv [monster_
  msg("@1 uses the watery terrain to its advantage.") << monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 0);
 }
 
-char runthru = 0;
-
-for (runthru = 0; runthru < 4; runthru ++)
+for (int runthru = 0; runthru < 4; runthru ++)
 {
 
 blocked = 0;
@@ -991,7 +992,7 @@ if (menv [monster_attacking].m_class == MONS_HYDRA)
  heads --;
 }
 
-char mdam = mondamage(menv [monster_attacking].m_class, runthru);
+int mdam = mondamage(menv [monster_attacking].m_class, runthru);
 
 if (menv [monster_attacking].m_class == MONS_SMALL_ZOMBIE || menv [monster_attacking].m_class == MONS_BIG_ZOMBIE || menv [monster_attacking].m_class == MONS_SMALL_SKELETON || menv [monster_attacking].m_class == MONS_LARGE_SKELETON || menv [monster_attacking].m_class == MONS_SPECTRAL_THING)
 {
@@ -1158,7 +1159,7 @@ if ((int) damage_taken >= 1)
 
 	/* special attacks: */
 
-	char brek = 0;
+	int brek = 0;
 
 	int mclas = menv [monster_attacking].m_class;
 
@@ -1435,7 +1436,7 @@ if ((int) damage_taken >= 1)
 
 
 
-char drained = 0;
+int drained = 0;
 
 
 
@@ -1673,12 +1674,12 @@ return;
 
 
 
-char monsters_fight(int monster_attacking, int monster_attacked)
+int monsters_fight(int monster_attacking, int monster_attacked)
 {
 int damage_taken = 0;
-char hit = 0;
+int hit = 0;
 int mmov_x = 0;
-char water_attack = 0;
+int water_attack = 0;
 int specdam = 0;
 
 int hand_used = 0;
@@ -1719,12 +1720,12 @@ if (grd [menv [monster_attacked].m_x] [menv [monster_attacked].m_y] == 65 && mon
 
 if (mons_near(monster_attacking) == 1 && mons_near(monster_attacked) == 1) sees = 1;
 
-char runthru;
+int runthru;
 
 for (runthru = 0; runthru < 4; runthru ++)
 {
 
-char mdam = mondamage(menv [monster_attacking].m_class, runthru);
+int mdam = mondamage(menv [monster_attacking].m_class, runthru);
 
 if (menv [monster_attacking].m_class == MONS_SMALL_ZOMBIE || menv [monster_attacking].m_class == MONS_BIG_ZOMBIE || menv [monster_attacking].m_class == MONS_SMALL_SKELETON || menv [monster_attacking].m_class == MONS_LARGE_SKELETON || menv [monster_attacking].m_class == MONS_SPECTRAL_THING)
 {
@@ -2362,7 +2363,7 @@ return 1;
 
 
 
-void monster_die(int monster_killed, char killer, int i)
+void monster_die(int monster_killed, int killer, int i)
 {
 
 int dmi; /* dead monster's inventory */
@@ -2749,10 +2750,10 @@ if (targetc == 250)
 
 /* if (power != -1) // automatic success */
 
-char old_class = menv [monsc].m_class;
-char old_hp = menv [monsc].m_hp;
-char old_hp_max = menv [monsc].m_hp_max;
-char old_sec = menv [monsc].m_sec;
+int old_class = menv [monsc].m_class;
+int old_hp = menv [monsc].m_hp;
+int old_hp_max = menv [monsc].m_hp_max;
+int old_sec = menv [monsc].m_sec;
 
 /* deal with mons_sec */
 
@@ -2810,7 +2811,7 @@ void monster_drop_ething(int monster_killed)
    drop weapons & missiles last (ie on top) so others pick up */
 
 int ygy;
-char splashes = 0;
+int splashes = 0;
 
 if (grd [menv [monster_killed].m_x] [menv [monster_killed].m_y] == 61 || grd [menv [monster_killed].m_x] [menv [monster_killed].m_y] == 62)
 {

@@ -58,7 +58,6 @@ void initialise(void);
 
 struct environ env [1];
 struct player you [1];
-char str_pass [80];
 int gmon_use [1000];
 int stealth; /* externed in view.h */
 int visible [10];

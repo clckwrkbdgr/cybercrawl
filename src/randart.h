@@ -4,9 +4,9 @@
 const char *randart_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev);
 const char *randart_armour_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev);
 const char *randart_ring_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev);
-void standard_name_weap(int item_typ, char glog [80]);
+std::string standard_name_weap(int item_typ);
 int randart_wpn_properties(int aclass, int atype, int adam, int aplus, int aplus2, int acol, char prop);
-void standard_name_armour(int item_typ, int item_plus2, char glorg [80]);
+std::string standard_name_armour(int item_typ, int item_plus2);
 
 int number_unrandarts(void);
 void set_unrandart_exist(int whun, char is_exist);

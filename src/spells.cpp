@@ -1340,7 +1340,6 @@ void which_spell(void)
 {
 int chance = 0;
 int powm;
-char spell_string [60];
 int levels_needed = 0;
 
 
@@ -1477,8 +1476,7 @@ chance = spell_fail(specspell);
 
 redraw_screen();
 
-spell_name(specspell, spell_string);
-msg("Install @1?") << spell_string;
+msg("Install @1?") << spell_name(specspell);
 keyin = getch();
 
 if (keyin == 0) getch();

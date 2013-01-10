@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "defines.h"
 // ($pellbinder) (c) D.G.S.E. 1998
 
@@ -149,10 +150,10 @@ int hit_points(int hit_dice, int min_hp, int rand_hp);
 void mons_spell_list(int sec, int splist [6]);
 //void def_letters(char letters [52] [1]);
 int mons_char(int mc);
-void moname(int mcl, char mench, char see_inv, char descrip, char glog [40]);
+std::string moname(int mcl, char mench, char see_inv, char descrip);
 int exper_value(int mclass, int mHD, int maxhp);
 
-const char *monam(int mons_cla, int mons_e, char desc, char see_invis);
+std::string monam(int mons_cla, int mons_e, char desc, char see_invis);
 
 
 char mons_pan(int mcls); // is the monster to be found in pandemonium

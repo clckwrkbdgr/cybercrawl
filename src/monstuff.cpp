@@ -204,7 +204,7 @@ if (mons_near(wounded) == 0) return;
 
 if (menv[wounded].m_hp == menv[wounded].m_hp_max || menv[wounded].m_hp <= 0) return;
 
-strcpy(info, monam(menv[wounded].m_sec,menv[wounded].m_class, menv [wounded].m_ench [2], 0));
+strcpy(info, monam(menv[wounded].m_sec,menv[wounded].m_class, menv [wounded].m_ench [2], 0).c_str());
 strcat(info, " is");
 
 if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 6)
@@ -554,7 +554,7 @@ switch (menv [i].m_ench [p])
    if (mons_res_fire(menv [i].m_class) == -1) menv [i].m_hp -= ((random2(5) + random2(5) + 1) * 10) / menv [i].m_speed;
    if (mons_near(i) == 1)
    {
-    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
     strcat(info, " burns!");
     mpr(info);
    }
@@ -840,7 +840,7 @@ beem[0].aim_down = 1;
 		beem[0].type = '#'; /* hash # */
 		beem[0].flavour = 20; /* lava */
 		beem[0].hit = 20;
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
 		strcat(info, " spits radioactive waste!");
                 beem[0].beam_source = i;
 		mpr(info);
@@ -874,7 +874,7 @@ viewwindow(1);
 		beem[0].flavour = 5; // elec
 		beem[0].hit = 150;
                 beem[0].beam_source = i;
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
+		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
 		strcat(info, " shoots out a bolt of electricity!");
 		mpr(info);
 	beem[0].thing_thrown = 2;
@@ -913,7 +913,7 @@ if (random2(4) == 0) // fiend!
 		{
    if (menv [i].m_ench [2] != 6)
    {
-   	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    	strcat(info, " makes a gesture!");
    	mpr(info);
    }
@@ -938,7 +938,7 @@ if (random2(7) == 0) // phantom
 {
    if (mons_near(i) == 1)
    {
-    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
     strcat(info, " jumps.");
     mpr(info);
    }
@@ -1021,10 +1021,10 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (menv [i].m_hp > menv [i].m_hp_max / 2) goto out_of_potion;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " drinks a vial.");
    mpr(info);
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " is healed!");
    mpr(info);
   }
@@ -1039,7 +1039,7 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (mitm.itype [menv [i].m_inv [4]] == 12) beem[0].colour = 5;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " drinks a vial.");
    mpr(info);
    mons_ench_f2(i, 1, func_pass, beem);
@@ -1066,7 +1066,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (menv [i].m_beh != BEH_FLEE) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " uses a device.");
    mpr(info);
   }
@@ -1077,10 +1077,10 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (menv [i].m_beh != BEH_FLEE) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " uses a device.");
    mpr(info);
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " jumps!");
    mpr(info);
    monster_blink(i);
@@ -1091,7 +1091,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (mons_near(i) != 1) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " uses a device.");
    mpr(info);
   }
@@ -1245,7 +1245,7 @@ out_of_scroll : if (menv [i].m_inv [5] != 501 && random2(2) == 0 && menv [i].m_b
 
         if (mons_near(i) != 0)
         {
-	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
          strcat(info, " shoots a gun.");
         } else strcpy(info, "You hear a shot.");
         mpr(info);
@@ -1410,7 +1410,7 @@ casted : if (spell_cast == 100) goto end_switch;
 
 if (mons_near(i) == 1)
 {
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
 	if (menv [i].m_class != MONS_BRAIN_WORM) /* brain worm */
 	{
 
@@ -1469,7 +1469,7 @@ if (mons_near(i) == 1)
 											strcat(info, " burns!");
 											mpr(info);
 										} else {
-											if (strstr(monam (menv [i].m_sec, menv [i].m_class, 0, 0), "priest") != NULL) /* various priestly types - assumes they're called 'something priest' */
+											if (strstr(monam (menv [i].m_sec, menv [i].m_class, 0, 0).c_str(), "priest") != NULL) /* various priestly types - assumes they're called 'something priest' */
 											{
 												strcat(info, " utters an invocation.");
 												mpr(info);
@@ -1497,7 +1497,7 @@ if (spell_cast == 16)
 {
  if (mons_near(i) == 1)
 	{
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
+		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
 		strcat(info, " jumps!");
 		mpr(info);
   monster_blink(i);
@@ -1726,7 +1726,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
  if (mitm.idam [menv [i].m_inv [0]] % 30 == SPWPN_PROTECTION) menv [i].m_AC += 3;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " picks up ");
 	strcat(info, it_name(menv [i].m_inv [0], 3).c_str());
  strcat(info, ".");
@@ -1738,7 +1738,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	if (menv [i].m_inv [1] != 501 && mitm.itype [menv [i].m_inv [1]] == mitm.itype [igrd [menv [i].m_x] [menv [i].m_y]] && mitm.iplus [menv [i].m_inv [1]] == mitm.iplus [igrd [menv [i].m_x] [menv [i].m_y]] && mitm.idam [menv [i].m_inv [1]] == mitm.idam [igrd [menv [i].m_x] [menv [i].m_y]])
     /* Removed check for item_plus2 - probably irrelevant */
 	{
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
 		strcat(info, " picks up ");
 		strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 3).c_str());
 		strcat(info, ".");
@@ -1756,7 +1756,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [1] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " picks up ");
 	strcat(info, it_name(menv [i].m_inv [1], 3).c_str());
  strcat(info, ".");
@@ -1770,7 +1770,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [5] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " picks up ");
 	strcat(info, it_name(menv [i].m_inv [5], 3).c_str());
  strcat(info, ".");
@@ -1784,7 +1784,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [6] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " picks up ");
 	strcat(info, it_name(menv [i].m_inv [6], 3).c_str());
  strcat(info, ".");
@@ -1798,7 +1798,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [4] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " picks up ");
 	strcat(info, it_name(menv [i].m_inv [4], 3).c_str());
  strcat(info, ".");
@@ -1812,7 +1812,7 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  menv [i].m_hp += random2(mons_weight(mitm.iplus [igrd [menv [i].m_x] [menv [i].m_y]])) / 100 + 1;
  if (menv [i].m_hp > 77) menv [i].m_hp = 77;
  if (menv [i].m_hp > menv [i].m_hp_max) menv [i].m_hp_max = menv [i].m_hp;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
  strcat(info, " eats ");
  strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 1).c_str());
  strcat(info, ".");
@@ -2220,7 +2220,7 @@ void plant_spit(int i, struct bolt beam [1])
 {
 if (mons_near(i) == 0) return;
 
-strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
   strcat(info, " spits at you.");
   mpr(info);
 
@@ -2274,7 +2274,7 @@ switch(env[0].cloud_type [wc] % 100)
 
 	case 1: // fire
   if (menv [i].m_class == MONS_FIRE_VORTEX || menv [i].m_class == MONS_EFREET || menv [i].m_class == MONS_FIRE_ELEMENTAL) break; // fire vortex, efreet, and fire elemental
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [menv [i].m_class]);
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [menv [i].m_class]);
 	strcat(info, " is engulfed in flame!");
 	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) mpr(info); // efreet
    if (mons_res_fire(menv [i].m_class) > 0) break;
@@ -2296,7 +2296,7 @@ switch(env[0].cloud_type [wc] % 100)
 	break;
 
    case 2: // stinking cloud
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " is engulfed in noxious gasses!");
    if (mons_near(i) == 1) mpr(info);
 
@@ -2321,7 +2321,7 @@ switch(env[0].cloud_type [wc] % 100)
 
 
  case 3: // cold
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
+	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
 	strcat(info, " is engulfed in freezing vapours!");
  if (mons_near(i) == 1) mpr(info);
    if (mons_res_cold(menv [i].m_class) > 0) break;
@@ -2343,7 +2343,7 @@ switch(env[0].cloud_type [wc] % 100)
 	break;
 
    case 4: // you[0].poison cloud
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " is engulfed in a cloud of poison!");
    if (mons_near(i) == 1) mpr(info);
    if (mons_res_poison(menv [i].m_class) > 0) return;
@@ -2364,7 +2364,7 @@ switch(env[0].cloud_type [wc] % 100)
 
   case 8: // steam - I couldn't be bothered doing this for armour of res fire
   if (menv [i].m_class == MONS_STEAM_DRAGON) break;
-  	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0)); //gmon_name [mons_class [i]]);
+  	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
 	strcat(info, " is engulfed in steam!");
 	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) mpr(info); // efreet
    if (mons_res_fire(menv [i].m_class) > 0 || (menv [i].m_inv [2] != 501 && mitm.idam [menv [i].m_inv [2]] % 30 == 2)) break;
@@ -2382,7 +2382,7 @@ switch(env[0].cloud_type [wc] % 100)
 
 
   case 9: // dark miasma
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
    strcat(info, " is engulfed in a dark miasma.");
    if (mons_near(i) == 1) mpr(info);
    if (mons_holiness(menv [i].m_class) > 0) return;
@@ -2416,7 +2416,7 @@ char mons_speaks(int i)
 
 if (menv [i].m_beh == BEH_FLEE) return 0;
 
-strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0));
+strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
 
 switch(menv [i].m_class)
 {

@@ -469,7 +469,7 @@ strcat(death_string, point_print);
         case 0: // monster
                 strcat(death_string, ", killed by ");
                 if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
-                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99));
+                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99).c_str());
  break;
 
         case 1: // you[0].poison
@@ -484,7 +484,7 @@ strcat(death_string, point_print);
         case 3: // beam - beam[0].name is a local variable, so can't access it without horrible hacks
                 strcat(death_string, ", killed from afar by ");
                 if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
-                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99));
+                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99).c_str());
  break;
 
 /* case 4: // death's door running out - NOTE: This is no longer fatal
@@ -754,9 +754,9 @@ for (i = 0; i < 52; i ++)
         }
 }
 
-if (status2 == 0) /* invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [EQ_WEAPON], you[0].equip [EQ_BODY_ARMOUR], you[0].equip [EQ_SHIELD], you[0].equip [EQ_HELMET], you[0].equip [EQ_CLOAK], you[0].equip [EQ_GLOVES], you[0].equip [EQ_BOOTS], you[0].ring, 1); */
+if (status2 == 0) 
         invent(-1, 1);
-  else /* invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [EQ_WEAPON], you[0].equip [EQ_BODY_ARMOUR], you[0].equip [EQ_SHIELD], you[0].equip [EQ_HELMET], you[0].equip [EQ_CLOAK], you[0].equip [EQ_GLOVES], you[0].equip [EQ_BOOTS], you[0].ring, 0); */
+  else 
         invent(-1, 0);
   if (dump_char((status2 == 0), "morgue.txt") == 1)
    mpr("Char dumped successfully (morgue.txt).");

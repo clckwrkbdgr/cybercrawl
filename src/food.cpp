@@ -23,13 +23,9 @@ IMPORTANT: There is also an eating bit in item_use.cc, so alter that with
 carnivores and things if it's changed here.
 */
 
-
 void eat_meat(int fod_eat_2);
-char eat_from_floor(void);
-char butchery(void);
 int eating(int func_pass [10], int item_class, int food_eat_3);
-void ghoul_eat_flesh(char rotting);
-
+void ghoul_eat_flesh(int rotting);
 
 void food_change(void)
 {
@@ -64,7 +60,6 @@ if (you[0].hunger < 11000)
 you[0].hung_state = 5; // Engorged
 
 } /* end of void food_change() */
-
 
 void eaten(int food_eat_2, int food_eat_3) /* this contains results of eating things. */
 {
@@ -103,11 +98,7 @@ if (food_eat_3 == 6)
 
 } /* end of void eaten () */
 
-
-
-
-
-char eat_from_floor(void)
+int eat_from_floor(void)
 {
 int gloggj;
 int o = igrd [you[0].x_pos] [you[0].y_pos];
@@ -339,27 +330,7 @@ if (items_here > 1)
 return 0;
 } // end of eat_from_floor() function
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-char butchery(void)
+int butchery(void)
 {
 
 //gloggo = 0;
@@ -534,13 +505,6 @@ return 0;
 
 } // end of eat_from_floor() function
 
-
-
-
-
-
-
-
 void eat_meat(int fod_eat_2)
 {
 
@@ -603,10 +567,10 @@ void eat_meat(int fod_eat_2)
 food_change();
 }
 
-void ghoul_eat_flesh(char rotting)
+void ghoul_eat_flesh(int rotting)
 {
 
- char healed = 0;
+ int healed = 0;
 
  if (rotting == 0)
  {

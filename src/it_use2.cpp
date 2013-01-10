@@ -19,6 +19,7 @@
 #include "effects.h"
 #include "view.h"
 
+char str_pass [80];
 char zappy(int func_pass [10], char str_pass [50], char z_type);
 void unuse_randart(int unw);
 

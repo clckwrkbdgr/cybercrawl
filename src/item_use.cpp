@@ -115,7 +115,6 @@ if (keyin == '?')
 {
 	//inventory(0);
 	nthing = get_invent(OBJ_WEAPONS);
-//invent(you[0].inv_plus2, 0, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if ((nthing >= 65 && nthing <= 90) || (nthing >= 97 && nthing <= 122))
 	{
 		keyin = nthing;
@@ -130,7 +129,6 @@ if (keyin == '*')
 {
 	//inventory(-1);
 	nthing = get_invent(-1);
-//invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if ((nthing >= 65 && nthing <= 90) || (nthing >= 97 && nthing <= 122))
 	{
 		keyin = nthing;
@@ -510,7 +508,6 @@ int keyin = get_ch();
 if (keyin == '?')
 {
 	nthing = get_invent(OBJ_ARMOUR);
-//invent(you[0].inv_plus2, 2, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if ((nthing >= 65 && nthing <= 90) || (nthing >= 97 && nthing <= 122))
 	{
 		keyin = nthing;
@@ -524,7 +521,6 @@ if (keyin == '?')
 if (keyin == '*')
 {
 	nthing = get_invent(-1);
-//invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if ((nthing >= 65 && nthing <= 90) || (nthing >= 97 && nthing <= 122))
 	{
 		keyin = nthing;
@@ -1041,9 +1037,7 @@ int keyin = get_ch();
 if (keyin == '?' || keyin == '*')
 {
 	if (keyin == '?') nthing = get_invent(OBJ_ARMOUR);
-//invent(you[0].inv_plus2, 2, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if (keyin == '*') nthing = get_invent(-1);
-//invent(you[0].inv_plus2, -1, you[0].inv_quant, you[0].inv_dam, you[0].inv_class, you[0].inv_type, you[0].inv_plus, you[0].inv_ident, you[0].equip [0], you[0].equip [6], you[0].equip [5], you[0].equip [2], you[0].equip [1], you[0].equip [3], you[0].equip [4], you[0].ring);
 	if ((nthing >= 65 && nthing <= 90) || (nthing >= 97 && nthing <= 122))
 	{
 		keyin = nthing;
@@ -2209,7 +2203,7 @@ if (you[0].inv_class [zap_device_2] != OBJ_WANDS || you[0].inv_plus [zap_device_
   if (mons_near(you[0].prev_targ) == 1 && (menv [you[0].prev_targ].m_ench [2] != 6 || player_see_invis() != 0))
   {
 	strcpy(info, "You are currently targetting ");
-        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1));
+        strcat(info, monam (menv [you[0].prev_targ].m_sec, menv [you[0].prev_targ].m_class, menv [you[0].prev_targ].m_ench [2], 1).c_str());
         strcat(info, " (p to target).");
         mpr(info);
   } else mpr("You have no current target.");

@@ -652,9 +652,6 @@ char *art_n;
 char unrandart_exist [NO_UNRANDARTS];
 void set_unrandart_exist(int whun, char is_exist);
 
-void standard_name_weap(int item_typ, char glog [80]);
-void standard_name_armour(int item_typ, int item_plus2, char glorg [80]);
-
 int random4(int randmax);
 
 
@@ -1019,25 +1016,19 @@ if (ident_lev == 0)
   case 19: strcat(art_n, "steaming "); break;
   case 20: strcat(art_n, "shiny "); break;
  }
- char st_p3 [80];
- standard_name_weap(atype, st_p3);
- strcat(art_n, st_p3);
+ strcat(art_n, standard_name_weap(atype).c_str());
  srandom(randstore);
  return art_n;
 }
 
 if (random4(2) == 0)
 {
- char st_p [80];
- standard_name_weap(atype, st_p);
- strcat(art_n, st_p);
+ strcat(art_n, standard_name_weap(atype).c_str());
  strcat(art_n, rand_wpn_names [random4(390)]);
 }
  else
 {
- char st_p2 [80];
- standard_name_weap(atype, st_p2);
- strcat(art_n, st_p2);
+ strcat(art_n, standard_name_weap(atype).c_str());
  if (random4(3) == 0)
   {
    strcat(art_n, " of ");
@@ -1109,25 +1100,19 @@ if (ident_lev == 0)
   case 19: strcat(art_n, "steaming "); break;
   case 20: strcat(art_n, "shiny "); break;
  }
- char st_p3 [80];
- standard_name_armour(atype, aplus2, st_p3);
- strcat(art_n, st_p3);
+ strcat(art_n, standard_name_armour(atype, aplus2).c_str());
  srandom(randstore);
  return art_n;
 }
 
 if (random4(2) == 0)
 {
- char st_p [80];
- standard_name_armour(atype, aplus2, st_p);
- strcat(art_n, st_p);
+ strcat(art_n, standard_name_armour(atype, aplus2).c_str());
  strcat(art_n, rand_armour_names [random4(71)]);
 }
  else
 {
- char st_p2 [80];
- standard_name_armour(atype, aplus2, st_p2);
- strcat(art_n, st_p2);
+ strcat(art_n, standard_name_armour(atype, aplus2).c_str());
  if (random4(3) == 0)
   {
    strcat(art_n, " of ");
@@ -1309,109 +1294,96 @@ randarts. */
 }
 
 
-void standard_name_weap(int item_typ, char glorg [80])
+std::string standard_name_weap(int item_typ)
 {
-
-strcpy(glorg, "");
-
-	switch(item_typ)
-	{
-	case WPN_CLUB: strcat(glorg , "club"); break;
-	case WPN_MACE: strcat(glorg , "mace"); break;
-	case WPN_FLAIL: strcat(glorg , "flail"); break;
-	case WPN_DAGGER: strcat(glorg , "dagger"); break;
-	case WPN_MORNINGSTAR: strcat(glorg , "morningstar"); break;
-	case WPN_SHORT_SWORD: strcat(glorg , "short sword"); break;
-	case WPN_LONG_SWORD: strcat(glorg , "long sword"); break;
-	case WPN_GREAT_SWORD: strcat(glorg , "great sword"); break;
-	case WPN_SCIMITAR: strcat(glorg , "scimitar"); break;
-	case WPN_HAND_AXE: strcat(glorg , "hand axe"); break;
-	case WPN_BATTLEAXE: strcat(glorg , "battleaxe"); break;
-	case WPN_SPEAR: strcat(glorg , "spear"); break;
-	case WPN_HALBERD: strcat(glorg , "halberd"); break;
-	case WPN_SLING: strcat(glorg , "sling"); break;
-	case WPN_BOW: strcat(glorg , "bow"); break;
-	case WPN_CROSSBOW: strcat(glorg , "crossbow"); break;
-    case WPN_HAND_CROSSBOW: strcat(glorg , "hand crossbow"); break;
-    case WPN_GLAIVE: strcat(glorg , "glaive"); break;
-	case WPN_QUARTERSTAFF: strcat(glorg , "quarterstaff"); break;
-    case WPN_SCYTHE: strcat(glorg , "scythe"); break;
-	case WPN_GIANT_CLUB: strcat(glorg , "giant club"); break;
-	case WPN_GIANT_SPIKED_CLUB: strcat(glorg , "giant spiked club"); break;
-	case WPN_EVENINGSTAR: strcat(glorg , "eveningstar"); break;
-	case WPN_QUICK_BLADE: strcat(glorg , "quick blade"); break;
-	case WPN_KATANA: strcat(glorg , "katana"); break;
-	case WPN_EXECUTIONERS_AXE: strcat(glorg , "executioner's axe"); break;
-	case WPN_DOUBLE_SWORD: strcat(glorg , "double sword"); break;
-	case WPN_TRIPLE_SWORD: strcat(glorg , "triple sword"); break;
-	case WPN_HAMMER: strcat(glorg , "hammer"); break;
-	case WPN_ANCUS: strcat(glorg , "ancus"); break;
-	case WPN_WHIP: strcat(glorg , "whip"); break;
-	case WPN_SABRE: strcat(glorg , "sabre"); break;
-	case WPN_DEMON_BLADE: strcat(glorg , "demon blade"); break;
-	case WPN_DEMON_WHIP: strcat(glorg , "demon whip"); break;
-	case 34: strcat(glorg , ""); break;
-	case 35: strcat(glorg , ""); break;
-	case 36: strcat(glorg , ""); break;
-	case 37: strcat(glorg , ""); break;
-	case 38: strcat(glorg , ""); break;
+	switch(item_typ) {
+		case WPN_CLUB: return "club";
+		case WPN_MACE: return "mace";
+		case WPN_FLAIL: return "flail";
+		case WPN_DAGGER: return "dagger";
+		case WPN_MORNINGSTAR: return "morningstar";
+		case WPN_SHORT_SWORD: return "short sword";
+		case WPN_LONG_SWORD: return "long sword";
+		case WPN_GREAT_SWORD: return "great sword";
+		case WPN_SCIMITAR: return "scimitar";
+		case WPN_HAND_AXE: return "hand axe";
+		case WPN_BATTLEAXE: return "battleaxe";
+		case WPN_SPEAR: return "spear";
+		case WPN_HALBERD: return "halberd";
+		case WPN_SLING: return "sling";
+		case WPN_BOW: return "bow";
+		case WPN_CROSSBOW: return "crossbow";
+		case WPN_HAND_CROSSBOW: return "hand crossbow";
+		case WPN_GLAIVE: return "glaive";
+		case WPN_QUARTERSTAFF: return "quarterstaff";
+		case WPN_SCYTHE: return "scythe";
+		case WPN_GIANT_CLUB: return "giant club";
+		case WPN_GIANT_SPIKED_CLUB: return "giant spiked club";
+		case WPN_EVENINGSTAR: return "eveningstar";
+		case WPN_QUICK_BLADE: return "quick blade";
+		case WPN_KATANA: return "katana";
+		case WPN_EXECUTIONERS_AXE: return "executioner's axe";
+		case WPN_DOUBLE_SWORD: return "double sword";
+		case WPN_TRIPLE_SWORD: return "triple sword";
+		case WPN_HAMMER: return "hammer";
+		case WPN_ANCUS: return "ancus";
+		case WPN_WHIP: return "whip";
+		case WPN_SABRE: return "sabre";
+		case WPN_DEMON_BLADE: return "demon blade";
+		case WPN_DEMON_WHIP: return "demon whip";
 	}
-
+	return "";
 }
 
-void standard_name_armour(int item_typ, int item_plus2, char glorg [80])
+std::string standard_name_armour(int item_typ, int item_plus2)
 {
-
- strcpy(glorg, "");
-
-
- switch(item_typ)
- {
-	case ARM_ROBE: strcat(glorg , "robe"); break;
-	case ARM_LEATHER_ARMOUR: strcat(glorg , "leather armour"); break;
-	case ARM_RING_MAIL: strcat(glorg , "ring mail"); break;
-	case ARM_SCALE_MAIL: strcat(glorg , "scale mail"); break;
-	case ARM_CHAIN_MAIL: strcat(glorg , "chain mail"); break;
-	case ARM_SPLINT_MAIL: strcat(glorg , "splint mail"); break;
-	case ARM_BANDED_MAIL: strcat(glorg , "banded mail"); break;
-	case ARM_PLATE_MAIL: strcat(glorg , "plate mail"); break;
-	case ARM_SHIELD: strcat(glorg , "shield"); break;
-	case ARM_CLOAK: strcat(glorg , "cloak"); break;
-	break;
-	case ARM_HELMET:
-        if (item_plus2 == 0) strcat(glorg , "helmet");
-        if (item_plus2 == 1) strcat(glorg , "helm");
-        if (item_plus2 == 2) strcat(glorg , "cap");
-        if (item_plus2 == 3) strcat(glorg , "wizard's hat");
-        break;
-	case ARM_GLOVES: strcat(glorg , "gloves");
-	break;
-	case ARM_BOOTS: if (item_plus2 == 0) strcat(glorg, "boots");
-		 if (item_plus2 == 1) strcat(glorg, "naga barding");
-		 if (item_plus2 == 2) strcat(glorg, "centaur barding");
-	break;
-	case ARM_BUCKLER: strcat(glorg , "buckler"); break;
-	case ARM_LARGE_SHIELD: strcat(glorg , "large shield"); break;
-    case ARM_DRAGON_HIDE: strcat(glorg , "dragon hide"); break;
-    case ARM_TROLL_HIDE: strcat(glorg , "troll hide"); break;
-    case ARM_CRYSTAL_PLATE_MAIL: strcat(glorg , "crystal plate mail"); break;
-    case ARM_DRAGON_ARMOUR: strcat(glorg , "dragon armour"); break;
-    case ARM_TROLL_LEATHER_ARMOUR: strcat(glorg , "troll leather armour"); break;
-    case ARM_ICE_DRAGON_HIDE: strcat(glorg , "ice dragon hide"); break;
-    case ARM_ICE_DRAGON_ARMOUR: strcat(glorg , "ice dragon armour"); break;
-    case ARM_STEAM_DRAGON_HIDE: strcat(glorg , "steam dragon hide"); break;
-    case ARM_STEAM_DRAGON_ARMOUR: strcat(glorg , "steam dragon armour"); break;
-    case ARM_MOTTLED_DRAGON_HIDE: strcat(glorg , "mottled dragon hide"); break;
-    case ARM_MOTTLED_DRAGON_ARMOUR: strcat(glorg , "mottled dragon armour"); break;
-    case ARM_STORM_DRAGON_HIDE: strcat(glorg , "storm dragon hide"); break;
-    case ARM_STORM_DRAGON_ARMOUR: strcat(glorg , "storm dragon armour"); break;
-    case ARM_GOLD_DRAGON_HIDE: strcat(glorg , "gold dragon hide"); break;
-    case ARM_GOLD_DRAGON_ARMOUR: strcat(glorg , "gold dragon armour"); break;
-    case ARM_ANIMAL_SKIN: strcat(glorg , "animal skin"); break;
-    case ARM_SWAMP_DRAGON_HIDE: strcat(glorg , "swamp dragon hide"); break;
-    case ARM_SWAMP_DRAGON_ARMOUR: strcat(glorg , "swamp dragon armour"); break;
- }
-
+	switch(item_typ) {
+		case ARM_ROBE: return "robe";
+		case ARM_LEATHER_ARMOUR: return "leather armour";
+		case ARM_RING_MAIL: return "ring mail";
+		case ARM_SCALE_MAIL: return "scale mail";
+		case ARM_CHAIN_MAIL: return "chain mail";
+		case ARM_SPLINT_MAIL: return "splint mail";
+		case ARM_BANDED_MAIL: return "banded mail";
+		case ARM_PLATE_MAIL: return "plate mail";
+		case ARM_SHIELD: return "shield";
+		case ARM_CLOAK: return "cloak";
+		case ARM_HELMET: switch(item_plus2) {
+							 case 0: return "helmet";
+							 case 1: return "helm";
+							 case 2: return "cap";
+							 case 3: return "wizard's hat";
+							 default: return "";
+						 }
+		case ARM_GLOVES: return "gloves";
+		case ARM_BOOTS: switch(item_plus2) {
+							case 0: return "boots";
+							case 1: return "naga barding";
+							case 2: return "centaur barding";
+							default: return "";
+						}
+		case ARM_BUCKLER: return "buckler";
+		case ARM_LARGE_SHIELD: return "large shield";
+		case ARM_DRAGON_HIDE: return "dragon hide";
+		case ARM_TROLL_HIDE: return "troll hide";
+		case ARM_CRYSTAL_PLATE_MAIL: return "crystal plate mail";
+		case ARM_DRAGON_ARMOUR: return "dragon armour";
+		case ARM_TROLL_LEATHER_ARMOUR: return "troll leather armour";
+		case ARM_ICE_DRAGON_HIDE: return "ice dragon hide";
+		case ARM_ICE_DRAGON_ARMOUR: return "ice dragon armour";
+		case ARM_STEAM_DRAGON_HIDE: return "steam dragon hide";
+		case ARM_STEAM_DRAGON_ARMOUR: return "steam dragon armour";
+		case ARM_MOTTLED_DRAGON_HIDE: return "mottled dragon hide";
+		case ARM_MOTTLED_DRAGON_ARMOUR: return "mottled dragon armour";
+		case ARM_STORM_DRAGON_HIDE: return "storm dragon hide";
+		case ARM_STORM_DRAGON_ARMOUR: return "storm dragon armour";
+		case ARM_GOLD_DRAGON_HIDE: return "gold dragon hide";
+		case ARM_GOLD_DRAGON_ARMOUR: return "gold dragon armour";
+		case ARM_ANIMAL_SKIN: return "animal skin";
+		case ARM_SWAMP_DRAGON_HIDE: return "swamp dragon hide";
+		case ARM_SWAMP_DRAGON_ARMOUR: return "swamp dragon armour";
+	}
+	return "";
 }
 
 
