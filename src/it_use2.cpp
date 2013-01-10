@@ -1075,7 +1075,7 @@ if (you[0].inv_class [unw] == 0 && you[0].inv_dam [unw] != 0)
 
 if (you[0].inv_ident [unw] == 1) you[0].inv_ident [unw] = 2;
 
-std::string name = item_name(you[0].inv_plus2 [unw], you[0].inv_class [unw], you[0].inv_type [unw], you[0].inv_dam [unw], you[0].inv_plus [unw], you[0].inv_quant [unw], you[0].inv_ident [unw], 4);
+std::string name = in_name(unw, 4);
 
 char i_dam = you[0].inv_dam [unw] % 30;
 

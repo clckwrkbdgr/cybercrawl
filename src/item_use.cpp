@@ -1350,7 +1350,7 @@ beam[0].source_x = you[0].x_pos;
 beam[0].source_y = you[0].y_pos;
 beam[0].colour = you[0].inv_col [throw_2];
 /*in_name(throw_2, 6);    <-- Don't use this: "the 10 +0 darts hit the x" */
-strcpy(beam[0].beam_name, item_name(you[0].inv_plus2 [throw_2],you[0].inv_class [throw_2], you[0].inv_type [throw_2], you[0].inv_dam [throw_2], you[0].inv_plus [throw_2], 1, you[0].inv_ident [throw_2], 6).c_str());
+strcpy(beam[0].beam_name, in_name(throw_2, 1, 6).c_str());
 beam[0].thing_thrown = 1;
 
 
@@ -1521,7 +1521,7 @@ ammo of fire and weapons of frost don't work together, and vice versa */
 
 if (shoot == 0)	strcpy(info, "You throw ");
 /* if shoot == 1, it has already strcpy'd "You shoot " */
-	strcat(info, item_name(you[0].inv_plus2 [throw_2], you[0].inv_class [throw_2], you[0].inv_type [throw_2], you[0].inv_dam [throw_2], you[0].inv_plus [throw_2], 1, you[0].inv_ident [throw_2], 3).c_str());
+	strcat(info, in_name(throw_2, 1, 3).c_str());
 	strcat(info, ".");
 	mpr(info);
 
@@ -1682,7 +1682,7 @@ strcpy(info, " ");
 			info [1] = 0;
 
 			strcat(info, " - ");
-			strcat(info, item_name(you[0].inv_plus2 [ring_wear_2], you[0].inv_class [ring_wear_2], you[0].inv_type [ring_wear_2], you[0].inv_dam [ring_wear_2], you[0].inv_plus [ring_wear_2], you[0].inv_quant [ring_wear_2], you[0].inv_ident [ring_wear_2], 3).c_str());
+			strcat(info, in_name(ring_wear_2, 3).c_str());
 
 			if (hand_used == 0) strcat(info, " (on left hemisphere)");
 			if (hand_used == 1) strcat(info, " (on right hemisphere)");
@@ -1976,7 +1976,7 @@ if (you[0].inv_plus [you[0].equip [hand_used + 7]] > 80) // cursed
 }
 
 strcpy(info, "You remove your ");
-strcat(info, item_name(you[0].inv_plus2 [you[0].equip [hand_used + 7]], you[0].inv_class [you[0].equip [hand_used + 7]], you[0].inv_type [you[0].equip [hand_used + 7]], you[0].inv_dam [you[0].equip [hand_used + 7]], you[0].inv_plus [you[0].equip [hand_used + 7]], you[0].inv_quant [you[0].equip [hand_used + 7]], you[0].inv_ident [you[0].equip [hand_used + 7]], 8).c_str());
+strcat(info, in_name(you[0].equip [hand_used + 7], 8).c_str());
 strcat(info, ".");
 mpr(info);
 
@@ -2804,7 +2804,7 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && (you[0].inv_da
 	{
 		if (affected == 0)
 		{
-		 strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4).c_str());
+		 strcpy(info, in_name(you[0].equip [EQ_WEAPON], 4).c_str());
 		 strcat(info, " glows silver for a moment.");
 		 mpr(info);
 		 you[0].inv_plus [you[0].equip [EQ_WEAPON]] -= 100;
@@ -2823,7 +2823,7 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && (you[0].inv_da
 
 	// vVvVv    This is *here* (as opposed to lower down) for a reason!
 
-	strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4).c_str());
+	strcpy(info, in_name(you[0].equip [EQ_WEAPON], 4).c_str());
         if (you[0].inv_type [sc_read_2] == SCR_ENCHANT_WEAPON_II && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS)
         {
          strcat(info, " glows red for a moment.");
@@ -2921,7 +2921,7 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
 	return;
 }
 
- strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4).c_str());
+ strcpy(info, in_name(you[0].equip [EQ_WEAPON], 4).c_str());
  strcat(info, " emits a brilliant flash of light!");
  alert();
  mpr(info);
@@ -2989,7 +2989,7 @@ do
         if (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_ICE_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_STEAM_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_MOTTLED_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_STORM_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_GOLD_DRAGON_HIDE || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_SWAMP_DRAGON_HIDE) // dragon hide
         {
                 affected = EQ_BODY_ARMOUR;
-		strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+		strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 		strcat(info, " glows purple and changes!");
 		mpr(info);
                 you[0].AC_ch = 1;
@@ -3050,7 +3050,7 @@ do
         if (you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] == ARM_TROLL_HIDE) // troll hide
         {
                 affected = EQ_BODY_ARMOUR;
-		strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+		strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 		strcat(info, " glows purple and changes!");
 		mpr(info);
 /*                player_AC() += 1;*/
@@ -3069,7 +3069,7 @@ do
     if (you[0].inv_dam [you[0].equip [affected]] % 30 >= 25)
 	{
 		set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
-		strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+		strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 		strcat(info, " glows faintly for a moment.");
 		mpr(info);
         if (you[0].inv_plus [you[0].equip [affected]] > 100) you[0].inv_plus [you[0].equip [affected]] -= 100;
@@ -3084,7 +3084,7 @@ do
 		you[0].inv_plus [you[0].equip [affected]] -= 100;
 		set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 
-		strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+		strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 		strcat(info, " glows silver for a moment.");
 		mpr(info);
 		return;
@@ -3109,7 +3109,7 @@ do
 
 	set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
 
-	strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+	strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 	strcat(info, " glows green for a moment.");
 /* if (affected != 5) player_AC() ++; else player_shield_class() ++;*/
  you[0].AC_ch = 1;
@@ -3163,7 +3163,7 @@ do
 	// vVvVv    This is *here* for a reason!
 	you[0].inv_plus [you[0].equip [affected]] += 100;
 	set_id(you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], 1);
-	strcpy(info, item_name(you[0].inv_plus2 [you[0].equip [affected]], you[0].inv_class [you[0].equip [affected]], you[0].inv_type [you[0].equip [affected]], you[0].inv_dam [you[0].equip [affected]], you[0].inv_plus [you[0].equip [affected]], you[0].inv_quant [you[0].equip [affected]], you[0].inv_ident [you[0].equip [affected]], 4).c_str());
+	strcpy(info, in_name(you[0].equip [affected], 4).c_str());
 	strcat(info, " glows black for a moment.");
 	mpr(info);
 	return;

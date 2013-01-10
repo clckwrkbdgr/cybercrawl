@@ -388,7 +388,7 @@ for (i = 0; i < ITEMS; i++)
 	}
 } /* end of i loop */
 
-msg("@1 dances into the air!") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+msg("@1 dances into the air!") << in_name(you[0].equip [EQ_WEAPON], 4);
 
 unwield_item(you[0].equip [EQ_WEAPON]);
 
@@ -566,7 +566,7 @@ if (you[0].equip [EQ_WEAPON] == -1 || you[0].inv_class [you[0].equip [EQ_WEAPON]
  return;
 }
 
-std::string name = item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+std::string name = in_name(you[0].equip [EQ_WEAPON], 4);
 if (you[0].inv_quant [you[0].equip [EQ_WEAPON]] == 1) {
 	msg("@1 is covered in a thin film of poison.") << name;
 } else {

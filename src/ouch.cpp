@@ -240,7 +240,7 @@ void item_corrode(char itco_char)
 
 
 
-        msg("@1 is eaten away!") << item_name(you[0].inv_plus2 [itco], you[0].inv_class [itco], you[0].inv_type [itco], you[0].inv_dam [itco], you[0].inv_plus [itco], you[0].inv_quant [itco], you[0].inv_ident [itco], 4);
+        msg("@1 is eaten away!") << in_name(itco, 4);
 
         rusty --;
         if (you[0].inv_class [itco] == 0) you[0].inv_plus2 [itco] = rusty;

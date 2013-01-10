@@ -391,7 +391,7 @@ if (you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 != 0 || you[0].inv_dam [you[0
  return 0;
 }
 
-std::string name = item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+std::string name = in_name(you[0].equip [EQ_WEAPON], 4);
 
 switch(which_brand)
 {

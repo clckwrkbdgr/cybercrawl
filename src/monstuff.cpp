@@ -964,7 +964,7 @@ if (menv [i].m_inv [1] != 501) // manticore
 {
 		hand_used = menv [i].m_inv [1];
 		beem[0].range = 6;
-		strcpy(beem[0].beam_name, item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6).c_str());
+		strcpy(beem[0].beam_name, it_name(hand_used, 1, 6).c_str());
 		mons_throw(i, beem, hand_used);
 		//mmov_x = 0;
 /*		if (brek == 1)
@@ -1539,7 +1539,7 @@ if (random2(10) < 8)
 		if (beem[0].tracer != 0 || (beem[0].trac_targ != MHITYOU && beem[0].trac_hit_mons != 0)) // doesn't need to worry about you[0].haste
 		{
  		beem[0].range = 6;
- 		strcpy(beem[0].beam_name, item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 6).c_str());
+ 		strcpy(beem[0].beam_name, it_name(hand_used, 1, 6).c_str());
  		mons_throw(i, beem, hand_used);
 		continue;
 /* 		if (brek == 1)

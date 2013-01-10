@@ -13,6 +13,8 @@
 #include "randart.h"
 #include "skills2.h"
 
+std::string item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip);
+std::string item_name_2(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev);
 char reduce(int reducee);
 char is_a_vowel(int let);
 char retbit(char sed);
@@ -29,12 +31,58 @@ int mss [20] [50];
 
 std::string it_name(int itn, char des)
 {
-	return item_name(mitm.iplus2 [itn], mitm.iclass [itn], mitm.itype [itn], mitm.idam [itn], mitm.iplus [itn], mitm.iquant [itn], mitm.iid [itn], des);
+	return item_name(
+			mitm.iplus2 [itn],
+			mitm.iclass [itn],
+			mitm.itype [itn],
+			mitm.idam [itn],
+			mitm.iplus [itn],
+			mitm.iquant [itn],
+			mitm.iid [itn],
+			des
+			);
+}
+
+std::string it_name(int itn, int quant, char des)
+{
+	return item_name(
+			mitm.iplus2 [itn],
+			mitm.iclass [itn],
+			mitm.itype [itn],
+			mitm.idam [itn],
+			mitm.iplus [itn],
+			quant,
+			mitm.iid [itn],
+			des
+			);
+}
+
+std::string in_name(int inn, int quant, char des)
+{
+	return item_name(
+			you[0].inv_plus2 [inn],
+			you[0].inv_class [inn],
+			you[0].inv_type [inn],
+			you[0].inv_dam [inn],
+			you[0].inv_plus [inn],
+			quant,
+			you[0].inv_ident [inn],
+			des
+			);
 }
 
 std::string in_name(int inn, char des)
 {
-	return item_name(you[0].inv_plus2 [inn], you[0].inv_class [inn], you[0].inv_type [inn], you[0].inv_dam [inn], you[0].inv_plus [inn], you[0].inv_quant [inn], you[0].inv_ident [inn], des);
+	return item_name(
+			you[0].inv_plus2 [inn],
+			you[0].inv_class [inn],
+			you[0].inv_type [inn],
+			you[0].inv_dam [inn],
+			you[0].inv_plus [inn],
+			you[0].inv_quant [inn],
+			you[0].inv_ident [inn],
+			des
+			);
 }
 
 struct ItemInfo {
@@ -70,6 +118,9 @@ std::string item_name(int item_plus2, char item_clas, char item_typ, int item_da
 	if(is_extraodinary) {
 		article = "the";
 	} else if(is_more_than_one) {
+		if(article == "an" || article == "a") {
+			article = "";
+		}
 		if(article.size() > 0) {
 			article += " ";
 		}

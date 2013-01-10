@@ -647,7 +647,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 			strcat(info, " shoots ");
 		} else strcat(info, " throws ");
 
-		strcat(info, item_name(mitm.iplus2 [hand_used], mitm.iclass [hand_used], mitm.itype [hand_used], mitm.idam [hand_used], mitm.iplus [hand_used], 1, mitm.iid [hand_used], 3).c_str());
+		strcat(info, it_name(hand_used, 1, 3).c_str());
 		strcat(info, ".");
 
 	}

@@ -764,7 +764,7 @@ if ((item_drop_1 < 65 || (item_drop_1 > 90 && item_drop_1 < 97) || item_drop_1 >
 
 	if (quant_drop > you[0].inv_quant [item_drop_2]) quant_drop = you[0].inv_quant [item_drop_2];
 
-	msg("You drop @1.") << item_name(you[0].inv_plus2 [item_drop_2], you[0].inv_class [item_drop_2], you[0].inv_type [item_drop_2], you[0].inv_dam [item_drop_2], you[0].inv_plus [item_drop_2], quant_drop, you[0].inv_ident [item_drop_2], 3);
+	msg("You drop @1.") << in_name(item_drop_2, quant_drop, 3);
 
 	if (item_drop_2 == you[0].equip [EQ_WEAPON])
 	{

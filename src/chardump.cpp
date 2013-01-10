@@ -436,7 +436,7 @@ int dump_char(int show_prices, const char * fname)
 
 	   				yps = wherey();
 
-					strcat(dmp [lin], item_name(you[0].inv_plus2 [j], you[0].inv_class [j], you[0].inv_type [j], you[0].inv_dam [j], you[0].inv_plus [j], you[0].inv_quant [j], you[0].inv_ident [j], 3).c_str());
+					strcat(dmp [lin], in_name(j, 3).c_str());
 
 				    inv_count --;
 

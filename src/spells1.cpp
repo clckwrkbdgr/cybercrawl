@@ -343,7 +343,7 @@ void identify(char pow)
 	}
 
 	char slot = (sc_read_2 <= 25) ? (sc_read_2 + 97) : (sc_read_2 + 39);
-	msg("@1 - @2@3") << slot << item_name(you[0].inv_plus2 [sc_read_2], you[0].inv_class [sc_read_2], you[0].inv_type [sc_read_2], you[0].inv_dam [sc_read_2], you[0].inv_plus [sc_read_2], you[0].inv_quant [sc_read_2], you[0].inv_ident [sc_read_2], 3) << equip_type(sc_read_2);
+	msg("@1 - @2@3") << slot << in_name(sc_read_2, 3) << equip_type(sc_read_2);
 
 	id_used -= 1;
 

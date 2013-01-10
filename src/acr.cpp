@@ -499,7 +499,7 @@ void input(void)
 		you[0].duration [DUR_VORPAL_BLADE] --;
 	}
 	if (you[0].duration [DUR_VORPAL_BLADE] == 1) {
-		msg("@1 seems blunter.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+		msg("@1 seems blunter.") << in_name(you[0].equip [EQ_WEAPON], 4);
 		you[0].duration [DUR_VORPAL_BLADE] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 10;
 		wield_change = 1;
@@ -508,7 +508,7 @@ void input(void)
 		you[0].duration [DUR_FIRE_BRAND] --;
 	}
 	if (you[0].duration [DUR_FIRE_BRAND] == 1) {
-		msg("@1 goes out.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+		msg("@1 goes out.") << in_name(you[0].equip [EQ_WEAPON], 4);
 		you[0].duration [DUR_FIRE_BRAND] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 1;
 		wield_change = 1;
@@ -517,7 +517,7 @@ void input(void)
 		you[0].duration [DUR_ICE_BRAND] --;
 	}
 	if (you[0].duration [DUR_ICE_BRAND] == 1) {
-		msg("@1 stops glowing.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+		msg("@1 stops glowing.") << in_name(you[0].equip [EQ_WEAPON], 4);
 		you[0].duration [DUR_ICE_BRAND] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 2;
 		wield_change = 1;
@@ -526,7 +526,7 @@ void input(void)
 		you[0].duration [DUR_LETHAL_INFUSION] --;
 	}
 	if (you[0].duration [DUR_LETHAL_INFUSION] == 1) {
-		msg("@1 stops crackling.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+		msg("@1 stops crackling.") << in_name(you[0].equip [EQ_WEAPON], 4);
 		you[0].duration [DUR_LETHAL_INFUSION] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 8;
 		wield_change = 1;
@@ -535,7 +535,7 @@ void input(void)
 		you[0].duration [DUR_POISON_WEAPON] --;
 	}
 	if (you[0].duration [DUR_POISON_WEAPON] == 1) {
-		msg("@1 stops dripping with poison.") << item_name(you[0].inv_plus2 [you[0].equip [EQ_WEAPON]], you[0].inv_class [you[0].equip [EQ_WEAPON]], you[0].inv_type [you[0].equip [EQ_WEAPON]], you[0].inv_dam [you[0].equip [EQ_WEAPON]], you[0].inv_plus [you[0].equip [EQ_WEAPON]], you[0].inv_quant [you[0].equip [EQ_WEAPON]], you[0].inv_ident [you[0].equip [EQ_WEAPON]], 4);
+		msg("@1 stops dripping with poison.") << in_name(you[0].equip [EQ_WEAPON], 4);
 		you[0].duration [DUR_POISON_WEAPON] = 0;
 		you[0].inv_dam [you[0].equip [EQ_WEAPON]] -= 6;
 		wield_change = 1;

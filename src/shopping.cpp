@@ -190,7 +190,7 @@ itty = igrd [0] [5 + shoppy];
 
        putch(i + 96);
        cprintf(" - ");
-       cprintf(item_name(mitm.iplus2 [itty], mitm.iclass [itty], mitm.itype [itty], mitm.idam [itty], mitm.iplus [itty], mitm.iquant [itty], mitm.iid [itty], 3).c_str());
+       cprintf(it_name(itty, 3).c_str());
 
        gp_value = greedy * item_value(mitm.iclass [itty], mitm.itype [itty], mitm.idam [itty], mitm.iplus [itty], mitm.iplus2 [itty], mitm.iquant [itty], mitm.iid [itty], id);
        gp_value /= 10;

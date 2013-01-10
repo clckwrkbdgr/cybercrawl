@@ -919,7 +919,7 @@ return;
 std::string monster_name(int mmov_x, int monster_attacking)
 {
 	if (menv [monster_attacking].m_class == MONS_DANCING_WEAPON) {
-		return item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 0);
+		return it_name(mmov_x, 0);
 	}
 	return monam(menv[monster_attacking].m_sec,menv[monster_attacking].m_class, menv [monster_attacking].m_ench [2], 1);
 }
@@ -1035,7 +1035,7 @@ mons_to_hit += water_attack * 5;
 if (menv [monster_attacking].m_inv [hand_used] != 501)
 {
 
-	std::string name = item_name(mitm.iplus2 [menv [monster_attacking].m_inv [hand_used]], mitm.iclass [menv [monster_attacking].m_inv [hand_used]], mitm.itype [menv [monster_attacking].m_inv [hand_used]], mitm.idam [menv [monster_attacking].m_inv [hand_used]], mitm.iplus [menv [monster_attacking].m_inv [hand_used]], mitm.iquant [menv [monster_attacking].m_inv [hand_used]], mitm.iid [menv [monster_attacking].m_inv [hand_used]], 0);
+	std::string name = it_name(menv [monster_attacking].m_inv [hand_used], 0);
 
   if (mitm.iclass [menv [monster_attacking].m_inv [hand_used]] != 0 || strstr(name.c_str(), "questionable item") != NULL)
   {
@@ -1143,7 +1143,7 @@ if ((int) damage_taken >= 1)
 
 	if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && mmov_x != 501 && mitm.iclass [mmov_x] == 0 && (mitm.itype [mmov_x] < 13 || mitm.itype [mmov_x] > 16))
 	{
-		msg("@1 hits you with @2!") << monster_name(mmov_x, monster_attacking) << item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3);
+		msg("@1 hits you with @2!") << monster_name(mmov_x, monster_attacking) << it_name(mmov_x, 3);
 	} else {
 		msg("@1 hits you!") << monster_name(mmov_x, monster_attacking);
 	}
@@ -1884,7 +1884,7 @@ if (hit == 1) //(int) damage_taken >= 1)
 	if (sees == 1) {
 
 		if (menv [monster_attacking].m_class != MONS_DANCING_WEAPON && menv [monster_attacking].m_inv [hand_used] != 501 && mitm.iclass [menv [monster_attacking].m_inv [hand_used]] == OBJ_WEAPONS && (mitm.itype [menv [monster_attacking].m_inv [hand_used]] < WPN_SLING || mitm.itype [menv [monster_attacking].m_inv [hand_used]] > WPN_HAND_CROSSBOW)) {
-			msg("@1 hits @2 with @3!") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << item_name(mitm.iplus2 [mmov_x], mitm.iclass [mmov_x], mitm.itype [mmov_x], mitm.idam [mmov_x], mitm.iplus [mmov_x], mitm.iquant [mmov_x], mitm.iid [mmov_x], 3);
+			msg("@1 hits @2 with @3!") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1) << it_name(mmov_x, 3);
 		} else {
 			msg("@1 hits @2!") << monster_name(mmov_x, monster_attacking) << monam(menv[monster_attacked].m_sec,menv[monster_attacked].m_class, menv [monster_attacked].m_ench [2], 1);
 		}
