@@ -1151,7 +1151,7 @@ void altar_prayer(void)
 
 int item_sacr;
 int i, j;
-char subst_id [4] [50];
+int subst_id [4] [50];
 
 
  item_sacr = 501;

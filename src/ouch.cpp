@@ -382,7 +382,7 @@ points += you[0].gp;
 points += (you[0].xp * 7) / 10;
 //if (death_type == 12) points += points / 2;
 //if (death_type == 11) points += points / 10; // these now handled by giving player the value of their inventory
-   char temp_id [4] [50];
+   int temp_id [4] [50];
 
    for (d = 0; d < 4; d ++)
    {

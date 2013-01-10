@@ -50,7 +50,7 @@ char invent(int item_class_inv, char show_price)
 
    char yps = 0;
 
-   char temp_id [4] [50];
+   int temp_id [4] [50];
 
    for (i = 0; i < 4; i ++)
    {

@@ -13,23 +13,22 @@
 #include "randart.h"
 #include "skills2.h"
 
-std::string item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip);
-std::string item_name_2(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev);
-char reduce(int reducee);
-char is_a_vowel(int let);
-char retbit(char sed);
-char retvow(char sed);
-std::string make_name(int var1, int var2, int var3, char ncase);
+std::string item_name(int item_plus2, int item_clas, int item_typ, int item_da, int it_plus, int it_quant, int ident_lev, int descrip);
+std::string item_name_2(int item_plus2, int item_clas, int item_typ, int item_da, int it_plus, int it_quant, int ident_lev);
+int reduce(int reducee);
+bool is_a_vowel(int let);
+int retbit(int sed);
+int retvow(int sed);
 
 
-char id [4] [50];
+int id [4] [50];
 
 int prop [4] [50] [3];
 int mss [20] [50];
 
 
 
-std::string it_name(int itn, char des)
+std::string it_name(int itn, int des)
 {
 	return item_name(
 			mitm.iplus2 [itn],
@@ -43,7 +42,7 @@ std::string it_name(int itn, char des)
 			);
 }
 
-std::string it_name(int itn, int quant, char des)
+std::string it_name(int itn, int quant, int des)
 {
 	return item_name(
 			mitm.iplus2 [itn],
@@ -57,7 +56,7 @@ std::string it_name(int itn, int quant, char des)
 			);
 }
 
-std::string in_name(int inn, int quant, char des)
+std::string in_name(int inn, int quant, int des)
 {
 	return item_name(
 			you[0].inv_plus2 [inn],
@@ -71,7 +70,7 @@ std::string in_name(int inn, int quant, char des)
 			);
 }
 
-std::string in_name(int inn, char des)
+std::string in_name(int inn, int des)
 {
 	return item_name(
 			you[0].inv_plus2 [inn],
@@ -95,7 +94,7 @@ struct ItemInfo {
 	int ident_lev;
 };
 
-std::string item_name(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev, char descrip)
+std::string item_name(int item_plus2, int item_clas, int item_typ, int item_da, int it_plus, int it_quant, int ident_lev, int descrip)
 {
 	std::string result = item_name_2(item_plus2, item_clas, item_typ, item_da, it_plus, it_quant, ident_lev);
 	bool is_orb = (item_clas == OBJ_ORBS);
@@ -1136,7 +1135,7 @@ std::string corpse_name(ItemInfo item)
 	return std::string((item.item_da < 100) ? "rotting " : "") + gmo_n + " corpse";
 }
 
-std::string item_name_2(int item_plus2, char item_clas, char item_typ, int item_da, int it_plus, int it_quant, char ident_lev)
+std::string item_name_2(int item_plus2, int item_clas, int item_typ, int item_da, int it_plus, int it_quant, int ident_lev)
 {
 	ItemInfo item;
 	item.item_plus2 = item_plus2;
@@ -1177,7 +1176,7 @@ std::string item_name_2(int item_plus2, char item_clas, char item_typ, int item_
 	return result;
 }
 
-void save_id(char identy [4] [50])
+void save_id(int identy [4] [50])
 {
 
 int ix = 0;
@@ -1210,7 +1209,7 @@ for (i = 0; i < 4; i ++)
 } // end of void initial
 
 
-void set_id(char cla, char ty, char setting)
+void set_id(int cla, int ty, int setting)
 {
 	if (cla > 99)
 	{
@@ -1230,7 +1229,7 @@ void set_id(char cla, char ty, char setting)
 } /* end of void set_id */
 
 
-char get_id(char cla_char, char ty_char)
+int get_id(int cla_char, int ty_char)
 {
 	int cla = cla_char, ty = ty_char;
 	if (cla > 99)
@@ -1249,7 +1248,7 @@ char get_id(char cla_char, char ty_char)
 	}
 return 0;
 
-} /* end of char get_id */
+}
 
 
 
@@ -1763,253 +1762,197 @@ mss [OBJ_MISCELLANY] [MISC_CRYSTAL_BALL_OF_SEEING] = 200; // crystal ball
 
 }
 
-
-
 int check_item_knowledge(void)
 {
-
-
-   char st_pass [60];
-
-   int i;
-   int j;
-   char lines = 0;
-   int anything = 0;
-   char ft = 0;
-
-   char yps = 0;
-   strcpy(st_pass, "");
-
-   clrscr();
-
-
-
-int inv_count = 0;
-int ki = 0;
-
-
-
-for (i = 0; i < 4; i++)
-{
- for (j = 0; j < 30; j ++)
- {
-	if (id [i] [j] != 0)
-	{
-		inv_count++;
+	int lines = 0;
+	int anything = 0;
+	int ft = 0;
+	int inv_count = 0;
+	int ki = 0;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 30; j ++) {
+			if (id [i] [j] != 0) {
+				inv_count++;
+			}
+		}
 	}
- }
-}
 
-if (inv_count == 0)
-{
-   cprintf("You don't recognise anything yet!");
-   if (getch() == 0) getch();
-   goto putty;
-}
-textcolor(BLUE);
-cprintf("  You recognise:");
-textcolor(LIGHTGREY);
-lines++;
-
-
-for (i = 0; i < 4; i ++)
+	clrscr();
+	if (inv_count == 0)
 	{
-switch(i)
-{
- case 0: ft = OBJ_WANDS; break; // magic devices
- case 1: ft = OBJ_SCROLLS; break; // scrolls
- case 2: ft = OBJ_JEWELLERY; break; // rings
- case 3: ft = OBJ_POTIONS; break; // potions
-}
+		cprintf("You don't recognise anything yet!");
+		if (getch() == 0) getch();
+		return 0;
+	}
+	textcolor(BLUE);
+	cprintf("  You recognise:");
+	textcolor(LIGHTGREY);
+	lines++;
 
-	for (j = 0; j < 30; j++)
-	{
 
-		if (lines > 23 && inv_count > 0)
-		{
-			gotoxy(1,25);
-			cprintf("-more-");
-			ki = getch();
-			if (ki == 27)
-			{
-				return 27;
-			}
-			if (ki >= 65 && ki < 123)
-			{
-				return ki;
-			}
-			if (ki == 0) ki = getch();
-			lines = 0;
-			clrscr();
-			gotoxy(1,1);
-			anything = 0;
+	for (int i = 0; i < 4; i ++) {
+		switch(i) {
+			case 0: ft = OBJ_WANDS; break;
+			case 1: ft = OBJ_SCROLLS; break;
+			case 2: ft = OBJ_JEWELLERY; break;
+			case 3: ft = OBJ_POTIONS; break;
 		}
+		for (int j = 0; j < 30; j++) {
+			if (lines > 23 && inv_count > 0) {
+				gotoxy(1,25);
+				cprintf("-more-");
+				ki = getch();
+				if (ki == 27) {
+					return 27;
+				}
+				if (ki >= 65 && ki < 123) {
+					return ki;
+				}
+				if (ki == 0) {
+					ki = getch();
+				}
+				lines = 0;
+				clrscr();
+				gotoxy(1,1);
+				anything = 0;
+			}
 
-		if (id [i] [j] == 1)
-		{
-			anything ++;
-
-			if (lines > 0) cprintf(EOL);
-			lines++;
+			if (id [i] [j] == 1) {
+				anything ++;
+				if (lines > 0) {
+					cprintf(EOL);
+				}
+				lines++;
 				cprintf(" ");
-
-   yps = wherey();
-
-			cprintf(item_name_2(0, ft, j, 0, 0, 1, 0).c_str());
-
-         inv_count --;
-
-   if (wherey() != yps) lines++;
-
+				int yps = 0;
+				yps = wherey();
+				cprintf(item_name_2(0, ft, j, 0, 0, 1, 0).c_str());
+				inv_count --;
+				if (wherey() != yps) lines++;
+			}
 		}
-	} // end of j loop
+	}
+
+	if (anything > 0) {
+		ki = getch();
+		if (ki >= 65 && ki < 123) {
+			return ki;
+		}
+		if (ki == 0) {
+			ki = getch();
+		}
+		return anything;
+	}
+	return ki;
+}
+
+int weapon_skill(int wclass, int wtype)
+{
+	bool is_staff = (wclass == 11);
+	bool no_skill = (wclass != 0);
+	if(is_staff) {
+		return 7;
+	}
+	if(no_skill) {
+		return 0;
+	}
+
+	switch(wtype) {
+		case WPN_CLUB: return SK_MACES_FLAILS;
+		case WPN_MACE: return SK_MACES_FLAILS;
+		case WPN_FLAIL: return SK_MACES_FLAILS;
+		case WPN_DAGGER: return SK_SHORT_BLADES;
+		case WPN_MORNINGSTAR: return SK_MACES_FLAILS;
+		case WPN_SHORT_SWORD: return SK_SHORT_BLADES;
+		case WPN_LONG_SWORD: return SK_LONG_SWORDS;
+		case WPN_GREAT_SWORD: return SK_GREAT_SWORDS;
+		case WPN_SCIMITAR: return SK_LONG_SWORDS;
+		case WPN_HAND_AXE: return SK_AXES;
+		case WPN_BATTLEAXE: return SK_AXES;
+		case WPN_SPEAR: return SK_POLEARMS;
+		case WPN_HALBERD: return SK_POLEARMS;
+		case WPN_SLING: return SK_SLINGS;
+		case WPN_BOW: return SK_BOWS;
+		case WPN_CROSSBOW: return SK_CROSSBOWS;
+		case WPN_HAND_CROSSBOW: return SK_CROSSBOWS;
+		case WPN_GLAIVE: return SK_POLEARMS;
+		case WPN_QUARTERSTAFF: return SK_STAVES;
+		case WPN_SCYTHE: return SK_POLEARMS;
+		case WPN_GIANT_CLUB: return SK_MACES_FLAILS;
+		case WPN_GIANT_SPIKED_CLUB: return SK_MACES_FLAILS;
+		case WPN_EVENINGSTAR: return SK_MACES_FLAILS;
+		case WPN_QUICK_BLADE: return SK_SHORT_BLADES;
+		case WPN_KATANA: return SK_LONG_SWORDS;
+		case WPN_EXECUTIONERS_AXE: return SK_AXES;
+		case WPN_DOUBLE_SWORD: return SK_LONG_SWORDS;
+		case WPN_TRIPLE_SWORD: return SK_GREAT_SWORDS;
+		case WPN_HAMMER: return SK_MACES_FLAILS;
+		case WPN_ANCUS: return SK_MACES_FLAILS;
+		case WPN_WHIP: return SK_MACES_FLAILS;
+		case WPN_SABRE: return SK_SHORT_BLADES;
+		case WPN_DEMON_BLADE: return SK_LONG_SWORDS;
+		case WPN_DEMON_WHIP: return SK_MACES_FLAILS;
+	}
+	return 0;
 }
 
 
-
-   if (anything > 0)
-   {
-	   ki = getch();
-	   //ki = getch();
-	   //ki = anything;
-	   if (ki >= 65 && ki < 123)
-	   {
-		   return ki;
-	   }
-	   if (ki == 0) ki = getch();
-	   return anything;
-   }
-
-   putty :
-
-   return ki;
-
-} // end of check_item_knowledge
-
-
-
-int weapon_skill(char wclass, char wtype)
+int damage_type(int wclass, int wtype)
 {
-if (wclass == 11) return 7; // staff
-
-if (wclass != 0) return 0; // no skill
-
-switch(wtype)
-{
-
-	case WPN_CLUB: return SK_MACES_FLAILS; //strcat(glog , "club"); break;
-	case WPN_MACE: return SK_MACES_FLAILS; //strcat(glog , "mace"); break;
-	case WPN_FLAIL: return SK_MACES_FLAILS; //strcat(glog , "flail"); break;
-	case WPN_DAGGER: return SK_SHORT_BLADES; //strcat(glog , "dagger"); break;
-	case WPN_MORNINGSTAR: return SK_MACES_FLAILS;//??? //strcat(glog , "spiked mace"); break;
-	case WPN_SHORT_SWORD: return SK_SHORT_BLADES; //strcat(glog , "short sword"); break;
-	case WPN_LONG_SWORD: return SK_LONG_SWORDS; //strcat(glog , "long sword"); break;
-	case WPN_GREAT_SWORD: return SK_GREAT_SWORDS; //strcat(glog , "great sword"); break;
-	case WPN_SCIMITAR: return SK_LONG_SWORDS; //strcat(glog , "scimitar"); break;
-	case WPN_HAND_AXE: return SK_AXES; //strcat(glog , "hand axe"); break;
-	case WPN_BATTLEAXE: return SK_AXES; //strcat(glog , "battleaxe"); break;
-	case WPN_SPEAR: return SK_POLEARMS; //strcat(glog , "spear"); break;
-	case WPN_HALBERD: return SK_POLEARMS; //strcat(glog , "halberd"); break;
-	case WPN_SLING: return SK_SLINGS; //strcat(glog , "sling"); break;
-	case WPN_BOW: return SK_BOWS; //strcat(glog , "bow"); break;
-	case WPN_CROSSBOW: return SK_CROSSBOWS; //strcat(glog , "crossbow"); break;
- case WPN_HAND_CROSSBOW: return SK_CROSSBOWS; //strcat(glog , "hand crossbow"); break;
- case WPN_GLAIVE: return SK_POLEARMS; //strcat(glog , "glaive"); break;
-	case WPN_QUARTERSTAFF: return SK_STAVES; //strcat(glog , "quarterstaff"); break;
- case WPN_SCYTHE: return SK_POLEARMS; //strcat(glog , "scythe"); break;
-	case WPN_GIANT_CLUB: return SK_MACES_FLAILS; //strcat(glog , "giant club"); break;
-	case WPN_GIANT_SPIKED_CLUB: return SK_MACES_FLAILS; //strcat(glog , "giant spiked club"); break;
-	case WPN_EVENINGSTAR: return SK_MACES_FLAILS; // eveningstar
-	case WPN_QUICK_BLADE: return SK_SHORT_BLADES; // quick blade
-	case WPN_KATANA: return SK_LONG_SWORDS; // katana
-
-	case WPN_EXECUTIONERS_AXE: return SK_AXES; // exec axe
-	case WPN_DOUBLE_SWORD: return SK_LONG_SWORDS; // 2x sword
-	case WPN_TRIPLE_SWORD: return SK_GREAT_SWORDS; // 3x sword
-	case WPN_HAMMER: return SK_MACES_FLAILS; // hammer
-	case WPN_ANCUS: return SK_MACES_FLAILS; // ancus
-	case WPN_WHIP: return SK_MACES_FLAILS; // whip
-	case WPN_SABRE: return SK_SHORT_BLADES; // sabre
-	case WPN_DEMON_BLADE: return SK_LONG_SWORDS; // demon blade
-	case WPN_DEMON_WHIP: return SK_MACES_FLAILS; // demon whip
-
-}
-
-return 0;
-
+	bool bludgeon = (wclass != 0);
+	if(bludgeon) {
+		return 0;
+	}
+	switch(wtype) {
+		case WPN_CLUB: return DVORP_CRUSHING;
+		case WPN_MACE: return DVORP_CRUSHING;
+		case WPN_FLAIL: return DVORP_CRUSHING;
+		case WPN_DAGGER: return DVORP_SLICING;
+		case WPN_MORNINGSTAR: return DVORP_PIERCING;
+		case WPN_SHORT_SWORD: return DVORP_SLICING;
+		case WPN_LONG_SWORD: return DVORP_SLICING;
+		case WPN_GREAT_SWORD: return DVORP_SLICING;
+		case WPN_SCIMITAR: return DVORP_SLICING;
+		case WPN_HAND_AXE: return DVORP_CHOPPING;
+		case WPN_BATTLEAXE: return DVORP_CHOPPING;
+		case WPN_SPEAR: return DVORP_PIERCING;
+		case WPN_HALBERD: return DVORP_CHOPPING;
+		case WPN_SLING: return DVORP_CRUSHING;
+		case WPN_BOW: return DVORP_CRUSHING;
+		case WPN_CROSSBOW: return DVORP_CRUSHING;
+		case WPN_HAND_CROSSBOW: return DVORP_CRUSHING;
+		case WPN_GLAIVE: return DVORP_CHOPPING;
+		case WPN_QUARTERSTAFF: return DVORP_CRUSHING;
+		case WPN_SCYTHE: return DVORP_SLICING;
+		case WPN_GIANT_CLUB: return DVORP_CRUSHING;
+		case WPN_GIANT_SPIKED_CLUB: return DVORP_PIERCING;
+		case WPN_EVENINGSTAR: return DVORP_PIERCING;
+		case WPN_QUICK_BLADE: return DVORP_SLICING;
+		case WPN_KATANA: return DVORP_SLICING;
+		case WPN_EXECUTIONERS_AXE: return DVORP_CHOPPING;
+		case WPN_DOUBLE_SWORD: return DVORP_SLICING;
+		case WPN_TRIPLE_SWORD: return DVORP_SLICING;
+		case WPN_HAMMER: return DVORP_CRUSHING;
+		case WPN_ANCUS: return DVORP_CRUSHING;
+		case WPN_WHIP: return DVORP_CRUSHING;
+		case WPN_SABRE: return DVORP_SLICING;
+		case WPN_DEMON_BLADE: return DVORP_SLICING;
+		case WPN_DEMON_WHIP: return DVORP_CRUSHING;
+	}
+	return 0;
 }
 
 
-char damage_type(char wclass, char wtype)
-{
-
-if (wclass != 0) return 0; // bludgeon
-// 1 = slicing
-// 2 = piercing
-// 3 = chopping
-
-switch(wtype)
-{
-
-	case WPN_CLUB: return DVORP_CRUSHING; //strcat(glog , "club"); break;
-	case WPN_MACE: return DVORP_CRUSHING; //strcat(glog , "mace"); break;
-	case WPN_FLAIL: return DVORP_CRUSHING; //strcat(glog , "flail"); break;
-	case WPN_DAGGER: return DVORP_SLICING; //strcat(glog , "dagger"); break;
-	case WPN_MORNINGSTAR: return DVORP_PIERCING;//??? //strcat(glog , "spiked mace"); break;
-	case WPN_SHORT_SWORD: return DVORP_SLICING; //strcat(glog , "short sword"); break;
-	case WPN_LONG_SWORD: return DVORP_SLICING; //strcat(glog , "long sword"); break;
-	case WPN_GREAT_SWORD: return DVORP_SLICING; //strcat(glog , "great sword"); break;
-	case WPN_SCIMITAR: return DVORP_SLICING; //strcat(glog , "scimitar"); break;
-	case WPN_HAND_AXE: return DVORP_CHOPPING; //strcat(glog , "hand axe"); break;
-	case WPN_BATTLEAXE: return DVORP_CHOPPING; //strcat(glog , "battleaxe"); break;
-	case WPN_SPEAR: return DVORP_PIERCING; //strcat(glog , "spear"); break;
-	case WPN_HALBERD: return DVORP_CHOPPING; //strcat(glog , "halberd"); break;
-	case WPN_SLING: return DVORP_CRUSHING; //strcat(glog , "sling"); break;
-	case WPN_BOW: return DVORP_CRUSHING; //strcat(glog , "bow"); break;
-	case WPN_CROSSBOW: return DVORP_CRUSHING; //strcat(glog , "crossbow"); break;
- case WPN_HAND_CROSSBOW: return DVORP_CRUSHING; //strcat(glog , "hand crossbow"); break;
- case WPN_GLAIVE: return DVORP_CHOPPING; //strcat(glog , "glaive"); break;
-	case WPN_QUARTERSTAFF: return DVORP_CRUSHING; //strcat(glog , "quarterstaff"); break;
- case WPN_SCYTHE: return DVORP_SLICING; //strcat(glog , "scythe"); break;
-	case WPN_GIANT_CLUB: return DVORP_CRUSHING; //strcat(glog , "giant club"); break;
-	case WPN_GIANT_SPIKED_CLUB: return DVORP_PIERCING; //strcat(glog , "giant spiked club"); break;
-	case WPN_EVENINGSTAR: return DVORP_PIERCING; // eveningstar
-	case WPN_QUICK_BLADE: return DVORP_SLICING; // quick blade
-	case WPN_KATANA: return DVORP_SLICING; // katana
-	case WPN_EXECUTIONERS_AXE: return DVORP_CHOPPING; // exec axe
-	case WPN_DOUBLE_SWORD: return DVORP_SLICING; // 2x sword
-	case WPN_TRIPLE_SWORD: return DVORP_SLICING; // 3x sword
-	case WPN_HAMMER: return DVORP_CRUSHING; // hammer
-	case WPN_ANCUS: return DVORP_CRUSHING; // ancus
-	case WPN_WHIP: return DVORP_CRUSHING; // whip
-	case WPN_SABRE: return DVORP_SLICING; // sabre
-	case WPN_DEMON_BLADE: return DVORP_SLICING; // demon blade
-	case WPN_DEMON_WHIP: return DVORP_CRUSHING; // demon whip
-
-
-}
-
-return 0;
-
-} // end damage_type
-
-
-std::string make_name(int var1, int var2, int var3, char ncase)
+std::string make_name(int var1, int var2, int var3, int ncase)
 {
 	char name [30] = "";
 	int numb [15];
-	char len;
+	int len;
 	int i = 0;
-	char nexty = 0;
+	int nexty = 0;
 	int j = 0;
-	char igo = 0;
 
 	int ix = 0;
-
-
-	char glag [30];
-
-	strcpy(glag, "");
 
 
 	numb [0] = var1 * var2;
@@ -2052,7 +1995,7 @@ std::string make_name(int var1, int var2, int var3, char ncase)
 	}
 
 	nexty = retbit(numb [4]);
-	char k = 0;
+	int k = 0;
 	j = 0;
 
 	for (i = 0; i < len; i ++)
@@ -2065,7 +2008,7 @@ std::string make_name(int var1, int var2, int var3, char ncase)
 			if (k > 9) break;
 		}
 
-		if (nexty == 1 || (i > 0 && is_a_vowel(name [i]) == 0))
+		if (nexty == 1 || (i > 0 && !is_a_vowel(name [i])))
 		{
 			name [i] = retvow(numb [j]);
 			if ((i == 0 || i == len - 1) && name [i] == 32)
@@ -2075,21 +2018,21 @@ std::string make_name(int var1, int var2, int var3, char ncase)
 			}
 		} else
 		{
-			if (numb [i / 2] <= 1 && i > 3 && is_a_vowel(name [i]) == 1) goto two_letter;
+			if (numb [i / 2] <= 1 && i > 3 && is_a_vowel(name [i])) goto two_letter;
 			else
 				name [i] = numb [j];
-hello : igo ++;
+hello :;
 		}
 
-		if ((nexty == 0 && is_a_vowel(name [i]) == 1) || (nexty == 1 && is_a_vowel(name [i]) == 0))
+		if ((nexty == 0 && is_a_vowel(name [i])) || (nexty == 1 && !is_a_vowel(name [i])))
 		{
-			if (nexty == 1 && i > 0 && is_a_vowel(name [i - 1]) == 0) i --;
+			if (nexty == 1 && i > 0 && !is_a_vowel(name [i - 1])) i --;
 			i--;
 			continue;
 		}
 
 
-		if (is_a_vowel(name [i]) == 0)
+		if (!is_a_vowel(name [i]))
 		{
 			nexty = 1;
 		} else nexty = 0;
@@ -2157,11 +2100,7 @@ hello : igo ++;
 			break;
 	}
 
-	strcpy(glag, name);
-
-	if (strlen(glag) == 0) strcpy(glag, "Plog");
-
-	return glag;
+	return (strlen(name) > 0) ? name : "Plog";
 
 
 
@@ -2215,62 +2154,42 @@ two_letter :
 
 
 
-char reduce(int reducee)
+int reduce(int reducee)
 {
-
-while(reducee >= 26)
-{
-	reducee -= 26;
-}
-
-return reducee;
-
-} // end of char reduce
-
-
-
-char is_a_vowel(int let)
-{
-	//if (let == 'a' || let == 'e' || let == 'i' || let == 'o' || let == 'u')
-	if (let == 0 || let == 4 || let == 8 || let == 14 || let == 20 || let == 24 || let == 32)
-	{
-		return 1;
-	} else return 0;
-} // end of char reduce
-
-
-
-char retvow(char sed)
-{
-
-while(sed > 6)
-{
-	sed -= 6;
-}
-
-switch(sed)
-{
-	case 0: return 0;
-	case 1: return 4;
-	case 2: return 8;
-	case 3: return 14;
-	case 4: return 20;
-	case 5: return 24;
-	case 6: return 32;
-}
-
-return 0;
+	while(reducee >= 26) {
+		reducee -= 26;
+	}
+	return reducee;
 }
 
 
-char retbit(char sed)
-{
 
+bool is_a_vowel(int let)
+{
+	return (let == 0 || let == 4 || let == 8 || let == 14 || let == 20 || let == 24 || let == 32);
+}
+
+int retvow(int sed)
+{
+	while(sed > 6) {
+		sed -= 6;
+	}
+
+	switch(sed) {
+		case 0: return 0;
+		case 1: return 4;
+		case 2: return 8;
+		case 3: return 14;
+		case 4: return 20;
+		case 5: return 24;
+		case 6: return 32;
+	}
+	return 0;
+}
+
+int retbit(int sed)
+{
 	if (sed % 2 == 0) return 0;
-
 	return 1;
-
 }
-
-
 

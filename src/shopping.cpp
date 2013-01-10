@@ -58,10 +58,10 @@ void purchase(int item_got);
 
 //void purchase(struct player you [1]);
 
-int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, char id [4] [50]);
+int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, int id [4] [50]);
 
 
-char in_a_shop(char shoppy, char id [4] [50]);
+char in_a_shop(char shoppy, int id [4] [50]);
 
 void shop_print(const char *shoppy, char sh_line);
 
@@ -81,7 +81,7 @@ void shop_set_id(int i, int shop_id [4] [50], int iclass, int itype);
 
 char book_rarity(char which_book);
 
-char in_a_shop(char shoppy_char, char id [4] [50])
+char in_a_shop(char shoppy_char, int id [4] [50])
 {
 	int shoppy = shoppy_char;
    int greedy = env[0].sh_greed [shoppy];
@@ -435,10 +435,7 @@ void purchase(int item_got)
                 you[0].inv_no++;
 }
 
-
-
-
-int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, char id [4] [50])
+int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, int id [4] [50])
 {
 
 int valued = 0;
@@ -1239,7 +1236,7 @@ for (i = 0; i < 6; i ++)
     break;
 }
 
-char identy [4] [50];
+int identy [4] [50];
 save_id(identy);
 
 in_a_shop(i, identy);

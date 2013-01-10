@@ -1092,7 +1092,7 @@ void save_game (char leave_game) {
     for (j=0; j<50; ++j) *p++=you[0].item_description[i][j];
   }
 
-  char identy[4][50];
+  int identy[4][50];
   save_id(identy);
 
   for (i=0; i<4; ++i) {
