@@ -8,7 +8,7 @@
 #include "dungeon.h"
 #include "stuff.h"
 
-char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, char empty [2]);
+char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, int empty [2]);
 
 int mons_place(int typed, int type_place, int px, int py, char behaviour, int hitting, int plus_seventy, int lev_mons)
 {
@@ -75,7 +75,7 @@ int spcw = 65;
 if (cls >= MLAVA0) spcw = 61;
 if (cls >= MWATER0) spcw = 62;
 
-char empty [2];
+int empty [2];
 
 if (empty_surrounds(cr_x, cr_y, spcw, 1, empty) == 0)
 {
@@ -115,7 +115,7 @@ return summd;
 
 }
 
-char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, char empty [2])
+char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, int empty [2])
 {
 
 int count_x, count_y = 0;

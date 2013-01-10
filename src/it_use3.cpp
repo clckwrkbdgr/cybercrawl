@@ -26,20 +26,56 @@
 #include "items.h"
 #include "misc.h"
 
-char info[200];
-
 void ball_of_seeing(void);
 void efreet_flask(void);
 void disc_of_storms(void);
 void ball_of_energy(void);
 void ball_of_fixation(void);
 void box_of_beasts(void);
-void staff_spell(char zap_device_2);
+void staff_spell(int zap_device_2);
 
 extern int show_green; /* defined in view.cc, I think */
 extern int book_thing; /* defined in spells.cc */
 extern int wield_change; /* defined in output.cc */
 
+std::string random_singing_sword_song()
+{
+	switch(random2(32)) {
+		case 0:  return "hums a little tune.";
+		case 1:  return "breaks into glorious song!";
+		case 2:  return "sings.";
+		case 3:  return "sings loudly.";
+		case 4:  return "chimes melodiously.";
+		case 5:  return "makes a horrible noise.";
+		case 6:  return "sings off-key.";
+		case 7:  return "sings 'tra-la-la'.";
+		case 8:  return "burbles away merrily.";
+		case 9:  return "gurgles.";
+		case 10: return "suddenly shrieks!";
+		case 11: return "cackles.";
+		case 12: return "warbles.";
+		case 13: return "chimes harmoniously.";
+		case 14: return "makes beautiful music.";
+		case 15: return "produces a loud orchestral chord.";
+		case 16: return "whines plaintively.";
+		case 17: return "tinkles.";
+		case 18: return "rings like a bell.";
+		case 19: return "wails mournfully.";
+		case 20: return "practices its scales.";
+		case 21: return "lilts tunefully.";
+		case 22: return "hums tunelessly.";
+		case 23: return "sighs.";
+		case 24: return "makes a deep moaning sound.";
+		case 25: return "makes a popping sound.";
+		case 26: return "sings a sudden stoccato note.";
+		case 27: return "says 'Hi! I'm the Singing Sword!'.";
+		case 28: return "whispers something.";
+		case 29: return "speaks gibberish.";
+		case 30: return "raves incoherently.";
+		case 31: return "yells in some weird language.";
+	}
+	return "";
+}
 
 void special_wielded(void)
 {
@@ -52,42 +88,7 @@ switch(you[0].special_wield)
 case SPWLD_SING:
 if (random2(20) == 0)
 {
- strcpy(info, "The Singing Sword ");
- switch(random2(32))
- {
-  case 0:  mpr("hums a little tune.");                break;
-  case 1:  mpr("breaks into glorious song!");         break;
-  case 2:  mpr("sings.");                             break;
-  case 3:  mpr("sings loudly.");                      break;
-  case 4:  mpr("chimes melodiously.");                break;
-  case 5:  mpr("makes a horrible noise.");            break;
-  case 6:  mpr("sings off-key.");                     break;
-  case 7:  mpr("sings 'tra-la-la'.");                 break;
-  case 8:  mpr("burbles away merrily.");              break;
-  case 9:  mpr("gurgles.");                           break;
-  case 10: mpr("suddenly shrieks!");                  break;
-  case 11: mpr("cackles.");                           break;
-  case 12: mpr("warbles.");                           break;
-  case 13: mpr("chimes harmoniously.");               break;
-  case 14: mpr("makes beautiful music.");             break;
-  case 15: mpr("produces a loud orchestral chord.");  break;
-  case 16: mpr("whines plaintively.");                break;
-  case 17: mpr("tinkles.");                           break;
-  case 18: mpr("rings like a bell.");                 break;
-  case 19: mpr("wails mournfully.");                  break;
-  case 20: mpr("practices its scales.");              break;
-  case 21: mpr("lilts tunefully.");                   break;
-  case 22: mpr("hums tunelessly.");                   break;
-  case 23: mpr("sighs.");                             break;
-  case 24: mpr("makes a deep moaning sound.");        break;
-  case 25: mpr("makes a popping sound.");             break;
-  case 26: mpr("sings a sudden stoccato note.");      break;
-  case 27: mpr("says 'Hi! I'm the Singing Sword!'."); break;
-  case 28: mpr("whispers something.");                break;
-  case 29: mpr("speaks gibberish.");                  break;
-  case 30: mpr("raves incoherently.");                break;
-  case 31: mpr("yells in some weird language.");      break;
- }
+ msg("The Singing Sword @1") << random_singing_sword_song();
    noisy(25, you[0].x_pos, you[0].y_pos);
 }
 break;
@@ -196,7 +197,7 @@ break;
 
 void invoke_wielded(void)
 {
- char opened_gates = 0;
+ int opened_gates = 0;
  int spell_casted = random2(21);
  int count_x, count_y;
 
@@ -514,8 +515,8 @@ if (random2(60) > 30 + you[0].skills [SK_AIR_MAGIC] && random2(3) != 0)
 
 	mpr("The disc erupts in an explosion of electricity!");
 
-char disc_count = 0;
-char disc_count2 = 0;
+int disc_count = 0;
+int disc_count2 = 0;
 int which_zap_thing = 0;
 
 disc_count2 = 2 + random2(4);
@@ -547,10 +548,8 @@ do
 
 
 
-void staff_spell(char zap_device_2_char)
+void staff_spell(int zap_device_2)
 {
-	int zap_device_2 = zap_device_2_char;
-
 if (you[0].inv_plus [zap_device_2] == 64 || you[0].inv_type [zap_device_2] < STAFF_SMITING || you[0].inv_type [zap_device_2] >= STAFF_AIR)
 {
    mpr("That ROM has no spells in it.");
@@ -629,19 +628,15 @@ whattt:
 
 
 
-void tome_of_power(char sc_read_2_char)
+void tome_of_power(int sc_read_2)
 {
-	int sc_read_2 = sc_read_2_char;
-
 int powc = 0;
 int spell_casted = 0;
 char keyin = 0;
 struct bolt beam [1];
 
 
-char str_pass [40];
-weird_writing(str_pass);
-msg( "The archive opens to a screen covered in @1.") << str_pass;
+msg( "The archive opens to a screen covered in @1.") << weird_writing();
 	mpr("Read it?");
 
 question : keyin = get_ch();
@@ -777,15 +772,12 @@ your_spells(spell_casted, powc, 0);
 }
 
 
-void skill_manual(char sc_read_2_char)
+void skill_manual(int sc_read_2)
 {
-
-	int sc_read_2 = sc_read_2_char;
 char skname [30];
 char keyin;
 
 msg("This is a manual of @1!") << skill_name(you[0].inv_plus [sc_read_2]);
-mpr(info);
 
 	mpr("Read it?");
 
@@ -814,7 +806,6 @@ you[0].turnover = 1;
 strcpy(skname, skill_name(you[0].inv_plus [sc_read_2]));
 
 msg("You read about @1.") << strlwr(skname);
-mpr(info);
 
 exercise(you[0].inv_plus [sc_read_2], 100);
 

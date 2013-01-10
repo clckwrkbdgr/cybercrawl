@@ -31,8 +31,8 @@
 #include "stuff.h"
 #include "view.h"
 
-char scramble(void);
-int trap_item(char iclass, char itype, char beam_x, char beam_y);
+int scramble(void);
+int trap_item(int iclass, int itype, int beam_x, int beam_y);
 
 
 void destroy_item(int dest)
@@ -246,7 +246,7 @@ if ((mcls == MONS_DRAGON || mcls == MONS_TROLL || mcls == MONS_ICE_DRAGON || mcl
 
 
 
-char search_around(void)
+int search_around(void)
 {
 int srx = 0;
 int sry = 0;
@@ -408,7 +408,7 @@ void up_stairs(void)
 {
 
 int stair_find = grd [you[0].x_pos] [you[0].y_pos];
-char old_level_where = you[0].where_are_you;
+int old_level_where = you[0].where_are_you;
 
 if (stair_find == 80)
 {
@@ -434,7 +434,7 @@ if (you[0].burden_state == 5)
 if (you[0].your_level == 0)
 {
  mpr("Are you sure you want to leave the Installation?");
- char kein = get_ch();
+ int kein = get_ch();
  if (kein != 'y' && kein != 'Y')
  {
   mpr("Alright, then stay!");
@@ -510,9 +510,9 @@ switch(stair_find)
  you[0].where_are_you = 10;
  break;
 }
-char stair_taken = stair_find;
-char moving_level = 1;
-char want_followers = 1;
+int stair_taken = stair_find;
+int moving_level = 1;
+int want_followers = 1;
 /*load(stair_taken, moving_level, level_saved, was_a_labyrinth, old_level, want_followers, just_made_new_lev);*/
 if (you[0].where_are_you == 3) you[0].your_level = 27;
 load(stair_taken, moving_level, 0, old_level, want_followers, 0, old_level_where);
@@ -576,16 +576,16 @@ for (count_x = 0; count_x < GXM; count_x ++)
 
 
 
-void down_stairs(char remove_stairs, int old_level)
+void down_stairs(int remove_stairs, int old_level)
 {
 
 int i;
-char old_level_type = you[0].level_type;
-char was_a_labyrinth = 0;
+int old_level_type = you[0].level_type;
+int was_a_labyrinth = 0;
 int stair_find = grd [you[0].x_pos] [you[0].y_pos];
 //int old_level = you[0].your_level;
-char leaving_abyss = 0;
-char old_where = you[0].where_are_you;
+int leaving_abyss = 0;
+int old_where = you[0].where_are_you;
 
 if ((stair_find < 81 || stair_find > 85) && stair_find != 69 && ((stair_find < 92 || stair_find > 101) && stair_find != 98) && !(stair_find >= 110 && stair_find < 130))
 {
@@ -725,23 +725,12 @@ if (grd [you[0].x_pos] [you[0].y_pos] == 99)
 if (you[0].level_type == 1 || you[0].level_type == 2 || you[0].level_type == 3)
 {
 
-char glorpstr [40];
-char del_file [40];
-int sysg;
-strncpy(glorpstr, you[0].your_name, 6);
-
-// glorpstr [strlen(glorpstr)] = 0; 
-// This is broken. Length is not valid yet! We have to check if we got a
-// trailing NULL; if not, write one:
-if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
-	glorpstr[6] = (char) 0; // NULL;   /* if so, char 7 should be NULL */
-
-strcpy(del_file, glorpstr);
-strcat(del_file, ".lab");
-sysg = unlink(del_file);
+Format format("@1.lab");
+format << std::string(you[0].your_name, 6);
+unlink(format.str().c_str());
 
 #ifdef DEBUG
-msg("Deleting: @1") << del_file;
+msg("Deleting: @1") << format.str();
 more();
 #endif
 
@@ -857,32 +846,35 @@ for (count_x = 0; count_x < GXM; count_x ++)
 
 } // end of void down_stairs(void)
 
+int current_dungeon_level()
+{
+	int result = you[0].your_level + 1;
+	if (you[0].where_are_you >= 1 && you[0].where_are_you <= 9) {
+		result = you[0].your_level - 26;
+	}
+	switch(you[0].where_are_you) {
+		/* Remember, must add this to the death_string in ouch */
+		case 10: result = you[0].your_level - you[0].branch_stairs [0]; break;
+		case 11: result = you[0].your_level - you[0].branch_stairs [1]; break;
+		case 12: result = you[0].your_level - you[0].branch_stairs [2]; break;
+		case 13: result = you[0].your_level - you[0].branch_stairs [3]; break;
+		case 14: result = you[0].your_level - you[0].branch_stairs [4]; break;
+		case 15: result = you[0].your_level - you[0].branch_stairs [5]; break;
+		case 16: result = you[0].your_level - you[0].branch_stairs [6]; break;
+		case 17: result = you[0].your_level - you[0].branch_stairs [7]; break;
+		case 18: result = you[0].your_level - you[0].branch_stairs [8]; break;
+		case 19: result = you[0].your_level - you[0].branch_stairs [9]; break;
+		case 20: result = you[0].your_level - you[0].branch_stairs [10]; break;
+		case 21: result = you[0].your_level - you[0].branch_stairs [11]; break;
+		case 22: result = you[0].your_level - you[0].branch_stairs [12]; break;
+	}
+	return result;
+}
 
 void new_level(void)
 {
 
- char temp_quant [10];
  textcolor(7);
- itoa(you[0].your_level + 1, temp_quant, 10);
- if (you[0].where_are_you >= 1 && you[0].where_are_you <= 9)
-    itoa(you[0].your_level - 26, temp_quant, 10);
- switch(you[0].where_are_you)
- {
-/* Remember, must add this to the death_string in ouch */
-  case 10: itoa(you[0].your_level - you[0].branch_stairs [0], temp_quant, 10); break;
-  case 11: itoa(you[0].your_level - you[0].branch_stairs [1], temp_quant, 10); break;
-  case 12: itoa(you[0].your_level - you[0].branch_stairs [2], temp_quant, 10); break;
-  case 13: itoa(you[0].your_level - you[0].branch_stairs [3], temp_quant, 10); break;
-  case 14: itoa(you[0].your_level - you[0].branch_stairs [4], temp_quant, 10); break;
-  case 15: itoa(you[0].your_level - you[0].branch_stairs [5], temp_quant, 10); break;
-  case 16: itoa(you[0].your_level - you[0].branch_stairs [6], temp_quant, 10); break;
-  case 17: itoa(you[0].your_level - you[0].branch_stairs [7], temp_quant, 10); break;
-  case 18: itoa(you[0].your_level - you[0].branch_stairs [8], temp_quant, 10); break;
-  case 19: itoa(you[0].your_level - you[0].branch_stairs [9], temp_quant, 10); break;
-  case 20: itoa(you[0].your_level - you[0].branch_stairs [10], temp_quant, 10); break;
-  case 21: itoa(you[0].your_level - you[0].branch_stairs [11], temp_quant, 10); break;
-  case 22: itoa(you[0].your_level - you[0].branch_stairs [12], temp_quant, 10); break;
- }
  gotoxy (46,12);
  env[0].floor_colour = LIGHTGREY;
  env[0].rock_colour = BROWN;
@@ -914,8 +906,11 @@ void new_level(void)
  }
  else
  {
- if (you[0].where_are_you != 3)
-		cprintf(temp_quant);
+ if (you[0].where_are_you != 3) {
+	 Format format("@1");
+	 format << current_dungeon_level();
+		cprintf(format.str().c_str());
+ }
 
  switch(you[0].where_are_you)
  {
@@ -1166,7 +1161,7 @@ for (cull = 0; cull < ITEMS; cull ++)
 } // end cull_items
 
 
-void handle_traps(char trt, char trap_known)
+void handle_traps(int trt, int trap_known)
 {
 
 switch (trt)
@@ -1362,68 +1357,72 @@ return ugy;
 
 }
 
-
-void weird_writing(char stringy [40])
+std::string random_writing_characteristic()
 {
-
-strcpy(stringy, "");
-
-switch(random2(15))
-{
- case 0: strcpy(stringy, "writhing "); break;
- case 1: strcpy(stringy, "bold "); break;
- case 2: strcpy(stringy, "faint "); break;
- case 3: strcpy(stringy, "spidery "); break;
- case 4: strcpy(stringy, "blocky "); break;
- case 5: strcpy(stringy, "angular "); break;
- case 6: strcpy(stringy, "shimmering "); break;
- case 7: strcpy(stringy, "glowing "); break;
+	switch(random2(15)) {
+		case 0: return "writhing";
+		case 1: return "bold";
+		case 2: return "faint";
+		case 3: return "spidery";
+		case 4: return "blocky";
+		case 5: return "angular";
+		case 6: return "shimmering";
+		case 7: return "glowing";
+	}
+	return "";
 }
 
-switch(random2(14))
+std::string random_writing_colour()
 {
- case 0: strcat(stringy, "yellow "); break;
- case 1: strcat(stringy, "brown "); break;
- case 2: strcat(stringy, "black "); break;
- case 3: strcat(stringy, "purple "); break;
- case 4: strcat(stringy, "orange "); break;
- case 5: strcat(stringy, "lime-green "); break;
- case 6: strcat(stringy, "blue "); break;
- case 7: strcat(stringy, "grey "); break;
- case 8: strcat(stringy, "silver "); break;
- case 9: strcat(stringy, "gold "); break;
- case 10: strcat(stringy, "umber "); break;
- case 11: strcat(stringy, "charcoal "); break;
- case 12: strcat(stringy, "pastel "); break;
- case 13: strcat(stringy, "mauve "); break;
+	switch(random2(14)) {
+		case 0: return "yellow";
+		case 1: return "brown";
+		case 2: return "black";
+		case 3: return "purple";
+		case 4: return "orange";
+		case 5: return "lime-green";
+		case 6: return "blue";
+		case 7: return "grey";
+		case 8: return "silver";
+		case 9: return "gold";
+		case 10: return "umber";
+		case 11: return "charcoal";
+		case 12: return "pastel";
+		case 13: return "mauve";
+	}
+	return "";
 }
 
-switch(random2(14))
+std::string random_writing_name()
 {
- case 0: strcat(stringy, "writing"); break;
- case 1: strcat(stringy, "scrawl"); break;
- case 2: strcat(stringy, "sigils"); break;
- case 3: strcat(stringy, "runes"); break;
- case 4: strcat(stringy, "hieroglyphics"); break;
- case 5: strcat(stringy, "scrawl"); break;
- case 6: strcat(stringy, "print-out"); break;
- case 7: strcat(stringy, "binary code"); break;
- case 8: strcat(stringy, "glyphs"); break;
- case 9: strcat(stringy, "symbols"); break;
- default: strcat(stringy, "text"); break;
+	switch(random2(14)) {
+		case 0: return "writing";
+		case 1: return "scrawl";
+		case 2: return "sigils";
+		case 3: return "runes";
+		case 4: return "hieroglyphics";
+		case 5: return "scrawl";
+		case 6: return "print-out";
+		case 7: return "binary code";
+		case 8: return "glyphs";
+		case 9: return "symbols";
+		default: return "text";
+	}
+	return "";
 }
 
-return;
-
+std::string weird_writing()
+{
+	return random_writing_characteristic() + " " + random_writing_colour() + " " + random_writing_name();
 }
 
 
 
-void fall_into_a_pool(char place, int grype)
+void fall_into_a_pool(int place, int grype)
 {
 
-char escape = 0;
-char empty [2];
+int escape = 0;
+int empty [2];
 
 switch(grype)
 {
@@ -1484,7 +1483,7 @@ if (grype == 62) ouch(-9999, 0, 6);
 } // end of fall_into_a_pool()
 
 
-char scramble(void)
+int scramble(void)
 {
 if (((1000 + you[0].strength * 200) / 2) + random2((1000 + you[0].strength * 200) / 2) <= you[0].burden)
 			 return 0; // failed
@@ -1543,7 +1542,7 @@ std::string weird_colours(int coll)
 	return result;
 }
 
-char go_berserk(void)
+int go_berserk(void)
 {
   if (you[0].berserker != 0 || you[0].slow != 0) return 0;
   if (you[0].is_undead == 2 || you[0].species == SP_GHOUL) return 0;
@@ -1569,11 +1568,8 @@ char go_berserk(void)
 
 
 
-int trap_item(char iclass, char itype, char beam_x_char, char beam_y_char)
+int trap_item(int iclass, int itype, int beam_x, int beam_y)
 {
-	int beam_x = beam_x_char;
-	int beam_y = beam_y_char;
-
 if (igrd [beam_x] [beam_y] != 501)
 	{
 		if ((iclass == 1 || iclass == 4 || iclass == 6 || iclass == 8 || iclass == 9) && iclass == mitm.iclass [igrd [beam_x] [beam_y]] && itype == mitm.itype [igrd [beam_x] [beam_y]] && mitm.iplus [igrd [beam_x] [beam_y]] == 50 && mitm.idam [igrd [beam_x] [beam_y]] == 0)

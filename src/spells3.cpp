@@ -345,7 +345,7 @@ if (numsc > 25) numsc = 25;
 int summs = 0;
 int i = 0;
 char behavi = 7;
-char empty [2];
+int empty [2];
 
 if (empty_surrounds(you[0].x_pos, you[0].y_pos, 67, 0, empty) == 0)
 {
@@ -626,7 +626,7 @@ if (random2(2) == 0)
  k = -1;
 } /* sometimes goes through monster list backwards */
 
-char empty [2];
+int empty [2];
 
 for (i = j; i != l; i += k)
 {

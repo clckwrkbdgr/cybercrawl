@@ -22,6 +22,8 @@
 #include "skills.h"
 #include "stuff.h"
 
+char info[200];
+
 int add_item(int item_got, int it_quant);
 void item_place(int item_drop_2, int x_plos, int y_plos, int quant_drop);
 int conv_lett(int item_drop_3);

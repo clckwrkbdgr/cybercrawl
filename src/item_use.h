@@ -1,5 +1,5 @@
 
-void wield_weapon(char auto_wield);
+void wield_weapon(int auto_wield);
 void wear_armour(void);
 void takeoff_armour(void);
 

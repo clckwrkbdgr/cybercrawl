@@ -19,15 +19,72 @@
 #include "effects.h"
 #include "view.h"
 
-char str_pass [80];
-char zappy(int func_pass [10], char str_pass [50], char z_type);
+int zappy(int func_pass [10], int z_type);
 void unuse_randart(int unw);
 
 extern int wield_change; /* defined in output.cc */
 
 
+std::string get_beam_name(int z_type)
+{
+	switch(z_type) {
+		case 0: return "puff of flame";
+		case 1: return "puff of frost";
+		case 2: return "0";
+		case 3: return "0";
+		case 4: return "energy dart";
+		case 5: return "0";
+		case 6: return "0";
+		case 7: return "bolt of fire";
+		case 8: return "bolt of cold";
+		case 9: return "0";
+		case 10: return "0";
+		case 11: return "0";
+		case 12: return "fireball";
+		case 13: return "0";
+		case 14: return "bolt of lightning";
+		case 15: return "0";
+		case 16: return "bolt of poison";
+		case 17: return "bolt of negative energy";
+		case 18: return "crystal spear";
+		case 19: return "narrow beam of energy";
+		case 20: return "orb of energy";
+		case 21: return "0";
+		case 22: return "0";
+		case 23: return "sticky flame";
+		case 24: return "0";
+		case 25: return "golden flame";
+		case 26: return "spray of bone shards";
+		case 27: return "0";
+		case 28: return "0";
+		case 29: return "sting";
+		case 30: return "hellfire";
+		case 31: return "iron bolt";
+		case 32: return "pebble";
+		case 33: return "stone arrow";
+		case 34: return "zap";
+		case 35: return "orb of electricity";
+		case 36: return "splash of poison";
+		case 37: return "debugging ray";
+		case 38: return "fiery breath";
+		case 39: return "freezing breath";
+		case 40: return "acid";
+		case 41: return "poison gas";
+		case 42: return "bolt of energy";
+		case 43: return "0";
+		case 44: return "0agony";
+		case 45: return "0";
+		case 46: return "0";
+		case 48: return "ball of steam";
+		case 49: return "0";
+		case ZAP_ORB_OF_FRAGMENTATION: return "metal orb";
+		case ZAP_ICE_BOLT: return "bolt of ice";
+		case ZAP_ICE_STORM: return "great blast of cold";
+	}
+	return "";
+}
 
-void zapping(char ztype, int power, struct bolt beams [1])
+void zapping(int ztype, int power, struct bolt beams [1])
 {
 
 int func_pass [10];
@@ -39,7 +96,7 @@ func_pass [8] = power;
 
 beams[0].damage = power;
 
-char luggy = zappy(func_pass, str_pass, ztype);
+int luggy = zappy(func_pass, ztype);
 
 if (ztype == 14)
 {
@@ -47,7 +104,7 @@ if (ztype == 14)
    noisy(25, you[0].x_pos, you[0].y_pos);
 }
 
-strcpy(beams[0].beam_name, str_pass);
+strcpy(beams[0].beam_name, get_beam_name(ztype).c_str());
 
 beams[0].colour = func_pass [0];
 beams[0].range = func_pass [1];
@@ -76,10 +133,7 @@ switch(luggy)
 
 }
 
-
-
-
-char zappy(int func_pass [10], char str_pass [50], char z_type)
+int zappy(int func_pass [10], int z_type)
 {
 
 func_pass [7] = 0; // wand_id
@@ -90,7 +144,6 @@ switch(z_type)
 {
 	case 0: // flame
 	func_pass [0] = 4;
-	strcpy(str_pass, "puff of flame");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 104 + func_pass [8] / 35; // should this be the same as magic missile? no
 	func_pass [3] = 60;
@@ -105,7 +158,6 @@ switch(z_type)
 	case 1: // frost
 //	beam_source_y = y_pos;
 	func_pass [0] = 15;
-	strcpy(str_pass, "puff of frost");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 104 + func_pass [8] / 35; // should this be the same as magic missile?
 	func_pass [3] = 60;
@@ -118,7 +170,6 @@ switch(z_type)
 	//break;
 
 	case 2: // slow monster
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 0;
@@ -131,7 +182,6 @@ switch(z_type)
 	//break;
 
 	case 3: // hasting
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 1;
@@ -144,7 +194,6 @@ switch(z_type)
 
 	case 4: // magic missile
 	func_pass [0] = 13;//you[0].inv_col [throw_2];//icolour [you[0].inv_class [throw_2]] [you[0].inv_type [throw_2]];
-	strcpy(str_pass, "energy dart");// you[0].inv_name [throw_2]);
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 102 + (func_pass [8] / 45) + random2(2);
 	func_pass [3] = 1500;
@@ -156,7 +205,6 @@ switch(z_type)
 	//break;
 
 	case 5: // healing
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 2;
@@ -166,7 +214,6 @@ switch(z_type)
 	//break;
 
 	case 6: // paralysis
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 3;
@@ -179,7 +226,6 @@ switch(z_type)
 	//break;
 
 	case 7:
-	strcpy(str_pass, "bolt of fire");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 107 + func_pass [8] / 11;
 	func_pass [0] = 4;
@@ -196,7 +242,6 @@ switch(z_type)
 //if (you[0].inv_type [zap_device_2] == 1)
 //{
 	case 8:
-	strcpy(str_pass, "bolt of cold");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 107 + func_pass [8] / 11;
 	func_pass [0] = WHITE; //LIGHTCYAN;
@@ -209,7 +254,6 @@ switch(z_type)
 	//break;
 
 	case 9: // confusion
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 4;
@@ -221,7 +265,6 @@ switch(z_type)
 	//break;
 
 	case 10: // make invisible
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 9;
 	func_pass [4] = 0;
 	func_pass [0] = 5;
@@ -233,7 +276,6 @@ switch(z_type)
 	//break;
 
 	case 11: // digging
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 4 + random2(func_pass [8]);
 	func_pass [4] = 0;
 	func_pass [0] = 6;
@@ -245,7 +287,6 @@ switch(z_type)
 
 	case 12: // fireball
 	func_pass [0] = 4;
-	strcpy(str_pass, "fireball");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 5 + func_pass [8] / 7;
 	func_pass [3] = 40;
@@ -255,7 +296,6 @@ switch(z_type)
 	return 1;
 
 	case 13: // teleportation
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 7; // 6 is used by digging
@@ -267,7 +307,6 @@ switch(z_type)
 	//break;
 
 	case 14: // lightning
-	strcpy(str_pass, "bolt of lightning");
 	func_pass [1] = random2(10) + 9;
 	func_pass [2] = 106 + func_pass [8] / 12;
 	func_pass [0] = LIGHTCYAN;
@@ -279,7 +318,6 @@ switch(z_type)
 	return 2;
 
    case 15: // polymorph
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 8;
@@ -290,7 +328,6 @@ switch(z_type)
 	return 2;
 
 	case 16: // venom bolt
-	strcpy(str_pass, "bolt of poison");
 	func_pass [1] = random2(10) + 9;
 	func_pass [2] = 105 + func_pass [8] / 13;
 	func_pass [0] = LIGHTGREEN;
@@ -302,7 +339,6 @@ switch(z_type)
 	return 2;
 
  case 17: // negative energy
-	strcpy(str_pass, "bolt of negative energy");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 105 + func_pass [8] / 13;
 	func_pass [0] = DARKGREY;
@@ -314,7 +350,6 @@ switch(z_type)
  return 2;
 
  case 18: // was splinters
-	strcpy(str_pass, "crystal spear");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 112 + func_pass [8] / 11;
 	func_pass [0] = WHITE;
@@ -326,7 +361,6 @@ switch(z_type)
  return 1;
 
  case 19: // bolt of innacuracy
-	strcpy(str_pass, "narrow beam of energy");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 110 + func_pass [8] / 5;// / 10;
 	func_pass [0] = YELLOW;
@@ -339,7 +373,6 @@ switch(z_type)
 
  case 20: // Mystic Bolt
 	func_pass [0] = 13;//you[0].inv_col [throw_2];//icolour [you[0].inv_class [throw_2]] [you[0].inv_type [throw_2]];
-	strcpy(str_pass, "orb of energy");// you[0].inv_name [throw_2]);
 	func_pass [1] = random2(5) + 8;
 	func_pass [2] = 105 + (func_pass [8] / 20);
 	func_pass [3] = 10 + (func_pass [8] / 20);
@@ -350,7 +383,6 @@ switch(z_type)
 	return 1;
 
 	case 21: // charm monster
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 9;
@@ -363,7 +395,6 @@ switch(z_type)
 	return 2;
 
 	case 22: // pain
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 13; // pain
@@ -377,7 +408,6 @@ switch(z_type)
 
 	case 23: // sticky flame
 	func_pass [0] = 4;
-	strcpy(str_pass, "sticky flame");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 102 + func_pass [8] / 30;
 	func_pass [3] = 11 + func_pass [8] / 10;
@@ -389,7 +419,6 @@ switch(z_type)
 	//break;
 
        	case 24: // dispel undead
-        strcpy(str_pass, "0");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 14; // pain
@@ -402,7 +431,6 @@ switch(z_type)
 	return 2;
 
         case 25: // flame of cleansing
-	strcpy(str_pass, "golden flame");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 110 + func_pass [8] / 5;
 	func_pass [0] = YELLOW;
@@ -414,7 +442,6 @@ switch(z_type)
         return 2;
 
         case 26: // bone shards
-	strcpy(str_pass, "spray of bone shards");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 102 + func_pass [8] / 150; // note that f_p [2] has a high value for this spell
 	func_pass [0] = LIGHTGREY;
@@ -426,7 +453,6 @@ switch(z_type)
         return 2;
 
 	case 27: // banishment
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 10;
@@ -438,7 +464,6 @@ switch(z_type)
 	return 2;
 
 	case 28: // degeneration
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 11;
@@ -451,7 +476,6 @@ switch(z_type)
 
 	case 29: // sting
 	func_pass [0] = GREEN;
-	strcpy(str_pass, "sting");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 4 + func_pass [8] / 15;
 	func_pass [3] = 60;
@@ -462,7 +486,6 @@ switch(z_type)
 	return 1;
 
     case 30: // hellfire
-	strcpy(str_pass, "hellfire");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 20;
 	func_pass [0] = RED;
@@ -475,7 +498,6 @@ switch(z_type)
 
     case 31: // Iron Bolt
 	func_pass [0] = LIGHTCYAN;
-	strcpy(str_pass, "iron bolt");
 	func_pass [1] = random2(5) + 5;
 	func_pass [2] = 108 + (func_pass [8] / 10);
 	func_pass [3] = 7 + (func_pass [8] / 25);
@@ -487,7 +509,6 @@ switch(z_type)
 
 	case 32: // throw pebble
 	func_pass [0] = BROWN;
-	strcpy(str_pass, "pebble");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 5;// + (func_pass [8] / 10);
 	func_pass [3] = 8 + func_pass [8] / 20;
@@ -499,7 +520,6 @@ switch(z_type)
 
 	case 33: // stone arrow
 	func_pass [0] = LIGHTGREY;
-	strcpy(str_pass, "stone arrow");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 105 + (func_pass [8] / 12);
 	func_pass [3] = 7 + func_pass [8] / 27;
@@ -511,7 +531,6 @@ switch(z_type)
 
 	case 34: // shock
 	func_pass [0] = LIGHTCYAN;
-	strcpy(str_pass, "zap");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 10 + (func_pass [8] / 6);
 	func_pass [3] = 1500;
@@ -523,7 +542,6 @@ switch(z_type)
 
 	case 35: // orb of elect
 	func_pass [0] = LIGHTBLUE;
-	strcpy(str_pass, "orb of electricity");
 	func_pass [1] = random2(10) + 12;
 	func_pass [2] = 5 + func_pass [8] / 5;
 	func_pass [3] = 40;
@@ -534,7 +552,6 @@ switch(z_type)
 
 	case 36: // Naga's species ability
 	func_pass [0] = GREEN;
-	strcpy(str_pass, "splash of poison");
 	func_pass [1] = 4 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 4 + func_pass [8] / 2; // note func_pass is xl
 	func_pass [3] = 5 + random2(func_pass [8] / 3 + 1);
@@ -545,7 +562,6 @@ switch(z_type)
 	return 1;
 
 	case 37:
-	strcpy(str_pass, "debugging ray");
 	func_pass [1] = random2(10) + 8;
 	func_pass [2] = 150;
 	func_pass [0] = random2(15) + 1;
@@ -558,7 +574,6 @@ switch(z_type)
 
 	case 38: // fire breath
 	func_pass [0] = RED;
-	strcpy(str_pass, "fiery breath");
 	func_pass [1] = 4 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 104 + func_pass [8] / 3; // note func_pass is xl + mut * 4
 	func_pass [3] = 8 + random2(func_pass [8] / 3 + 1);
@@ -570,7 +585,6 @@ switch(z_type)
 
 	case 39: // frost breath
 	func_pass [0] = WHITE;
-	strcpy(str_pass, "freezing breath");
 	func_pass [1] = 4 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 104 + func_pass [8] / 3; // note func_pass is xl + mut * 4
 	func_pass [3] = 8 + random2(func_pass [8] / 3 + 1);
@@ -582,7 +596,6 @@ switch(z_type)
 
 	case 40: // spit acid
 	func_pass [0] = YELLOW;
-	strcpy(str_pass, "acid");
 	func_pass [1] = 4 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 103 + func_pass [8] / 3; // note func_pass is xl
 	func_pass [3] = 5 + random2(func_pass [8] / 3 + 1);
@@ -594,7 +607,6 @@ switch(z_type)
 
 	case 41: // poison breath - leaves clouds of gas
 	func_pass [0] = GREEN;
-	strcpy(str_pass, "poison gas");
 	func_pass [1] = 4 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 102 + func_pass [8] / 6; // note func_pass is xl
 	func_pass [3] = 5 + random2(func_pass [8] / 3 + 1);
@@ -609,7 +621,6 @@ switch(z_type)
 	if (random2(func_pass [8]) >= 8) func_pass [0] = LIGHTBLUE;
 	if (random2(func_pass [8]) >= 12) func_pass [0] = MAGENTA;
 	if (random2(func_pass [8]) >= 17) func_pass [0] = LIGHTMAGENTA;
-	strcpy(str_pass, "bolt of energy");
 	func_pass [1] = 7 + random2(func_pass [8] / 2 + 1);
 	func_pass [2] = 103 + func_pass [8] / 3; // note func_pass is xl
 	func_pass [3] = 11 + random2(func_pass [8] / 3 + 1);
@@ -620,7 +631,6 @@ switch(z_type)
 	return 1;
 
 	case 43: // enslave undead
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 12;
@@ -632,7 +642,6 @@ switch(z_type)
 	return 2;
 
 	case 44: // agony
-	strcpy(str_pass, "0agony");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 13; // pain
@@ -645,7 +654,6 @@ switch(z_type)
 	return 2;
 
 	case 45: // disruption
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 15; // disrupt/disint
@@ -658,7 +666,6 @@ switch(z_type)
 	return 2;
 
 	case 46: // disintegrate
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 15; // disrupt/disint
@@ -672,7 +679,6 @@ switch(z_type)
 
 /*	case 47: // Isk's Cross
 	func_pass [0] = 13;
-	strcpy(str_pass, "blast");
 	func_pass [1] = random2(5) + 12;
 	func_pass [2] = 105 + (func_pass [8] / 9);
 	func_pass [3] = 500; //10 + (func_pass [8] / 20);
@@ -684,7 +690,6 @@ switch(z_type)
 */
 	case 48: // breathe steam
 	func_pass [0] = LIGHTGREY;
-	strcpy(str_pass, "ball of steam");
 	func_pass [1] = random2(5) + 7;
 	func_pass [2] = 104 + (func_pass [8] / 5);
    	func_pass [3] = 10 + random2(func_pass [8] / 5 + 1);
@@ -695,7 +700,6 @@ switch(z_type)
     return 1;
 
 	case 49: // control demon
-	strcpy(str_pass, "0");
 	func_pass [1] = random2(5) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 16; /* control demon */
@@ -708,7 +712,6 @@ switch(z_type)
 
 	case ZAP_ORB_OF_FRAGMENTATION: // orb of frag
 	func_pass [0] = CYAN;
-	strcpy(str_pass, "metal orb");
 	func_pass [1] = random2(7) + 10;
 	func_pass [2] = 10 + func_pass [8] / 7;
 	func_pass [3] = 20;
@@ -719,7 +722,6 @@ switch(z_type)
 
 	case ZAP_ICE_BOLT:
 	func_pass [0] = WHITE;
-	strcpy(str_pass, "bolt of ice");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 105 + (func_pass [8] / 10);
 	func_pass [3] = 9 + func_pass [8] / 12;
@@ -730,7 +732,6 @@ switch(z_type)
 
 	case ZAP_ICE_STORM:
 	func_pass [0] = BLUE;
-	strcpy(str_pass, "great blast of cold");
 	func_pass [1] = random2(5) + 10;
 	func_pass [2] = 5 + (func_pass [8] / 10);
 	func_pass [3] = 9 + func_pass [8] / 12;
@@ -760,8 +761,7 @@ return 0;
 
 }
 
-
-void potion_effect(char pot_eff, int pow)
+void potion_effect(int pot_eff, int pow)
 {
 
 int new_value = 0;
@@ -1022,12 +1022,8 @@ switch(pot_eff)
 
 } // end of void potion_effect(pot_eff)
 
-
-
-
-void unwield_item(char unw_char)
+void unwield_item(int unw)
 {
-	int unw = unw_char;
 
  you[0].special_wield = 0;
  wield_change = 1;
@@ -1078,7 +1074,7 @@ if (you[0].inv_ident [unw] == 1) you[0].inv_ident [unw] = 2;
 
 std::string name = in_name(unw, 4);
 
-char i_dam = you[0].inv_dam [unw] % 30;
+int i_dam = you[0].inv_dam [unw] % 30;
 
 if (you[0].inv_dam [unw] % 30 >= 25)
 {
@@ -1219,12 +1215,8 @@ if (you[0].inv_class [you[0].equip [EQ_WEAPON]] == 11)
 
 } /* end of unwield_item */
 
-
-
-void unwear_armour(char unw_char) /* This does *not* call ev_mod! */
+void unwear_armour(int unw) /* This does *not* call ev_mod! */
 {
-	int unw = unw_char;
-
 you[0].AC_ch = 1;
 you[0].evasion_ch = 1;
 
@@ -1376,7 +1368,6 @@ if (you[0].inv_dam [unw] % 30 >= 25)
 }
 
 } /* end of unwear_armour */
-
 
 void unuse_randart(int unw)
 {
