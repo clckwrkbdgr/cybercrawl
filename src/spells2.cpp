@@ -341,8 +341,7 @@ int rotted = 0;
 
 finished : // now to raise the thing
 #ifdef DEBUG
-itoa(total_mass, st_prn, 10);
- mpr(st_prn);
+ msg("@1") << total_mass;
 #endif
 
 total_mass += random2(power) * 3 + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) + random2(power) * 3+ random2(power) * 3 + random2(power) + random2(power) * 3;

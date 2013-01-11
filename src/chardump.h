@@ -1,1 +1,3 @@
-int dump_char(int show_prices, const char * fname);
+#pragma once
+#include <string>
+int dump_char(int show_prices, const std::string & fname);

@@ -85,43 +85,6 @@ void lincurses_shutdown()
 }
 
 
-/* Convert value to string */
-int itoa(int value, char *strptr, int radix)
-{
-        int bitmask = 32768;
-        int ctr = 0;
-        int startflag = 0;
-
-        if (radix == 10)
-        {
-                sprintf(strptr, "%i", value);
-        }
-        if (radix == 2)       /* int to "binary string" */
-        {
-                while (bitmask)
-                {
-                        if (value & bitmask)
-                        {
-                                startflag = 1;
-                                sprintf(strptr + ctr, "1");
-                        }
-                        else
-                        {
-                                if (startflag)
-                                sprintf(strptr + ctr, "0");
-                        }
-                        bitmask = bitmask >> 1;
-                        if (startflag)
-                                ctr++;
-                }
-                if (!startflag) /* Special case if value == 0 */
-                        sprintf((strptr + ctr++), "0");
-                strptr[ctr] = (char) NULL;
-        }
-	return(OK); 			/* Me? Fail? Nah. */
-}
-
-
 // Convert string to lowercase.
 char * strlwr(char *str)
 {

@@ -199,7 +199,6 @@ types of spells:
 20 = translocation
 21 = poison
 */
-         char sval [4];
 
 gotoxy(58, wherey());
 
@@ -254,8 +253,7 @@ if (spell_f > 0)
 			gotoxy(70, wherey());
 
 
-         itoa((int) spell_value(you[0].spells [j]), sval, 10);
-         cprintf(sval);
+         cprintf(to_string(spell_value(you[0].spells [j])).c_str());
 
 		}
 	} // end of j loop
@@ -1308,13 +1306,13 @@ std::string spell_name(int spell)
 	   */
 }
 
+#include <bitset>
 
 char spellbook_contents(int plus, int type)
 {
 
 char st_pass [60];
 
-char stringy [9];
 int numby = plus;
 int j;
 int spelcount = 0;
@@ -1338,7 +1336,7 @@ char already = 0;
 
 //   numby -= 64;
 
-   itoa(numby, stringy, 2);
+   std::string stringy = std::bitset<16>(numby).to_string();
 
    textcolor(LIGHTGREY);
 cprintf(" Programs                           Type                      Level"EOL);
@@ -1455,10 +1453,7 @@ cprintf(" Programs                           Type                      Level"EOL
 
 			gotoxy(65, wherey());
 
-         char sval [2];
-
-         itoa((int) spell_value(spell_types [j]), sval, 10);
-         cprintf(sval);
+         cprintf(to_string(spell_value(spell_types [j])).c_str());
 
 
          cprintf(EOL);

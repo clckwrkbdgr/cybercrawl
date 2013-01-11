@@ -297,8 +297,7 @@ if (you[0].equip [EQ_WEAPON] != -1)
                 you[0].time_taken *= weapon_speed2;
                 you[0].time_taken /= 10;
 #ifdef DEBUG
-                itoa(you[0].time_taken, st_prn, 10);
-                mpr(st_prn);
+                msg("@1") << you[0].time_taken;
 #endif
         }
 } else
@@ -417,8 +416,7 @@ damage_done /= 30;
         {
                 /* thing_thrown = 1; */
 #ifdef DEBUG
-                itoa(damage_done, st_prn, 10);
-                msg("Hit for @1.") << st_prn; /* note: doesn't take account of special weapons etc */
+                msg("Hit for @1.") << damage_done; /* note: doesn't take account of special weapons etc */
 #endif
                 if (you[0].equip [EQ_WEAPON] != -1 && you[0].inv_class [you[0].equip [EQ_WEAPON]] == OBJ_WEAPONS && you[0].inv_dam [you[0].equip [EQ_WEAPON]] < 180 && you[0].inv_dam [you[0].equip [EQ_WEAPON]] % 30 == SPWPN_VAMPIRICISM)
                 {

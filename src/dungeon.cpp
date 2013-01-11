@@ -4,6 +4,7 @@
 //#include <iostream.h>
 //#include <graphics.h>
 
+#include <bitset>
 #include <stdlib.h>
 
 #include <stdio.h>
@@ -3095,7 +3096,7 @@ int items(int allow_uniques,
 	int bkk = 0;
 	int fpass [10];
 // used in books:
-  	char strungy [9];
+	std::string strungy;
 	int icky = 0;
   	int numbo = 0;
   	int multip = 0;
@@ -4041,7 +4042,7 @@ int items(int allow_uniques,
   			if (book_rarity(mitm.itype [bp]) == 100) goto create_book;
 
   			mitm.iplus [bp] = 127;
-  			itoa(127, strungy, 2);
+			strungy = std::bitset<16>(127).to_string();
 
   			if (force_type != 250) mitm.itype [bp] = force_type;
 
@@ -4054,7 +4055,7 @@ int items(int allow_uniques,
 				if (fpass [bkk] == 210) strungy [bkk] = '0';
 			}
 
-      		icky = strlen(strungy);
+      		icky = strungy.size();
 
       		multip = 1;
       		numbo = 0;
@@ -4075,7 +4076,7 @@ int items(int allow_uniques,
                		multip *= 2;
          		}
        		}
-      		strcpy(strungy, "");
+			strungy = "";
 
 			mitm.iplus [bp] = numbo + 64;
 
@@ -4108,7 +4109,7 @@ int items(int allow_uniques,
   				mitm.iplus [bp] = 127;
   				if (force_type != 250) mitm.itype [bp] = force_type;
 
-  				itoa(127, strungy, 2);
+  				strungy = std::bitset<16>(127).to_string();
   				if (force_type != 250) mitm.itype [bp] = force_type;
 
       			spellbook_template(mitm.itype [bp] + 40, fpass);
@@ -4118,7 +4119,7 @@ int items(int allow_uniques,
 					if (fpass [bkk] == 210) strungy [bkk] = '0';
 				}
 
-		      	icky = strlen(strungy);
+		      	icky = strungy.size();
 
       			multip = 1;
       			numbo = 0;
@@ -4139,7 +4140,7 @@ int items(int allow_uniques,
                			multip *= 2;
         			}
        			}
-      			strcpy(strungy, "");
+      			strungy = "";
 
   				mitm.iplus [bp] = numbo + 64;
 			}
@@ -8689,123 +8690,4 @@ for (i = 10; i < 70; i ++)
 }
 
 }
-
-/*
-void item_bugs(void)
-{
-
-int i = 0;
-int total_number = 0;
-
-for (i = 0; i < ITEMS; i ++)
-{
- if (mitm.iquant [i] <= 0) continue;
- total_number ++;
- itoa(i, st_prn, 10);
- cprintf("item ");
- cprintf(st_prn);
- cprintf(" x ");
- itoa(mitm.ix [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", y ");
- itoa(mitm.iy [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", c ");
- itoa(mitm.iclass [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", t ");
- itoa(mitm.itype [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", p ");
- itoa(mitm.iplus [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", p2 ");
- itoa(mitm.iplus2 [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", d ");
- itoa(mitm.idam [i], st_prn, 10);
- cprintf(st_prn);
- cprintf(", q ");
- itoa(mitm.iquant [i], st_prn, 10);
- cprintf(st_prn);
- find_item(i);
- cprintf("\n\r");
-// itoa(mitm.iy [i], st_prn, 10);
- if (total_number % 10 == 0)
- {
-  cprintf("Waiting...\n\r");
-  if (getch() == 0) getch();
- }
-
-}
-
- itoa(total_number, st_prn, 10);
- cprintf("Total: ");
- cprintf(st_prn);
-
-  cprintf("Waiting...\n\r");
-  if (getch() == 0) getch();
-
-  clrscr();
-
-}
-
-
-void find_item(int found)
-{
-
-int i = 0;
-
-int x = 0;
-int y = 0;
-
-for (x = 0; x < 80; x ++)
-{
- for (y = 0; y < 70; y ++)
- {
-  if (igrd [x] [y] == found)
-  {
-   cprintf(EOL"Item lying on floor at ");
-   itoa(x, st_prn, 10);
-   cprintf(st_prn);
-   cprintf(", ");
-   itoa(y, st_prn, 10);
-   cprintf(st_prn);
-   cprintf(".");
-  }
- }
-}
-
-
-for (i = 0; i < ITEMS; i ++)
-{
- if (mitm.ilink [i] == found)
- {
-  cprintf(EOL"Item linked from ");
-  itoa(i, st_prn, 10);
-  cprintf(st_prn);
-  cprintf(".");
- }
-}
-
-for (x = 0; x < MNST; x ++)
-{
- for (y = 0; y < 8; y ++)
- {
-  if (menv[x].m_inv [y] == found)
-  {
-   cprintf(EOL"Item carried by monster ");
-   itoa(x, st_prn, 10);
-   cprintf(st_prn);
-   cprintf(" in inv slot ");
-   itoa(y, st_prn, 10);
-   cprintf(st_prn);
-   cprintf(".");
-  }
- }
-}
-
-}
-*/
-
 

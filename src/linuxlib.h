@@ -9,7 +9,6 @@
 #define O_BINARY O_RDWR
 
 void lincurses_startup();
-int itoa(int value, char *strptr, int radix);
 char * strlwr(char *str);
 int cprintf (const char *format, ... );
 int putch(int chr);

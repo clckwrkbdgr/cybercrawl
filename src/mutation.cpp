@@ -331,7 +331,6 @@ void display_mutations(void)
 
    int i;
    int j = 0;
-   char st_prn [5];
 
    clrscr();
    textcolor(WHITE);
@@ -348,10 +347,9 @@ void display_mutations(void)
      if (you[0].demon_pow [i] != 0 && you[0].demon_pow [i] < you[0].mutation [i]) textcolor(LIGHTRED); /* same as above, but power is enhanced by mutation */
      if (i == MUT_STRONG || i == MUT_CLEVER || i == MUT_AGILE || i == MUT_WEAK || i == MUT_DOPEY || i == MUT_CLUMSY)
      {
-      cprintf(mutation_descrip [i] [0]);
-      itoa(you[0].mutation [i], st_prn, 10);
-      cprintf(st_prn);
-      cprintf(")."EOL);
+		 Format format("@1@2)."EOL);
+		 format << mutation_descrip [i] [0] << you[0].mutation [i];
+      cprintf(format.str().c_str());
       continue;
      }
      cprintf(mutation_descrip [i] [you[0].mutation [i] - 1]);
@@ -429,11 +427,6 @@ if (mutat == MUT_BLURRY_VISION && you[0].mutation [MUT_ACUTE_VISION] > 0) return
 
 
 mpr("You mutate.");
-/*itoa(mutat, st_prn, 10);
-mpr(st_prn);
-itoa(you[0].mutation [mutat], st_prn, 10);
-mpr(st_prn);*/
-
 
 	you[0].hp_ch = 1;
 	you[0].ep_ch = 1;
@@ -686,12 +679,6 @@ if (you[0].mutation [mutat] == 0) return 0;
 
 if (you[0].demon_pow [mutat] >= you[0].mutation [mutat]) return 0;
 
-/*mpr("Deleting:");
-itoa(mutat, st_prn, 10);
-mpr(st_prn);
-itoa(you[0].mutation [mutat], st_prn, 10);
-mpr(st_prn);*/
-
 mpr("You mutate.");
 
 switch(mutat)
@@ -875,22 +862,14 @@ return covered;
 }
 
 
-const char *mutation_name(char which_mutat_char)
+std::string mutation_name(int which_mutat)
 {
-	int which_mutat = which_mutat_char;
- char st_prn [5];
-
- if (which_mutat == MUT_STRONG || which_mutat == MUT_CLEVER || which_mutat == MUT_AGILE || which_mutat == MUT_WEAK || which_mutat == MUT_DOPEY || which_mutat == MUT_CLUMSY)
- {
-   strcpy(mut_string, mutation_descrip [which_mutat] [0]);
-   itoa(you[0].mutation [which_mutat], st_prn, 10);
-   strcat(mut_string, st_prn);
-   strcat(mut_string, ").");
-   return mut_string;
- }
-
- return mutation_descrip [which_mutat] [you[0].mutation [which_mutat] - 1];
-
+	if (which_mutat == MUT_STRONG || which_mutat == MUT_CLEVER || which_mutat == MUT_AGILE || which_mutat == MUT_WEAK || which_mutat == MUT_DOPEY || which_mutat == MUT_CLUMSY) {
+		Format format("@1@2).");
+		format << mutation_descrip [which_mutat] [0] << you[0].mutation [which_mutat];
+		return format.str();
+	}
+	return mutation_descrip [which_mutat] [you[0].mutation [which_mutat] - 1];
 }
 
 /* Use an attribute counter for how many demonic mutations a dspawn has */

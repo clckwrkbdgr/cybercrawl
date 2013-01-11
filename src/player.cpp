@@ -536,8 +536,7 @@ emod += you[0].skills [SK_DODGING] / 2; // is this too generous?
 if (emod > 0) ev += emod;
 
 #ifdef DEBUG
-itoa(emod, st_prn, 10);
- mpr(st_prn);
+ msg("@1") << emod;
 #endif
 
  /* repulsion field */
@@ -691,13 +690,6 @@ if (ench_power > 70) ench_power = ((ench_power - 70) / 2) + 70;
 if (ench_power > 90) ench_power = ((ench_power - 90) / 2) + 90;
 
 if (ench_power > 120) ench_power = 120;
-/*
-  itoa(power, st_prn, 10);
-                strcpy(info, st_prn);
-  mpr(info);
-  itoa(you[0].res_magic, st_prn, 10);
-                strcpy(info, st_prn);
-  mpr(info);*/
 
 
 int mrchance = 100 + player_res_magic();

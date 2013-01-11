@@ -3,8 +3,6 @@
 
 #include <string.h>
 
-//#include <stdlib.h> only needed for itoa
-
 #include "externs.h"
 #include "enum.h"
 #include "spells2.h"

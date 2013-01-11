@@ -135,10 +135,10 @@ void generate_random_demon(void);
 
 static void save_int (char **pp, int val, int digits) {
   char *p=*pp;
-  char thing_quant[8];
+  std::string thing_quant;
   int add=1;
   for (int i=1; i<digits; ++i) add*=10;
-  itoa(val+add, thing_quant, 10);
+  thing_quant = to_string(val+add);
   for (int i=0; i<digits; ++i) *p++=thing_quant[i];
   *pp=p;
 }
@@ -199,12 +199,9 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
   int itmf = 0;
   int ic = 0;
 
-  char hbjh [5];
-
   strcpy(corr_level, "");
   if (you[0].your_level<10) strcpy(corr_level, "0");
-  itoa(you[0].your_level, hbjh, 10);
-  strcat(corr_level, hbjh);
+  strcat(corr_level, to_string(you[0].your_level).c_str());
   corr_level [2] = you[0].where_are_you + 97;
   corr_level [3] = 0; /* null-terminate it */
   strncpy(cha_fil, you[0].your_name, 6);
@@ -317,8 +314,7 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
     {
       strcpy(corr_level, "");
       if (you[0].your_level<10) strcpy(corr_level, "0");
-      itoa(you[0].your_level, hbjh, 10);
-      strcat(corr_level, hbjh);
+      strcat(corr_level, to_string(you[0].your_level).c_str());
       corr_level[2]=you[0].where_are_you+97;
       corr_level [3] = 0; /* null-terminate it */
       strcpy(cha_fil, "bones.");
@@ -760,12 +756,10 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
   char extens[5];
   int count_x, count_y;
   int i, j;
-  char hbjh[5];
 
   strcpy(extens, "");
   if (level_saved < 10) strcpy(extens, "0");
-  itoa(level_saved, hbjh, 10);
-  strcat(extens, hbjh);
+  strcat(extens, to_string(level_saved).c_str());
   extens [2] = where_were_you + 97;
   extens [3] = 0; /* null-terminate it */
   strncpy(cha_fil, you[0].your_name, 6);
@@ -1354,12 +1348,10 @@ void restore_game () {
 void save_ghost () {
   if ((you[0].your_level<=1) || (you[0].is_undead!=0)) return;
   char corr_level[10];
-  char hbjh [5];
   char cha_fil [40];
   corr_level[0]=0;
   if (you[0].your_level<10) strcpy(corr_level, "0");
-  itoa(you[0].your_level, hbjh, 10);
-  strcat(corr_level, hbjh);
+  strcat(corr_level, to_string(you[0].your_level).c_str());
   corr_level[2]=you[0].where_are_you+'a';
   corr_level[3]=0; /* null-terminate it */
   strcpy(cha_fil, "bones.");

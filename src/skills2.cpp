@@ -1821,7 +1821,6 @@ void show_skills(void)
 char st_pass [60];
 int i;
 int x;
-char strng [5] = "";
 char lcount = 0;
 	_setcursortype(_NOCURSOR);
 
@@ -1832,10 +1831,9 @@ reprint_stuff:
 	gotoxy(1, 1);
 	lcount = 0;
 	textcolor(LIGHTGREY);
-	cprintf(" You have ");
-	itoa(you[0].exp_available, strng, 10);
-	cprintf(strng);
-	cprintf(" points of unallocated experience."EOL EOL);
+	Format format(" You have @1 points of unallocated experience."EOL EOL);
+	format << you[0].exp_available;
+	cprintf(format.str().c_str());
 	char scrln=3,scrcol=1;
 	for(x=0;x<50;x++) {
 		/* spells in second column */
@@ -1850,19 +1848,18 @@ reprint_stuff:
             char bufff[15];
             sprintf(bufff, "%-14s", skills[x][0]);
             cprintf(bufff);
-			cprintf(" Skill ");
-			itoa(you[0].skills[x], strng, 10);
-			cprintf(strng);
+			format = Format(" Skill @1");
+			format << you[0].skills[x];
+			cprintf(format.str().c_str());
 			textcolor(BLUE);
-			cprintf(" (");
-            itoa(((((skill_exp_needed(you[0].skills [x] + 2) * species_skills(x, you[0].species)) / 100) - you[0].skill_points [x]) * 10) / (((skill_exp_needed(you[0].skills [x] + 2) * species_skills(x, you[0].species)) / 100) - ((skill_exp_needed(you[0].skills [x] + 1) * species_skills(x, you[0].species)) / 100)), strng, 10);
-			cprintf(strng);
-			cprintf(")");
+			format = Format(" (@1)");
+            format << ((((skill_exp_needed(you[0].skills [x] + 2) * species_skills(x, you[0].species)) / 100) - you[0].skill_points [x]) * 10) / (((skill_exp_needed(you[0].skills [x] + 2) * species_skills(x, you[0].species)) / 100) - ((skill_exp_needed(you[0].skills [x] + 1) * species_skills(x, you[0].species)) / 100));
+			cprintf(format.str().c_str());
 			textcolor(LIGHTGREY);
 #ifdef DEBUG
-			cprintf(" / ");
-            itoa(you[0].skill_points[x], strng, 10);
-			cprintf(strng);
+			format = Format(" / @1");
+            format << you[0].skill_points[x];
+			cprintf(format.str().c_str());
 #endif
 			scrln++;
 		}

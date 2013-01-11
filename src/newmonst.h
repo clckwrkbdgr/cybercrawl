@@ -1091,20 +1091,6 @@ if (trac_targ == MHITYOU && mons_near(i) == 0) break;
 
 tracer_f();
 
-/*
-for (okg = 0; okg < 6; okg ++)
-{
- itoa(func_pass_2 [okg], st_prn, 10);
- strcpy(info, st_prn);
- incrl();
-}
-* /
-digging : if (func_pass_2 [4] == 18 && mons_near(i) == 0 && mons [i].m_beh == 1 && trac_targ == MHITYOU && distance(you[0].x_pos, mons [i].m_x, you[0].y_pos, mons [i].m_y) < 40)
-{
-	spell_cast = 18;
-	goto casted;
-}
-*/
 if (func_pass_2 [4] == 18) func_pass_2 [4] = 100;
 
 //   if (tracer != 0 | (trac_targ != MHITYOU && trac_hit_mons != 0))
@@ -1422,19 +1408,6 @@ if (mons [i].m_beh == 6 && random2(3) != 0) mons [i].m_beh = 1; // I think?
 
 } // end of if (mons_class != -1)
 
-}
-//}
-//}
-
-//if (mons_near(i) == 1)
-{
-//itoa(monc, st_prn, 10);
-//mons [i].m_speed, st_prn, 10);
-//strcpy(info, st_prn);
-//strcat(info, ",");
-//itoa(mons [i].m_speed_inc, st_prn, 10);
-//strcat(info, st_prn);
-//incrl();
 }
 
 

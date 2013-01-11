@@ -78,3 +78,4 @@ Message operator<<(Message message, const T & value)
 }
 Message msg(const std::string & format_string);
 
+std::string to_string(int value, int width = 0);

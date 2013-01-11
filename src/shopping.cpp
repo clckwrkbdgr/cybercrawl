@@ -83,14 +83,13 @@ char book_rarity(char which_book);
 
 char in_a_shop(char shoppy_char, int id [4] [50])
 {
+	  Format format("You have @1 credit chip@2.");
 	int shoppy = shoppy_char;
    int greedy = env[0].sh_greed [shoppy];
    int shop_id [4] [50];
    int shop_items [20];
 
    char st_pass [60];
-
-   char gold_p [10];
 
    int gp_value = 0;
    char i;
@@ -196,8 +195,7 @@ itty = igrd [0] [5 + shoppy];
        gp_value /= 10;
        if (gp_value <= 1) gp_value = 1;
        gotoxy(60, i);
-       itoa(gp_value, st_pass, 10);
-       cprintf(st_pass);
+       cprintf(to_string(gp_value).c_str());
        cprintf("cc");
        if (mitm.ilink [itty] == 501) break;
 
@@ -210,12 +208,8 @@ itty = igrd [0] [5 + shoppy];
       shop_print("Type letter to buy item, x/Esc to leave, ?/* for inventory, V to examine.", 23);
 
       purchase :
-      strcpy(sh_name, "You have ");
-      itoa(you[0].gp, gold_p, 10);
-      strcat(sh_name, gold_p);
-      strcat(sh_name, " credit chip");
-      if (you[0].gp == 1) strcat(sh_name, "."); else strcat(sh_name, "s.");
-      shop_print(sh_name, 19);
+      format << you[0].gp << ((you[0].gp == 1) ? "" : "s");
+      shop_print(format.str().c_str(), 19);
 
       //shop_print("What would you like to purchase?", 20);
 

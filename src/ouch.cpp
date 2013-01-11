@@ -1,6 +1,8 @@
 
 #include "linuxlib.h"
 
+#include <sstream>
+#include <iomanip>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -29,13 +31,12 @@
 #include "stuff.h"
 #include "files.h"
 
-void highscore(char death_string [80], int points);
+void highscore(std::string death_string, int points);
 void item_corrode(char itco);
-void end_game(char end_status);
+void end_game(char end_status, const char death_string [80]);
 int set_status(int stat);
 
 
-char death_string [80];
 int points = 0;
 
 extern int wield_change; /* defined in output.cc */
@@ -312,656 +313,354 @@ if (burn_no > 1)
 }
 
 
+std::string species_abbr(int species)
+{
+	switch(species) {
+		case 1: return "Hu";
+		case 2: return "SN";
+		case 3: return "Ni";
+		case 4: return "GN";
+		case 5: return "CN";
+		case 6: return "NS";
+		case 7: return "CE";
+		case 8: return "ME";
+		case 9: return "FE";
+		case 10: return "Te";
+		case 11: return "Sm";
+		case 12: return "Ro";
+		case 13: return "As";
+		case 14: return "Ap";
+		case 15: return "Mu";
+		case 16: return "Bu";
+		case 17: return "MH";
+		case 18:
+		case 19:
+		case 20:
+		case 21:
+		case 22:
+		case 23:
+		case 24:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29: return "Dr";
+		case 30: return "Ra";
+		case 31: return "Fr";
+		case 32: return "Th";
+		case 33: return "BM";
+		case 34: return "Su";
+		case 35: return "Lo";
+		case 36: return "BM";
+	}
+	return "";
+}
+
+std::string death_reason(int death_type, int death_source)
+{
+	bool append_a = ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400);
+	std::string a = append_a ? "a" : "";
+	switch(death_type) {
+		case 0: return ", killed by " + a + monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99);
+		case 1: return ", killed by a lethal dose of poison";
+		case 2: return ", killed by a cloud";
+		case 3: return ", killed from afar by " + a + monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99);
+		case 5: return " took a swim in radioactive waste";
+		case 6: return (you[0].species == SP_MUMMY) ? " soaked and fell apart" : " drowned";
+		case 7: return " died of stupidity";
+		case 8: return " died of muscular atrophy";
+		case 9: return " died of clumsiness";
+		case 10: return ", killed by a trap";
+		case 11: return " got out of the installation alive.";
+		case 12: return " escaped with the Disk.";
+		case 13: return " quit";
+		case 14: return " was drained of all life";
+		case 15: return " starved to death";
+		case 16: return " froze to death";
+		case 17: return " burned to death";
+		case 18: return ", killed by corrupted program";
+		case 19: return ", killed by The Anonimous";
+		case 20: return ", killed by a statue";
+		case 21: return " rotted away";
+		case 22: return ", killed by bad targetting";
+	}
+	return "";
+}
+
+std::string location_name(int location)
+{
+	switch(location) {
+		case 1:  return " of Iron Works";
+		case 2:  return " of Refuelings";
+		case 3:  return " in the Lobby";
+		case 4:  return " of Cooling Plants";
+		case 5:  return " of Cyborg Researchs";
+		case 10: return " of the Terrorists";
+		case 11: return " of the Hive";
+		case 12: return " of the Biodome";
+		case 13: return " of the Waste Pits";
+		case 14: return " of the Storage Area";
+		case 15: return " of the Cyborg Manufactory";
+		case 16: return " of the Hall";
+		case 17: return " of Alice's Hall";
+		case 18: return " of the Terminal Hub";
+		case 19: return " of the Snake Pit";
+		case 20: return " of the Ninja Palace";
+		case 21: return " of the Cyborg Hub";
+		case 22: return " of the Greenhouse";
+	}
+	return "";
+}
+
+std::string death_location()
+{
+	if (you[0].level_type == 2) {
+		return " in the Dump.";
+	}
+	if (you[0].level_type == 3) {
+		return " in Bioengineerings.";
+	}
+	if (you[0].level_type == 1) {
+		return " in a labyrinth.";
+	}
+
+	if (you[0].where_are_you != 3) {
+		int level = (you[0].your_level + 1);
+		if (you[0].where_are_you >= 1 && you[0].where_are_you <= 9) {
+			level = you[0].your_level + 1 - 26;
+		}
+		if (you[0].where_are_you >= 10) {
+			level = you[0].your_level - you[0].branch_stairs [you[0].where_are_you - 10];
+		}
+		Format format(" on L@1@2.");
+		format << level << location_name(you[0].where_are_you);
+		return format.str();
+	}
+	return location_name(you[0].where_are_you) + ".";
+}
 
 void ouch(int dam, char death_source_char, char death_type)
 {
 	int death_source = death_source_char;
-char point_print [10];
-int d = 0;
-int e = 0;
+	int d = 0;
+	int e = 0;
 
+	if (you[0].deaths_door > 0 && death_type != 4 && death_type != 5 && death_type != 6) {
+		return;
+	}
 
- if (you[0].deaths_door > 0 && death_type != 4 && death_type != 5 && death_type != 6)
- {
-  return;
- }
+	if (dam > -9000) {
+		switch(you[0].religion) {
+			case 5:
+				if (random2(you[0].hp_max) > you[0].hp && dam > random2(you[0].hp) && random2(5) == 0) {
+					mpr("The Anonimous protects you from harm!");
+					return;
+				}
+				break;
+			case 1:
+			case 2:
+			case 3:
+			case 7:
+			case 12:
+				if (dam >= you[0].hp && you[0].duration [DUR_PRAYER] > 0 && random2(you[0].piety) >= 30) {
+					msg("@1 protects you from harm!") << god_name(you[0].religion);
+					return;
+				}
+				break;
+		}
+	}
 
-if (dam > -9000)
-{
+	you[0].hp_ch = 1;
 
- switch(you[0].religion)
- {
- case 5:
- if (random2(you[0].hp_max) > you[0].hp && dam > random2(you[0].hp) && random2(5) == 0)
- {
-  mpr("The Anonimous protects you from harm!");
-  return;
- }
- break;
- case 1:
- case 2:
- case 3:
- case 7:
- case 12:
- if (dam >= you[0].hp && you[0].duration [DUR_PRAYER] > 0 && random2(you[0].piety) >= 30)
- {
-  msg("@1 protects you from harm!") << god_name(you[0].religion);
-  return;
- }
- break;
+	if (dam > 300) return; /* assume it's a bug */
 
- }
-
-}
-
-you[0].hp_ch = 1;
-
-if (dam > 300) return; /* assume it's a bug */
-
- if (dam > -9000)
-        {
-                you[0].hp -= dam;
-                if (you[0].hp > 0) return;
-        }
+	if (dam > -9000) {
+		you[0].hp -= dam;
+		if (you[0].hp > 0) return;
+	}
 
 #ifdef DEBUG
-if (death_type != 13 && death_type != 12 && death_type != 11) // quit or escaped
-{
- mpr("Since you're a debugger, I'll let you live.");
- mpr("Be more careful next time, okay?");
-// more2();
- you[0].hp = you[0].hp_max;
- you[0].hp_ch = 1;
- return;
-}
+	if (death_type != 13 && death_type != 12 && death_type != 11) // quit or escaped
+	{
+		mpr("Since you're a debugger, I'll let you live.");
+		mpr("Be more careful next time, okay?");
+		// more2();
+		you[0].hp = you[0].hp_max;
+		you[0].hp_ch = 1;
+		return;
+	}
 #endif
 
-// okay, so you're dead.
+	// okay, so you're dead.
 
-points += you[0].gp;
-points += (you[0].xp * 7) / 10;
-//if (death_type == 12) points += points / 2;
-//if (death_type == 11) points += points / 10; // these now handled by giving player the value of their inventory
-   int temp_id [4] [50];
+	points += you[0].gp;
+	points += (you[0].xp * 7) / 10;
+	//if (death_type == 12) points += points / 2;
+	//if (death_type == 11) points += points / 10; // these now handled by giving player the value of their inventory
+	int temp_id [4] [50];
 
-   for (d = 0; d < 4; d ++)
-   {
-    for (e = 0; e < 50; e ++)
-    {
-        temp_id [d] [e] = 1;
-    }
-   }
-if (death_type == 11 || death_type == 12)
-{
- for (d = 0; d < 52; d ++)
- {
-   points += item_value(you[0].inv_class [d], you[0].inv_type [d], you[0].inv_dam [d], you[0].inv_plus [d], you[0].inv_plus2 [d], you[0].inv_quant [d], 3, temp_id);
- }
+	for (d = 0; d < 4; d ++)
+	{
+		for (e = 0; e < 50; e ++)
+		{
+			temp_id [d] [e] = 1;
+		}
+	}
+	if (death_type == 11 || death_type == 12)
+	{
+		for (d = 0; d < 52; d ++)
+		{
+			points += item_value(you[0].inv_class [d], you[0].inv_type [d], you[0].inv_dam [d], you[0].inv_plus [d], you[0].inv_plus2 [d], you[0].inv_quant [d], 3, temp_id);
+		}
+	}
+
+	if (points > 99999999) points = 99999999;
+
+	std::string death_string;
+	death_string += to_string(points, 9);
+
+	death_string += std::string(you[0].your_name, 14);
+	death_string += "-";
+	death_string += species_abbr(you[0].species);
+	death_string += you[0].clasnam [0];
+
+	death_string += to_string(you[0].xl);
+
+	death_string += death_reason(death_type, death_source);
+
+	if (death_type != 11 && death_type != 12) {
+		death_string += death_location();
+		save_ghost();
+		end_game(1, death_string.c_str());
+	}
+	end_game(0, death_string.c_str()); // must have won! (or at least escaped)
 }
 
-if (points > 99999999) points = 99999999;
-itoa(points, point_print, 10);
-
-strcpy(death_string, point_print);
-if (points < 10000000) strcat(death_string, " ");
-if (points < 1000000) strcat(death_string, " ");
-if (points < 100000) strcat(death_string, " ");
-if (points < 10000) strcat(death_string, " ");
-if (points < 1000) strcat(death_string, " ");
-if (points < 100) strcat(death_string, " ");
-if (points < 10) strcat(death_string, " ");
-/*for (i = 0; i < 12 - strlen(death_string); i ++)
+void end_game(char end_status, const char death_string [80])
 {
- strcat(death_string, " ");
-}*/
+	int handle, i;
+	char status2 = end_status;
+	set_status(end_status);
 
-        strncat(death_string, you[0].your_name, 14);
-        strcat(death_string, "-");
-        switch(you[0].species)
-        {
-         case 1: strcat(death_string, "Hu"); break;
-         case 2: strcat(death_string, "SN"); break;
-         case 3: strcat(death_string, "Ni"); break;
-         case 4: strcat(death_string, "GN"); break;
-         case 5: strcat(death_string, "CN"); break;
-         case 6: strcat(death_string, "NS"); break;
-         case 7: strcat(death_string, "CE"); break;
-         case 8: strcat(death_string, "ME"); break;
-         case 9: strcat(death_string, "FE"); break;
-         case 10: strcat(death_string, "Te"); break;
-         case 11: strcat(death_string, "Sm"); break;
-         case 12: strcat(death_string, "Ro"); break;
-         case 13: strcat(death_string, "As"); break;
-         case 14: strcat(death_string, "Ap"); break;
-         case 15: strcat(death_string, "Mu"); break;
-         case 16: strcat(death_string, "Bu"); break;
-         case 17: strcat(death_string, "MH"); break;
-         case 18:
-         case 19:
-         case 20:
-         case 21:
-         case 22:
-         case 23:
-         case 24:
-         case 25:
-         case 26:
-         case 27:
-         case 28:
-         case 29: strcat(death_string, "Dr"); break;
-         case 30: strcat(death_string, "Ra"); break;
-         case 31: strcat(death_string, "Fr"); break;
-         case 32: strcat(death_string, "Th"); break;
-         case 33: strcat(death_string, "BM"); break;
-         case 34: strcat(death_string, "Su"); break;
-         case 35: strcat(death_string, "Lo"); break;
-         case 36: strcat(death_string, "BM"); break;
-        }
-        death_string [strlen(death_string)] = you[0].clasnam [0];
+	char del_file [55];
+	int sysg = 0;
+	strcpy(del_file, "");
+	for (i = 0; i < 6; i ++) {
+		del_file [i] = you[0].your_name [i];
+		if (you[0].your_name [i] == 0)
+			break;
+	}
+	del_file [6] = 0;
 
-itoa(you[0].xl, point_print, 10);
-strcat(death_string, point_print);
-//if (strlen(point_print) == 1) strcat(death_string, " ");
+	char glorpstr [40];
+	strncpy(glorpstr, you[0].your_name, 6);
 
-//      strcat(death_string, ", killed by ");
- switch(death_type)
-        {
+	/* This is broken. Length is not valid yet! We have to check if we got a
+	   trailing NULL; if not, write one: */
+	if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
+		glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
 
-        case 0: // monster
-                strcat(death_string, ", killed by ");
-                if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
-                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99).c_str());
- break;
+	int fi = 0;
+	int fi2 = 0;
 
-        case 1: // you[0].poison
-//              if (dam == -9999) strcat(death_string, "an overload of ");
-                strcat(death_string, ", killed by a lethal dose of poison");
- break;
+	for (fi2 = 0; fi2 < 30; fi2 ++) {
+		for (fi = 0; fi < 50; fi ++) {
+			Format format("@1.@2@3@4");
+			format << glorpstr << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
+			handle = open(format.str().c_str(), S_IWRITE, S_IREAD);
 
-        case 2: // cloud
-                strcat(death_string, ", killed by a cloud");
-        break;
+			if (handle != -1)
+			{
+				close(handle);
+				unlink(del_file);
+			} else close(handle);
+		}
+	}
 
-        case 3: // beam - beam[0].name is a local variable, so can't access it without horrible hacks
-                strcat(death_string, ", killed from afar by ");
-                if ((menv [death_source].m_class < 250 || menv [death_source].m_class > 310) && menv [death_source].m_class != 400) strcat(death_string, "a");
-                strcat(death_string, monam(menv [death_source].m_sec, menv [death_source].m_class, 0, 99).c_str());
- break;
+	strcpy(del_file, glorpstr);
 
-/* case 4: // death's door running out - NOTE: This is no longer fatal
-  strcat(death_string, " ran out of time");
- break;*/
+	strcat(del_file, ".lab");
+	sysg = unlink(del_file);
 
- case 5: // falling into lava
-  strcat(death_string, " took a swim in radioactive waste");
- break;
+	strcpy(del_file, glorpstr);
 
- case 6: // falling into water
- if (you[0].species == SP_MUMMY) strcat(death_string, " soaked and fell apart");
-   else strcat(death_string, " drowned");
- break;
+	strcat(del_file, ".sav");
+	sysg = unlink(del_file);
 
-// these three are probably only possible if you wear a you[0].ring of >= +3 ability,
-//  get drained to 3, then take it off, or have a very low abil and wear a -ve you[0].ring.
-// or, as of 2.7x, mutations can cause this
- case 7: // lack of intelligence
-  strcat(death_string, " died of stupidity");
-        break;
- case 8: // lack of str
-  strcat(death_string, " died of muscular atrophy");
-        break;
- case 9: // lack of dex
-  strcat(death_string, " died of clumsiness"); // crappy message
-        break;
-
- case 10:
-  strcat(death_string, ", killed by a trap");
- break;
-
- case 11:
-  strcat(death_string, " got out of the installation alive.");
- break;
-
- case 12:
-  strcat(death_string, " escaped with the Disk.");
- break;
-
- case 13:
-  strcat(death_string, " quit");
- break;
-
- case 14:
-  strcat(death_string, " was drained of all life");
- break;
-
- case 15:
-  strcat(death_string, " starved to death");
- break;
-
- case 16:
-  strcat(death_string, " froze to death");
- break;
-
- case 17:
-  strcat(death_string, " burned to death");
- break;
-
- case 18: /* from function miscast_effect */
-  strcat(death_string, ", killed by corrupted program");
- break;
-
- case 19:
-  strcat(death_string, ", killed by The Anonimous");
- break;
-
- case 20:
-  strcat(death_string, ", killed by a statue");
- break;
-
- case 21:
-  strcat(death_string, " rotted away");
- break;
-
- case 22:
-  strcat(death_string, ", killed by bad targetting");
- break;
+	status2 = set_status(100);
 
 
- } // end switch
+	if (status2 == 1)
+	{
+		mpr("You die...");
+	}
 
-if (death_type != 11 && death_type != 12)
-{
+	viewwindow(1);
+	more();
 
- if (you[0].level_type == 2)
- {
-   strcat(death_string, " in the Dump.");
-   goto ending;
- }
- if (you[0].level_type == 3)
- {
-   strcat(death_string, " in Bioengineerings.");
-   goto ending;
- }
- if (you[0].level_type == 1)
- {
-   strcat(death_string, " in a labyrinth.");
-   goto ending;
- }
 
- char st_prn[20];
-        itoa((you[0].your_level + 1), st_prn, 10);
+	for (i = 0; i < 52; i ++)
+	{
+		you[0].inv_ident [i] = 3;
+	}
 
- if (you[0].where_are_you >= 1 && you[0].where_are_you <= 9)
-    itoa(you[0].your_level + 1 - 26, st_prn, 10);
+	for (i = 0; i < 52; i ++)
+	{
+		if (you[0].inv_class [i] != 0)
+		{
+			set_id(you[0].inv_class [i], you[0].inv_type [i], 1);
+		}
+	}
 
- if (you[0].where_are_you >= 10)
- {
-  itoa(you[0].your_level - you[0].branch_stairs [you[0].where_are_you - 10], st_prn, 10);
- }
-if (you[0].where_are_you != 3)
-{
-        strcat(death_string, " on L");
-        strcat(death_string, st_prn);
+	if (status2 == 0) 
+		invent(-1, 1);
+	else 
+		invent(-1, 0);
+	if (dump_char((status2 == 0), "morgue.txt") == 1)
+		mpr("Char dumped successfully (morgue.txt).");
+	else mpr("Char dump unsuccessful! Sorry about that.");
+	more();
+	int p = 0;
+	for (p = 0; p < 52; p ++)
+	{
+		for (i = 0; i < ITEMS; i++)
+		{
+			if (mitm.iquant [i] == 0)
+			{
+				mitm.iid [i] = 0;
+				mitm.iclass [i] = you[0].inv_class [p];
+				mitm.itype [i] = you[0].inv_type [p];
+				mitm.iplus [i] = you[0].inv_plus [p];
+				mitm.iplus2 [i] = you[0].inv_plus2 [p];
+				mitm.idam [i] = you[0].inv_dam [p];
+				mitm.icol [i] = you[0].inv_col [p];
+				mitm.ix [i] = you[0].x_pos;
+				mitm.iy [i] = you[0].y_pos;
+				mitm.iquant [i] = you[0].inv_quant [p];
+				/*                it_no ++; */
+				break;
+			}
+		} // end of i loop
+	} // end of p loop
+
+
+	for (i = 0; i < ITEMS; i ++)
+	{
+		mitm.iid [i] = 0;
+	}
+
+
+	clrscr();
+	clrscr();
+	cprintf("Goodbye, ");
+	cprintf(you[0].your_name);
+	cprintf(".");
+	cprintf(EOL EOL);
+	cprintf(death_string);
+
+	get_ch();
+	end(0);
 }
-
-switch (you[0].where_are_you)
-{
- case 1: strcat(death_string, " of Iron Works"); break;
- case 2: strcat(death_string, " of Refuelings"); break;
- case 3: strcat(death_string, " in the Lobby"); break;
- case 4: strcat(death_string, " of Cooling Plants"); break;
- case 5: strcat(death_string, " of Cyborg Researchs"); break;
- case 10: strcat(death_string, " of the Terrorists"); break;
- case 11: strcat(death_string, " of the Hive"); break;
- case 12: strcat(death_string, " of the Biodome"); break;
- case 13: strcat(death_string, " of the Waste Pits"); break;
- case 14: strcat(death_string, " of the Storage Area"); break;
- case 15: strcat(death_string, " of the Cyborg Manufactory"); break;
- case 16: strcat(death_string, " of the Hall"); break;
- case 17: strcat(death_string, " of Alice's Hall"); break;
- case 18: strcat(death_string, " of the Terminal Hub"); break;
- case 19: strcat(death_string, " of the Snake Pit"); break;
- case 20: strcat(death_string, " of the Ninja Palace"); break;
- case 21: strcat(death_string, " of the Cyborg Hub"); break;
- case 22: strcat(death_string, " of the Greenhouse"); break;
-}
-
-
-
-        strcat(death_string, ".");
-
-  save_ghost();
-
-        ending : end_game(1);
-}
-
- end_game(0); // must have won! (or at least escaped)
-
-}
-
-
-
-
-
-void end_game(char end_status)
-{
-   int handle, i;
-
-   char status2 = end_status;
-
-   set_status(end_status);
-
-
-        char del_file [55];
-
-        int sysg = 0;
-
-strcpy(del_file, "");
-for (i = 0; i < 6; i ++)
-{
- del_file [i] = you[0].your_name [i];
- if (you[0].your_name [i] == 0)
-  break;
-}
-del_file [6] = 0;
-
-char glorpstr [40];
-strncpy(glorpstr, you[0].your_name, 6);
-
-/* This is broken. Length is not valid yet! We have to check if we got a
-   trailing NULL; if not, write one: */
-if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
-        glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
-
-
-int fi = 0;
-int fi2 = 0;
-char st_prn [6];
-
-for (fi2 = 0; fi2 < 30; fi2 ++)
-{
- for (fi = 0; fi < 50; fi ++)
- {
-  strcpy(del_file, glorpstr);
-  strcat(del_file, ".");
-  if (fi < 10) strcat(del_file, "0");
-  itoa(fi, st_prn, 10);
-  strcat(del_file, st_prn);
-  st_prn [0] = fi2 + 97;
-  st_prn [1] = 0;
-  strcat(del_file, st_prn);
-  strcat(del_file, "\0");
-  handle = open(del_file, S_IWRITE, S_IREAD);
-
-  if (handle != -1)
-  {
-        close(handle);
-        unlink(del_file);
-  } else close(handle);
- }
-}
-
-/*int fi = 0;
-
-for (fi = 0; fi < 100; fi ++)
-{
-strcpy(del_file, glorpstr);
-strcat(del_file, ".");
-itoa(fi, st_prn, 10);
-strcat(del_file, st_prn);
-strcat(del_file, "\0");
-handle = open(del_file, S_IWRITE, S_IREAD);
-
-if (handle != -1)
-{
-        close(handle);
-        sysg = unlink(del_file);
-} else close(handle);
-}*/
-
-
-strcpy(del_file, glorpstr);
-
-        strcat(del_file, ".lab");
-        sysg = unlink(del_file);
-
-strcpy(del_file, glorpstr);
-
-        strcat(del_file, ".sav");
-        sysg = unlink(del_file);
-
-status2 = set_status(100);
-
-
-if (status2 == 1)
-{
-        mpr("You die...");
-}
-
-        viewwindow(1);
-        more();
-
-
-for (i = 0; i < 52; i ++)
-{
- you[0].inv_ident [i] = 3;
-}
-
-for (i = 0; i < 52; i ++)
-{
-        if (you[0].inv_class [i] != 0)
-        {
-                set_id(you[0].inv_class [i], you[0].inv_type [i], 1);
-        }
-}
-
-if (status2 == 0) 
-        invent(-1, 1);
-  else 
-        invent(-1, 0);
-  if (dump_char((status2 == 0), "morgue.txt") == 1)
-   mpr("Char dumped successfully (morgue.txt).");
-    else mpr("Char dump unsuccessful! Sorry about that.");
-    more();
-int p = 0;
-for (p = 0; p < 52; p ++)
-{
-for (i = 0; i < ITEMS; i++)
-{
-        if (mitm.iquant [i] == 0)
-        {
-                mitm.iid [i] = 0;
-                mitm.iclass [i] = you[0].inv_class [p];
-                mitm.itype [i] = you[0].inv_type [p];
-                mitm.iplus [i] = you[0].inv_plus [p];
-                mitm.iplus2 [i] = you[0].inv_plus2 [p];
-                mitm.idam [i] = you[0].inv_dam [p];
-                mitm.icol [i] = you[0].inv_col [p];
-                mitm.ix [i] = you[0].x_pos;
-                mitm.iy [i] = you[0].y_pos;
-                mitm.iquant [i] = you[0].inv_quant [p];
-/*                it_no ++; */
-                break;
-        }
-} // end of i loop
-} // end of p loop
-
-
-        for (i = 0; i < ITEMS; i ++)
-        {
-                mitm.iid [i] = 0;
-        }
-
-
-        clrscr();
-        clrscr();
-        cprintf("Goodbye, ");
-        cprintf(you[0].your_name);
-        cprintf(".");
-        cprintf(EOL EOL);
-        cprintf(death_string);
-        cprintf(EOL EOL" Best Crawlers - "EOL);
-
-
-highscore(death_string, points);
-get_ch();
-        end(0);
-}
-
-
-
-void highscore(char death_string [80], int points)
-{
-
-char high_scores [20] [80];
-int scores [20];
-int hc = 0;
-int hc2 = 0;
-int hc3 = 0;
-char ready [2];
-int multip = 1;
-
-ready [0] = 0;
-ready [1] = 0;
-
-for (hc2 = strlen(death_string); hc2 < 80; hc2 ++)
-{
- death_string [hc2] = ' ';
-}
-
-for (hc = 0; hc < 20; hc ++)
-{
- strcpy(high_scores [hc], "-empty");
- scores [hc] = 0;
-}
-
-int handle = open("scores", S_IWRITE, S_IREAD);
-
-if (handle == -1)
-{
-for (hc = 0; hc < 15; hc ++)
-{
- for (hc2 = 0; hc2 < 80; hc2 ++)
- {
-  high_scores [hc] [hc2] = 32;
- }
-   strcpy(high_scores [hc], "0       empty");
-   scores [hc] = 0;
-
-}
-goto out_of_ready;
-}
-
-
-for (hc = 0; hc < 15; hc ++)
-{
- for (hc2 = 0; hc2 < 80; hc2 ++)
- {
-  read(handle, ready, 1);
-  if (ready [0] == 13 || ready [0] == 0 || ready [0] == '\r' || ready [0] == '\n')
-  {
-   for (hc3 = hc2; hc3 < 80; hc3 ++)
-   {
-    high_scores [hc] [hc3] = 32;
-    goto out_of_inner;
-   }
-  }
-  if (ready [0] == EOF) goto out_of_ready;
-  if (ready [0] == 0 || ready [0] == 7) ready [0] = 32;
-  high_scores [hc] [hc2] = ready [0];
- } // end for hc2
-out_of_inner : hc3 = 0;
-} // end for hc
-
-for (hc = 0; hc < 15; hc ++)
-{
- multip = 1;
- for (hc2 = 6; hc2 >= 0; hc2 --)
- {
-  if (high_scores [hc] [hc2] == 32) continue;
-  scores [hc] += (high_scores [hc] [hc2] - 48) * multip;
-  multip *= 10;
- }
-}
-
-out_of_ready :
-
-int placed = 0;
-char has_printed = 0;
-
-for (hc = 0; hc < 15; hc ++)
-{
- placed ++;
-if (points > scores [hc] && has_printed == 0)
-{
- textcolor(YELLOW);
-  itoa(placed, ready, 10);
-  cprintf(ready);
-  if (strlen(ready) == 1) cprintf("- "); else cprintf("-");
- for (hc2 = 0; hc2 < 80; hc2 ++)
- {
-  if (death_string [hc2] == 32 && death_string [hc2 + 1] == 32 && hc2 > 15)
-  {
-   cprintf(EOL);
-   break;
-  }
-  putch(death_string [hc2]);
- }
- has_printed = 1;
- hc --;
- textcolor(LIGHTGREY);
- continue;
-}
-  itoa(placed, ready, 10);
-  cprintf(ready);
-  if (strlen(ready) == 1) cprintf("- "); else cprintf("-");
- for (hc2 = 0; hc2 < 80; hc2 ++)
- {
-  if (high_scores [hc] [hc2] == 32 && high_scores [hc] [hc2 + 1] == 32 && hc2 > 15)
-  {
-   cprintf(EOL);
-   break;
-  }
-  putch(high_scores [hc] [hc2]);
- }
-}
-
-close(handle);
-
-//handle = open("scores", O_CREAT || O_TRUNC | O_BINARY, S_IWRITE | S_IREAD);
-//handle = open("scores", O_WRONLY | O_BINARY, S_IWRITE, S_IREAD);
-//handle = open("scores", O_BINARY, 0660);
-handle = open("scores", O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660); //S_IREAD | S_IWRITE);
-
-if (handle == -1)
-{
-        perror("oh NO!!!");
-        if (getch() == 0) getch();
-        return;
-}
-
-for (hc = 0; hc < 15; hc ++)
-{
- for (hc2 = strlen(high_scores [hc]); hc2 < 80; hc2 ++)
- {
-  high_scores [hc] [hc2] = ' ';
- }
-}
-has_printed = 0;
-for (hc = 0; hc < 15; hc ++)
-{
- if (has_printed == 1 && hc == 14) break;
- if (points > scores [hc] && has_printed == 0)
- {
-  write(handle, death_string, 80);
-  hc --;
-  has_printed = 1;
- } else write(handle, high_scores [hc], 80);
-}
-
-close(handle);
-
-} // end void highscores
-
 
 
 

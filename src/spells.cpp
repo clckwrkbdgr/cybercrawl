@@ -1123,94 +1123,46 @@ return 0;
 
 
 
+#include <bitset>
 
 char learn_a_spell(int splbook, char bitty)
 {
+	int found_a_one = 0;
+	bitty ++;
 
+	std::string strungy = std::bitset<16>(you[0].inv_plus [splbook]).to_string();
+	int kl = 0;
+	for(int h = 1; h < 7; h ++) {
+		if (strungy [h] == '1') kl ++;
+		if (kl == bitty) {
+			learned = h;
+			goto succes;
+		}
+	}
+	return 0;
 
-char strungy [9];
+succes:
+	found_a_one = 0;
+	int icky = 0;
+	icky = strungy.size();
+	int numbo = 0;
+	int multip = 1;
 
-int numbo;
+	for(int j = icky; j >= 1; j --) {
+		if (strungy [j] != '1' && strungy [j] != '0') continue;
+		if (strungy [j] == '0') {
+			multip *= 2;
+			continue;
+		}
+		if (strungy [j] == '1') {
+			numbo += multip;
+			multip *= 2;
+		}
+	}
 
-int j;
-int h;
-int multip = 1;
-
-int found_a_one = 0;
-
-int icky = 0;
-
-
-      bitty ++;
-
-
-
-
-      numbo = you[0].inv_plus [splbook];
-    
-
-      itoa(numbo, strungy, 2);
-
-      int kl = 0;
-
-      for (h = 1; h < 7; h ++)
-      {
-
-      if (strungy [h] == '1') kl ++;
-
-      if (kl == bitty)
-      {
-         learned = h;
-         goto succes;
-      }
-
-      }
-
-      return 0;
-
-
-
-
-
-
-
-      succes : multip = 1;
-      numbo = 0;
-      found_a_one = 0;
-
-      icky = strlen(strungy);
-
-      multip = 1;
-      numbo = 0;
-
-      for (j = icky; j >= 1; j --)
-      {
-
-         if (strungy [j] != '1' && strungy [j] != '0') continue;
-         if (strungy [j] == '0')
-         {
-            multip *= 2;
-            continue;
-
-         }
-
-         if (strungy [j] == '1')
-         {
-               numbo += multip;
-               multip *= 2;
-
-         }
-       }
-
-
-
-      strcpy(strungy, "");
-
-you[0].inv_plus [splbook] = numbo + 64;
-
-   return 1;
-
-} // end of change spellbook
+	you[0].inv_plus [splbook] = numbo + 64;
+	return 1;
+}
 
 
 int which_spellbook(void)

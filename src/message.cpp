@@ -1,5 +1,7 @@
 #include <list>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include <string.h>
 #include "enum.h"
 #include "externs.h"
@@ -9,6 +11,16 @@
 
 Message msg(const std::string & format_string) {
 	return Message(format_string);
+}
+
+std::string to_string(int value, int width)
+{
+	std::ostringstream out;
+	if(width != 0) {
+		out << std::setw(width);
+	}
+	out << value;
+	return out.str();
 }
 
 char scrloc = 1; // Line of next (previous?) message.

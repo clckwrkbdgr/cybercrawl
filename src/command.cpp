@@ -46,8 +46,7 @@ void stethoscope(int mwh)
 		if (mgrd [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y] == MNG)
 		{
 
-			itoa((int) igrd [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y], st_prn, 10);
-			mpr(st_prn);
+			msg("@1") << igrd [you[0].x_pos + stmove[0].move_x] [you[0].y_pos + stmove[0].move_y];
 
 /*	move_x = 0;
 	move_y = 0;*/

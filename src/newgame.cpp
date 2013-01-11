@@ -2444,43 +2444,16 @@ strncpy(glorpstr, you[0].your_name, 6);
 if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
 	glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
 
-/*int fi = 0;
-char st_prn [6];
-
-for (fi = 0; fi < 100; fi ++)
-{
-strcpy(del_file, glorpstr);
-strcat(del_file, ".");
-itoa(fi, st_prn, 10);
-strcat(del_file, st_prn);
-strcat(del_file, "\0");
-handle = open(del_file, S_IWRITE, S_IREAD);
-
-if (handle != -1)
-{
-        close(handle);
-	sysg = unlink(del_file);
-} else close(handle);
-}*/
-
 int fi = 0;
 int fi2 = 0;
-char st_prn [6];
 
 for (fi2 = 0; fi2 < 30; fi2 ++)
 {
  for (fi = 0; fi < 50; fi ++)
  {
-  strcpy(del_file, glorpstr);
-  strcat(del_file, ".");
-  if (fi < 10) strcat(del_file, "0");
-  itoa(fi, st_prn, 10);
-  strcat(del_file, st_prn);
-  st_prn [0] = fi2 + 97;
-  st_prn [1] = 0;
-  strcat(del_file, st_prn);
-  strcat(del_file, "\0");
-  handle = open(del_file, S_IWRITE, S_IREAD);
+	 Format format("@1.@2@3@4");
+	 format << glorpstr << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
+  handle = open(format.str().c_str(), S_IWRITE, S_IREAD);
 
   if (handle != -1)
   {
@@ -2490,20 +2463,6 @@ for (fi2 = 0; fi2 < 30; fi2 ++)
  }
 }
 
-/*
-char hbjh [5];
-
-if (level_saved < 10) strcpy(extens, "0");
-itoa(level_saved, hbjh, 10);
-strcat(extens, hbjh);
-corr_level [2] = you[0].where_are_you + 97;
-corr_level [3] = 0; / * null-terminate it * /
-strcpy(cha_fil, "");
-strncat(cha_fil, you[0].your_name, 6);
-strcat(cha_fil, ".");
-if (was_a_labyrinth == 1) strcat(cha_fil, "lab"); / * temporary level * /
- else strcat(cha_fil, extens);
-*/
 
 for (i = 0; i < 30; i ++)
 {
