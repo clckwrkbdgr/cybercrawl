@@ -20,15 +20,16 @@
 #include "stuff.h"
 #include "view.h"
 
+
 void mons_pickup(int i);
 void plant_spit(int i, struct bolt beam [1]);
 void monster_move(int i);
 void mons_in_cloud(int i);
-char mons_speaks(int i);
+int mons_speaks(int i);
 
-char mmov_x, mmov_y;
+int mmov_x, mmov_y;
 
-char curse_an_item(char which, char power)
+int curse_an_item(int which, int power)
 {
 /* use which later, if I want to curse weapon/gloves whatever
    which, for now: 0 = non-mummy, 1 = mummy (potions as well)
@@ -124,7 +125,7 @@ mgrd [menv [mn].m_x] [menv [mn].m_y] = mn;
 
 }
 
-char random_near_space(int passed [2])
+int random_near_space(int passed [2])
 {
 
 passed [0] = 0;
@@ -162,9 +163,6 @@ int ydisp = y1 - y2;
 if (ydisp < 0) ydisp *= -1;
 
 if (xdisp == 1 && ydisp == 1) ydisp = 0;
-//itoa(xdisp + ydisp, st_prn, 10);
-//strcpy(info, st_prn);
-//mpr(info);
 
 return xdisp + ydisp;
 
@@ -189,65 +187,38 @@ mgrd [menv [swap].m_x] [menv [swap].m_y] = swap;
 } // end of swap_places
 
 
+std::string wound_name(int hp, int hp_max)
+{
+	if (hp <= hp_max / 4) {
+		return "horribly";
+	}
+	if (hp <= hp_max / 3) {
+		return "heavily";
+	}
+	if (hp <= (hp_max / 4) * 3) {
+		return "moderately";
+	}
+	return "lightly";
+}
 
 void print_wounds(int wounded)
 {
+	if (menv[wounded].m_class == -1) return;
+	if (menv[wounded].m_class == MONS_SMALL_ZOMBIE || menv[wounded].m_class == MONS_BIG_ZOMBIE || menv[wounded].m_class == MONS_SMALL_SKELETON || menv[wounded].m_class == MONS_LARGE_SKELETON || menv[wounded].m_class == MONS_RAKSHASA || menv[wounded].m_class == MONS_FAKE_RAKSHASA)
+		return;
+	if (menv[wounded].m_ench [2] == 6 && player_see_invis() == 0) return;
+	if (mons_near(wounded) == 0) return;
+	if (menv[wounded].m_hp == menv[wounded].m_hp_max || menv[wounded].m_hp <= 0) return;
 
-if (menv[wounded].m_class == -1) return;
-
-if (menv[wounded].m_class == MONS_SMALL_ZOMBIE || menv[wounded].m_class == MONS_BIG_ZOMBIE || menv[wounded].m_class == MONS_SMALL_SKELETON || menv[wounded].m_class == MONS_LARGE_SKELETON || menv[wounded].m_class == MONS_RAKSHASA || menv[wounded].m_class == MONS_FAKE_RAKSHASA)
-        return;
-
-if (menv[wounded].m_ench [2] == 6 && player_see_invis() == 0) return;
-
-if (mons_near(wounded) == 0) return;
-
-if (menv[wounded].m_hp == menv[wounded].m_hp_max || menv[wounded].m_hp <= 0) return;
-
-strcpy(info, monam(menv[wounded].m_sec,menv[wounded].m_class, menv [wounded].m_ench [2], 0).c_str());
-strcat(info, " is");
-
-if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 6)
-{
- strcat(info, " almost");
- if (wounded_damaged(menv [wounded].m_class) == 0)
-  strcat(info, " dead.");
-   else  strcat(info, " destroyed.");
-   mpr(info);
- return;
-}
-
-if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 4)
-{
- strcat(info, " horribly ");
- goto wounded_print;
-}
-
-if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 3)
-{
- strcat(info, " heavily ");
- goto wounded_print;
-}
-
-/*if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 2)
-{
- strcat(info, " somewhat ");
- goto wounded_print;
-}*/
-
-if (menv[wounded].m_hp <= (menv[wounded].m_hp_max / 4) * 3)
-{
- strcat(info, " moderately ");
- goto wounded_print;
-}
-
-strcat(info, " lightly ");
-
-wounded_print:
-if (wounded_damaged(menv [wounded].m_class) == 0)
- strcat(info, "wounded.");
-  else strcat(info, "damaged.");
-mpr(info);
+	if (menv[wounded].m_hp <= menv[wounded].m_hp_max / 6)
+	{
+		msg("@1 is almost @2.") << monam(menv[wounded].m_sec,menv[wounded].m_class, menv [wounded].m_ench [2], 0) << ((wounded_damaged(menv [wounded].m_class) == 0) ? "dead" : "destroyed");
+	} else {
+		msg("@1 is @2 @3")
+			<< monam(menv[wounded].m_sec,menv[wounded].m_class, menv [wounded].m_ench [2], 0)
+			<< wound_name(menv[wounded].m_hp, menv[wounded].m_hp_max / 4)
+			<< ((wounded_damaged(menv [wounded].m_class) == 0) ? "wounded" : "damaged");
+	}
 }
 
 
@@ -265,12 +236,12 @@ int wounded_damaged(int wound_class)
 
 void monster(void)
 {
-char bat = 0;
+int bat = 0;
 int monc = 0;
 int mzap = 0;
 
 int msecc = 0;
-char brkk = 0;
+int brkk = 0;
 int i, j, hand_used, spell_cast;
 
 struct bolt beem [1];
@@ -554,9 +525,7 @@ switch (menv [i].m_ench [p])
    if (mons_res_fire(menv [i].m_class) == -1) menv [i].m_hp -= ((random2(5) + random2(5) + 1) * 10) / menv [i].m_speed;
    if (mons_near(i) == 1)
    {
-    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-    strcat(info, " burns!");
-    mpr(info);
+    msg("@1 burns!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    }
    if (menv [i].m_hp <= 0)
    {
@@ -840,10 +809,8 @@ beem[0].aim_down = 1;
 		beem[0].type = '#'; /* hash # */
 		beem[0].flavour = 20; /* lava */
 		beem[0].hit = 20;
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-		strcat(info, " spits radioactive waste!");
+		msg("@1 spits radioactive waste!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
                 beem[0].beam_source = i;
-		mpr(info);
 	beem[0].thing_thrown = 4;
 	missile(beem, 0);
 }
@@ -874,9 +841,7 @@ viewwindow(1);
 		beem[0].flavour = 5; // elec
 		beem[0].hit = 150;
                 beem[0].beam_source = i;
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
-		strcat(info, " shoots out a bolt of electricity!");
-		mpr(info);
+		msg("@1 shoots out a bolt of electricity!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 	beem[0].thing_thrown = 2;
 	beam(beem);
 }
@@ -913,9 +878,7 @@ if (random2(4) == 0) // fiend!
 		{
    if (menv [i].m_ench [2] != 6)
    {
-   	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   	strcat(info, " makes a gesture!");
-   	mpr(info);
+   	msg("@1 makes a gesture!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    }
  		spell_cast = 49;
 			mons_cast(i, beem, spell_cast);
@@ -938,9 +901,7 @@ if (random2(7) == 0) // phantom
 {
    if (mons_near(i) == 1)
    {
-    strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-    strcat(info, " jumps.");
-    mpr(info);
+    msg("@1 jumps.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    }
    monster_blink(i);
 }
@@ -1021,12 +982,8 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (menv [i].m_hp > menv [i].m_hp_max / 2) goto out_of_potion;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " drinks a vial.");
-   mpr(info);
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " is healed!");
-   mpr(info);
+   msg("@1 drinks a vial.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   msg("@1 is healed!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   }
   if (mitm.itype [menv [i].m_inv [4]] == 1) menv [i].m_hp += random2(10) + random2(10) + random2(10) + 10;
    menv [i].m_hp += random2(7) + 5;
@@ -1039,9 +996,7 @@ if (menv [i].m_inv [4] != 501 && random2(3) == 0 && menv [i].m_beh != BEH_SLEEP)
   if (mitm.itype [menv [i].m_inv [4]] == 12) beem[0].colour = 5;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " drinks a vial.");
-   mpr(info);
+   msg("@1 drinks a vial.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    mons_ench_f2(i, 1, func_pass, beem);
   } else goto out_of_potion;
   break;
@@ -1066,9 +1021,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (menv [i].m_beh != BEH_FLEE) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " uses a device.");
-   mpr(info);
+   msg("@1 uses a device.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   }
   monster_teleport(i, 0);
   break;
@@ -1077,12 +1030,8 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (menv [i].m_beh != BEH_FLEE) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " uses a device.");
-   mpr(info);
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " jumps!");
-   mpr(info);
+   msg("@1 uses a device.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   msg("@1 jumps!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
    monster_blink(i);
   } else goto out_of_scroll;
   break;
@@ -1091,9 +1040,7 @@ out_of_potion : if (menv [i].m_inv [6] != 501 && random2(3) == 0 && menv [i].m_b
   if (mons_near(i) != 1) goto out_of_scroll;
   if (mons_near(i) != 0)
   {
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " uses a device.");
-   mpr(info);
+   msg("@1 uses a device.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   }
   create_monster(MONS_LARGE_ABOMINATION, 21, menv [i].m_beh, menv [i].m_x, menv [i].m_y, menv [i].m_hit, 250);
   break;
@@ -1245,10 +1192,8 @@ out_of_scroll : if (menv [i].m_inv [5] != 501 && random2(2) == 0 && menv [i].m_b
 
         if (mons_near(i) != 0)
         {
-	 strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-         strcat(info, " shoots a gun.");
-        } else strcpy(info, "You hear a shot.");
-        mpr(info);
+         msg("@1 shoots a gun.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+        } else msg("You hear a shot.");
 
         mitm.iplus [menv [i].m_inv [5]] --;
 
@@ -1331,15 +1276,6 @@ func_pass_2 [5] = 100;
 
 mons_spell_list(msecc, func_pass_2);
 
-/*int ifx = 0;
-
-for (ifx = 0; ifx < 6; ifx ++)
-{
- itoa(func_pass_2 [ifx], st_prn, 10);
- strcpy(info, st_prn);
- mpr(info);
-}*/
-
 if (func_pass_2 [4] == 18 && mons_near(i) == 0 && menv [i].m_beh == BEH_CHASING_I)// && trac_targ == MHITYOU)// && distance(you[0].x_pos, menv [i].m_x, you[0].y_pos, menv [i].m_y) < 40)
 {
 	spell_cast = 18; // This is EVIL!
@@ -1410,7 +1346,7 @@ casted : if (spell_cast == 100) goto end_switch;
 
 if (mons_near(i) == 1)
 {
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
+	std::string monster = monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 	if (menv [i].m_class != MONS_BRAIN_WORM) /* brain worm */
 	{
 
@@ -1418,8 +1354,7 @@ if (mons_near(i) == 1)
 		{
 			if (menv [i].m_ench [2] != 6)
 			{
-				strcat(info, " breathes.");
-				mpr(info);
+				msg("@1 breathes.") << monster;
 			}
 		} else
 
@@ -1427,8 +1362,7 @@ if (mons_near(i) == 1)
 			{
 				if (menv [i].m_ench [2] != 6)
 				{
-					strcat(info, " gazes.");
-					mpr(info);
+					msg("@1 gazes.") << monster;
 				}
 			} else
 				if (menv [i].m_class == MONS_VAPOUR) // vapour
@@ -1440,51 +1374,38 @@ if (mons_near(i) == 1)
 					{
 						if (menv [i].m_ench [2] != 6)
 						{
-							strcat(info, " pulsates.");
-							mpr(info);
+							msg("@1 pulsates.") << monster;
 						}
 					} else
 						if (menv [i].m_class == MONS_GERYON)
 						{
-							strcat(info, " winds a great silver horn.");
-							mpr(info);
+							msg("@1 winds a great silver horn.") << monster;
 						} else
 							if (menv [i].m_class == MONS_NAGA || menv [i].m_class == MONS_NAGA_WARRIOR)
 							{
-								strcat(info, " spits poison.");
-								mpr(info);
+								msg("@1 spits poison.") << monster;
 							} else
 								if ((menv [i].m_class >= MONS_HELLION && menv [i].m_class <= 90) || menv [i].m_class == MONS_EFREET || (menv [i].m_class >= MONS_WHITE_IMP && menv [i].m_class <= MONS_CACODEMON))
 								{
-									strcat(info, " gestures.");
-									mpr(info);
+									msg("@1 gestures.") << monster;
 								} else
 									if (menv [i].m_class == MONS_DORGI || menv [i].m_class == MONS_GUARDIAN_ROBOT)
 									{
-										strcat(info, " fires!");
-										mpr(info);
+										msg("@1 fires!") << monster;
 									} else
 										if (menv [i].m_class == MONS_SWORD) /* Sword */
 										{
-											strcat(info, " burns!");
-											mpr(info);
+											msg("@1 burns!") << monster;
 										} else {
 											if (strstr(monam (menv [i].m_sec, menv [i].m_class, 0, 0).c_str(), "priest") != NULL) /* various priestly types - assumes they're called 'something priest' */
 											{
-												strcat(info, " utters an invocation.");
-												mpr(info);
+												msg("@1 utters an invocation.") << monster;
 											} else
 											{
-												strcat(info, " executes a program.");
-												mpr(info);
+												msg("@1 executes a program.") << monster;
 											}
 										}
 	}
-/*
-itoa(spell_cast, st_prn, 10);
-strcpy(info, st_prn);
-mpr(info);
-*/
 
 } // end of if mons_near
  else if (menv [i].m_class == MONS_GERYON)
@@ -1497,9 +1418,7 @@ if (spell_cast == 16)
 {
  if (mons_near(i) == 1)
 	{
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
-		strcat(info, " jumps!");
-		mpr(info);
+		msg("@1 jumps!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
   monster_blink(i);
   continue;
  }
@@ -1726,11 +1645,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
  if (mitm.idam [menv [i].m_inv [0]] % 30 == SPWPN_PROTECTION) menv [i].m_AC += 3;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " picks up ");
-	strcat(info, it_name(menv [i].m_inv [0], 3).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+ msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(menv [i].m_inv [0], 3);
+ }
 /*	mmov_x = 0; mmov_y = 0;*/
 	break;
 
@@ -1738,11 +1655,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	if (menv [i].m_inv [1] != 501 && mitm.itype [menv [i].m_inv [1]] == mitm.itype [igrd [menv [i].m_x] [menv [i].m_y]] && mitm.iplus [menv [i].m_inv [1]] == mitm.iplus [igrd [menv [i].m_x] [menv [i].m_y]] && mitm.idam [menv [i].m_inv [1]] == mitm.idam [igrd [menv [i].m_x] [menv [i].m_y]])
     /* Removed check for item_plus2 - probably irrelevant */
 	{
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-		strcat(info, " picks up ");
-		strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 3).c_str());
-		strcat(info, ".");
-		if (mons_near(i)) mpr(info);
+		if (mons_near(i)) {
+			msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(igrd [menv [i].m_x] [menv [i].m_y], 3);
+		}
 		mitm.iquant [menv [i].m_inv [1]] += mitm.iquant [igrd [menv [i].m_x] [menv [i].m_y]];
 		mitm.iquant [igrd [menv [i].m_x] [menv [i].m_y]] = 0;
 		igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
@@ -1756,11 +1671,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [1] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " picks up ");
-	strcat(info, it_name(menv [i].m_inv [1], 3).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+	 msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(menv [i].m_inv [1], 3);
+ }
 /*	mmov_x = 0; mmov_y = 0;*/
 	break;
 
@@ -1770,11 +1683,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [5] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " picks up ");
-	strcat(info, it_name(menv [i].m_inv [5], 3).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+	 msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(menv [i].m_inv [5], 3);
+ }
 /*	mmov_x = 0; mmov_y = 0;*/
 	break;
 
@@ -1784,11 +1695,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [6] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " picks up ");
-	strcat(info, it_name(menv [i].m_inv [6], 3).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+	 msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(menv [i].m_inv [6], 3);
+ }
 /*	mmov_x = 0; mmov_y = 0;*/
 	break;
 
@@ -1798,11 +1707,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
 	menv [i].m_inv [4] = igrd [menv [i].m_x] [menv [i].m_y];
 	igrd [menv [i].m_x] [menv [i].m_y] = mitm.ilink [igrd [menv [i].m_x] [menv [i].m_y]];
  mitm.ilink [menv [i].m_inv [0]] = 501;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " picks up ");
-	strcat(info, it_name(menv [i].m_inv [4], 3).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+	 msg("@1 picks up @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(menv [i].m_inv [4], 3);
+ }
 /*	mmov_x = 0; mmov_y = 0;*/
 	break;
 
@@ -1812,11 +1719,9 @@ switch(mitm.iclass [igrd [menv [i].m_x] [menv [i].m_y]])
  menv [i].m_hp += random2(mons_weight(mitm.iplus [igrd [menv [i].m_x] [menv [i].m_y]])) / 100 + 1;
  if (menv [i].m_hp > 77) menv [i].m_hp = 77;
  if (menv [i].m_hp > menv [i].m_hp_max) menv [i].m_hp_max = menv [i].m_hp;
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
- strcat(info, " eats ");
- strcat(info, it_name(igrd [menv [i].m_x] [menv [i].m_y], 1).c_str());
- strcat(info, ".");
- if (mons_near(i)) mpr(info);
+ if (mons_near(i)) {
+	 msg("@1 eats @2.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << it_name(igrd [menv [i].m_x] [menv [i].m_y], 1);
+ }
  destroy_item(igrd [menv [i].m_x] [menv [i].m_y]);
  break;
 
@@ -1831,8 +1736,8 @@ if (menv [i].m_speed_inc > 25) menv [i].m_speed_inc -= menv [i].m_speed;
 
 void monster_move(int i)
 {
-char which_first = random2(2);
-char good_move [3] [3];
+int which_first = random2(2);
+int good_move [3] [3];
 int count_x, count_y, vacated_x, vacated_y;
 //mmov_x = 0;
 //mmov_y = 0;
@@ -2158,8 +2063,8 @@ if (menv [i].m_class == MONS_EFREET || menv [i].m_class == MONS_FIRE_ELEMENTAL) 
 
 	if (menv [i].m_class == MONS_TUNNELING_WORM && mgrd [vacated_x] [vacated_y] == MNG && (mmov_x != 0 || mmov_y != 0)) //(mmov_x != 0 || mmov_y != 0)) // worm
 	{
-		char vac_x_2 = vacated_x; //menv [i].m_x;
-		char vac_y_2 = vacated_y; //menv [i].m_y;
+		int vac_x_2 = vacated_x; //menv [i].m_x;
+		int vac_y_2 = vacated_y; //menv [i].m_y;
 
 		mgrd [menv [i].m_x] [menv [i].m_y] = i;
 
@@ -2220,9 +2125,7 @@ void plant_spit(int i, struct bolt beam [1])
 {
 if (mons_near(i) == 0) return;
 
-strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-  strcat(info, " spits at you.");
-  mpr(info);
+  msg("@1 spits at you.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
 
 beam[0].move_x = beam[0].trac_targ_x - menv [i].m_x;
 beam[0].move_y = beam[0].trac_targ_y - menv [i].m_y;
@@ -2274,9 +2177,9 @@ switch(env[0].cloud_type [wc] % 100)
 
 	case 1: // fire
   if (menv [i].m_class == MONS_FIRE_VORTEX || menv [i].m_class == MONS_EFREET || menv [i].m_class == MONS_FIRE_ELEMENTAL) break; // fire vortex, efreet, and fire elemental
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [menv [i].m_class]);
-	strcat(info, " is engulfed in flame!");
-	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) mpr(info); // efreet
+	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) {
+		msg("@1 is engulfed in flame!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+	}
    if (mons_res_fire(menv [i].m_class) > 0) break;
 	hurted += ((random2(8) + random2(5) + random2(5) + 6) * 10) / menv [i].m_speed;
  if (mons_res_fire(menv [i].m_class) < 0 && !(menv [i].m_inv [2] != 501 && mitm.idam [menv [i].m_inv [2]] % 30 == 2)) hurted += (random2(15) * 10) / menv [i].m_speed;
@@ -2296,9 +2199,9 @@ switch(env[0].cloud_type [wc] % 100)
 	break;
 
    case 2: // stinking cloud
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " is engulfed in noxious gasses!");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+	   msg("@1 is engulfed in noxious gasses!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   }
 
    if (mons_res_poison(menv [i].m_class) > 0) return;
 
@@ -2321,9 +2224,9 @@ switch(env[0].cloud_type [wc] % 100)
 
 
  case 3: // cold
-	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
-	strcat(info, " is engulfed in freezing vapours!");
- if (mons_near(i) == 1) mpr(info);
+ if (mons_near(i) == 1) {
+	msg("@1 is engulfed in freezing vapours!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+ }
    if (mons_res_cold(menv [i].m_class) > 0) break;
 	hurted += ((random2(8) + random2(5) + random2(5) + 6) * 10) / menv [i].m_speed;
  if (mons_res_cold(menv [i].m_class) < 0 && !(menv [i].m_inv [2] != 501 && mitm.idam [menv [i].m_inv [2]] % 30 == 3)) hurted += (random2(15) * 10) / menv [i].m_speed;
@@ -2343,9 +2246,9 @@ switch(env[0].cloud_type [wc] % 100)
 	break;
 
    case 4: // you[0].poison cloud
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " is engulfed in a cloud of poison!");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+	   msg("@1 is engulfed in a cloud of poison!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   }
    if (mons_res_poison(menv [i].m_class) > 0) return;
    if (env[0].cloud_type [wc] >= 100) poison_monster(i, 1); // something else
 								else poison_monster(i, 0);
@@ -2364,9 +2267,9 @@ switch(env[0].cloud_type [wc] % 100)
 
   case 8: // steam - I couldn't be bothered doing this for armour of res fire
   if (menv [i].m_class == MONS_STEAM_DRAGON) break;
-  	strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
-	strcat(info, " is engulfed in steam!");
-	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) mpr(info); // efreet
+	if (mons_near(i) == 1 && menv [i].m_class != MONS_EFREET) {
+		msg("@1 is engulfed in steam!") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+	}
    if (mons_res_fire(menv [i].m_class) > 0 || (menv [i].m_inv [2] != 501 && mitm.idam [menv [i].m_inv [2]] % 30 == 2)) break;
 	hurted += (random2(6) * 10) / menv [i].m_speed;
  if (mons_res_fire(menv [i].m_class) < 0 && !(menv [i].m_inv [2] != 501 && mitm.idam [menv [i].m_inv [2]] % 30 == 2)) hurted += (random2(6) * 10) / menv [i].m_speed;
@@ -2382,9 +2285,9 @@ switch(env[0].cloud_type [wc] % 100)
 
 
   case 9: // dark miasma
-   strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-   strcat(info, " is engulfed in a dark miasma.");
-   if (mons_near(i) == 1) mpr(info);
+   if (mons_near(i) == 1) {
+	   msg("@1 is engulfed in a dark miasma.") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0);
+   }
    if (mons_holiness(menv [i].m_class) > 0) return;
    if (env[0].cloud_type [wc] >= 100) poison_monster(i, 1); // something else
 	else poison_monster(i, 0);
@@ -2410,72 +2313,49 @@ switch(env[0].cloud_type [wc] % 100)
 
 }
 
-
-char mons_speaks(int i)
+std::string random_dorgi_scream()
 {
-
-if (menv [i].m_beh == BEH_FLEE) return 0;
-
-strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str());
-
-switch(menv [i].m_class)
-{
- case MONS_DORGI: // dorgi
- switch(random2(10))
- {
-  case 0: mpr(" screams \"HALT!\""); break;
-  case 1: mpr(" screams \"HALT! HALT RIGHT NOW!\""); break;
-  case 2: mpr(" screams \"HALT, OR YOU WILL BE ELIMINATED!\""); break;
-  case 3: mpr(" screams \"HALT OR I SHOOT!\""); break;
-  case 4: mpr(" screams \"DROP YOUR WEAPONS! UP AGAINST THE WALL!\""); break;
-  case 5: mpr(" screams \"PREPARE TO DIE!\""); break;
-  case 6: mpr(" screams \"SUBMIT OR DIE!\""); break;
-  case 7: mpr(" screams \"YOU ARE VIOLATING AREA SECURITY!\""); break;
-  case 8: mpr(" screams \"SUBMIT TO THERAPY OR DIE!\""); break;
-  case 9: mpr(" screams \"HALT, TRESPASSER!\""); break;
- }
- break;
-
- case MONS_KILLER_KLOWN: // Killer Klown
- switch(random2(10))
- {
-  case 0: mpr(" giggles crazily."); break;
-  case 1: mpr(" laughs merrily."); break;
-  case 2: mpr(" beckons to you."); break;
-  case 3: mpr(" does a flip."); break;
-  case 4: mpr(" does a somersault."); break;
-  case 5: mpr(" smiles at you."); break;
-  case 6: mpr(" grins with merry abandon."); break;
-  case 7: mpr(" howls with blood-lust!"); break;
-  case 8: mpr(" pokes out its tongue."); break;
-  case 9: mpr(" says \"Come and play with me!\""); break;
- }
- break;
-
-/* default:
- switch(random2(10))
- {
-  case 0: strcat(info, " laughs at you."); break;
-  case 1: strcat(info, " salutes you derisively."); break;
-  case 2: strcat(info, " beckons to you."); break;
-  case 3: strcat(info, " smiles in anticipation of an easy kill."); break;
-  case 4: strcat(info, " giggles maniacally."); break;
-  case 5: strcat(info, " ."); break;
-  case 6: strcat(info, " ."); break;
-  case 7: strcat(info, " ."); break;
-  case 8: strcat(info, " ."); break;
-  case 9: strcat(info, " ."); break;
- }
- mpr(info);
- break;*/
-
+	switch(random2(10)) {
+		case 0: return "HALT!";
+		case 1: return "HALT! HALT RIGHT NOW!";
+		case 2: return "HALT, OR YOU WILL BE ELIMINATED!";
+		case 3: return "HALT OR I SHOOT!";
+		case 4: return "DROP YOUR WEAPONS! UP AGAINST THE WALL!";
+		case 5: return "PREPARE TO DIE!";
+		case 6: return "SUBMIT OR DIE!";
+		case 7: return "YOU ARE VIOLATING AREA SECURITY!";
+		case 8: return "SUBMIT TO THERAPY OR DIE!";
+		case 9: return "HALT, TRESPASSER!";
+	}
+	return "";
 }
 
-return 1;
-
+std::string random_killer_klown_joke()
+{
+	switch(random2(10)) {
+		case 0: return "giggles crazily.";
+		case 1: return "laughs merrily.";
+		case 2: return "beckons to you.";
+		case 3: return "does a flip.";
+		case 4: return "does a somersault.";
+		case 5: return "smiles at you.";
+		case 6: return "grins with merry abandon.";
+		case 7: return "howls with blood-lust!";
+		case 8: return "pokes out its tongue.";
+		case 9: return "says \"Come and play with me!\"";
+	}
+	return "";
 }
 
-
-
-
+int mons_speaks(int i)
+{
+	if (menv [i].m_beh == BEH_FLEE) {
+		return 0;
+	}
+	switch(menv [i].m_class) {
+		case MONS_DORGI: msg("@1 screams \"@2\"") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << random_dorgi_scream(); break;
+		case MONS_KILLER_KLOWN: msg("@1 @2") << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << random_killer_klown_joke(); break;
+	}
+	return 1;
+}
 

@@ -1,6 +1,7 @@
 
 #include "linuxlib.h"
 
+#include <algorithm>
 #include <string.h>
 
 #include "externs.h"
@@ -632,7 +633,7 @@ void tome_of_power(int sc_read_2)
 {
 int powc = 0;
 int spell_casted = 0;
-char keyin = 0;
+int keyin = 0;
 struct bolt beam [1];
 
 
@@ -771,11 +772,16 @@ your_spells(spell_casted, powc, 0);
 
 }
 
+std::string string_tolower(const std::string & value)
+{
+	std::string result = value;
+	std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+	return result;
+}
 
 void skill_manual(int sc_read_2)
 {
-char skname [30];
-char keyin;
+int keyin;
 
 msg("This is a manual of @1!") << skill_name(you[0].inv_plus [sc_read_2]);
 
@@ -803,9 +809,7 @@ read_it:
 you[0].inv_ident [sc_read_2] = 3;
 you[0].turnover = 1;
 
-strcpy(skname, skill_name(you[0].inv_plus [sc_read_2]));
-
-msg("You read about @1.") << strlwr(skname);
+msg("You read about @1.") << string_tolower(skill_name(you[0].inv_plus [sc_read_2]));
 
 exercise(you[0].inv_plus [sc_read_2], 100);
 

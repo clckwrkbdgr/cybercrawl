@@ -20,6 +20,8 @@
 #include "stuff.h"
 #include "view.h"
 
+char info[200];
+
 int mons_spells(char spell_cast, int func_pass [10], char beam_name [30]);
 void itrap(struct bolt beam [1], int trapped);
 int monster_abjuration(int pow, char test);

@@ -1,6 +1,7 @@
 
 #include "linuxlib.h"
 
+#include <vector>
 #include <string.h>
 #include <stdlib.h>
 
@@ -22,7 +23,6 @@
 #include "skills.h"
 #include "stuff.h"
 
-char info[200];
 
 int add_item(int item_got, int it_quant);
 void item_place(int item_drop_2, int x_plos, int y_plos, int quant_drop);
@@ -33,158 +33,136 @@ int last_item = ING;
 
 extern int wield_change; /* defined in output.cc */
 
+void print_structure_under_hero()
+{
+	if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 69 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 210)
+	{
+		if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 82 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 85)
+		{
+			if (env[0].grid [you[0].x_pos] [you[0].y_pos] == 85) mpr("There is a rock staircase leading down here.");
+			else	mpr("There is a stone staircase down here.");
+		} else
+			if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 86 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 89)
+			{
+				if (env[0].grid [you[0].x_pos] [you[0].y_pos] == 89) mpr("There is a rock staircase leading upwards here.");
+				else	mpr("There is a stone staircase up here.");
+			} else
+				switch(env[0].grid [you[0].x_pos] [you[0].y_pos])
+				{
+					case 69: mpr("There is a gateway to Facilities here."); break;
+					case 80: mpr("There is an entrance to a store here."); break;
+					case 81: mpr("There is an entrance to a labyrinth here.");
+							 mpr("Beware, for starvation awaits!"); break;
+					case 92: mpr("There is a gateway to the Iron Works here."); break;
+					case 93: mpr("There is a gateway to Refueling Base here."); break;
+					case 94: mpr("There is a gateway to the frozen wastes of Cooling Plants here."); break;
+					case 95: mpr("There is a gateway to Cyborg Researchs here."); break;
+					case 96: mpr("There is a one-way gate to the infinite horrors of the Dump here."); break;
+					case 97: mpr("There is a gateway leading out of the Dump here."); break;
+					case 98: mpr("There is an opened blast door here."); break;
+					case 99: mpr("There is a gate leading to the halls of Bioengineerings here."); break;
+					case 100: mpr("There is a gate leading out of Bioengineerings here."); break;
+					case 101: mpr("There is a gate leading to another region of Bioengineerings here."); break;
+
+					case 110: mpr("There is a staircase to the Terrorists Lair here."); break;
+					case 111: mpr("There is a staircase to the Hive here."); break;
+					case 112: mpr("There is a staircase to the Biodome here."); break;
+					case 113: mpr("There is a staircase to the Waste Pits here."); break;
+					case 114: mpr("There is a staircase to the Storage Area here."); break;
+					case 115: mpr("There is a staircase to the Cyborg Manufactory here."); break;
+					case 116: mpr("There is a staircase to the Armory here."); break;
+					case 117: mpr("There is a gate to the Vault of Alice here."); break;
+					case 118: mpr("There is a staircase to the Terminal Hub here."); break;
+					case 119: mpr("There is a staircase to the Snake Pit here."); break;
+					case 120: mpr("There is a staircase to the Ninja Palace here."); break;
+					case 121: mpr("There is a staircase to the Cyborg Hub here."); break;
+					case 122: mpr("There is a staircase to the Greenhouse here."); break;
+					case 130:
+					case 131:
+					case 134:
+					case 138:
+					case 132: mpr("There is a staircase back to the Installation here."); break;
+					case 142: mpr("There is a staircase back to the Biodome here."); break;
+					case 133: mpr("There is a staircase back to the Biodome here."); break;
+					case 135: mpr("There is a staircase back to the Storage Area here."); break;
+					case 141:
+					case 136: mpr("There is a staircase back to the Cyborg Manufactory here."); break;
+					case 139: mpr("There is a staircase back to the Biodome here."); break;
+					case 140: mpr("There is a staircase back to the Terrorists here."); break;
+					case 137: mpr("There is a gate leading back out of this place here."); break;
+
+					case 180: mpr("There is a glowing white marble terminal of Knights Templar here."); break;
+					case 181: mpr("There is a glowing golden terminal of the UNATCO here."); break;
+					case 182: mpr("There is an ancient bone terminal of Manticore here."); break;
+					case 183: mpr("There is a basalt terminal of NSF here."); break;
+					case 184: mpr("There is a shimmering terminal of The Anonimous here."); break;
+					case 185: mpr("There is a shining terminal of Digicorp here."); break;
+					case 186: mpr("There is an iron terminal of S.T.A.R.S. here."); break;
+					case 187: mpr("There is a burning terminal of Netchaos Order here."); break;
+					case 188: mpr("There is a deep blue terminal of Black Mesa Research Facilities here."); break;
+					case 189: mpr("There is a bloodstained terminal of Human Liberation Front here."); break;
+					case 190: mpr("There is a sparkling terminal of Triads here."); break;
+					case 191: mpr("There is a silver terminal of Aperture Labs here."); break;
+
+					case 200: mpr("There is a water conduit here."); break;
+					case 202: mpr("There is a sparkling water conduit here."); break;
+					case 201:
+					case 203:
+					case 205:
+					case 207:
+					case 209:
+					case 210: mpr("There is a dry water conduit here."); break;
+
+				}
+	}
+}
+
 /*
 Takes keyin as an argument because it will only display a long list of items
  if ; is pressed.
 */
 void item_check(int keyin)
 {
-char item_show [50] [50];
-char temp_quant [10];
+	std::vector<std::string> lines;
+	print_structure_under_hero();
+	bool explicit_description = (keyin == ';');
 
-int counter = 0;
-int counter_max = 0;
-if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 69 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 210)
-{
- if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 82 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 85)
- {
-  if (env[0].grid [you[0].x_pos] [you[0].y_pos] == 85) mpr("There is a rock staircase leading down here.");
-   else	mpr("There is a stone staircase down here.");
- } else
- if (env[0].grid [you[0].x_pos] [you[0].y_pos] >= 86 && env[0].grid [you[0].x_pos] [you[0].y_pos] <= 89)
- {
-  if (env[0].grid [you[0].x_pos] [you[0].y_pos] == 89) mpr("There is a rock staircase leading upwards here.");
-   else	mpr("There is a stone staircase up here.");
- } else
-switch(env[0].grid [you[0].x_pos] [you[0].y_pos])
-{
-  case 69: mpr("There is a gateway to Facilities here."); break;
-  case 80: mpr("There is an entrance to a store here."); break;
-  case 81: mpr("There is an entrance to a labyrinth here.");
-  mpr("Beware, for starvation awaits!"); break;
-  case 92: mpr("There is a gateway to the Iron Works here."); break;
-  case 93: mpr("There is a gateway to Refueling Base here."); break;
-  case 94: mpr("There is a gateway to the frozen wastes of Cooling Plants here."); break;
-  case 95: mpr("There is a gateway to Cyborg Researchs here."); break;
-  case 96: mpr("There is a one-way gate to the infinite horrors of the Dump here."); break;
-  case 97: mpr("There is a gateway leading out of the Dump here."); break;
-  case 98: mpr("There is an opened blast door here."); break;
-  case 99: mpr("There is a gate leading to the halls of Bioengineerings here."); break;
-  case 100: mpr("There is a gate leading out of Bioengineerings here."); break;
-  case 101: mpr("There is a gate leading to another region of Bioengineerings here."); break;
-
-  case 110: mpr("There is a staircase to the Terrorists Lair here."); break;
-  case 111: mpr("There is a staircase to the Hive here."); break;
-  case 112: mpr("There is a staircase to the Biodome here."); break;
-  case 113: mpr("There is a staircase to the Waste Pits here."); break;
-  case 114: mpr("There is a staircase to the Storage Area here."); break;
-  case 115: mpr("There is a staircase to the Cyborg Manufactory here."); break;
-  case 116: mpr("There is a staircase to the Armory here."); break;
-  case 117: mpr("There is a gate to the Vault of Alice here."); break;
-  case 118: mpr("There is a staircase to the Terminal Hub here."); break;
-  case 119: mpr("There is a staircase to the Snake Pit here."); break;
-  case 120: mpr("There is a staircase to the Ninja Palace here."); break;
-  case 121: mpr("There is a staircase to the Cyborg Hub here."); break;
-  case 122: mpr("There is a staircase to the Greenhouse here."); break;
-  case 130:
-  case 131:
-  case 134:
-  case 138:
-  case 132: mpr("There is a staircase back to the Installation here."); break;
-  case 142: mpr("There is a staircase back to the Biodome here."); break;
-  case 133: mpr("There is a staircase back to the Biodome here."); break;
-  case 135: mpr("There is a staircase back to the Storage Area here."); break;
-  case 141:
-  case 136: mpr("There is a staircase back to the Cyborg Manufactory here."); break;
-  case 139: mpr("There is a staircase back to the Biodome here."); break;
-  case 140: mpr("There is a staircase back to the Terrorists here."); break;
-  case 137: mpr("There is a gate leading back out of this place here."); break;
-
-  case 180: mpr("There is a glowing white marble terminal of Knights Templar here."); break;
-  case 181: mpr("There is a glowing golden terminal of the UNATCO here."); break;
-  case 182: mpr("There is an ancient bone terminal of Manticore here."); break;
-  case 183: mpr("There is a basalt terminal of NSF here."); break;
-  case 184: mpr("There is a shimmering terminal of The Anonimous here."); break;
-  case 185: mpr("There is a shining terminal of Digicorp here."); break;
-  case 186: mpr("There is an iron terminal of S.T.A.R.S. here."); break;
-  case 187: mpr("There is a burning terminal of Netchaos Order here."); break;
-  case 188: mpr("There is a deep blue terminal of Black Mesa Research Facilities here."); break;
-  case 189: mpr("There is a bloodstained terminal of Human Liberation Front here."); break;
-  case 190: mpr("There is a sparkling terminal of Triads here."); break;
-  case 191: mpr("There is a silver terminal of Aperture Labs here."); break;
-
-  case 200: mpr("There is a water conduit here."); break;
-  case 202: mpr("There is a sparkling water conduit here."); break;
-  case 201:
-  case 203:
-  case 205:
-  case 207:
-  case 209:
-  case 210: mpr("There is a dry water conduit here."); break;
-
- }
-}
-
-
-
-if (env[0].igrid [you[0].x_pos] [you[0].y_pos] == ING)
-{
- if (keyin == ';') mpr("There are no items here.");
- return;
-}
-
-int objl = env[0].igrid [you[0].x_pos] [you[0].y_pos];
-int hrg = 0;
-
-while(objl != 501)
-{
-			counter++;
-
-			if (counter > 45)
-			{
-			     strcpy(item_show [counter], "Too many items.");
-			     break;
-			}
-			if (mitm.iclass [objl] == 15)
-			{
-			 itoa(mitm.iquant [objl], temp_quant, 10);
-			 strcpy(item_show [counter], temp_quant);
-			 if (mitm.iquant [objl] > 1) strcat(item_show [counter], " credit chips");
-			  else strcat(item_show [counter], " credit chip");
-			 goto linking; //continue;
-			}
-		strcpy(item_show [counter], it_name(objl, 3).c_str());
-linking : hrg = mitm.ilink [objl];
-objl = hrg;
-}
-
-counter_max = counter;
-counter = 0;
-
-
-if (counter_max == 1)
-{
-	msg("You see here @1.") << item_show [counter_max]; // remember 'an'.
-	counter++;
-	counter_max = 0; // to skip next part.
-}
-
-
-if ((counter_max > 0 && counter_max < 6) || (counter_max > 1 && keyin == 59))
-{
-	mpr("Things that are here:");
-	while (counter < counter_max)
+	int objl = env[0].igrid [you[0].x_pos] [you[0].y_pos];
+	int hrg = 0;
+	while(objl != ING && lines.size() <= 45)
 	{
-		counter++; // this is before the strcpy because item_show start at 1, not 0.
-		mpr(item_show [counter]);
+		if (mitm.iclass [objl] == 15)
+		{
+			Format format("@1 credit chip@2");
+			format << mitm.iquant [objl] << ((mitm.iquant [objl] > 1) ? "s" : "");
+			lines.push_back(format.str());
+		} else {
+			lines.push_back(it_name(objl, 3));
+		}
+		hrg = mitm.ilink [objl];
+		objl = hrg;
 	}
-}
+	if(lines.size() > 45) {
+		lines.push_back("Too many items.");
+	}
 
-if (counter_max > 5 && keyin != 59)
-	{
+	if(lines.size() == 0 && explicit_description) {
+		mpr("There are no items here.");
+		return;
+	}
+	if (lines.size() == 1) {
+		msg("You see here @1.") << lines[0]; // remember 'an'.
+		return;
+	}
+	if ((lines.size() > 0 && lines.size() < 6) || (lines.size() > 1 && explicit_description)) {
+		mpr("Things that are here:");
+		for(std::vector<std::string>::const_iterator s = lines.begin(); s != lines.end(); s++) {
+			msg(*s);
+		}
+	}
+	if(lines.size() > 5) {
 		mpr("There are several objects here.");
 	}
-
 }
 
 
@@ -496,8 +474,6 @@ for (m = 0; m < 52; m++)
 		burden_change();
 
 			msg("@1 - @2") << char((m <= 25) ? (m + 97) : (m + 39)) << in_name(m, 3);
-
-			mpr(info);
 
 if (mitm.iclass [item_got] == 12 && you[0].char_direction == 0)
 {

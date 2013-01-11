@@ -94,9 +94,6 @@ for (c = 2; c < 79; c ++)
  }
 }
 
-//strcpy(info, "Warning: Invalid item destroyed!");
-//mpr(info);
-//more();
 
 } // end void destroy_item(int dest)
 
@@ -472,9 +469,6 @@ if (you[0].where_are_you == 3)
 
 if (you[0].where_are_you > 0 && you[0].where_are_you != 3 && you[0].where_are_you < 10)
 {
-/* strcpy(info, "You hear a howl of diabolical anger from deep beneath you!");
- mpr(info);
- more();*/
  you[0].where_are_you = 3;
  you[0].your_level = 27;
 }
@@ -647,63 +641,62 @@ if ((grd [you[0].x_pos] [you[0].y_pos] >= 92 && grd [you[0].x_pos] [you[0].y_pos
 {
  switch(grd [you[0].x_pos] [you[0].y_pos])
  {
-  case 92: strcpy(info, "Welcome to the Iron Works!");
+  case 92: msg("Welcome to the Iron Works!");
   you[0].where_are_you = 1;
   you[0].your_level = 26;
   break;
-  case 93: strcpy(info, "Welcome to Refueling Base!");
+  case 93: msg("Welcome to Refueling Base!");
   you[0].where_are_you = 2;
   you[0].your_level = 26;
   break;
-  case 94: strcpy(info, "Welcome to Cooling Plants!");
+  case 94: msg("Welcome to Cooling Plants!");
   you[0].where_are_you = 4;
   you[0].your_level = 26;
   break;
-  case 95: strcpy(info, "Welcome to Cyborg Research Labs!");
+  case 95: msg("Welcome to Cyborg Research Labs!");
   you[0].where_are_you = 5;
   you[0].your_level = 26;
   break;
-  case 110: strcpy(info, "Welcome to the Terrorists Lair!");
+  case 110: msg("Welcome to the Terrorists Lair!");
   you[0].where_are_you = 10;
   break;
-  case 111: strcpy(info, "You hear a buzzing sound coming from all directions.");
+  case 111: msg("You hear a buzzing sound coming from all directions.");
   you[0].where_are_you = 11;
   break;
-  case 112: strcpy(info, "Welcome to the Biodome!");
+  case 112: msg("Welcome to the Biodome!");
   you[0].where_are_you = 12;
   break;
-  case 113: strcpy(info, "Welcome to the Pits of Waste!");
+  case 113: msg("Welcome to the Pits of Waste!");
   you[0].where_are_you = 13;
   break;
-  case 114: strcpy(info, "Welcome to the Storage Area!");
+  case 114: msg("Welcome to the Storage Area!");
   you[0].where_are_you = 14;
   break;
-  case 115: strcpy(info, "Welcome to the Cyborg Manufactory!");
+  case 115: msg("Welcome to the Cyborg Manufactory!");
   you[0].where_are_you = 15;
   break;
-  case 116: strcpy(info, "Welcome to the Armory!");
+  case 116: msg("Welcome to the Armory!");
   you[0].where_are_you = 16;
   break;
-  case 117: strcpy(info, "Welcome to the Hall of Alice!");
+  case 117: msg("Welcome to the Hall of Alice!");
   you[0].where_are_you = 17;
   break;
-  case 118: strcpy(info, "Welcome to the Terminal Hub!");
+  case 118: msg("Welcome to the Terminal Hub!");
   you[0].where_are_you = 18;
   break;
-  case 119: strcpy(info, "Welcome to the Snake Pit!");
+  case 119: msg("Welcome to the Snake Pit!");
   you[0].where_are_you = 19;
   break;
-  case 120: strcpy(info, "Welcome to the Ninja Palace!");
+  case 120: msg("Welcome to the Ninja Palace!");
   you[0].where_are_you = 20;
   break;
-  case 121: strcpy(info, "Welcome to the Cyborg Hub!");
+  case 121: msg("Welcome to the Cyborg Hub!");
   you[0].where_are_you = 21;
   break;
-  case 122: strcpy(info, "Welcome to the Greenhouse!");
+  case 122: msg("Welcome to the Greenhouse!");
   you[0].where_are_you = 22;
   break;
  }
- mpr(info);
 }
 
 if (grd [you[0].x_pos] [you[0].y_pos] == 81)
@@ -794,12 +787,12 @@ int pt = random2(10) + random2(10) + random2(10);
 
 if (you[0].level_type == 1)
 {
- strcpy(info, "You enter a dark and forbidding labyrinth.");
+ msg("You enter a dark and forbidding labyrinth.");
 } else
 if (you[0].level_type == 2)
 {
  mpr("You enter the Dump!");
- strcpy(info, "To return, you must find a gate leading back.");
+ msg("To return, you must find a gate leading back.");
  grd [you[0].x_pos] [you[0].y_pos] = 67;
  you[0].your_level --;
  init_pandemonium(); /* colours only */
@@ -808,14 +801,14 @@ if (you[0].level_type == 3)
 {
 if (old_level_type == 3)
 {
- strcpy(info, "You pass into a different region of Bioengineerings.");
+ msg("You pass into a different region of Bioengineerings.");
  init_pandemonium();
  for (pc = 0; pc < pt; pc ++)
   pandemonium_mons();
 } else
 {
  mpr("You enter the halls of Bioengineerings!");
- strcpy(info, "To return, you must find a gate leading back.");
+ msg("To return, you must find a gate leading back.");
  init_pandemonium();
  for (pc = 0; pc < pt; pc ++)
   pandemonium_mons();
@@ -1198,51 +1191,6 @@ switch (trt)
 void disarm_trap(struct dist disa [1])
 {
 
-/*
-strcpy(info, "Disarm which trap?");
-mpr(info);
-strcpy(info, "Which direction?");
-mpr(info);
-struct dist disa [1];
-direction(0, disa);
-
-
-if (disa[0].nothing == -1)
-{
-	strcpy(info, "Huh?");
-	mpr(info);
-	return;
-}
-
-if (mgrd [you[0].x_pos + disa[0].move_x] [you[0].y_pos + disa[0].move_y] != MNG)
-{
-        strcpy(info, "Not there!");
-        mpr(info);
-        return;
-}
-
-if (disa[0].move_x > 1 || disa[0].move_y > 1)
-{
-	strcpy(info, "You can't reach that space.");
-	mpr(info);
-        return;
-}
-
-if (disa[0].move_x == 0 && disa[0].move_y == 0)
-{
-	strcpy(info, "You aren't a trap!");
-	mpr(info);
-        return;
-}
-
-if (grd [you[0].x_pos + disa[0].move_x] [you[0].y_pos + disa[0].move_y] < 75 || grd [you[0].x_pos + disa[0].move_x] [you[0].y_pos + disa[0].move_y] > 77)
-{
-	strcpy(info, "You can't see a trap there.");
-	mpr(info);
-        return;
-}
-*/
-
 if (you[0].berserker != 0)
 {
  mpr("You're in battle mode!");
@@ -1430,7 +1378,6 @@ switch(grype)
  case 62: mpr("You fall into the water!");break;
 }
 
-//mpr(info);
 more();
 mesclr();
 
