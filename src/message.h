@@ -4,7 +4,7 @@
 #include <sstream>
 
 // TODO Move all messaging from MPR to MSG.
-void mpr(const char * inf);
+void mpr(const std::string & inf);
 void more();
 void mesclr();
 void replay_messages();
@@ -58,7 +58,8 @@ public:
 		data->refCount--;
 		assert(data->refCount >= 0);
 		if(data->refCount == 0) {
-			mpr(data->format.str().c_str());
+			mpr(data->format.str());
+			//mpr(data->format.str().c_str());
 			delete data;
 		}
 	}

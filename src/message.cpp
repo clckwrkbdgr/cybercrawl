@@ -22,7 +22,7 @@ std::string to_string(int value, int width)
 	return out.str();
 }
 
-char scrloc = 1; // Line of next (previous?) message.
+int scrloc = 1; // Line of next (previous?) message.
 std::list<std::string> history;
 
 // Juho Snellman wrote this function.
@@ -47,7 +47,7 @@ void more()
 	_setcursortype(_NORMALCURSOR);
 	textcolor(7);
 	cprintf("\r--more--");
-	char keypress = 0;
+	int keypress = 0;
 	while (keypress != 32 && keypress != 13) {
 		keypress = getkey();
 	}
@@ -55,7 +55,7 @@ void more()
 	mesclr();
 } 
 
-void mpr(const char * inf)
+void mpr(const std::string & inf)
 {
 	you[0].running = 0;
 
@@ -65,11 +65,8 @@ void mpr(const char * inf)
 		more();
 	}
 
-	char info2 [80];
 	gotoxy(1, scrloc + 18);
-	strncpy(info2, inf, 78);
-	info2 [78] = 0;
-	cprintf(info2);
+	cprintf(std::string(inf, 0, 78).c_str());
 
 	history.push_back(inf);
 	while(history.size() > 23) {
