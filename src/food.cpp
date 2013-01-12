@@ -150,10 +150,10 @@ if (items_here == 1)
    } else {
 	   msg("Eat @1\?") << name;
    }
-   int keyin = getch();
+   int keyin = getkey();
    if (keyin == 0)
    {
-     getch();
+     getkey();
      keyin = 0;
    }
    if (keyin != 'y' && keyin != 'Y') return 0;
@@ -235,10 +235,10 @@ if (items_here > 1)
    } else {
 	   msg("Eat @1\?") << it_name(o, 3);
    }
-   keyin = getch();
+   keyin = getkey();
    if (keyin == 0)
    {
-     getch();
+     getkey();
      keyin = 0;
    }
 
@@ -395,10 +395,10 @@ if (items_here == 1)
 {
    if (mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14 || mitm.itype [igrd [you[0].x_pos] [you[0].y_pos]] != 0) goto out_of_eating;// && mitm.iclass [igrd [you[0].x_pos] [you[0].y_pos]] != 14) return 0;
 			msg("Butcher @1\?") << it_name(igrd [you[0].x_pos] [you[0].y_pos], 3);
-   int keyin = getch();
+   int keyin = getkey();
    if (keyin == 0)
    {
-     getch();
+     getkey();
      keyin = 0;
    }
    if (keyin != 'y' && keyin != 'Y') return 0;
@@ -443,10 +443,10 @@ if (items_here > 1)
 	{
 		    if (mitm.iclass [o] != 14 || mitm.itype [o] != 0) goto out_of_eating; // && mitm.iclass [o] != 14) goto out_of_eating;
 			msg("Butcher @1\?") << it_name(o, 3);
-   keyin = getch();
+   keyin = getkey();
    if (keyin == 0)
    {
-     getch();
+     getkey();
      keyin = 0;
    }
 

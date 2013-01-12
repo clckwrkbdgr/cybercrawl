@@ -50,7 +50,7 @@ void more()
 	cprintf("\r--more--");
 	char keypress = 0;
 	while (keypress != 32 && keypress != 13) {
-		keypress = getch();
+		keypress = getkey();
 	}
 
 	mesclr();
@@ -91,7 +91,7 @@ void replay_messages()
 		cprintf(EOL);
 	}
 
-	if (getch() == 0) getch();
+	if (getkey() == 0) getkey();
 	_setcursortype(_NORMALCURSOR);
 }
 

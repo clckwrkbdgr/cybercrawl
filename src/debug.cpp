@@ -16,6 +16,18 @@
 #include "mstruct.h"
 #include "skills.h"
 #include "spell.h"
+#include <curses.h>
+
+char getche()
+{
+        char chr;
+
+        chr = getch();
+        addch(chr);
+        refresh();
+        return(chr);
+}
+
 
 #define DEBUG
 

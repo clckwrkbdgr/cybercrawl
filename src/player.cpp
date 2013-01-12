@@ -1593,10 +1593,10 @@ mesclr();
  mpr("Increase Strength, Intelligence, or Dexterity? ");
 
 get_key:
-keyin = getch();
+keyin = getkey();
 if (keyin == 0)
 {
- getch();
+ getkey();
  goto get_key;
 }
 

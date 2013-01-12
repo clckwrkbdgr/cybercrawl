@@ -136,25 +136,7 @@ if (you[0].slow > 0) mons [i].m_speed_inc += (mons [i].m_speed * time_taken / 10
 
 //if (mons [i].m_speed >= 100) mons [i].m_speed_inc -= 100;
 
-
 // Note: Put regeneration before enchantments so that paralysed creatures still regenerate.
-
-/*
-if (grid [mons [i].m_x] [mons [i].m_y] >= 100)
-{
-	mons_in_cloud();
-// abort();
- if (mons_class [i] == -1)
-	{
-		mons [i].m_speed_inc = 1;
-		break;
-	}
-//	cout << "/" << (int) grid [mons [i].m_x] [mons [i].m_y] << "/";
-//	getch();
-}
-*/
-
-
 
 /*
 if (mons_near(i))
@@ -163,12 +145,6 @@ if (mons_near(i))
 	incrl();
 }
 */
-
-
-
-
-
-
 
 while (mons [i].m_speed_inc >= 80) // The continues & breaks are WRT this.
 {
@@ -194,32 +170,10 @@ if (cgrid [mons [i].m_x] [mons [i].m_y] != CNG)
 		mons [i].m_speed_inc = 1;
 		break;
 	}
-//	cout << "/" << (int) grid [mons [i].m_x] [mons [i].m_y] << "/";
-//	getch();
 }
-
-
-
-
-
-
-
-/*
-if (mons_near(i))
-{
-	strcpy(info, "x");
-	incrl();
-}
-//keyin = getch(); //cprintf("x");
-*/
-
-
-
 
 if (you[0].invis != 0 && mons_see_invis(mons [i].m_class) != 1 && mons [i].m_targ_1_x == mons [i].m_x && mons [i].m_targ_1_y == mons [i].m_y)
 	mons [i].m_beh = 2;
-
-
 
 //if (mons [i].m_beh == 0) continue; // if it hasn't found you yet.
 
@@ -361,32 +315,6 @@ switch (mons [i].m_ench [p])
 			mons [i].m_ench_1 = 0;
 	}
 	break;
-
-/*
-	case 3: // you[0].paralysis
-	//mons [i].m_targ_1_x = mons [i].m_x;
-	//mons [i].m_targ_1_y = mons [i].m_y;
-	//mons [i].m_beh = 0;
-	//mons [i].m_speed += 100;
-	if (random2(20) == 0 < mons_HD [i])
-	{
-//      cprintf("iggy");
-//      getch();
-//	   mons [i].m_speed -= 100;
-		//mons [i].m_ev += 5;
-		mons [i].m_ench [p] = 0;
-  mons [i].m_speed_inc = 0;
-		//mons [i].m_speed /= 2;
-		//mons [i].m_ench [p] = 0;
-		//mons [i].m_beh =
-		if (mons [i].m_ench [0] == 0 && mons [i].m_ench [1] == 0 && mons [i].m_ench [2] == 0)
-			mons [i].m_ench_1 = 0;
-	} else
-       {
-        mons [i].m_speed_inc = 0; // yuck!
-       }
-	break;
-*/
 
 	case 4: // fear
 	mons [i].m_beh = 3;

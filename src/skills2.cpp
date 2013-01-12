@@ -1874,9 +1874,9 @@ reprint_stuff:
 	cprintf("Press the letter of a skill to choose whether you want to practise it.");
    	char get_thing;
 
-   	get_thing = getch();
+   	get_thing = getkey();
 
-	if (get_thing == 0) getch();
+	if (get_thing == 0) getkey();
     	else {
          	if (get_thing < 97 || get_thing > 122) goto putty;
          	lcount = 0; // toggle skill practise

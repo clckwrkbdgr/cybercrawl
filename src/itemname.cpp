@@ -1774,7 +1774,7 @@ int check_item_knowledge(void)
 	if (inv_count == 0)
 	{
 		cprintf("You don't recognise anything yet!");
-		if (getch() == 0) getch();
+		if (getkey() == 0) getkey();
 		return 0;
 	}
 	textcolor(BLUE);
@@ -1794,7 +1794,7 @@ int check_item_knowledge(void)
 			if (lines > 23 && inv_count > 0) {
 				gotoxy(1,25);
 				cprintf("-more-");
-				ki = getch();
+				ki = getkey();
 				if (ki == 27) {
 					return 27;
 				}
@@ -1802,7 +1802,7 @@ int check_item_knowledge(void)
 					return ki;
 				}
 				if (ki == 0) {
-					ki = getch();
+					ki = getkey();
 				}
 				lines = 0;
 				clrscr();
@@ -1827,12 +1827,12 @@ int check_item_knowledge(void)
 	}
 
 	if (anything > 0) {
-		ki = getch();
+		ki = getkey();
 		if (ki >= 65 && ki < 123) {
 			return ki;
 		}
 		if (ki == 0) {
-			ki = getch();
+			ki = getkey();
 		}
 		return anything;
 	}

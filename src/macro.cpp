@@ -9,10 +9,6 @@
 #include <stdarg.h>
 #include <ctype.h>
 
-#define _LINUXLIB_IMPLEMENTATION
-
-#undef _LINUXLIB_IMPLEMENTATION
-
 #include "linuxlib.h"
 # include <curses.h>
 
@@ -257,7 +253,7 @@ int getch_mul(int size, int* buf)
 	signed int a;
 	int i = 0, b;
 	
-	buf[i++] = b = a = getch();
+	buf[i++] = b = a = getkey();
 
 	b = -1;
 
@@ -265,7 +261,7 @@ int getch_mul(int size, int* buf)
 	
 	while ( (kbhit() || b == 0 ) && i < size )
 	{
-		a = getch();
+		a = getkey();
 		b = a;
 		buf[i++] = a;
 		buf[i] = -1;

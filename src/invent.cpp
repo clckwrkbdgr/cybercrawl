@@ -55,7 +55,7 @@ int invent(int item_class_inv, int show_price)
 
 	if (inv_count == 0) {
 		cprintf("You aren't carrying anything.");
-		if (getch() == 0) getch();
+		if (getkey() == 0) getkey();
 		goto putty;
 	}
 
@@ -77,14 +77,14 @@ int invent(int item_class_inv, int show_price)
 				if (lines > 22) {
 					gotoxy(1,25);
 					cprintf("-more-");
-					ki = getch();
+					ki = getkey();
 					if (ki == 27) {
 						return 27;
 					}
 					if (ki >= 65 && ki < 123) {
 						return ki;
 					}
-					if (ki == 0) ki = getch();
+					if (ki == 0) ki = getkey();
 					lines = 0;
 					clrscr();
 					gotoxy(1,1);
@@ -116,14 +116,14 @@ int invent(int item_class_inv, int show_price)
 					if (lines > 23 && inv_count > 0) {
 						gotoxy(1,25);
 						cprintf("-more-");
-						ki = getch();
+						ki = getkey();
 						if (ki == 27) {
 							return 27;
 						}
 						if (ki >= 65 && ki < 123) {
 							return ki;
 						}
-						if (ki == 0) ki = getch();
+						if (ki == 0) ki = getkey();
 						lines = 0;
 						clrscr();
 						gotoxy(1,1);
@@ -180,11 +180,11 @@ int invent(int item_class_inv, int show_price)
 	}
 
 	if (anything > 0) {
-		ki = getch();
+		ki = getkey();
 		if (ki >= 65 && ki < 123) {
 			return ki;
 		}
-		if (ki == 0) ki = getch();
+		if (ki == 0) ki = getkey();
 		return anything;
 	}
 
@@ -221,7 +221,7 @@ void list_commands(void)
     j ++;
    }
 //   j ++;
-   getch();
+   getkey();
 
 //   cprintf("xxxxxxxxxxxxx");
 //   last_requested = 0;

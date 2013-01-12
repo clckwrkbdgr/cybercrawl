@@ -374,8 +374,8 @@ char more3(void)
  char keyin = 0;
  gotoxy(70,20);
  cprintf("-more-");
- keyin = getch();
- if (keyin == 0) getch();
+ keyin = getkey();
+ if (keyin == 0) getkey();
  clear_line();
  return keyin;
 }
@@ -397,8 +397,8 @@ return;
 char shop_getch(void)
 {
  char keyin = 0;
- keyin = getch();
- if (keyin == 0) getch();
+ keyin = getkey();
+ if (keyin == 0) getkey();
  return keyin;
 }
 

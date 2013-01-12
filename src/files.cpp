@@ -639,7 +639,7 @@ out_of_foll :
     env[0].sh_level[i]=*p++;
     if (mgrd[env[0].sh_x[i]-1][env[0].sh_y[i]-1]==31) {
       cprintf("x");
-      getch();
+      getkey();
     }
   }
 
@@ -804,7 +804,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
 			Format format("Error! Item out of bounds: @1");
 			format << frx;
           cprintf(format.str().c_str());
-          if (getch() == 0) getch();
+          if (getkey() == 0) getkey();
           cprintf(EOL);
           break;
         }
@@ -885,7 +885,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
     *p++=env[0].sh_level [i];
     if (mgrd [env[0].sh_x [i] - 1] [env[0].sh_y [i] - 1] == 31) {
       cprintf("y");
-      getch();
+      getkey();
     }
   }
 

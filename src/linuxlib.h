@@ -11,7 +11,6 @@
 void lincurses_startup();
 int cprintf (const char *format, ... );
 int putch(int chr);
-char getche();
 int window(int x1, int y1, int x2, int y2);
 int clrscr();
 void _setcursortype(int curstype);
@@ -23,14 +22,5 @@ void delay(int time);
 int kbhit();
 void textbackground(int bg);
 void lincurses_shutdown();
-
-#ifndef _LINUXLIB_IMPLEMENTATION
-/* Some stuff from curses, to remove compiling warnings.. */
-extern "C" {
-int getstr(char *);
-int getch(void);
-int noecho(void);
-int echo(void);
-}
-#endif
+int getkey();
 

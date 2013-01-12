@@ -359,7 +359,7 @@ void display_mutations(void)
 
    if (j == 0) cprintf("You aren't a mutant."EOL);
 
-   if (getch() == 0) getch();
+   if (getkey() == 0) getkey();
 //   cprintf("xxxxxxxxxxxxx");
 //   last_requested = 0;
 return;

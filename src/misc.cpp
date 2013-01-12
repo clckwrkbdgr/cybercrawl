@@ -1107,7 +1107,7 @@ void itrap(struct bolt beam [1], int trapped)
 
 
 				default:
-				getch();
+				getkey();
 				break;
 
 			}

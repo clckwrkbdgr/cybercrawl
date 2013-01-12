@@ -242,7 +242,7 @@ int main_look_cycle(int & xps, int & yps) // TODO References are bad.
 		mve_x = 0;
 		mve_y = 0;
 
-		gotch = getch();
+		gotch = getkey();
 		switch(gotch) {
 			case '.': return 0;
 			case 'b': mve_x = -1; mve_y = 1; break;
@@ -326,7 +326,7 @@ int dir_cursor(int rng)
 
 	if (rng == 100) return -9999;
 
-	keyy = getch();
+	keyy = getkey();
 
 	if (keyy != 0 && keyy != '*' && keyy != '.') {
 		switch(keyy) {
@@ -345,7 +345,7 @@ int dir_cursor(int rng)
 	}
 
 	if (keyy != '*' && keyy != '.') {
-		keyy = getch();
+		keyy = getkey();
 	}
 
 	switch(keyy) {

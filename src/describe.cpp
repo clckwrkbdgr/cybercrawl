@@ -372,7 +372,7 @@ void describe_monsters(int class_described)
 {
 	clrscr();
 	print_description(monster_description(class_described));
-	if(getch() == 0) getch();
+	if(getkey() == 0) getkey();
 }
 
 std::string describe_ordinary_weapon(int item_type)
@@ -1018,7 +1018,7 @@ void describe_item(int item_class, int item_type, int item_plus, int item_plus2,
 	Format format(item_description(item) + "It weighs around @1 aum. "); /* arbitrary unit of mass */
 	format << item_mass(item);
 	print_description(format.str());
-	if (getch() == 0) getch();
+	if (getkey() == 0) getkey();
 }
 
 /*
@@ -1291,7 +1291,7 @@ void describe_spell(int spelled)
 
 	clrscr();
 	print_description(description);
-	if (getch() == 0) getch();
+	if (getkey() == 0) getkey();
 }
 
 std::string corporation_description(int corporation_id)
@@ -1373,7 +1373,7 @@ void describe_god(int which_god)
 {
 	clrscr();
 	print_description(corporation_description(which_god));
-	if (getch() == 0) getch();
+	if (getkey() == 0) getkey();
 }
 
 /*

@@ -1288,9 +1288,6 @@ basic_level:	doorlevel = random3(11);
 	int kloppo = 0;
 
 	if (level_type == 3) goto finished_monsters;
-/*cprintf("1st:");
-if (getch() == 0) getch();
- item_bugs();*/
 
 
 	for (kloppo = 0; kloppo < bno_mons; kloppo ++)
@@ -1311,9 +1308,6 @@ if (getch() == 0) getch();
 
 	}
 
-/*cprintf("2nd:");
-if (getch() == 0) getch();
- item_bugs();*/
 
 // keep kloppo for later (aquatic monsters)
 

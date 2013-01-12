@@ -1231,10 +1231,10 @@ putch(buffer2 [bufcount2 - 2]);
  }
 }
    gotoxy(curs_x, curs_y);
-   gettything : getty = getch();
+   gettything : getty = getkey();
    if (spec_place [0] == 0 && getty != 0 && getty != '+' && getty != '-' && getty != 'h' && getty != 'j' && getty != 'k' && getty != 'l' && getty != 'y' && getty != 'u' && getty != 'b' && getty != 'n') goto putty;
    if (spec_place [0] == 1 && getty != 0 && getty != '+' && getty != '-' && getty != 'h' && getty != 'j' && getty != 'k' && getty != 'l' && getty != 'y' && getty != 'u' && getty != 'b' && getty != 'n' && getty != '.' && getty != 'S') goto gettything;
-   if (getty == 0) getty = getch();
+   if (getty == 0) getty = getkey();
 	switch(getty)
 	{
 		case 'b': move_x = -1; move_y = 1; break;

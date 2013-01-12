@@ -15,7 +15,6 @@
 #include <curses.h>
 #include <stdarg.h>
 #include <ctype.h>
-#define _LINUXLIB_IMPLEMENTATION
 #include "linuxlib.h"
 #include "defines.h"
 
@@ -23,6 +22,10 @@
 int FG_COL = COLOR_WHITE;
 int BG_COL = COLOR_BLACK;
 
+int getkey()
+{
+	return getch();
+}
 
 // Translate DOS colors to curses. 128 just means use high intens./bold.
 int translatecolor(int col)
@@ -103,17 +106,6 @@ int putch(int chr)
         if (chr == 0)
                 chr = ' ';
         return(addch(chr));
-}
-
-
-char getche()
-{
-        char chr;
-
-        chr = getch();
-        addch(chr);
-        refresh();
-        return(chr);
 }
 
 
@@ -235,55 +227,4 @@ int kbhit()
 	
 	return(i);
 }
-
-/*int kbhit()
-{
-        int i;
-
-        nodelay(stdscr, TRUE);
-        i = getch();
-        nodelay(stdscr, FALSE);
-        if (i == -1)
-              i = 0;
-        return(i);
-}*/
-
-/*
-
-Now in stuff.cc
-
-// this function is used for systems without gettext/puttext to redraw the
-// playing screen after a call to for example inventory.
-void redraw_screen(void)
-{
-
-char title [40];
-
-strcpy(title, skill_title(best_skill(you, 0, 50, 99), you[0].skills [best_skill(you, 0, 50, 99)], you[0].clas, you[0].xl));
-draw_border(BROWN, you[0].your_name, title, you[0].species);
-
-//draw_border(BROWN, you[0].your_name, title);
-
-you[0].hp_ch = 1;
-you[0].ep_ch = 1;
-you[0].strength_ch = 1;
-you[0].intel_ch = 1;
-you[0].dex_ch = 1;
-you[0].AC_ch = 1;
-you[0].evasion_ch = 1;
-you[0].gp_ch = 1;
-you[0].xp_ch = 1;
-you[0].hung_ch = 1;
-you[0].burden_ch = 1;
-
-print_stats();
-
-new_level();
-
-viewwindow(1);
-
-
-}
-
-*/
 

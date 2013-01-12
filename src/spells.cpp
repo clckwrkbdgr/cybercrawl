@@ -1429,9 +1429,9 @@ chance = spell_fail(specspell);
 redraw_screen();
 
 msg("Install @1?") << spell_name(specspell);
-keyin = getch();
+keyin = getkey();
 
-if (keyin == 0) getch();
+if (keyin == 0) getkey();
 if (keyin != 'y' && keyin != 'Y')
 {
 redraw_screen();

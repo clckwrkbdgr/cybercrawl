@@ -143,10 +143,10 @@ int get_control(int & move_x, int & move_y) // FIXME References are bad!
 			if (is_running) {
 				keyin = get_key_while_running(move_x, move_y);
 				if(keyin == 0) {
-					keyin = getch();
+					keyin = getkey();
 				}
 			} else {
-				keyin = getch();
+				keyin = getkey();
 			}
 			mesclr();
 		}

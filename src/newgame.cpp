@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <curses.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -185,10 +186,10 @@ cprintf("? - Random"EOL);
 cprintf("X - Quit"EOL);
 
 cprintf(EOL"Which one? ");
-spec_query : keyn = getch();
+spec_query : keyn = getkey();
 if (keyn == 0)
 {
- getch();
+ getkey();
  goto spec_query;
 }
 switch_start : switch(keyn)
@@ -444,7 +445,7 @@ cprintf("? - Random; x - Back to species selection; X - Quit"EOL);
 
 
 cprintf(EOL"What kind of character are you? ");
-query : keyn = getch();
+query : keyn = getkey();
 
 
 query5: if (keyn == 'a') you[0].clas = JOB_FIGHTER;

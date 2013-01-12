@@ -24,8 +24,8 @@ int random2(int randmax)
 
 int get_ch(void)
 {
- int gotched = getch();
- if (gotched == 0) gotched = getch();
+ int gotched = getkey();
+ if (gotched == 0) gotched = getkey();
  return gotched;
 }
 

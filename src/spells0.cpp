@@ -47,7 +47,7 @@ lines++;
 	{
 		gotoxy(1,25);
 		cprintf("-more-");
-		ki = getch();
+		ki = getkey();
 		if (ki == 27)
 		{
 			return 27;
@@ -56,7 +56,7 @@ lines++;
 		{
 			return ki;
 		}
-		if (ki == 0) ki = getch();
+		if (ki == 0) ki = getkey();
 		lines = 0;
 		clrscr();
 		gotoxy(1,1);
@@ -72,7 +72,7 @@ lines++;
 		{
 			gotoxy(1,25);
 			cprintf("-more-");
-			ki = getch();
+			ki = getkey();
 			if (ki == 27)
 			{
 				return 27;
@@ -81,7 +81,7 @@ lines++;
 			{
 				return ki;
 			}
-			if (ki == 0) ki = getch();
+			if (ki == 0) ki = getkey();
 			lines = 0;
 			clrscr();
 			gotoxy(1,1);
@@ -259,17 +259,17 @@ if (spell_f > 0)
 	} // end of j loop
    if (anything > 0)
    {
-	   ki = getch();
+	   ki = getkey();
 	   if (ki >= 65 && ki < 123)
 	   {
 		   return ki;
 	   }
-	   if (ki == 0) ki = getch();
+	   if (ki == 0) ki = getkey();
 	   return anything;
    }
 
        // was 35
-   ki = getch();
+   ki = getkey();
 
    return ki;
 
@@ -1476,16 +1476,9 @@ cprintf(" Programs                           Type                      Level"EOL
 
    //cprintf(stringy);
 
-   //getch();
 
-
-//   goto inpy;
-
-
-//if (getch() == 0) getch();
-
-char keyn = getch();
-if (keyn == 0) getch();
+char keyn = getkey();
+if (keyn == 0) getkey();
 
 return keyn;
 

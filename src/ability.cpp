@@ -1777,7 +1777,7 @@ int show_abilities(int ability [120], int ability_fail [120])
 	{
 		gotoxy(1,25);
 		cprintf("-more-");
-		ki = getch();
+		ki = getkey();
 		if (ki == 27)
 		{
 			return 27;
@@ -1786,7 +1786,7 @@ int show_abilities(int ability [120], int ability_fail [120])
 		{
 			return ki;
 		}
-		if (ki == 0) ki = getch();
+		if (ki == 0) ki = getkey();
 		lines = 0;
 		clrscr();
 		gotoxy(1,1);
@@ -1802,7 +1802,7 @@ int show_abilities(int ability [120], int ability_fail [120])
 		{
 			gotoxy(1,25);
 			cprintf("-more-");
-			ki = getch();
+			ki = getkey();
 			if (ki == 27)
 			{
 				return 27;
@@ -1811,7 +1811,7 @@ int show_abilities(int ability [120], int ability_fail [120])
 			{
 				return ki;
 			}
-			if (ki == 0) ki = getch();
+			if (ki == 0) ki = getkey();
 			lines = 0;
 			clrscr();
 			gotoxy(1,1);
@@ -2115,17 +2115,17 @@ int show_abilities(int ability [120], int ability_fail [120])
 	} // end of j loop
    	if (anything > 0)
    	{
-	   	ki = getch();
+	   	ki = getkey();
 	   	if (ki >= 65 && ki < 123)
 	   	{
 		   	return ki;
 	   	}
-	   	if (ki == 0) ki = getch();
+	   	if (ki == 0) ki = getkey();
 	   	return anything;
    	}
 
        // was 35
-   	ki = getch();
+   	ki = getkey();
 
    	return ki;
 }
