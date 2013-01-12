@@ -20,9 +20,6 @@
 #include "stuff.h"
 #include "view.h"
 
-char info[200];
-
-int mons_spells(char spell_cast, int func_pass [10], char beam_name [30]);
 void itrap(struct bolt beam [1], int trapped);
 int monster_abjuration(int pow, char test);
 
@@ -360,7 +357,8 @@ beem[0].source_y = menv [i].m_y;
 int func_pass [10];
 func_pass [8] = menv [i].m_HD * 12;
 
-int ufdg = mons_spells(spell_cast, func_pass, beem[0].beam_name);
+int ufdg = mons_spells(spell_cast, func_pass);
+strcpy(beem[0].beam_name, spell_beam_name(spell_cast).c_str());
 
 beem[0].ench_power = beem[0].damage; // !!!
 beem[0].colour = func_pass [0];
@@ -404,9 +402,8 @@ switch(ufdg)
 
 
 
-void monster_teleport(char monstel_char, char instan)
+void monster_teleport(int monstel, int instan)
 {
-	int monstel = monstel_char;
 int p = 0;
 
 if (instan == 0)
@@ -642,19 +639,11 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 	}
 
 
-		strcpy(info, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0).c_str()); //gmon_name [mons_class [i]]);
-
-		if (shoot == 1)
-		{
-			strcat(info, " shoots ");
-		} else strcat(info, " throws ");
-
-		strcat(info, it_name(hand_used, 1, 3).c_str());
-		strcat(info, ".");
+	Format format("@1 @2 @3.");
+	format << monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 0) << ((shoot == 1) ? "shoots" : "throws") << it_name(hand_used, 1, 3);
 
 	}
 
-	mpr(info);
 	missile(beem, hand_used);
 	mitm.iquant [hand_used] --;
 	if (mitm.iquant [hand_used] == 0)
@@ -695,9 +684,53 @@ if (mons_near(i) == 1)
 	explosion(1, beam);
 }
 
+std::string spell_beam_name(int spell_cast)
+{
+	switch(spell_cast) {
+		case 0: return "magic dart";
+		case 1: return "puff of flame";
+		case 2: return "puff of frost";
+		case 3: return "0";
+		case 4: return "0";
+		case 5: return "0";
+		case 6: return "0";
+		case 7: return "bolt of poison";
+		case 8: return "bolt of fire";
+		case 9: return "bolt of cold";
+		case 10: return "bolt of lightning";
+		case 11: return "0";
+		case 12: return "fireball";
+		case 13: return "0";
+		case 14: return "0";
+		case 15: return "0";
+		case 16: return "";
+		case 17: return "crystal spear";
+		case 18: return "0";
+		case 19: return "bolt of negative energy";
+		case 22: return "orb of energy";
+		case 26: return "ball of steam";
+		case 29: return "0";
+		case 31: return "sticky flame";
+		case 32: return "blast of poison";
+		case 35: return "blast";
+		case 37: return "bolt of energy";
+		case 38: return "sting";
+		case 39: return "iron bolt";
+		case 40: return "stone arrow";
+		case 41: return "splash of poison";
+		case 44: return "zulzer blast";
+		case 45: return "0";
+		case 46: return "foul vapour";
+		case 47: return "bolt of energy";
+		case 49: return "hellfire";
+		case 50: return "spray of metal splinters";
+		case 52: return "0";
+	}
+	return "";
+}
 
 
-int mons_spells(char spell_cast, int func_pass [10], char beam_name [30])
+int mons_spells(int spell_cast, int func_pass [10])
 {
 
 /*
@@ -715,7 +748,6 @@ switch(spell_cast)
 
 case 0: // magic missile
 func_pass [0] = 13;//inv_col [throw_2];//icolour [inv_class [throw_2]] [inv_type [throw_2]];
-strcpy(beam_name, "magic dart");// inv_name [throw_2]);
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 104 + (func_pass [8] / 100);
 func_pass [3] = 1500;
@@ -728,7 +760,6 @@ return 0;
 
 case 1: // flame
 func_pass [0] = 4;
-strcpy(beam_name, "puff of flame");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 105 + func_pass [8] / 40; // should this be the same as magic missile?
 func_pass [3] = 60;
@@ -741,7 +772,6 @@ return 0;
 
 case 2: // frost
 func_pass [0] = 15;
-strcpy(beam_name, "puff of frost");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 105 + func_pass [8] / 40; // should this be the same as magic missile?
 func_pass [3] = 60;
@@ -752,7 +782,6 @@ return 0;
 //break;
 
 case 3: // paralysis
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 3;
@@ -762,7 +791,6 @@ return 1;
 //break;
 
 case 4: // slow monster
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 0;
@@ -772,7 +800,6 @@ return 1;
 //break;
 
 case 5: // haste self
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 1;
@@ -781,7 +808,6 @@ func_pass [5] = 4; // magic
 return 1;
 
 case 6: // slow monster
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 4;
@@ -790,7 +816,6 @@ func_pass [5] = 4; // magic
 return 1;
 
 case 7: // venom bolt
-strcpy(beam_name, "bolt of poison");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 106 + func_pass [8] / 13;
 func_pass [0] = LIGHTGREEN;
@@ -802,7 +827,6 @@ func_pass [3] = 7 + random2(func_pass [8]) / 80;
 return 1;
 
 case 8:
-strcpy(beam_name, "bolt of fire");
 func_pass [1] = random2(10) + 5;
 func_pass [2] = 108 + func_pass [8] / 11;
 func_pass [0] = 4;
@@ -815,7 +839,6 @@ return 1;
 
 
 case 9:
-strcpy(beam_name, "bolt of cold");
 func_pass [1] = random2(10) + 5;
 func_pass [2] = 108 + func_pass [8] / 11;
 func_pass [0] = 15;
@@ -826,7 +849,6 @@ func_pass [3] = 8 + random2(func_pass [8]) / 80; // hit
 return 1;
 
 case 10: // lightning
-strcpy(beam_name, "bolt of lightning");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 110 + func_pass [8] / 9;
 func_pass [0] = LIGHTCYAN;
@@ -838,7 +860,6 @@ func_pass [3] = 10 + random2(func_pass [8]) / 40;
 return 1;
 
 case 11: // make invisible
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 5;
@@ -848,7 +869,6 @@ return 1;
 
 case 12: // fireball
 func_pass [0] = 4;
-strcpy(beam_name, "fireball");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 7 + func_pass [2] / 10;
 func_pass [3] = 40;
@@ -858,7 +878,6 @@ func_pass [5] = 10; // fire
 return 0;
 
 case 13: // healing
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 2;
@@ -867,7 +886,6 @@ func_pass [5] = 4; // magic
 return 1;
 
 case 14: // teleportation
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 7; // 6 is used by digging
@@ -876,7 +894,6 @@ func_pass [5] = 4; // magic
 return 1;
 
 case 15: // teleport target away
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 7; // 6 is used by digging
@@ -888,7 +905,6 @@ case 16:
 return 0; // blink
 
 case 17: // was splinters
-strcpy(beam_name, "crystal spear");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 112 + func_pass [8] / 10;
 func_pass [0] = WHITE;
@@ -900,7 +916,6 @@ func_pass [3] = 6; // + random2(func_pass [8]) / 10;
 return 0;
 
 case 18: // digging
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 4 + random2(func_pass [8]) / 10;
 func_pass [4] = 0;
 func_pass [0] = 6;
@@ -909,7 +924,6 @@ func_pass [5] = 4;
 return 1;
 
 case 19: // negative energy
-strcpy(beam_name, "bolt of negative energy");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 106 + func_pass [8] / 13;
 func_pass [0] = DARKGREY;
@@ -923,7 +937,6 @@ return 1;
 
 case 22: // mystic blast
 func_pass [0] = 13;
-strcpy(beam_name, "orb of energy");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 107 + (func_pass [8] / 14);
 func_pass [3] = 10 + (func_pass [8] / 20);
@@ -937,7 +950,6 @@ return 0;
 
 case 26: // ball of steam
 func_pass [0] = LIGHTGREY;
-strcpy(beam_name, "ball of steam");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 106;
 func_pass [3] = 11;
@@ -950,7 +962,6 @@ return 0;
 // 28 is animate dead
 
 case 29: // pain
-strcpy(beam_name, "0");
 func_pass [1] = random2(8) + 8;
 func_pass [4] = 0;
 func_pass [0] = 13; // pain
@@ -964,7 +975,6 @@ return 1;
 
 case 31: // sticky flame
 func_pass [0] = 4;
-strcpy(beam_name, "sticky flame");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 103 + func_pass [8] / 50;
 func_pass [3] = 8 + func_pass [8] / 15;
@@ -974,7 +984,6 @@ func_pass [5] = 2; // fire
 return 0;
 
 case 32: // demon
-strcpy(beam_name, "blast of poison");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 103 + func_pass [8] / 25;
 func_pass [0] = LIGHTGREEN;
@@ -987,7 +996,6 @@ return 1;
 
 case 35: // purple bang thing
 func_pass [0] = 13;
-strcpy(beam_name, "blast");
 func_pass [1] = random2(5) + 7;
 func_pass [2] = 106;
 func_pass [3] = 9;
@@ -998,7 +1006,6 @@ return 0;
 
 case 37: // eye of devastation
 func_pass [0] = YELLOW;
-strcpy(beam_name, "bolt of energy");
 func_pass [1] = random2(15) + 10;
 func_pass [2] = 120;
 func_pass [3] = 9;
@@ -1010,7 +1017,6 @@ return 1;
 
 	case 38: // sting
 	func_pass [0] = GREEN;
-	strcpy(beam_name, "sting");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 6 + func_pass [8] / 25;
 	func_pass [3] = 60;
@@ -1022,7 +1028,6 @@ return 1;
 
         case 39: // Iron Bolt
 	func_pass [0] = LIGHTCYAN;
-	strcpy(beam_name, "iron bolt");
 	func_pass [1] = random2(5) + 5;
 	func_pass [2] = 108 + (func_pass [8] / 9);
 	func_pass [3] = 6 + (func_pass [8] / 25);
@@ -1034,7 +1039,6 @@ return 1;
 
 	case 40: // stone arrow
 	func_pass [0] = LIGHTGREY;
-	strcpy(beam_name, "stone arrow");
 	func_pass [1] = random2(5) + 9;
 	func_pass [2] = 105 + (func_pass [8] / 10);
 	func_pass [3] = 5 + func_pass [8] / 47;
@@ -1046,7 +1050,6 @@ return 1;
 
 	case 41: // splash of poison
 	func_pass [0] = GREEN;
-	strcpy(beam_name, "splash of poison");
 	func_pass [1] = random2(6) + 6;
 	func_pass [2] = 4 + func_pass [8] / 10;
 	func_pass [3] = 9;
@@ -1058,7 +1061,6 @@ return 1;
 
 	case 44: // zulzer
 	func_pass [0] = YELLOW;
-	strcpy(beam_name, "zulzer blast");
 	func_pass [1] = random2(4) + 15;
 	func_pass [2] = 125;
 	func_pass [3] = 7;
@@ -1069,7 +1071,6 @@ return 1;
 	return 0;
 
 	case 45: // disintegrate
-	strcpy(beam_name, "0");
 	func_pass [1] = random2(8) + 8;
 	func_pass [4] = 0;
 	func_pass [0] = 15; // disint
@@ -1080,7 +1081,6 @@ return 1;
 	return 1;
 
 case 46: // swamp drake
-strcpy(beam_name, "foul vapour");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 102 + func_pass [8] / 25;
 func_pass [0] = GREEN;
@@ -1094,7 +1094,6 @@ return 0;
 
 case 47: // Quicksilver dragon
 func_pass [0] = 1 + random2(15);
-strcpy(beam_name, "bolt of energy");
 func_pass [1] = random2(15) + 10;
 func_pass [2] = 125;
 func_pass [3] = 9;
@@ -1117,7 +1116,6 @@ thing_thrown = func_pass [6];
 
 
 case 49: // fiend's hellfire
-strcpy(beam_name, "hellfire");
 func_pass [1] = random2(10) + 5;
 func_pass [2] = 25;
 func_pass [3] = 20;
@@ -1128,7 +1126,6 @@ func_pass [5] = 10; // hellfire
 return 1;
 
 case 50: // metal splinters
-strcpy(beam_name, "spray of metal splinters");
 func_pass [1] = random2(10) + 8;
 func_pass [2] = 120 + func_pass [8] / 20;
 func_pass [0] = CYAN;
@@ -1140,7 +1137,6 @@ func_pass [3] = 15 + random2(func_pass [8]) / 50;
 return 1;
 
 case 52: // banishment
-strcpy(beam_name, "0");
 func_pass [1] = random2(5) + 6;
 func_pass [4] = 0;
 func_pass [0] = 10;

@@ -1168,7 +1168,8 @@ out_of_scroll : if (menv [i].m_inv [5] != 501 && random2(2) == 0 && menv [i].m_b
 
         func_pass [8] = 25; // menv [i].m_HD * 7;
 
-        int ufdg = mons_spells(mzap, func_pass, beem[0].beam_name);
+        int ufdg = mons_spells(mzap, func_pass);
+        strcpy(beem[0].beam_name, spell_beam_name(mzap).c_str());
 
         beem[0].ench_power = beem[0].damage; // !!!
         beem[0].colour = func_pass [0];

@@ -91,10 +91,8 @@ if (ep_gain < 0) ep_gain = 0;
 
 if (ep_gain == spell_value(you[0].spells [spc2]))
 {
- strcpy(info, "The program releases its latent energy back to you as it unravels.");
+ msg("The program releases its latent energy back to you as it unravels.");
 }
-
-mpr(info);
 
 you[0].spell_levels += ep_gain;
 you[0].ep_ch = 1;
@@ -161,10 +159,6 @@ for (i = 0; i < 52; i ++)
    }
 } /* end of for i */
 
-//if (curse_found > 0)
-//{
-// strcpy(info, "You sense a malignant aura.");
-//} else
  mpr("You sense the presence of viruses on your possessions.");
 
 }
@@ -531,8 +525,6 @@ for (srx = you[0].x_pos - 1; srx < you[0].x_pos + 2; srx ++)
     hrg = mitm.ilink [objl];
     destroy_item(objl);
     objl = hrg;
-//    strcpy(info, "Destroying.");
-//    mpr(info);
    }
 
   if (env[0].cgrid [srx] [sry] != CNG)
