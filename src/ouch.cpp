@@ -120,7 +120,6 @@ int check_your_resists(int hurted, int flavour)
 
  } /* end switch */
 
-//      if (stricmp(beam_name, "hellfire") == 0 || beam[0].flavour == 20) // 20 is lava
         if (flavour == 20)
         {
                 if (player_res_fire() > 100)

@@ -42,7 +42,7 @@ void explosion1(struct bolt beam [1])
 	int exsize = 0;
 
 
-	if (stricmp(beam[0].beam_name, "hellfire") == 0)
+	if (strcmp(beam[0].beam_name, "hellfire") == 0)
 	{
     	if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The hellfire explodes!");
 	    else mpr("You hear a strangely unpleasant explosion.");
@@ -51,7 +51,7 @@ void explosion1(struct bolt beam [1])
 		beam[0].flavour = 13; // hellfire
 	}
 
-	if (stricmp(beam[0].beam_name, "golden flame") == 0)
+	if (strcmp(beam[0].beam_name, "golden flame") == 0)
 	{
 	    if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The flame explodes!");
 	    else mpr("You hear a strange explosion.");
@@ -60,7 +60,7 @@ void explosion1(struct bolt beam [1])
 	}
 
 
-	if (stricmp(beam[0].beam_name, "fireball") == 0)
+	if (strcmp(beam[0].beam_name, "fireball") == 0)
 	{
 	    if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The fireball explodes!");
         else mpr("You hear an explosion.");
@@ -69,7 +69,7 @@ void explosion1(struct bolt beam [1])
 		beam[0].flavour = 2;
 	}
 
-	if (stricmp(beam[0].beam_name, "orb of electricity") == 0)
+	if (strcmp(beam[0].beam_name, "orb of electricity") == 0)
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb of electricity explodes!");
         else mpr("You hear a clap of thunder!");
@@ -80,14 +80,14 @@ void explosion1(struct bolt beam [1])
         exsize = 1;
 	}
 
-	if (stricmp(beam[0].beam_name, "blast") == 0)
+	if (strcmp(beam[0].beam_name, "blast") == 0)
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb of energy explodes.");
         else mpr("You hear an explosion.");
         exsize = 0;
 	}
 
-	if (stricmp(beam[0].beam_name, "metal orb") == 0)
+	if (strcmp(beam[0].beam_name, "metal orb") == 0)
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb explodes into a blast of deadly shrapnel!");
         else mpr("You hear an explosion!");
@@ -98,7 +98,7 @@ void explosion1(struct bolt beam [1])
         exsize = 0;
 	}
 
-	if (stricmp(beam[0].beam_name, "great blast of cold") == 0)
+	if (strcmp(beam[0].beam_name, "great blast of cold") == 0)
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The blast explodes into a great storm of ice!");
          else mpr("You hear a raging storm!");
@@ -109,58 +109,6 @@ void explosion1(struct bolt beam [1])
         exsize = 1;
 	}
 
-
-
-/*
-if (stricmp(beam[0].beam_name, "concussion rocket") == 0)
-{
-        if (see_grid(beam[0].bx, beam[0].by) == 1) strcpy(info, "The rocket explodes!");
-           else strcpy(info, "You hear a powerful explosion.");
-	mpr(info);
-        strcpy(beam[0].beam_name, "explosion");
-	beam[0].type = 43;
-	beam[0].damage = 112;
-	beam[0].flavour = 0;
-        beam[0].colour = LIGHTGRAY;
-}
-
-if (stricmp(beam[0].beam_name, "fragmentation rocket") == 0)
-{
-        if (see_grid(beam[0].bx, beam[0].by) == 1) strcpy(info, "The rocket explodes!");
-           else strcpy(info, "You hear a fragmentary explosion."); // this is not proper usage, BTW
-	mpr(info);
-        strcpy(beam[0].beam_name, "blast of shrapnel");
-	beam[0].type = 43;
-	beam[0].damage = 110;
-	beam[0].flavour = 0; // hmmm
-        beam[0].colour = CYAN;
-        exsize = 1;
-}
-
-if (stricmp(beam[0].beam_name, "incendiary rocket") == 0)
-{
-        if (see_grid(beam[0].bx, beam[0].by) == 1) strcpy(info, "The rocket explodes!");
-           else strcpy(info, "You hear an explosion.");
-	mpr(info);
-        strcpy(beam[0].beam_name, "fiery explosion");
-	beam[0].type = 43;
-	beam[0].damage = 114;
-	beam[0].flavour = 2;
-        beam[0].colour = RED;
-}
-*/
-/*
-if (stricmp(beam[0].beam_name, "blast") == 0)
-{
-        if (see_grid(beam[0].bx, beam[0].by) == 1) strcpy(info, "The blast explodes!");
-           else strcpy(info, "You hear an explosion.");
-	mpr(info);
-//	strcpy(info, "The blast explodes!");
-//	mpr(info);
-	beam[0].type = 43;
-	beam[0].flavour = 0;
-}
-*/
 	explosion(exsize, beam);
 }
 
@@ -304,7 +252,7 @@ void explosion(int ex_size, struct bolt beam [1])
 			{
  				if (mitm.iclass [igrd [beam[0].bx] [beam[0].by]] == 6)
  				{
-  					if (beam[0].flavour == 2 || stricmp(beam[0].beam_name, "hellfire") == 0)
+  					if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0)
   					{
    						destroy_item(igrd [beam[0].bx] [beam[0].by]);
    						if (see_grid(beam[0].bx, beam[0].by) == 1)
@@ -352,7 +300,7 @@ void explosion(int ex_size, struct bolt beam [1])
 
  				if (hurted <= 0) hurted = 0;
 
- 				if (beam[0].flavour == 2 || stricmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(5, 6);
+ 				if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(5, 6);
  				if (beam[0].flavour == 3) scrolls_burn(5, 8);
  				if (beam[0].flavour == 11) scrolls_burn(2, 4); // spores!
 
@@ -388,7 +336,7 @@ void explosion(int ex_size, struct bolt beam [1])
 
 				}
 			} else
-				if (stricmp(beam[0].beam_name, "ice storm") == 0)
+				if (strcmp(beam[0].beam_name, "ice storm") == 0)
 				{
                  place_cloud(3, beam[0].bx, beam[0].by, 2 + random2(3) + random2(3));
 				}

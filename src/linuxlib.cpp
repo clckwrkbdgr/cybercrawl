@@ -84,18 +84,6 @@ void lincurses_shutdown()
         endwin();
 }
 
-
-// Convert string to lowercase.
-char * strlwr(char *str)
-{
-	size_t i;
-
-	for(i = 0; i < strlen(str); i++)
-		str[i] = tolower(str[i]);
-	return(str);
-}
-
-
 int cprintf (const char *format, ... )
 {
    int i;
@@ -220,12 +208,6 @@ int wherey()
 
         getyx(stdscr, y, x);
 	return(y+1);
-}
-
-
-int stricmp(const char *str1, const char *str2)
-{
-        return(strcmp(str1, str2));
 }
 
 

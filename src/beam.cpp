@@ -457,7 +457,7 @@ void beam(struct bolt beam [1])
 
 /*	check_your_resists(); */
 
-			if (beam[0].flavour == 2 || stricmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(3, 6); // also above
+			if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(3, 6); // also above
  			if (beam[0].flavour == 3) scrolls_burn(3, 8);
 
             if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
@@ -1073,7 +1073,7 @@ brek = 0;*/
   							you[0].poison += 1 + random2(3);
  						}
 
-						if (beam[0].flavour == 20 || beam[0].flavour == 20 || (beam[0].flavour == 2 && strcmp(beam[0].beam_name, "ball of steam") != 0) || stricmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(2, 6);
+						if (beam[0].flavour == 20 || beam[0].flavour == 20 || (beam[0].flavour == 2 && strcmp(beam[0].beam_name, "ball of steam") != 0) || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(2, 6);
  						if (beam[0].flavour == 3) scrolls_burn(2, 8);
 
  						hurted -= random2(player_AC() + 1);
@@ -1527,7 +1527,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 	} /* end of switch */
 
 
-	if (stricmp(beam[0].beam_name, "hellfire") == 0 || beam[0].flavour == 20)
+	if (strcmp(beam[0].beam_name, "hellfire") == 0 || beam[0].flavour == 20)
 	{
 		if (mons_res_fire(menv [o].m_class) == 2)
 		{

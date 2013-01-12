@@ -9,7 +9,6 @@
 #define O_BINARY O_RDWR
 
 void lincurses_startup();
-char * strlwr(char *str);
 int cprintf (const char *format, ... );
 int putch(int chr);
 char getche();
@@ -20,7 +19,6 @@ void textcolor(int col);
 int gotoxy(int x, int y);
 int wherex();
 int wherey();
-int stricmp(const char *str1, const char *str2);
 void delay(int time);
 int kbhit();
 void textbackground(int bg);
