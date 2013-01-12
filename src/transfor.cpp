@@ -11,7 +11,7 @@
 #include "skills2.h"
 #include "stuff.h"
 
-int remove_equipment(char remove_stuff [8]);
+int remove_equipment(int remove_stuff [8]);
 void extra_hp(int amount_extra);
 void untransform(void);
 
@@ -19,7 +19,7 @@ void untransform(void);
 extern int your_sign; /* these two are defined in view.cc */
 extern int your_colour;
 
-int remove_equipment(char remove_stuff [8])
+int remove_equipment(int remove_stuff [8])
 {
 
 int i;
@@ -60,7 +60,7 @@ return 1;
 */
 
 
-char transform(int pow, char which_trans)
+int transform(int pow, int which_trans)
 {
 
 if (you[0].attribute [ATTR_TRANSFORMATION] != TRAN_NONE) untransform();
@@ -71,7 +71,7 @@ if (you[0].is_undead != 0)
  return 0;
 }
 
-char rem_stuff [8];
+int rem_stuff [8];
 int i = EQ_WEAPON;
 for (i = EQ_WEAPON; i < EQ_RIGHT_RING; i ++)
 {
@@ -182,7 +182,7 @@ void untransform(void)
 
 int was_transformed = you[0].attribute [ATTR_TRANSFORMATION];
 
-char rem_stuff [8];
+int rem_stuff [8];
 int i = 0;
 for (i = EQ_WEAPON; i < EQ_RIGHT_RING; i ++)
 {
@@ -251,7 +251,7 @@ calc_hp();
 
 }
 
-char can_equip(char use_which)
+int can_equip(int use_which)
 {
 
 if (you[0].attribute [ATTR_TRANSFORMATION] == TRAN_NONE || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_BLADE_HANDS || you[0].attribute [ATTR_TRANSFORMATION] == TRAN_LICH) /* or it's a transformation which doesn't change overall shape */

@@ -1108,7 +1108,7 @@ gotoxy(40,1);
 textcolor(7);
 cprintf(print_it2);
 gotoxy(40, 2);
-cprintf(species_name(tspecies));
+cprintf(species_name(tspecies).c_str());
 gotoxy(40,3);
 cprintf("HP:");
 gotoxy(40,4);

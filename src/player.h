@@ -14,15 +14,15 @@ int player_res_fire(void);
 int player_res_cold(void);
 int player_res_poison(void);
 int player_prot_life(void);
-char you_resist_magic(int power);
-void forget_map(char chance_forgotten);
+int you_resist_magic(int power);
+void forget_map(int chance_forgotten);
 void how_hungered(int hunge);
 void gain_exp(int exp_gained);
 void display_char_status(void);
-void redraw_skill(char your_name [30], char clasnam [40]);
-const char *species_name(char speci);
-char wearing_amulet(char which_am);
-int exp_needed(int lev, char species);
+void redraw_skill(const std::string & your_name, const std::string & clasnam);
+std::string species_name(int speci);
+int wearing_amulet(int which_am);
+int exp_needed(int lev, int species);
 int check_stealth(void);
 void level_change(void);
 int player_spec_summ(void);
@@ -36,8 +36,8 @@ int player_spec_holy(void);
 int player_spec_death(void);
 int player_spec_poison(void);
 int player_energy(void);
-int slaying_bonus(char which_affected); /* returns bonuses from rings of slaying etc */
-int scan_randarts(char which_property);
+int slaying_bonus(int which_affected); /* returns bonuses from rings of slaying etc */
+int scan_randarts(int which_property);
 
 
 

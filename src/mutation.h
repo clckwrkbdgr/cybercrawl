@@ -1,13 +1,11 @@
-char mutate(int which_mutation);
+#pragma once
+#include <string>
+int mutate(int which_mutation);
 void display_mutations(void);
-char delete_mutation(char which_mutation);
+int delete_mutation(int which_mutation);
 int how_mutated(void);
-char body_covered(void);
+int body_covered(void);
 std::string mutation_name(int which_mutat);
-char give_good_mutation(void);
-char give_bad_mutation(void);
+int give_good_mutation(void);
+int give_bad_mutation(void);
 void demonspawn(void);
-
-
-
-

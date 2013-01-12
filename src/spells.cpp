@@ -28,7 +28,7 @@
 #include "stuff.h"
 #include "view.h"
 
-char mutate(int which_mutation);
+int mutate(int which_mutation);
 
 
 int learned = 0;

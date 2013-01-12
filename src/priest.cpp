@@ -10,33 +10,11 @@
 #include "enum.h"
 
 void generate_area(int gx1, int gy1, int gx2, int gy2);
-char area_shift(void);
+int area_shift(void);
 
 
 
-/*
-char *god_name(char which_god)
-{
-
-switch(which_god)
-{
-case 1: return "Knights Templar";
-case 2: return "UNATCO";
-case 3: return "Aperture Labs";
-case 4: return "Triads";
-case 5: return "Jurubetut";
-case 6: return "Digicorp";
-case 7: return "Okawaru";
-case 8: return "Kikubaaqudgha";
-case 9: return "Sif Muna";
-case 10: return "Lugafu the Hairy";
-}
-
-return "The God of Software Bugs";
-}
-*/
-
-void priest_spells(int func_pass [10], char religious)
+void priest_spells(int func_pass [10], int religious)
 {
 
 switch(religious)
@@ -324,7 +302,7 @@ for (i = gx1; i < gx2 + 1; i ++)
 
 
 
-char area_shift(void)
+int area_shift(void)
 {
 /*int grd [80] [70];
  struct player you [1];*/

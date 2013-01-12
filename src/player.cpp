@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iomanip>
 
 #include "linuxlib.h"
 
@@ -77,10 +79,10 @@ you[0].duration []:
 /* Contains functions which return various player state vars,
 and other stuff related to the player. */
 
-int species_exp_mod(char species);
+int species_exp_mod(int species);
 void ability_increase(void);
-void increase_stats(char which_stat);
-int scan_randarts(char which_property);
+void increase_stats(int which_stat);
+int scan_randarts(int which_property);
 
 
 int player_teleport(void)
@@ -623,7 +625,7 @@ int player_sust_abil(void)
 int burden_change(void)
 {
 
-char old_burden = you[0].burden_state;
+int old_burden = you[0].burden_state;
 
 you[0].burden = 0;
 
@@ -680,7 +682,7 @@ return you[0].burden;
 
 
 
-char you_resist_magic(int power)
+int you_resist_magic(int power)
 {
 int ench_power = power;
 
@@ -711,7 +713,7 @@ return 0;
 
 
 
-void forget_map(char chance_forgotten)
+void forget_map(int chance_forgotten)
 {
 int xcount = 0;
 int ycount = 0;
@@ -1280,9 +1282,7 @@ while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) 
 						case SP_UNK2_DRACONIAN: mpr(""); break;
 					}
 					more();
-					char title [40];
-					strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
-					draw_border(BROWN, you[0].your_name, title, you[0].species);
+					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
 					you[0].hp_ch = 1;
 					you[0].ep_ch = 1;
 					you[0].strength_ch = 1;
@@ -1326,9 +1326,7 @@ while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) 
 				{
 					mpr("Your scales start turning grey.");
 					more();
-					char title [40];
-					strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
-					draw_border(BROWN, you[0].your_name, title, you[0].species);
+					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
 					you[0].hp_ch = 1;
 					you[0].ep_ch = 1;
 					you[0].strength_ch = 1;
@@ -1508,7 +1506,7 @@ you[0].xp_ch = 1;
 }
 
 
-void increase_stats(char which_stat)
+void increase_stats(int which_stat)
 {
 
 switch(which_stat)
@@ -1773,37 +1771,20 @@ if (you[0].mpower > 5)
 
 
 
-void redraw_skill(char your_name [30], char clasnam [40])
+void redraw_skill(const std::string & your_name, const std::string & clasnam)
 {
-
-char print_it [80];
-char print_it2 [42];
-
-int i = 0;
-char spaces = 0;
-
-strcpy(print_it, your_name);
-strcat(print_it, " the ");
-strcat(print_it, clasnam);
-
-strncpy(print_it2, print_it, 39);
-
-for (i = 0; i < 40; i ++)
-{
- if (print_it2 [i] == 0) spaces = 1;
- if (spaces == 1) print_it2 [i] = ' ';
-}
-
-print_it2 [39] = 0;
-
-textcolor(LIGHTGREY);
-gotoxy(40,1);
-textcolor(7);
-cprintf(print_it2);
+	std::string line = your_name + " the " + clasnam;
+	line = std::string(line, 0, 40);
+	std::ostringstream out;
+	out << std::setw(40) << line;
+	textcolor(LIGHTGREY);
+	gotoxy(40,1);
+	textcolor(7);
+	cprintf(line.c_str());
 }
 
 
-const char *species_name(char speci)
+std::string species_name(int speci)
 {
 
 if (you[0].species >= SP_RED_DRACONIAN && you[0].species <= SP_UNK2_DRACONIAN && you[0].xl < 7)
@@ -1855,7 +1836,7 @@ return "Yak";
 
 }
 
-char wearing_amulet(char which_am)
+int wearing_amulet(int which_am)
 {
  if (which_am == AMU_CONTROLLED_FLIGHT && (you[0].duration
 [DUR_CONTROLLED_FLIGHT] != 0 || (you[0].species >= SP_RED_DRACONIAN &&
@@ -1874,7 +1855,7 @@ you[0].species <= SP_UNK2_DRACONIAN) || you[0].attribute [ATTR_TRANSFORMATION] =
 }
 
 
-int species_exp_mod(char species)
+int species_exp_mod(int species)
 {
 switch(species)
 {
@@ -1919,7 +1900,7 @@ switch(species)
 
 }
 
-int exp_needed(int lev, char species)
+int exp_needed(int lev, int species)
 {
 lev --;
 int level = 0;
@@ -1965,7 +1946,7 @@ return (level - 1) * species_exp_mod(species) / 10;
 
 
 
-int slaying_bonus(char which_affected) /* returns bonuses from rings of slaying etc */
+int slaying_bonus(int which_affected) /* returns bonuses from rings of slaying etc */
 {
 
 int to_hit = 0;
@@ -2002,7 +1983,7 @@ return 0;
 
 /* Checks each equip slot for a randart, and adds up all of those with
 a given property. Slow if any randarts are worn, so avoid where possible. */
-int scan_randarts(char which_property)
+int scan_randarts(int which_property)
 {
 
 int i = 0;

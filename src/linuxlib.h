@@ -1,3 +1,5 @@
+#pragma once
+#include <string>
 /* Some replacement routines missing in gcc */
 
 // This defines were in now non-existent files. Moved here as it is most basic and must-have header file.
@@ -23,4 +25,5 @@ int kbhit();
 void textbackground(int bg);
 void lincurses_shutdown();
 int getkey();
+std::string read_string();
 

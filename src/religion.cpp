@@ -24,7 +24,7 @@
 #include "spells3.h"
 #include "stuff.h"
 
-char mutate(int which_mutation);
+int mutate(int which_mutation);
 
 
 const char *sacrifice [] =

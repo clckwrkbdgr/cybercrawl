@@ -2,11 +2,11 @@
 
 void monster(void)
 {
-char bat = 0;
+int bat = 0;
 int monc = 0;
 
 int msecc = 0;
-char brkk = 0;
+int brkk = 0;
 
 brek = 0;
 losight(show, grid, you[0].x_pos, you[0].y_pos);

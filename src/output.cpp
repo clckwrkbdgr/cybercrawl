@@ -13,7 +13,6 @@
 #include "ouch.h"
 
 int wield_change;
-char st_prn[20];
 
 void print_stats(void)
 {
@@ -103,10 +102,7 @@ void print_stats(void)
 	if (you[0].AC_ch == 1)
 	{
 		gotoxy (44,5);
-		cprintf(to_string(player_AC()).c_str());
-		if (strlen(st_prn) <= 1) cprintf(" ");
-		if (strlen(st_prn) <= 2) cprintf(" ");
-		if (strlen(st_prn) <= 3) cprintf(" ");
+		cprintf(to_string(player_AC(), 3).c_str());
 		cprintf("(");
 		cprintf(to_string(player_shield_class()).c_str());
 		cprintf(")   ");

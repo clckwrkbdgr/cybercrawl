@@ -1,2 +1,2 @@
 
-char new_game(void);
+int new_game(void);

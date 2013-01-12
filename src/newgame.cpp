@@ -19,22 +19,20 @@
 #include "skills2.h"
 #include "stuff.h"
 
-char class_allowed(char speci, char clas);
+int class_allowed(int speci, int clas);
 void init_player(void);
 void choose_weapon(void);
 
 extern int wield_change;
 
 
-char new_game(void)
+int new_game(void)
 {
 int handle;
-char your_nam [50];
 int p;
-char keyn;
-char weap_skill = 0;
+int keyn;
+int weap_skill = 0;
 
-char char_fil [50];
 
 int i;
 
@@ -73,7 +71,6 @@ you[0].ep_incr_regen = 0;
 
 
 int j = 0;
-char char_name [30];
 
 for (i = 0; i < 30; i ++)
 {
@@ -97,18 +94,14 @@ cprintf(EOL"Hello, and welcome to Cybercrawl v"VERSION"!");
 cprintf(EOL"(Copyright 1997, 1998, 1999 Linley Henzell)");
 cprintf(EOL"Please read Crawl.txt for instructions and legal details."EOL EOL);
 name_q : cprintf("What is your name today? ");
-//cin >> your_nam;
+std::string your_nam;
 echo();
-getstr(your_nam);
+//getstr(your_nam);
+your_nam = read_string();
 noecho();
-/*
-echo();
-getstr(your_nam);
-noecho();
-*/
 
-
-if (strcmp(your_nam, "bones") == 0 || strlen(your_nam) == 0) /* this would cause big probs with ghosts */
+if (your_nam == "bones" || your_nam.size() == 0) /* this would cause big probs with ghosts */
+//if (strcmp(your_nam, "bones") == 0 || strlen(your_nam) == 0) /* this would cause big probs with ghosts */
 {
 	cprintf(EOL"That's a silly name!"EOL);
 	goto name_q;
@@ -116,7 +109,7 @@ if (strcmp(your_nam, "bones") == 0 || strlen(your_nam) == 0) /* this would cause
 
 size_t glorpo = 0;
 
-for (glorpo = 0; glorpo < strlen(your_nam); glorpo ++)
+for (glorpo = 0; glorpo < your_nam.size(); glorpo ++)
 {
  if (your_nam [glorpo] == ' ')
  {
@@ -131,26 +124,25 @@ for (glorpo = 0; glorpo < strlen(your_nam); glorpo ++)
 }
 
 
-strcpy(you[0].your_name, your_nam);
+strcpy(you[0].your_name, your_nam.c_str());
 
-strncpy(char_name, your_nam, 6);
-
-strcpy(char_fil, "");
-strncat(char_fil, you[0].your_name, 6);
-strcat(char_fil, ".sav");
-
+std::string name = you[0].your_name;
+if(name.size() > 6) {
+	name = std::string(name, 0, 6);
+}
+cprintf(std::string(name + ".sav").c_str());
 
 
  int passout = 0;
 
 
-handle = open(char_fil, S_IWRITE, S_IREAD);
+handle = open(std::string(name + ".sav").c_str(), S_IWRITE, S_IREAD);
 
 
 if (handle != -1)
 {
 	cprintf(EOL"Welcome back, ");
-	cprintf(your_nam);
+	cprintf(your_nam.c_str());
 	cprintf("!");
 	close(handle);
 
@@ -353,44 +345,10 @@ cprintf(EOL EOL);
 cprintf("Welcome, ");
 cprintf(you[0].your_name);
 cprintf(" the ");
-cprintf(species_name(you[0].species));
+cprintf(species_name(you[0].species).c_str());
 cprintf("."EOL EOL);
 
 cprintf("You can be any of the following :"EOL);
-/*
-for (i = 0; i < 19; i ++)
-{
- if (class_allowed(you[0].species, i) == 0) continue;
-
- if (i > 0) cprintf(", ");
- if (wherex() > 57) cprintf("\n\r");
-
- switch(i)
- {
-  case 0: cprintf("fighter"); break;
-  case 1: cprintf("Hacker"); break;
-  case 2: cprintf("Operator"); break;
-  case 3: cprintf("Thief"); break;
-  case 4: cprintf("Gladiator"); break;
-  case 5: cprintf("Cyborgizator"); break;
-  case 6: cprintf("Paladin"); break;
-  case 7: cprintf("assassin"); break;
-  case 8: cprintf("Berserker"); break;
-  case 9: cprintf("Ranger"); break;
-  case 10: cprintf("conjurer"); break;
-  case 11: cprintf("Designer"); break;
-  case 12: cprintf("Fire Scientist"); break;
-  case 13: cprintf("Ice Scientist"); break;
-  case 14: cprintf("Summoner"); break;
-  case 15: cprintf("Air Scientist"); break;
-  case 16: cprintf("Earth Scientist"); break;
-  case 17: cprintf("Crusader"); break;
-  case 18: cprintf("Death knight"); break;
- }
-
-}
-cprintf(", or Quit.");
-*/
 j = 0;
 
 for (i = 0; i < 30; i ++)
@@ -2042,7 +2000,7 @@ Spellbook binary thing:
 
 /*you[0].res_magic = 3 + you[0].skills [SK_ENCHANTMENTS] * 2;*/
 
-char points_left = 8;
+int points_left = 8;
 
 if (you[0].species == SP_DEMIGOD || you[0].species == SP_DEMONSPAWN) points_left += 7; /* demigod */
 
@@ -2424,26 +2382,6 @@ if (you[0].clas == JOB_PRIEST || you[0].clas == JOB_PALADIN) set_id(OBJ_POTIONS,
 you[0].spell_levels = you[0].skills [SK_SPELLCASTING] * 2 - (you[0].spells [0] != 210) - (you[0].spells [1] != 210);
 
 
-	char del_file [55];
-
-
-char glorpstr [40];
-strncpy(glorpstr, you[0].your_name, 6);
-
-// glorpstr [strlen(glorpstr)] = 0; 
-// This is broken. Length is not valid yet! We have to check if we got a
-// trailing NULL; if not, write one:
-if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
-	glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
-
-strncpy(glorpstr, you[0].your_name, 6);
-
-// glorpstr [strlen(glorpstr)] = 0; 
-// This is broken. Length is not valid yet! We have to check if we got a
-// trailing NULL; if not, write one:
-if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
-	glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
-
 int fi = 0;
 int fi2 = 0;
 
@@ -2452,13 +2390,13 @@ for (fi2 = 0; fi2 < 30; fi2 ++)
  for (fi = 0; fi < 50; fi ++)
  {
 	 Format format("@1.@2@3@4");
-	 format << glorpstr << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
+	 format << std::string(you[0].your_name, 6) << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
   handle = open(format.str().c_str(), S_IWRITE, S_IREAD);
 
   if (handle != -1)
   {
         close(handle);
-	unlink(del_file);
+	unlink(format.str().c_str());
   } else close(handle);
  }
 }
@@ -2489,7 +2427,7 @@ you[0].branch_stairs [12] = you[0].branch_stairs [2] + random2(6) + 2; // Swamp
 
 
 
-char class_allowed(char speci, char clas)
+int class_allowed(int speci, int clas)
 {
 switch(clas)
 {
@@ -3121,37 +3059,11 @@ default: return 0;
 }
 
 }
-/*
- case 1: return "Human";
- case 2: return "Elf";
- case 3: return "High Elf";
- case 4: return "Grey Elf";
- case 5: return "Deep Elf";
- case 6: return "Sludge Elf";
- case 7: return "Hill Dwarf";
- case 8: return "Mountain Dwarf";
- case 9: return "Halfling";
- case 10: return "Hill Orc";
- case 11: return "Kobold";
- case 12: return "Mummy";
- case 13: return "Naga";
- case 14: return "Gnome";
- case 15: return "Ogre";
- case 16: return "Troll";
- case 17: return "Ogre-Mage";
- case 18: return "Red Draconian";
- case 19: return "White Draconian";
- case 20: return "Green Draconian";
- case 21: return "Yellow Draconian";
- case 22: return "Grey Draconian";
- case 23: return "Black Draconian";
- case 24: return "Purple Draconian";
-*/
 
 void choose_weapon(void)
 {
 
-char keyin = 0;
+int keyin = 0;
 /*
 switch(you[0].clas)
 {

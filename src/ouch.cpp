@@ -31,8 +31,8 @@
 #include "files.h"
 
 void highscore(std::string death_string, int points);
-void item_corrode(char itco);
-void end_game(char end_status, const char death_string [80]);
+void item_corrode(int itco);
+void end_game(int end_status, const std::string & death_string);
 int set_status(int stat);
 
 
@@ -141,7 +141,7 @@ return hurted;
 
 
 
-void splash_with_acid(char acid_strength)
+void splash_with_acid(int acid_strength)
 {
 
 /* affects equip only?
@@ -173,9 +173,9 @@ for (splc = 1; splc < 7; splc++)
 }
 
 
-void weapon_acid(char acid_strength)
+void weapon_acid(int acid_strength)
 {
-        char hand_thing = you[0].equip [EQ_WEAPON];
+        int hand_thing = you[0].equip [EQ_WEAPON];
 
         if (you[0].equip [EQ_WEAPON] == -1)
         {
@@ -191,10 +191,8 @@ void weapon_acid(char acid_strength)
 
 
 
-void item_corrode(char itco_char)
+void item_corrode(int itco)
 {
-	int itco = itco_char;
-
         int chance_corr = 0;
         int rusty = 0;
         if (you[0].inv_class [itco] == 0) rusty = you[0].inv_plus2 [itco];
@@ -253,7 +251,7 @@ void item_corrode(char itco_char)
 
 
 
-void scrolls_burn(char burn_strength, char target_class)
+void scrolls_burn(int burn_strength, int target_class)
 {
 
 int burnc;
@@ -437,9 +435,8 @@ std::string death_location()
 	return location_name(you[0].where_are_you) + ".";
 }
 
-void ouch(int dam, char death_source_char, char death_type)
+void ouch(int dam, int death_source, int death_type)
 {
-	int death_source = death_source_char;
 	int d = 0;
 	int e = 0;
 
@@ -534,29 +531,15 @@ void ouch(int dam, char death_source_char, char death_type)
 	end_game(0, death_string.c_str()); // must have won! (or at least escaped)
 }
 
-void end_game(char end_status, const char death_string [80])
+void end_game(int end_status, const std::string & death_string)
 {
 	int handle, i;
-	char status2 = end_status;
+	int status2 = end_status;
 	set_status(end_status);
 
-	char del_file [55];
 	int sysg = 0;
-	strcpy(del_file, "");
-	for (i = 0; i < 6; i ++) {
-		del_file [i] = you[0].your_name [i];
-		if (you[0].your_name [i] == 0)
-			break;
-	}
-	del_file [6] = 0;
 
-	char glorpstr [40];
-	strncpy(glorpstr, you[0].your_name, 6);
-
-	/* This is broken. Length is not valid yet! We have to check if we got a
-	   trailing NULL; if not, write one: */
-	if (strlen(you[0].your_name) > 5)    /* is name 6 chars or more? */
-		glorpstr[6] = (char) NULL;   /* if so, char 7 should be NULL */
+	std::string short_name = std::string(you[0].your_name, 6);
 
 	int fi = 0;
 	int fi2 = 0;
@@ -564,7 +547,7 @@ void end_game(char end_status, const char death_string [80])
 	for (fi2 = 0; fi2 < 30; fi2 ++) {
 		for (fi = 0; fi < 50; fi ++) {
 			Format format("@1.@2@3@4");
-			format << glorpstr << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
+			format << short_name << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
 			handle = open(format.str().c_str(), S_IWRITE, S_IREAD);
 
 			if (handle != -1)
@@ -575,16 +558,8 @@ void end_game(char end_status, const char death_string [80])
 		}
 	}
 
-	strcpy(del_file, glorpstr);
-
-	strcat(del_file, ".lab");
-	sysg = unlink(del_file);
-
-	strcpy(del_file, glorpstr);
-
-	strcat(del_file, ".sav");
-	sysg = unlink(del_file);
-
+	sysg = unlink(std::string(short_name + ".lab").c_str());
+	sysg = unlink(std::string(short_name + ".sav").c_str());
 	status2 = set_status(100);
 
 
@@ -654,7 +629,7 @@ void end_game(char end_status, const char death_string [80])
 	cprintf(you[0].your_name);
 	cprintf(".");
 	cprintf(EOL EOL);
-	cprintf(death_string);
+	cprintf(death_string.c_str());
 
 	get_ch();
 	end(0);

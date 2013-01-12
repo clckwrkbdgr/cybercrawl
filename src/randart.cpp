@@ -20,7 +20,7 @@ in dungeon.cc and consists of giving it a few random things - plus & plus2
 mainly.
 */
 
-const char *rand_wpn_names[] = {
+std::string rand_wpn_names[] = {
 " of Blood",
 " of Death",
 " of Bloody Death",
@@ -518,7 +518,7 @@ const char *rand_wpn_names[] = {
 };
 
 
-const char *rand_armour_names[] = {
+std::string rand_armour_names[] = {
 /* 0: */
 " of Shielding",
 " of Grace",
@@ -624,17 +624,17 @@ int unranddatasize;
 
 struct unrandart_entry {
 
-	const char *name/*[32]*/; // true name of unrandart (max 31 chars)
-	const char *unid_name/*[32]*/; // un-id'd name of unrandart (max 31 chars)
+	std::string name/*[32]*/; // true name of unrandart (max 31 chars)
+	std::string unid_name/*[32]*/; // un-id'd name of unrandart (max 31 chars)
 	int ura_cl ; // class of ura
 	int ura_ty ; // type of ura
 	int ura_pl ; // plus of ura
 	int ura_pl2 ; // plus2 of ura
 	int ura_col ; // colour of ura
 	int prpty [RA_PROPERTIES] ;
-	const char *spec_descrip1/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
-	const char *spec_descrip2/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
-	const char *spec_descrip3/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
+	std::string spec_descrip1/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
+	std::string spec_descrip2/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
+	std::string spec_descrip3/*[32]*/; // A special description which is added to the 'V' command output (max 31 chars)
 };// unranddata[];
 
 
@@ -647,27 +647,25 @@ struct unrandart_entry unranddata[]={
 
 struct unrandart_entry *seekunrandart(int aclass, int atype, int aplus, int aplus2);
 
-char *art_n;
-
-char unrandart_exist [NO_UNRANDARTS];
-void set_unrandart_exist(int whun, char is_exist);
+int unrandart_exist [NO_UNRANDARTS];
+void set_unrandart_exist(int whun, int is_exist);
 
 int random4(int randmax);
 
 
 
-void set_unrandart_exist(int whun, char is_exist)
+void set_unrandart_exist(int whun, int is_exist)
 {
  unrandart_exist [whun] = is_exist;
 }
 
-char does_unrandart_exist(int whun)
+int does_unrandart_exist(int whun)
 {
  return unrandart_exist [whun];
 }
 
 
-int randart_wpn_properties(int aclass, int atype, int adam, int aplus, int aplus2, int acol, char prop)
+int randart_wpn_properties(int aclass, int atype, int adam, int aplus, int aplus2, int acol, int prop)
 {
 
 if ((aclass == OBJ_JEWELLERY && adam == 201) || (aclass != OBJ_JEWELLERY && adam == 25))
@@ -678,7 +676,7 @@ if ((aclass == OBJ_JEWELLERY && adam == 201) || (aclass != OBJ_JEWELLERY && adam
 
 int globby = aclass * adam + acol + atype * (aplus % 100) + aplus2 * 100;
 int randstore = random();
-char proprt [RA_PROPERTIES];
+int proprt [RA_PROPERTIES];
 int i = 0;
 int power_level = ((aplus % 100) - 50) / 3 + (aplus2 - 50) / 3;
 
@@ -965,253 +963,132 @@ return proprt [int(prop)];
 }
 
 
-
-const char *randart_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
+std::string random_randart_characteristic()
 {
-
-if (adam == 25)
-{
- struct unrandart_entry *search_unrandarts = sura;
- if (ident_lev == 0) return search_unrandarts->unid_name;
-  else return search_unrandarts->name;
+	switch(random4(21)) {
+		case 0: return "brightly glowing ";
+		case 1: return "runed ";
+		case 2: return "smoking ";
+		case 3: return "bloodstained ";
+		case 4: return "twisted ";
+		case 5: return "shimmering ";
+		case 6: return "warped ";
+		case 7: return "crystal ";
+		case 8: return "jewelled ";
+		case 9: return "transparent ";
+		case 10: return "encrusted ";
+		case 11: return "pitted ";
+		case 12: return "slimy ";
+		case 13: return "polished ";
+		case 14: return "fine ";
+		case 15: return "crude ";
+		case 16: return "ancient ";
+		case 17: return "ichor-stained ";
+		case 18: return "faintly glowing ";
+		case 19: return "steaming ";
+		case 20: return "shiny ";
+	}
+	return "";
 }
 
-
-free(art_n);
-art_n = (char *)malloc(sizeof(char) * 80);
-if (art_n == NULL)
+std::string randart_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
- return "Malloc Failed Error";
-}
-strcpy(art_n, "");
+	if (adam == 25) {
+		struct unrandart_entry *search_unrandarts = sura;
+		if (ident_lev == 0) return search_unrandarts->unid_name;
+		else return search_unrandarts->name;
+	}
 
-int globby = aclass + adam * (aplus % 100) + atype * aplus2;
-int randstore = random();
+	int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+	int randstore = random();
 
-srandom(globby);
+	srandom(globby);
 
-if (ident_lev == 0)
-{
- switch(random4(21))
- {
-  case 0: strcat(art_n, "brightly glowing "); break;
-  case 1: strcat(art_n, "runed "); break;
-  case 2: strcat(art_n, "smoking "); break;
-  case 3: strcat(art_n, "bloodstained "); break;
-  case 4: strcat(art_n, "twisted "); break;
-  case 5: strcat(art_n, "shimmering "); break;
-  case 6: strcat(art_n, "warped "); break;
-  case 7: strcat(art_n, "crystal "); break;
-  case 8: strcat(art_n, "jewelled "); break;
-  case 9: strcat(art_n, "transparent "); break;
-  case 10: strcat(art_n, "encrusted "); break;
-  case 11: strcat(art_n, "pitted "); break;
-  case 12: strcat(art_n, "slimy "); break;
-  case 13: strcat(art_n, "polished "); break;
-  case 14: strcat(art_n, "fine "); break;
-  case 15: strcat(art_n, "crude "); break;
-  case 16: strcat(art_n, "ancient "); break;
-  case 17: strcat(art_n, "ichor-stained "); break;
-  case 18: strcat(art_n, "faintly glowing "); break;
-  case 19: strcat(art_n, "steaming "); break;
-  case 20: strcat(art_n, "shiny "); break;
- }
- strcat(art_n, standard_name_weap(atype).c_str());
- srandom(randstore);
- return art_n;
-}
+	if (ident_lev == 0) {
+		std::string result = random_randart_characteristic() + standard_name_weap(atype);
+		srandom(randstore);
+		return result;
+	}
 
-if (random4(2) == 0)
-{
- strcat(art_n, standard_name_weap(atype).c_str());
- strcat(art_n, rand_wpn_names [random4(390)]);
-}
- else
-{
- strcat(art_n, standard_name_weap(atype).c_str());
- if (random4(3) == 0)
-  {
-   strcat(art_n, " of ");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-  }
-  else
-  {
-   strcat(art_n, " \"");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-   strcat(art_n, "\"");
-  }
-}
-
-srandom(randstore);
-
-return art_n;
-
+	std::string result;
+	if (random4(2) == 0) {
+		result = standard_name_weap(atype) + rand_wpn_names [random4(390)];
+	} else {
+		result = standard_name_weap(atype);
+		if (random4(3) == 0) {
+			result += " of " + make_name(random4(250), random4(250), random4(250), 3);
+		} else {
+			result += " \"" + make_name(random4(250), random4(250), random4(250), 3) + "\"";
+		}
+	}
+	srandom(randstore);
+	return result;
 }
 
 
 
-const char *randart_armour_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
+std::string randart_armour_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
+	if (adam == 25) {
+		struct unrandart_entry *search_unrandarts = sura;
+		if (ident_lev == 0) return search_unrandarts->unid_name;
+		else return search_unrandarts->name;
+	}
 
-if (adam == 25)
-{
- struct unrandart_entry *search_unrandarts = sura;
- if (ident_lev == 0) return search_unrandarts->unid_name;
-  else return search_unrandarts->name;
+	int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+	int randstore = random();
+	srandom(globby);
+	std::string result;
+	if (ident_lev == 0) {
+		result = random_randart_characteristic() + standard_name_armour(atype, aplus2);
+		srandom(randstore);
+		return result;
+	}
+
+	if (random4(2) == 0) {
+		result = standard_name_armour(atype, aplus2) + rand_armour_names [random4(71)];
+	} else {
+		result = standard_name_armour(atype, aplus2);
+		if (random4(3) == 0) {
+			result += " of " + make_name(random4(250), random4(250), random4(250), 3);
+		} else {
+			result += " \"" + make_name(random4(250), random4(250), random4(250), 3) + "\"";
+		}
+	}
+	srandom(randstore);
+	return result;
 }
 
 
-free(art_n);
-art_n = (char *)malloc(sizeof(char) * 80);
-if (art_n == NULL)
+std::string randart_ring_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
 {
- return "Malloc Failed Error";
-}
-strcpy(art_n, "");
-
-int globby = aclass + adam * (aplus % 100) + atype * aplus2;
-int randstore = random();
-
-srandom(globby);
-
-if (ident_lev == 0)
-{
- switch(random4(21))
- {
-  case 0: strcat(art_n, "brightly glowing "); break;
-  case 1: strcat(art_n, "runed "); break;
-  case 2: strcat(art_n, "smoking "); break;
-  case 3: strcat(art_n, "bloodstained "); break;
-  case 4: strcat(art_n, "twisted "); break;
-  case 5: strcat(art_n, "shimmering "); break;
-  case 6: strcat(art_n, "warped "); break;
-  case 7: strcat(art_n, "heavily runed "); break;
-  case 8: strcat(art_n, "jewelled "); break;
-  case 9: strcat(art_n, "transparent "); break;
-  case 10: strcat(art_n, "encrusted "); break;
-  case 11: strcat(art_n, "pitted "); break;
-  case 12: strcat(art_n, "slimy "); break;
-  case 13: strcat(art_n, "polished "); break;
-  case 14: strcat(art_n, "fine "); break;
-  case 15: strcat(art_n, "crude "); break;
-  case 16: strcat(art_n, "ancient "); break;
-  case 17: strcat(art_n, "ichor-stained "); break;
-  case 18: strcat(art_n, "faintly glowing "); break;
-  case 19: strcat(art_n, "steaming "); break;
-  case 20: strcat(art_n, "shiny "); break;
- }
- strcat(art_n, standard_name_armour(atype, aplus2).c_str());
- srandom(randstore);
- return art_n;
-}
-
-if (random4(2) == 0)
-{
- strcat(art_n, standard_name_armour(atype, aplus2).c_str());
- strcat(art_n, rand_armour_names [random4(71)]);
-}
- else
-{
- strcat(art_n, standard_name_armour(atype, aplus2).c_str());
- if (random4(3) == 0)
-  {
-   strcat(art_n, " of ");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-  }
-  else
-  {
-   strcat(art_n, " \"");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-   strcat(art_n, "\"");
-  }
-}
-
-srandom(randstore);
-
-return art_n;
-
-}
-
-
-const char *randart_ring_name(int aclass, int atype, int adam, int aplus, int aplus2, int ident_lev)
-{
-
-if (adam == 201)
-{
- struct unrandart_entry *search_unrandarts = sura;
- if (ident_lev == 0) return search_unrandarts->unid_name;
-  else return search_unrandarts->name;
-}
-
-free(art_n);
-art_n = (char *)malloc(sizeof(char) * 80);
-if (art_n == NULL)
-{
- return "Malloc Failed Error";
-}
-strcpy(art_n, "");
-
-int globby = aclass + adam * (aplus % 100) + atype * aplus2;
-int randstore = random();
-
-srandom(globby);
-
-if (ident_lev == 0)
-{
- switch(random4(21))
- {
-  case 0: strcat(art_n, "brightly glowing "); break;
-  case 1: strcat(art_n, "runed "); break;
-  case 2: strcat(art_n, "smoking "); break;
-  case 3: strcat(art_n, "ruby "); break;
-  case 4: strcat(art_n, "twisted "); break;
-  case 5: strcat(art_n, "shimmering "); break;
-  case 6: strcat(art_n, "warped "); break;
-  case 7: strcat(art_n, "crystal "); break;
-  case 8: strcat(art_n, "diamond "); break;
-  case 9: strcat(art_n, "transparent "); break;
-  case 10: strcat(art_n, "encrusted "); break;
-  case 11: strcat(art_n, "pitted "); break;
-  case 12: strcat(art_n, "slimy "); break;
-  case 13: strcat(art_n, "polished "); break;
-  case 14: strcat(art_n, "fine "); break;
-  case 15: strcat(art_n, "crude "); break;
-  case 16: strcat(art_n, "ancient "); break;
-  case 17: strcat(art_n, "emerald "); break;
-  case 18: strcat(art_n, "faintly glowing "); break;
-  case 19: strcat(art_n, "steaming "); break;
-  case 20: strcat(art_n, "shiny "); break;
- }
- if (atype < AMU_RAGE) strcat(art_n, "ring"); else strcat(art_n, "amulet");
- srandom(randstore);
- return art_n;
-}
-
-if (random4(5) == 0)
-{
- if (atype < AMU_RAGE) strcat(art_n, "ring"); else strcat(art_n, "amulet");
- strcat(art_n, rand_armour_names [random4(71)]);
-}
- else
-{
- if (atype < AMU_RAGE) strcat(art_n, "ring"); else strcat(art_n, "amulet");
- if (random4(3) == 0)
-  {
-   strcat(art_n, " of ");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-  }
-  else
-  {
-   strcat(art_n, " \"");
-   strcat(art_n, make_name(random4(250), random4(250), random4(250), 3).c_str());
-   strcat(art_n, "\"");
-  }
-}
-
-srandom(randstore);
-
-return art_n;
-
+	if (adam == 201) {
+		struct unrandart_entry *search_unrandarts = sura;
+		if (ident_lev == 0) return search_unrandarts->unid_name;
+		else return search_unrandarts->name;
+	}
+	int globby = aclass + adam * (aplus % 100) + atype * aplus2;
+	int randstore = random();
+	srandom(globby);
+	std::string result;
+	std::string type = (atype < AMU_RAGE) ? "ring" : "amulet";
+	if (ident_lev == 0) {
+		result = random_randart_characteristic() + type;
+		srandom(randstore);
+		return result;
+	}
+	if (random4(5) == 0) {
+		result = type + rand_armour_names [random4(71)];
+	} else {
+		result = type;
+		if (random4(3) == 0) {
+			result += " of " + make_name(random4(250), random4(250), random4(250), 3);
+		} else {
+			result += " \"" + make_name(random4(250), random4(250), random4(250), 3) + "\"";
+		}
+	}
+	srandom(randstore);
+	return result;
 }
 
 
@@ -1235,7 +1112,7 @@ int x = 0;
 int find_okay_unrandart(int aclass)
 {
  int x = 0;
- char ura_index [NO_UNRANDARTS];
+ int ura_index [NO_UNRANDARTS];
  for (x = 0; x < NO_UNRANDARTS; x ++)
  {
    ura_index [x] = 0;
@@ -1277,7 +1154,7 @@ void make_item_unrandart(int x, int ura_item)
 
 }
 
-const char *unrandart_descrip(char which_descrip, int aclass, int atype, int aplus, int aplus2)
+std::string unrandart_descrip(int which_descrip, int aclass, int atype, int aplus, int aplus2)
 {
  switch(which_descrip)
  {

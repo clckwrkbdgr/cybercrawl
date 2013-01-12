@@ -1,6 +1,6 @@
 void untransform(void);
-char can_equip(char use_which);
-char transform(int pow, char which_trans);
-int remove_equipment(char remove_stuff [8]);
+int can_equip(int use_which);
+int transform(int pow, int which_trans);
+int remove_equipment(int remove_stuff [8]);
 
 

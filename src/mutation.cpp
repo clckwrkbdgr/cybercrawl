@@ -1,3 +1,4 @@
+#include "mutation.h"
 
 
 #include <stdlib.h>
@@ -16,13 +17,9 @@
 #define NO_MUT 57
 
 int how_mutated(void);
-char delete_mutation(char which_mutation);
-char body_covered(void);
-void perma_mutate(int which_mut, char how_much);
+void perma_mutate(int which_mut, int how_much);
 
-char mut_string [80];
-
-const char *mutation_descrip [] [3] =
+std::string mutation_descrip [] [3] =
 {
 {"You have tough skin (AC +1).", "You have very tough skin (AC +2).", "You have extremely tough skin (AC +3)."},
 {"Your muscles are strong (Str +", "", ""},
@@ -110,7 +107,7 @@ to the "resist mutation" mutation thing.
 */
 
 
-const char *gain_mutation [] [3] =
+std::string gain_mutation [] [3] =
 {
 {"Your skin toughens.", "Your skin toughens.", "Your skin toughens."},
 {"You feel stronger.", "You feel stronger.", "You feel stronger."},
@@ -194,7 +191,7 @@ const char *gain_mutation [] [3] =
 };
 
 
-const char *lose_mutation [] [3] =
+std::string lose_mutation [] [3] =
 {
 {"Your skin feels delicate.", "Your skin feels delicate.", "Your skin feels delicate."},
 {"You feel weaker.", "You feel weaker.", "You feel weaker."},
@@ -253,7 +250,7 @@ const char *lose_mutation [] [3] =
 /*
 Chance out of 10 that mutation will be given/removed randomly. 0 means never.
 */
-char mutation_rarity [] =
+int mutation_rarity [] =
 {
 10, // tough skin
 8, // str
@@ -351,7 +348,7 @@ void display_mutations(void)
       cprintf(format.str().c_str());
       continue;
      }
-     cprintf(mutation_descrip [i] [you[0].mutation [i] - 1]);
+     cprintf(mutation_descrip [i] [you[0].mutation [i] - 1].c_str());
      cprintf(EOL);
     }
    }
@@ -367,11 +364,11 @@ return;
 }
 
 
-char mutate(int which_mutation)
+int mutate(int which_mutation)
 {
 int mutat = which_mutation;
 
-char force = 0;
+int force = 0;
 
 if (which_mutation >= 1000) /* Must give this mutation - no failure */
 {
@@ -379,8 +376,6 @@ if (which_mutation >= 1000) /* Must give this mutation - no failure */
  mutat -= 1000;
  which_mutation -= 1000;
 }
-
-//char st_prn [10];
 
 int i = 0;
 
@@ -560,7 +555,7 @@ switch(mutat)
 
  case MUT_HORNS: // horns force your helmet off
  mpr(gain_mutation [mutat] [you[0].mutation [mutat]]);
- char removed [8];
+ int removed [8];
  for (i = EQ_WEAPON; i < EQ_RIGHT_RING; i ++)
  {
   removed [i] = 0;
@@ -656,7 +651,7 @@ return j;
 
 
 
-char delete_mutation(char which_mutation)
+int delete_mutation(int which_mutation)
 {
 int mutat = which_mutation;
 
@@ -843,10 +838,10 @@ return 1;
 }
 
 
-char body_covered(void)
+int body_covered(void)
 {
 /* checks how much of your body is covered by scales etc */
-char covered = 0;
+int covered = 0;
 if (you[0].species == SP_NAGA) covered ++; /* naga */
 if (you[0].species >= SP_RED_DRACONIAN && you[0].species <= SP_UNK2_DRACONIAN) return 3; /* Dracon */
 
@@ -876,7 +871,7 @@ void demonspawn(void)
 {
 
  int whichm = -1;
- char howm = 1;
+ int howm = 1;
  int counter = 0;
 
  you[0].attribute [ATTR_NUM_DEMONIC_POWERS] ++;
@@ -991,7 +986,7 @@ void demonspawn(void)
 }
 
 
-void perma_mutate(int which_mut, char how_much)
+void perma_mutate(int which_mut, int how_much)
 {
 
  mutate(which_mut + 1000);
@@ -1003,7 +998,7 @@ void perma_mutate(int which_mut, char how_much)
 }
 
 
-char give_good_mutation(void)
+int give_good_mutation(void)
 {
   switch(random2(25)) /* beneficial mutates */
   {
@@ -1036,7 +1031,7 @@ char give_good_mutation(void)
  return 0;
 }
 
-char give_bad_mutation(void)
+int give_bad_mutation(void)
 {
   switch(random2(12)) /* bad mutations */
   {

@@ -21,7 +21,7 @@
 #include "view.h"
 
 void itrap(struct bolt beam [1], int trapped);
-int monster_abjuration(int pow, char test);
+int monster_abjuration(int pow, int test);
 
 /*
 NOTE: must fix species abils to not use duration 15
@@ -443,7 +443,7 @@ if (mons_near(monstel) == 1 && (player_see_invis() != 0 || menv [monstel].m_ench
 }
 mgrd [menv [monstel].m_x] [menv [monstel].m_y] = MNG;
 
-char ogrid = 67;
+int ogrid = 67;
 
 if (menv [monstel].m_class >= MLAVA0) ogrid = 61;
 if (menv [monstel].m_class >= MWATER0) ogrid = 62;
@@ -529,7 +529,7 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 void mons_throw(int i, struct bolt beem [1], int hand_used)
 {
 
-char shoot = 0;
+int shoot = 0;
 beem[0].range = 9;
 beem[0].beam_source = i;
 /*if (menv [i].m_x > you[0].x_pos - 6 && menv [i].m_x < you[0].x_pos + 6 && menv [i].m_y > you[0].y_pos - 6 && menv [i].m_y < you[0].y_pos + 6)
@@ -1152,7 +1152,7 @@ return 0; // Should never reach this. Stupid pedantic gcc warning thing.
 }
 
 
-int monster_abjuration(int pow, char test)
+int monster_abjuration(int pow, int test)
 {
 
 int ab = 0;

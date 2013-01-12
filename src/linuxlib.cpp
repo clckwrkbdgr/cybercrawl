@@ -22,6 +22,13 @@
 int FG_COL = COLOR_WHITE;
 int BG_COL = COLOR_BLACK;
 
+std::string read_string()
+{
+	char buffer[80];
+	getnstr(buffer, 80);
+	return std::string(buffer);
+}
+
 int getkey()
 {
 	return getch();
