@@ -8,15 +8,15 @@
 #include "dungeon.h"
 #include "stuff.h"
 
-char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, int empty [2]);
+int empty_surrounds(int emx, int emy, int spc_wanted, int allow_centre, int empty [2]);
 
-int mons_place(int typed, int type_place, int px, int py, char behaviour, int hitting, int plus_seventy, int lev_mons)
+int mons_place(int typed, int type_place, int px, int py, int behaviour, int hitting, int plus_seventy, int lev_mons)
 {
 int passed [2];
 passed [0] = 0;
 passed [1] = 0;
 
-char bands = 1;
+int bands = 1;
 int nomons = 0;
 int il;
 
@@ -115,17 +115,17 @@ return summd;
 
 }
 
-char empty_surrounds(int emx, int emy, int spc_wanted, char allow_centre, int empty [2])
+int empty_surrounds(int emx, int emy, int spc_wanted, int allow_centre, int empty [2])
 {
 
 int count_x, count_y = 0;
 
-char minx = -1;
-char maxx = 3;
-char miny = -1;
-char maxy = 2;
-char xinc = 1;
-char yinc = 1;
+int minx = -1;
+int maxx = 3;
+int miny = -1;
+int maxy = 2;
+int xinc = 1;
+int yinc = 1;
 
 if (random2(2) == 0)
 {
@@ -172,7 +172,7 @@ return 1;
 
 } /* end empty surrounds */
 
-int summon_any_demon(char demon_class)
+int summon_any_demon(int demon_class)
 {
 
  if (demon_class == 0) /* imps/minor demons (class 5) */

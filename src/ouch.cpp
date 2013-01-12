@@ -570,7 +570,7 @@ void end_game(char end_status, const char death_string [80])
 			if (handle != -1)
 			{
 				close(handle);
-				unlink(del_file);
+				unlink(format.str().c_str());
 			} else close(handle);
 		}
 	}
