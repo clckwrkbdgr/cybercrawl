@@ -89,10 +89,10 @@ extern struct monsterentry {
 	// ((((max_hp / 7) + 1) * (mHD * mHD) + 1) * exp_mod) / 10
 	//     ^^^^^^ see below at hpdice
         //   Note that this may make draining attacks less attractive (LH)
-	char exp_mod ;
+	int exp_mod ;
 	
 	int charclass ; //
-	char holiness ; // -1=holy,0=normal,1=undead,2=very very evil
+	int holiness ; // -1=holy,0=normal,1=undead,2=very very evil
 	
 	int resist_magic ; // (positive is ??)
 	// max damage in a turn is total of these four?
@@ -106,21 +106,21 @@ extern struct monsterentry {
 	// hp will be around 135 each time. (assuming an good random number generator)
 	// !!!!!!! The system is exactly the same as before, only the way of writing changed !!!!
 	int hpdice[4] ; // until we have monsters with 32767 hp,this is easily possible
-	char AC ; // armour class
-	char ev ; // evasion
-	char speed ,speed_inc ; // duh!
+	int AC ; // armour class
+	int ev ; // evasion
+	int speed ,speed_inc ; // duh!
 	int sec ; // not used (250) most o/t time
 	
 	// eating the corpse: 1=clean,2=might be contaminated,3=poison,4=very bad
-	char corpse_thingy ;
+	int corpse_thingy ;
 	// 0=no zombie, 1=small zombie (z) 107, 2=_BIG_ zombie (Z) 108
-	char zombie_size ;
+	int zombie_size ;
 	// 0=silent, 1=shout, 2=bark (makes only sense for dogs), 
 	// 3=shout twice, 4=rour, 5=scream, 6=bellow (?), 7=screech,
 	// 8=buzz, 9=moan, -1=random one of (0-7)
-	char shouts ;
+	int shouts ;
 	// AI things?
-	char intel ; // 0=none, 1=worst...4=best
+	int intel ; // 0=none, 1=worst...4=best
 	int gmon_use ;
 } mondata[];
 // wow. this struct is only about 48 bytes, (excluding the name)
@@ -129,7 +129,7 @@ extern struct monsterentry {
 int mondamage(int mc, int rt);
 void mon_init(int gmon_use [1000], int mcolour [1000]);
 void def_letters(char letters [52] [1]);
-int mon_resist_mag(int mc, char mhd);
+int mon_resist_mag(int mc, int mhd);
 int mons_res_fire(int mclass);
 int mons_intel(int mclass);
 int mons_res_poison(int mclass);
@@ -139,24 +139,23 @@ int mons_corpse_thingy(int mclass);
 int mons_charclass(int mcls);
 int mons_res_cold(int mclass);
 int mons_holiness(int mclass);
-char mons_shouts(int mclass);
-char mons_flies(int mclass);
-char mons_see_invis(int mclass);
+int mons_shouts(int mclass);
+int mons_flies(int mclass);
+int mons_see_invis(int mclass);
 void define_monster(int k, struct monsters mns [MNST]);
 int mons_exp_mod(int mclass);
 int mons_skeleton(int mcls);
 int mons_res_elec(int mclass);
 int hit_points(int hit_dice, int min_hp, int rand_hp);
 void mons_spell_list(int sec, int splist [6]);
-//void def_letters(char letters [52] [1]);
 int mons_char(int mc);
-std::string moname(int mcl, char mench, char see_inv, char descrip);
+std::string moname(int mcl, int mench, int see_inv, int descrip);
 int exper_value(int mclass, int mHD, int maxhp);
 
-std::string monam(int mons_cla, int mons_e, char desc, char see_invis);
+std::string monam(int mons_cla, int mons_e, int desc, int see_invis);
 
 
-char mons_pan(int mcls); // is the monster to be found in pandemonium
+int mons_pan(int mcls); // is the monster to be found in pandemonium
 
 int mons_flag(int mc,int bf);
 

@@ -182,31 +182,6 @@ summonings can also cast Abjuration (just for simplicity)
 */
 
 
-/*struct monsters
-{
-int m_class;
-int m_hp;
-int m_hp_max;
-int m_HD;
-int m_AC;
-char m_ev;
-int m_speed;
-int m_speed_inc;
-int m_x;
-int m_y;
-int m_targ_1_x;
-int m_targ_1_y;
-int m_inv [8];
-int m_beh;
-	int m_sec;
-        //int m_sec;
- int m_hit;
-	 int m_ench [3];
-	 int m_ench_1;
-};
-*/
-
-
 struct monsterentry *seekmonster(int mc)
 {
 int x=0;
@@ -230,19 +205,19 @@ int mons_flag(int mc,int bf)
 
 // These are easy to implement here. The difficult (dull!) work of converting 
 // the data structures is finally finished now!
-const char *mons_name(int mc) { return smc->name; }
+std::string mons_name(int mc) { return smc->name; }
 int mons_intel(int mc) { return smc->intel; }
 int mons_holiness(int mc) { return smc->holiness; }
 int mons_zombie_size(int mc) { return smc->zombie_size; }
 int mons_weight(int mc) { return smc->weight; }
 int mons_corpse_thingy(int mc) { return smc->corpse_thingy; }
 int mons_charclass(int mc) { return smc->charclass; }
-char mons_shouts(int mc) { 
+int mons_shouts(int mc) { 
 	int u=smc->shouts;
 	if(u==-1) u=random()%12;
 	return u; 
 }
-char mons_see_invis(int mc)
+int mons_see_invis(int mc)
 {
  if (mc == 400 || mc == 401) return ghost.ghs [3];
  return mf(M_SEE_INVIS);
@@ -258,7 +233,7 @@ int mondamage(int mc, int rt)
 	return smc->damage[rt];
 }
 
-int mon_resist_mag(int mc, char mhd)
+int mon_resist_mag(int mc, int mhd)
 {
 int u=smc->resist_magic;
 	if(u<0) return mhd*abs(u) * 2; // negative values get multiplied with mhd
@@ -325,7 +300,7 @@ int mons_skeleton(int mc)
 	return 1;
 }
 
-char mons_flies(int mc) 
+int mons_flies(int mc) 
 {
 
 if (mc == 401)
@@ -527,16 +502,9 @@ size_t x;
 
 void def_letters(char letters [52] [1])
 {
-/*int x; char temp[2]={0,0};
+int x; 
 	for(x=0;x<26;x++) {
-		temp[0]=x+'a'; strcpy(letters[x],temp);
-		temp[0]=x+'A'; strcpy(letters[x+26],temp);
-	}*/
-int x; //char temp[2]={0,0};
-	for(x=0;x<26;x++) {
-//		temp[0]=x+'a';
 		letters [x] [0] = x + 'a';
-//		temp[0]=x+'A';
 		letters [x + 26] [0] = x + 'A';
 
 		}
@@ -544,7 +512,7 @@ int x; //char temp[2]={0,0};
 
 
 /* Note: the arguments to this function are very messed up */
-std::string monam(int mons_cla, int mons_e, char desc, char see_invis)
+std::string monam(int mons_cla, int mons_e, int desc, int see_invis)
 {
 	if (mons_e == 25 || mons_e == 51) {
 		return moname(mons_cla, desc, player_see_invis(), see_invis) + " zombie";
@@ -572,7 +540,7 @@ std::string monam(int mons_cla, int mons_e, char desc, char see_invis)
 }
 
 
-std::string moname(int mcl, char mench, char see_inv, char descrip)
+std::string moname(int mcl, int mench, int see_inv, int descrip)
 {
 	bool titlecase = (descrip % 2 == 0);
 	std::string gmon_name = mons_name(mcl);
@@ -625,17 +593,8 @@ done_xval : if (x_val < 0) x_val = 0;
 if (x_val > 15000) x_val = 15000;
 return x_val;
 }
-/*
-main()
-{
-	printf("%i x %i (%i)\n",mondatasize,sizeof(struct monsterentry),sizeof(mondata));
-	printf("%s\n",mons_name(13));
-	if(mons_flag(13,M_RES_COLD)) {
-		printf("cold resistant\n");
-	}
-}*/
 
-char mons_pan(int mcls) // is the monster to be found in pandemonium
+int mons_pan(int mcls) // is the monster to be found in pandemonium
 {
 
 switch(mcls)
