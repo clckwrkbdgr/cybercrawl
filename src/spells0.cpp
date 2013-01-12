@@ -9,7 +9,6 @@
 #include "enum.h"
 
 #include "itemname.h"
-#include "macro.h"
 #include "player.h"
 #include "dungeon.h"
 

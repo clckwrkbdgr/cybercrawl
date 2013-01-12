@@ -208,9 +208,6 @@ void delay(int time)
 	usleep(time * 1000);
 }
 
-/*
-Note: kbhit now in macro.cc
-*/
 
 /* This is Juho Snellman's modified kbhit, to work with macros */
 int kbhit()

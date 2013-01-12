@@ -6,7 +6,6 @@
 #include "enum.h"
 #include "externs.h"
 #include "linuxlib.h"
-#include "macro.h"
 #include "message.h"
 
 Message msg(const std::string & format_string) {

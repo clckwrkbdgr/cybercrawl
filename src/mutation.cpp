@@ -7,7 +7,6 @@
 
 #include "externs.h"
 #include "enum.h"
-#include "macro.h"
 #include "message.h"
 #include "player.h"
 #include "transfor.h"

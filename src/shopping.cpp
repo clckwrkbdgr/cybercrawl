@@ -7,7 +7,6 @@
 #include "describe.h"
 #include "invent.h"
 #include "itemname.h"
-#include "macro.h"
 #include "player.h"
 #include "stuff.h"
 

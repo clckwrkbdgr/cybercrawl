@@ -13,7 +13,6 @@
 #include "items.h"
 #include "it_use2.h"
 #include "it_use3.h"
-#include "macro.h"
 #include "monplace.h"
 #include "monstuff.h"
 #include "misc.h"

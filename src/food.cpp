@@ -6,7 +6,6 @@
 #include "externs.h"
 #include "enum.h"
 #include "spells2.h"
-#include "macro.h"
 #include "mutation.h"
 #include "player.h"
 #include "religion.h"

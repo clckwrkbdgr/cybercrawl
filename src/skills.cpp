@@ -6,7 +6,6 @@
 
 #include "externs.h"
 #include "enum.h"
-#include "macro.h"
 #include "player.h"
 #include "skills.h"
 #include "skills2.h"

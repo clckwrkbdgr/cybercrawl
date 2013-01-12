@@ -15,7 +15,6 @@
 #include "items.h"
 #include "it_use2.h"
 #include "levels.h"
-#include "macro.h"
 #include "mstruct.h"
 #include "misc.h"
 #include "monplace.h"

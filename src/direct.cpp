@@ -5,7 +5,6 @@
 #include "externs.h"
 #include "itemname.h"
 #include "linuxlib.h"
-#include "macro.h"
 #include "monstuff.h"
 #include "mstruct.h"
 #include "player.h"

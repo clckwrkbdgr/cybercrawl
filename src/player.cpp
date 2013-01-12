@@ -9,7 +9,6 @@
 
 #include "itemname.h"
 #include "misc.h"
-#include "macro.h"
 #include "mstruct.h"
 #include "mutation.h"
 #include "output.h"

@@ -21,7 +21,6 @@
 #include "invent.h"
 #include "shopping.h"
 #include "itemname.h"
-#include "macro.h"
 #include "mstruct.h"
 #include "ouch.h"
 #include "player.h"

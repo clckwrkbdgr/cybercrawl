@@ -29,7 +29,6 @@
 #include "items.h"
 //#include "levels.h"
 //#include "maps.h"
-#include "macro.h"
 #include "message.h"
 #include "misc.h"
 #include "monplace.h"

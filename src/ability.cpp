@@ -14,7 +14,6 @@
 #include "effects.h"
 #include "items.h"
 #include "it_use2.h"
-#include "macro.h"
 #include "misc.h"
 #include "monplace.h"
 #include "player.h"

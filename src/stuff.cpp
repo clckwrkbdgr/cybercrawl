@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "macro.h"
 #include "message.h"
 #include "misc.h"
 #include "output.h"

@@ -8,7 +8,6 @@
 #include "enum.h"
 
 #include "itemname.h"
-#include "macro.h"
 #include "mstruct.h"
 #include "randart.h"
 #include "skills2.h"

@@ -14,7 +14,6 @@
 #include "externs.h"
 #include "enum.h"
 #include "itemname.h"
-#include "macro.h"
 #include "player.h"
 #include "randart.h"
 #include "skills2.h"

@@ -13,7 +13,6 @@
 #include "player.h"
 #include "religion.h"
 #include "itemname.h"
-#include "macro.h"
 #include "message.h"
 #include "mutation.h"
 #include "skills.h"

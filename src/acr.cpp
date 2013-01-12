@@ -25,7 +25,6 @@
 #include "items.h"
 #include "levels.h"
 #include "linuxlib.h"
-#include "macro.h"
 #include "message.h"
 #include "misc.h"
 #include "monplace.h"
@@ -74,15 +73,11 @@ new_game and then input.
 int main()
 {
 	lincurses_startup();
-	macro_init();
-
 	initial();
 	initialise();
-
 	while(true) {
 		input();
 	}
-
 	lincurses_shutdown();
 	return 0;
 }
@@ -319,9 +314,6 @@ void process_control(int keyin, int & move_x, int & move_y) // FIXME References 
 				  else
 					  mpr("Char dump unsuccessful! Sorry about that.");
 				  break;
-
-		case '`': macro_add_query(); break;
-		case '~': mpr("Saving macros."); macro_save(); break;
 
 
 

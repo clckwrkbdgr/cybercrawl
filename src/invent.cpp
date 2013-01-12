@@ -10,7 +10,6 @@
 #include <string.h>
 
 #include "itemname.h"
-#include "macro.h"
 
 //#include "crawlfnc.h"
 #include "shopping.h"
@@ -274,8 +273,6 @@ std::string command_string(int i)
 		case 370: return "# - dump character to file <name>.txt";
 		case 380: return "= - adjust inventory/program letters";
 		case 390: return "\' - wield item a, or switch to b";
-		case 400: return "` - add macro";
-		case 410: return "~ - save macros";
 		default: return "";
 	}
 }
