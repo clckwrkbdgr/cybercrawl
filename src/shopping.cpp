@@ -12,126 +12,60 @@
 
 #include <stdlib.h>
 #include <string.h>
-
-/*#include "crawlfnc.h"
-#include "fn2.h"
-#include "invent.h"
-#include "struct.h"*/
-
-//#define ITEMS 500
-/*
-struct item_struct
-{
-	 int iclass [ITEMS];
-	 int itype [ITEMS];
-	 int iplus [ITEMS]; // +, charges, remaining food value
-         int iplus2 [ITEMS];
-	 int idam [ITEMS]; // damage
-	 int iquant [ITEMS]; // multiple items
-	 int ix [ITEMS]; //  x-location
-	 int iy [ITEMS]; //  y-location
-	 int icol [ITEMS];
-	 int iid [ITEMS];
-
-	 int ilink [ITEMS];
-
-};
-
-//struct item_struct it [1];
-
-struct shop_struct
-{
-
-int keeper_name [5] [3];
-int sh_x [5];
-int sh_y [5];
-int sh_greed [5];
-int sh_type [5];
-int sh_level [5];
-
-};
-
-*/
+#include <sstream>
+#include <iomanip>
+#include "shopping.h"
 
 void purchase(int item_got);
-
-//void purchase(struct player you [1]);
-
-int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, int id [4] [50]);
-
-
-char in_a_shop(char shoppy, int id [4] [50]);
-
-void shop_print(const char *shoppy, char sh_line);
-
-
-char more3(void);
-
-
+void shop_print(const std::string & shoppy, int sh_line);
+int more3(void);
 void clear_line(void);
-
-
-char shop_getch(void);
-
+int shop_getch(void);
 void shop_init_id(int i, int shop_id [4] [50]);
 void shop_uninit_id(int i, int shop_id [4] [50]);
-
 void shop_set_id(int i, int shop_id [4] [50], int iclass, int itype);
 
-char book_rarity(char which_book);
+std::string shop_type_name(int type)
+{
+	switch(type) {
+		case 0: return "Weapon Store!";
+		case 1: return "Armour Store!";
+		case 2: return "Antique Weapon Store!";
+		case 3: return "Antique Armour Store!";
+		case 4: return "Assorted Antiques!";
+		case 5: return "Bioimplant Lab!";
+		case 6: return "Gun Shop!";
+		case 7: return "Program Repository!";
+		case 8: return "Food Shop!";
+		case 9: return "Chem Lab!";
+		case 10: return "Devices Store!";
+		case 11: return "General Store!";
+	}
+	return "";
+}
 
-char in_a_shop(char shoppy_char, int id [4] [50])
+int in_a_shop(int shoppy, int id [4] [50])
 {
 	  Format format("You have @1 credit chip@2.");
-	int shoppy = shoppy_char;
    int greedy = env[0].sh_greed [shoppy];
    int shop_id [4] [50];
    int shop_items [20];
 
-   char st_pass [60];
-
    int gp_value = 0;
-   char i;
+   int i;
    int ft;
 
-   strcpy(st_pass, "");
-
    clrscr();
-//   char st_pass [50];
 int itty = 0;
-char sh_name [40];
 
 
-//char *make_name(int var1, int var2, int var3, char ncase)
+      Format shop_name_format("Welcome to @1's @2");
+	  shop_name_format << make_name(env[0].keeper_name [shoppy] [0], env[0].keeper_name [shoppy] [1], env[0].keeper_name [shoppy] [2], 3) << shop_type_name(env[0].sh_type [shoppy]);
 
-      strcpy(sh_name, "Welcome to ");
-      strcat(sh_name, make_name(env[0].keeper_name [shoppy] [0], env[0].keeper_name [shoppy] [1], env[0].keeper_name [shoppy] [2], 3).c_str());
-      strcat(sh_name, "'s ");
-      switch(env[0].sh_type [shoppy])
-      {
-       case 0: strcat(sh_name, "Weapon Store!"); break;
-       case 1: strcat(sh_name, "Armour Store!"); break;
-       case 2: strcat(sh_name, "Antique Weapon Store!"); break;
-       case 3: strcat(sh_name, "Antique Armour Store!"); break;
-       case 4: strcat(sh_name, "Assorted Antiques!"); break;
-       case 5: strcat(sh_name, "Bioimplant Lab!"); break;
-       case 6: strcat(sh_name, "Gun Shop!"); break;
-       case 7: strcat(sh_name, "Program Repository!"); break;
-       case 8: strcat(sh_name, "Food Shop!"); break;
-       case 9: strcat(sh_name, "Chem Lab!"); break;
-       case 10: strcat(sh_name, "Devices Store!"); break;
-       case 11: strcat(sh_name, "General Store!"); break;
-      }
-
-//      strcat(sh_name, " shop.");
-
-      shop_print(sh_name, 20); //"Hello, and welcome to ");
+      shop_print(shop_name_format.str().c_str(), 20); //"Hello, and welcome to ");
 
       more3();
 
-//      for (i = 0; i < 4; i ++) // when invent becomes available, must replace!
-//      {
-//      }
       shop_init_id(shoppy, shop_id);
   /* THINGS TO DO:
    Allow inventory
@@ -162,7 +96,7 @@ itty = igrd [0] [5 + shoppy];
 
       if (itty == 501) goto empty_shop;
 
-      for (i = 1; i < 20; i ++) // remember i is a char
+      for (i = 1; i < 20; i ++)
       {
 
        shop_items [i - 1] = itty;
@@ -179,7 +113,7 @@ itty = igrd [0] [5 + shoppy];
 
       itty = igrd [0] [5 + shoppy];
 
-      for (i = 1; i < 18; i ++) // remember i is a char
+      for (i = 1; i < 18; i ++)
       {
 
        gotoxy(1, i);
@@ -295,14 +229,9 @@ itty = igrd [0] [5 + shoppy];
       clear_line();
       shop_print("Goodbye!", 20);
       more3();
-//      for (i = 0; i < 4; i ++)
-//      {
-//      }
-//
       shop_uninit_id(shoppy, shop_id);
       return 0;
 }
-
 
 void shop_init_id(int i, int shop_id [4] [50])
 {
@@ -356,21 +285,17 @@ void shop_set_id(int i, int shop_id [4] [50], int iclass, int itype)
 }
 
 
-void shop_print(const char *shoppy, char sh_lines)
+void shop_print(const std::string & shoppy, int sh_lines)
 {
- int i;
- gotoxy(1, sh_lines);
- cprintf(shoppy);
- for (i = strlen(shoppy); i < 80; i ++)
- {
-  cprintf(" ");
- }
-
+	gotoxy(1, sh_lines);
+	std::ostringstream out;
+	out << std::setw(80) << shoppy;
+	cprintf(out.str().c_str());
 }
 
-char more3(void)
+int more3(void)
 {
- char keyin = 0;
+ int keyin = 0;
  gotoxy(70,20);
  cprintf("-more-");
  keyin = getkey();
@@ -393,9 +318,9 @@ void clear_line(void)
 return;
 }
 
-char shop_getch(void)
+int shop_getch(void)
 {
- char keyin = 0;
+ int keyin = 0;
  keyin = getkey();
  if (keyin == 0) getkey();
  return keyin;
@@ -428,7 +353,7 @@ void purchase(int item_got)
                 you[0].inv_no++;
 }
 
-int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, char ident_lev, int id [4] [50])
+int item_value(int item_clas, int item_typ, int item_da, int it_plus, int it_plus2, int item_quant, int ident_lev, int id [4] [50])
 {
 
 int valued = 0;
@@ -1083,7 +1008,7 @@ return valued;
 
 
 
-char book_rarity(char which_book)
+int book_rarity(int which_book)
 {
 
  switch(which_book)

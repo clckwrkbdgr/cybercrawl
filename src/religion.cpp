@@ -23,11 +23,12 @@
 #include "spells1.h"
 #include "spells3.h"
 #include "stuff.h"
+#include "religion.h"
 
 int mutate(int which_mutation);
 
 
-const char *sacrifice [] =
+std::string sacrifice [] =
 {
 " glows silver and disappears.",
 " glows a brilliant golden colour and disappears.",
@@ -43,14 +44,8 @@ const char *sacrifice [] =
 " evaporates."
 };
 
-const char *god_name(int which_god);
-const char *god_name_long(int which_god);
-void gain_piety(char pgn);
-void naughty(char type_naughty, int naughtiness);
-void excommunication(void);
-void god_pitch(int which_god);
+std::string god_name_long(int which_god);
 void altar_prayer();
-void lose_piety(char pgn);
 
 std::string god_attitude(int piety)
 {
@@ -233,7 +228,7 @@ Remember to check for water/lava
 
 }
 
-const char *god_name(int which_god)
+std::string god_name(int which_god)
 {
 	switch(which_god) {
 		case 0: return "You aren't employed!";
@@ -254,7 +249,7 @@ const char *god_name(int which_god)
 }
 
 
-const char *god_name_long(int which_god)
+std::string god_name_long(int which_god)
 {
 	switch(which_god) {
 		case 0: return "Nobody";
@@ -275,7 +270,7 @@ const char *god_name_long(int which_god)
 }
 
 
-void Xom_acts(char niceness, int sever, char force_sever)
+void Xom_acts(int niceness, int sever, int force_sever)
 {
 
 /*
@@ -557,7 +552,7 @@ Thing_done:
 10 - any servants kill anything
 11 - cards (Nemelex)
 */
-void done_good(char thing_done, int pgain)
+void done_good(int thing_done, int pgain)
 {
 
 if (you[0].religion == GOD_NO_GOD) return;
@@ -686,7 +681,7 @@ switch(thing_done)
 
 }
 
-void gain_piety(char pgn)
+void gain_piety(int pgn)
 {
 
 if (you[0].piety > 100 && random2(3) == 0) return;
@@ -857,7 +852,7 @@ if (you[0].piety >= 120 && old_piety < 120)
 /*
 
 */
-void naughty(char type_naughty, int naughtiness)
+void naughty(int type_naughty, int naughtiness)
 {
 /*
  1 = using necromancy (spell or device)
@@ -961,7 +956,7 @@ if (you[0].piety <= 0) excommunication();
 }
 
 
-void lose_piety(char pgn)
+void lose_piety(int pgn)
 {
 
 int old_piety = you[0].piety;
@@ -1236,7 +1231,7 @@ if ((you[0].is_undead != 0 || you[0].species == SP_DEMONSPAWN) && (which_god == 
 describe_god(which_god);
 
 mpr("Do you wish to join this company?");
-char keyi = get_ch();
+int keyi = get_ch();
 if (keyi != 'Y' && keyi != 'y') return;
 
 mpr("Are you sure?");
