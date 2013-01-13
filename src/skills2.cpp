@@ -14,8 +14,6 @@ This file was extensively modified by Wladimir van der Laan.
 int species_skills(char skill, char species);
 int skill_exp_needed(int lev); /* both in skills.cc */
 
-//#define DEBUG
-
 const char *skills[50][5] = {
 {"Fighting",	   "Grunt", "Fighter", "Warrior", "Slayer"}, // fighter
 {"Short Blades",   "Stabber","Cutter","Slicer","Knifefighter"}, // short blades
@@ -90,17 +88,6 @@ const char *skills[50][5] = {
 {NULL},
 {NULL}*/
 };
-
-
-
-// human
-/* Note that this (humans have 100 for all skills) is assumed in the
-level_change function in crawl99.cc, if CLASSES is def'd
-
-3.10: but it never is, and CLASSES is probably broken now. Anyway,
-the Spellcasting skill (25) is actually about 130% of what is shown here.
-*/
-
 
 int spec_skills [36] [39] =
 {
@@ -2053,33 +2040,6 @@ return enp;
 
 }
 
-#ifdef CLASSES
-int skill_exp_needed(int lev)
-{
-lev --;
-switch(lev)
-{
-	case 0: return 0;
-        case 1: return 10;
-        case 2: return 60;
-	case 3: return 130;
-	case 4: return 200;
-	case 5: return 400;
-	case 6: return 500;
-	case 7: return 610;
-	case 8: return 720;
-	case 9: return 840;
-	case 10: return 960;
-	case 11: return 1100;
-	case 12: return 1250;
-	case 13: return 1500;
-        default: return 1900 + 400 * (lev - 14); //return 1200 * (lev - 11) + ((lev - 11) * (lev - 11));// * (lev - 11));
-}
-
-return 0;
-
-}
-#else
 int skill_exp_needed(int lev)
 {
 lev --;
@@ -2122,7 +2082,6 @@ switch(lev)
 return 0;
 
 }
-#endif
 
 
 int species_skills(char skill, char species)
@@ -2136,77 +2095,4 @@ if (skill == SK_INVOCATIONS) return (spec_skills [int(species) - 1] [int(skill)]
 return spec_skills [int(species) - 1] [int(skill)];
 
 }
-
-#ifdef CLASSES
-/*
-This function divides the available skill points equally among eligible skills,
-and returns any which are left over (eg if all available skills are at lvl 27).
-Note: I'm not applying practise_skill to all skills, because that would give
- players too much control over the development of their characters without
- having to work for it.
-*/
-int add_skill(int min_skill, int max_skill, int sk_tot)
-{
-
-if (max_skill >= 50) max_skill = 49;
-
-char numb_sk = 0;
-int skc = 0;
-
-for (skc = min_skill; skc <= max_skill; skc ++)
-{
- if (you[0].practise_skill [skc] == 0)
- {
-  if (   (skc >= SK_SHORT_BLADES && skc <= SK_DARTS) 
-      || (skc >= SK_ARMOUR       && skc <= SK_STEALTH) 
-      || (skc >= SK_CONJURATIONS && skc <= SK_EARTH_MAGIC))
-/* cdl -- should SK_EARTH_MAGIC be SK_POISON_MAGIC? */
-    continue;
- }
- if (you[0].skills [skc] > 0 && you[0].skills [skc] < 27) numb_sk ++;
-}
-
-if (numb_sk <= 0) return sk_tot;
-
-for (skc = min_skill; skc <= max_skill; skc ++)
-{
- if (you[0].practise_skill [skc] == 0)
- {
-  if (   (skc >= SK_SHORT_BLADES && skc <= SK_DARTS) 
-      || (skc >= SK_ARMOUR       && skc <= SK_STEALTH) 
-      || (skc >= SK_CONJURATIONS && skc <= SK_EARTH_MAGIC))
-/* cdl -- should SK_EARTH_MAGIC be SK_POISON_MAGIC? */
-    continue;
- }
- if (you[0].skills [skc] > 0 && you[0].skills [skc] < 27)
- {
-  you[0].skill_points [skc] += sk_tot / numb_sk;
-  sk_tot -= sk_tot / numb_sk;
- }
-}
-
-return sk_tot;
-
-}
-
-/*void class_sk(int clsk [8] [3], int chcls)
-{
-int ci = 0;
-int cy = 0;
-
-for (ci = 0; ci < 8; ci ++)
-{
- for (cy = 0; cy < 3; cy ++)
- {
-   clsk = class_skill [chcls] [ci] [cy];
- }
-}
-
-}*/
-
-#endif
-
-
-
-
 

@@ -12,45 +12,24 @@
 #include "stuff.h"
 
 
-#ifdef CLASSES
-void exercise2(char exsk, char deg, char cutting);
-#else
 void exercise2(char exsk, char deg);
-#endif
-
 
 void exercise(char exsk, char deg)
 {
-
-while (deg > 0)
-{
-#ifdef CLASSES
- exercise2(exsk, 1, 0);
-#else
- exercise2(exsk, 1);
-#endif
- deg --;
-}
-
+	while (deg > 0) {
+		exercise2(exsk, 1);
+		deg --;
+	}
 }
 
 
-#ifdef CLASSES
-void exercise2(char exsk_char, char deg, char cutting)
-#else
 void exercise2(char exsk_char, char deg)
-#endif
 {
 	int exsk = exsk_char;
 
  int skill_change = deg * (you[0].skills [exsk] + 1);// + 3;
  char title [40];
  char old_best_skill = best_skill(0, 50, 99);
-
-
-#ifdef CLASSES
-if (cutting == 1) goto cut_through;
-#endif
 
 // does not yet allow for loss of skill levels.
  if (you[0].exp_available <= 0 && (exsk != SK_SPELLCASTING || you[0].skills [SK_SPELLCASTING] > 0)) return;
@@ -195,13 +174,7 @@ if (exsk < SK_SLINGS)
  you[0].skill_points [exsk] += deg;
  you[0].exp_available -= skill_change;
 
-#ifdef CLASSES
- cut_through:
-// if (you[0].skill_points [exsk] > (skill_exp_needed(you[0].skills [exsk] + 2) * species_skills(exsk, you[0].species) / 40) && you[0].skills [exsk] < 27)
-#endif
-//#else
  if (you[0].skill_points [exsk] > (skill_exp_needed(you[0].skills [exsk] + 2) * species_skills(exsk, you[0].species) / 100) && you[0].skills [exsk] < 27)
-//#endif
  {
 /*        if (exsk == SK_DODGING) player_evasion(you) -= ev_mod();*/
 
