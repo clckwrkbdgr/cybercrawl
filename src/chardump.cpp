@@ -16,6 +16,7 @@
 #include "message.h"
 #include "mutation.h"
 #include "skills.h"
+#include "skills2.h"
 #include "spells0.h"
 #include "shopping.h"
 

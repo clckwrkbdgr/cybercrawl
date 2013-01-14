@@ -1,16 +1,16 @@
 
 int corpse_rot(int power);
-char detect_traps(void);
-char detect_items(int map_radius);
-char detect_creatures(int map_radius);
+int detect_traps(void);
+int detect_items(int map_radius);
+int detect_creatures(int map_radius);
 int animate_dead(int power, int corps_beh, int corps_hit, int actual);
-int animate_a_corpse(char axps, char ayps, int corps_beh, int corps_hit, char class_allowed);
-int raise_corpse(int corps, char corx, char cory, int corps_beh, int corps_hit, int actual);
+int animate_a_corpse(int axps, int ayps, int corps_beh, int corps_hit, int class_allowed);
+int raise_corpse(int corps, int corx, int cory, int corps_beh, int corps_hit, int actual);
 void cast_twisted(int power, int corps_beh, int corps_hit);
-char brand_weapon(char which_brand, int power);
+int brand_weapon(int which_brand, int power);
 void manage_shock_shield(void);
 int vampiric_drain(int pow);
-int burn_freeze(int pow, char b_f);
+int burn_freeze(int pow, int b_f);
 int summon_elemental(int pow, int restricted_type, int unfriendly);
 void summon_small_mammals(void);
 void summon_scorpions(int pow);

@@ -30,7 +30,7 @@ int get_ch(void)
 
 
 
-char see_grid(int grx, int gry)
+int see_grid(int grx, int gry)
 {
 
 if (grx > you[0].x_pos - 9 && grx < you[0].x_pos + 9 && gry > you[0].y_pos - 9 && gry < you[0].y_pos + 9)
@@ -41,7 +41,7 @@ if (grx > you[0].x_pos - 9 && grx < you[0].x_pos + 9 && gry > you[0].y_pos - 9 &
 
 return 0;
 
-} // end of char mons_near(char)
+}
 
 
 int magic_ability(int mag_abil, int intel)
@@ -67,12 +67,8 @@ lincurses_shutdown();
 void redraw_screen(void)
 {
 
-char title [40];
+draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl).c_str(), you[0].species);
 
-strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
-draw_border(BROWN, you[0].your_name, title, you[0].species);
-
-//draw_border(BROWN, you[0].your_name, title);
 
 you[0].hp_ch = 1;
 you[0].ep_ch = 1;

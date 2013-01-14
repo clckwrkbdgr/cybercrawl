@@ -1169,7 +1169,7 @@ void setup_game()
 	you[0].hung_ch = 1;
 	wield_change = 1;
 
-	draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
+	draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl).c_str(), you[0].species);
 
 	new_level();
 	viewwindow(1); // This just puts the view up for the first turn.

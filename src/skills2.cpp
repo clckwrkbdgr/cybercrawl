@@ -11,10 +11,10 @@ This file was extensively modified by Wladimir van der Laan.
 #include <stdio.h>
 #include <stdlib.h>
 
-int species_skills(char skill, char species);
+int species_skills(int skill, int species);
 int skill_exp_needed(int lev); /* both in skills.cc */
 
-const char *skills[50][5] = {
+std::string skills[50][5] = {
 {"Fighting",	   "Grunt", "Fighter", "Warrior", "Slayer"}, // fighter
 {"Short Blades",   "Stabber","Cutter","Slicer","Knifefighter"}, // short blades
 {"Long Swords",	   "Slasher", "Cutter", "Slicer", "Eviscerator"}, // long swords
@@ -1801,17 +1801,15 @@ case 2: // elf
 
 
 
-const char *skill_name(char which_skill);
+std::string skill_name(int which_skill);
 
 void show_skills(void)
 {
-char st_pass [60];
 int i;
 int x;
-char lcount = 0;
+int lcount = 0;
 	_setcursortype(_NOCURSOR);
 
-	strcpy(st_pass, "");
 	clrscr();
 
 reprint_stuff: 
@@ -1821,7 +1819,7 @@ reprint_stuff:
 	Format format(" You have @1 points of unallocated experience."EOL EOL);
 	format << you[0].exp_available;
 	cprintf(format.str().c_str());
-	char scrln=3,scrcol=1;
+	int scrln=3,scrcol=1;
 	for(x=0;x<50;x++) {
 		/* spells in second column */
 		if(x==SK_SPELLCASTING) { scrln=3; scrcol=40; }
@@ -1832,9 +1830,7 @@ reprint_stuff:
 			if (you[0].skills [x] == 27) textcolor(YELLOW);
 			putch(lcount + 97); lcount++;
             cprintf(" - ");
-            char bufff[15];
-            sprintf(bufff, "%-14s", skills[x][0]);
-            cprintf(bufff);
+            cprintf("%-14s", skills[x][0].c_str());
 			format = Format(" Skill @1");
 			format << you[0].skills[x];
 			cprintf(format.str().c_str());
@@ -1859,7 +1855,7 @@ reprint_stuff:
 	gotoxy(1, 24);
 	textcolor(LIGHTGREY);
 	cprintf("Press the letter of a skill to choose whether you want to practise it.");
-   	char get_thing;
+   	int get_thing;
 
    	get_thing = getkey();
 
@@ -1879,72 +1875,37 @@ reprint_stuff:
    	return;
 }
 
-const char *skill_name(char which_skill)
+std::string skill_name(int which_skill)
 {
  return skills [int(which_skill)] [0];
 }
 
 
-const char *skill_title(char best_skill, char skill_lev, char char_class, char char_lev)
+std::string skill_title(int best_skill, int skill_lev, int char_class, int char_lev)
 {
+	int skill_lev2 = char_class;
+	skill_lev2 = 0;
+	int char_lev2 = 0;
 
-//char title [40];
+	skill_lev2 = 3;
+	if (skill_lev <= 20) skill_lev2 = 2;
+	if (skill_lev <= 12) skill_lev2 = 1; // 12
+	if (skill_lev <= 7) skill_lev2 = 0; // 6 or 7
 
-//strcpy(title, "undefined");
-
-char skill_lev2 = char_class;
-skill_lev2 = 0;
-char char_lev2 = 0;
-const char *tempstr=NULL;
-
-//if (skill_lev <= 21)
-skill_lev2 = 3;
-if (skill_lev <= 20) skill_lev2 = 2;
-if (skill_lev <= 12) skill_lev2 = 1; // 12
-if (skill_lev <= 7) skill_lev2 = 0; // 6 or 7
-
-char_lev2 = 3;
-//if (char_lev <= 21) char_lev2 = 3;
-if (char_lev <= 20) char_lev2 = 2;
-if (char_lev <= 12) char_lev2 = 1;
-if (char_lev <= 7) char_lev2 = 0;
-
-/*if (char_class == 2) // Priest
-{
-switch(char_lev2)
-{
- case 0: return "Preacher";
- case 1: return "Priest";
- case 2: return "Evangelist";
- case 3: return "Pontifex";
-}
-} else
-if (char_class == 6) // Paladin
-{
-switch(char_lev2)
-{
- case 0: return "Holy Warrior";
- case 1: return "Holy Crusader";
- case 2: return "Paladin";
- case 3: return "Scourge of Evil";
-}
-} else {*/
-	if(best_skill<50) tempstr=skills[int(best_skill)][skill_lev2+1];
-//	if(tempstr!=NULL) strcpy(title,tempstr);
-//       }
-
-//return title;
-if (tempstr == NULL) return "Invalid Title";
-return tempstr;
-
+	char_lev2 = 3;
+	if (char_lev <= 20) char_lev2 = 2;
+	if (char_lev <= 12) char_lev2 = 1;
+	if (char_lev <= 7) char_lev2 = 0;
+	if(best_skill<50) return skills[int(best_skill)][skill_lev2+1];
+	return "Invalid Title";
 }
 
 
-int best_skill(char min_skill, char max_skill, char excl_skill)
+int best_skill(int min_skill, int max_skill, int excl_skill)
 {
 
-char skillb = 0;
-char skmk = 0;
+int skillb = 0;
+int skmk = 0;
 
 int i = 0;
 
@@ -2084,7 +2045,7 @@ return 0;
 }
 
 
-int species_skills(char skill, char species)
+int species_skills(int skill, int species)
 {
 
 if (skill == SK_SPELLCASTING) return (spec_skills [int(species) - 1] [int(skill)] * 130) / 100;

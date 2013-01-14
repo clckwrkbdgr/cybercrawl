@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iomanip>
 
 #include "linuxlib.h"
 
@@ -8,21 +10,10 @@
 #include "mstruct.h"
 #include "player.h"
 #include "stuff.h"
-
-
-/*#define menv env[0].mons
-#define mit env[0].it[0]*/
+#include "view.h"
 
 /* for player_see_invis */
 
-void moname(int mcl, char mench, char see_inv, char descrip, char glog [40]);
-
-void item(void);
-void monster_grid(void);
-void noisy(char loudness, char nois_x, char nois_y);
-void cloud_grid(void);
-int check_awaken(int mons_aw);
-void losight(int sh [19] [19], int gr [80] [70], int x_p, int y_p);
 int mapch(int ldfk);
 int mapch2(int ldfk);
 
@@ -31,7 +22,7 @@ int your_colour;
 
 int show_green;
 extern int stealth; /* defined in acr.cc */
-extern char visible [10]; /* also acr.cc */
+extern int visible [10]; /* also acr.cc */
 
 
 void monster_grid(void)
@@ -97,12 +88,6 @@ if (menv [s].m_class != -1)
 
 } // really the end of monster_grid
 
-
-
-
-
-
-
 int check_awaken(int mons_aw)
 {
 int mons_perc = 0;
@@ -121,11 +106,6 @@ if (random2(stealth) <= mons_perc) return 1;
 return 0;
 
 }
-
-
-
-
-
 
 void item(void)
 {
@@ -173,9 +153,6 @@ for (count_y = (you[0].y_pos - 8); (count_y < you[0].y_pos + 9); count_y++)
 
 
 } // end of item()
-
-
-
 
 void cloud_grid(void)
 {
@@ -243,64 +220,10 @@ if (env[0].cloud_type [s] != 0)
 
 } // end of cloudter_grid()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // All items must have show values >= 38, all grid squares must be < 38
 // because of monster invisibility.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void noisy(char loudness, char nois_x, char nois_y)
+void noisy(int loudness, int nois_x, int nois_y)
 {
 
 int p = 0;
@@ -317,8 +240,6 @@ int p = 0;
 
 } // end of void noisy_2()
 
-
-
 /*
 The losight function is so complex and tangled that I daren't even look at it.
 Good luck trying to work out what each bit does.
@@ -326,13 +247,13 @@ Good luck trying to work out what each bit does.
 void losight(int sh [19] [19], int gr [80] [70], int x_p, int y_p)
 {
 
-char shad;
-char see_section;
+int shad;
+int see_section;
 int startPoint_x = 0; // = 8;
 int startPoint_y = 0; // = 7;
-char behind = 0;
-char xs = 0; // the multiplier of the x addition thing
-char ys = 0;
+int behind = 0;
+int xs = 0; // the multiplier of the x addition thing
+int ys = 0;
 int cx = 0;
 int cy = 0;
 
@@ -1069,71 +990,46 @@ if ((gr [x_p] [y_p + ys] < MINSEE && gr [x_p + xs] [y_p + ys] < MINSEE) || (gr [
 
 }
 
-
-void draw_border(int bord_col, const char * your_name, const char * clasnam, char tspecies)
+void draw_border(int bord_col, const std::string & your_name, const std::string & clasnam, int tspecies)
 {
+	textcolor(bord_col);
+	clrscr();
+	gotoxy(40,1);
+	textcolor(7);
 
-textcolor(bord_col);
-// this bit draws the borders:
-clrscr();
-gotoxy(40,1);
-textcolor(7);
-char print_it [80];
-char print_it2 [42];
+	Format format("@1 the @2");
+	format << your_name << clasnam;
+	std::ostringstream out;
+	out << std::setw(40) << std::string(format.str(), 0, 40);
 
-int i = 0;
-char spaces = 0;
+	textcolor(LIGHTGREY);
+	gotoxy(40,1);
+	textcolor(7);
+	cprintf(out.str().c_str());
+	gotoxy(40, 2);
+	cprintf(species_name(tspecies).c_str());
+	gotoxy(40,3);
+	cprintf("HP:");
+	gotoxy(40,4);
+	cprintf("Energy:");
+	gotoxy(40,5);
+	cprintf("AC:");
+	gotoxy(40,6);
+	cprintf("EV:");
+	gotoxy(40,7);
+	cprintf("Str:");
+	gotoxy(40,8);
+	cprintf("Int:");
+	gotoxy(40,9);
+	cprintf("Dex:");
+	gotoxy(40,10);
+	cprintf("Credits:");
+	gotoxy(40,11);
+	cprintf("Experience:");
+	gotoxy(40,12);
+	cprintf("Level");
 
-strcpy(print_it, your_name);
-strcat(print_it, " the ");
-strcat(print_it, clasnam);
-
-for (i = 0; i < 39; i ++)
-{
- print_it2 [i] = print_it [i];
- if (print_it [i] == 0)
-  break;
 }
-
-for (i = 0; i < 40; i ++)
-{
- if (print_it2 [i] == 0) spaces = 1;
- if (spaces == 1) print_it2 [i] = ' ';
-}
-
-print_it2 [39] = 0;
-
-textcolor(LIGHTGREY);
-gotoxy(40,1);
-textcolor(7);
-cprintf(print_it2);
-gotoxy(40, 2);
-cprintf(species_name(tspecies).c_str());
-gotoxy(40,3);
-cprintf("HP:");
-gotoxy(40,4);
-cprintf("Energy:");
-gotoxy(40,5);
-cprintf("AC:");
-gotoxy(40,6);
-cprintf("EV:");
-
-gotoxy(40,7);
-cprintf("Str:");
-gotoxy(40,8);
-cprintf("Int:");
-gotoxy(40,9);
-cprintf("Dex:");
-gotoxy(40,10);
-cprintf("Credits:");
-gotoxy(40,11);
-cprintf("Experience:");
-gotoxy(40,12);
-cprintf("Level");
-
-} // end of void draw_border(int bord_col)
-
-
 
 void show_map(int spec_place [2])
 {
@@ -1145,15 +1041,14 @@ void show_map(int spec_place [2])
    int bufcount2 = 0;
    int j;
 
-   char move_x = 0;
-   char move_y = 0;
-   char getty = 0;
-//char buffer[4800];
+   int move_x = 0;
+   int move_y = 0;
+   int getty = 0;
 char buffer2[4800];
 
-char min_y = 0;
-char max_y = 0;
-char found = 0;
+int min_y = 0;
+int max_y = 0;
+int found = 0;
 
 for (j = 0; j < 70; j ++)
 {
@@ -1305,7 +1200,6 @@ return;
 
 }
 
-
 void magic_mapping(int map_radius, int proportion)
 {
 
@@ -1337,9 +1231,8 @@ for (i = you[0].x_pos - map_radius; i < you[0].x_pos + map_radius; i ++)
 
 }
 
-/* mapchars 3 & 4 are for non-ibm char sets */
-
-char mons_near(int monst)
+/* mapchars 3 & 4 are for non-ibm charsets */
+int mons_near(int monst)
 {
 
  if (menv [monst].m_x > you[0].x_pos - 9 && menv [monst].m_x < you[0].x_pos + 9 && menv [monst].m_y > you[0].y_pos - 9 && menv [monst].m_y < you[0].y_pos + 9)
@@ -1350,9 +1243,9 @@ char mons_near(int monst)
 
  return 0;
 
-} // end of char mons_near(char)
+}
 
-void viewwindow(char draw_it)
+void viewwindow(int draw_it)
 {
 
    int bufcount = 0;
@@ -1674,8 +1567,6 @@ if (you[0].running == 0) // this line is purely optional
 
 }
 
-
-
 int mapch(int ldfk)
 {
 int showed = 0;
@@ -1924,5 +1815,4 @@ int showed = 0;
 return showed;
 
 }
-
 

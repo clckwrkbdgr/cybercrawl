@@ -66,7 +66,7 @@ priest.o: dungeon.h enum.h externs.h levels.h linuxlib.h message.h
 randart.o: enum.h externs.h itemname.h linuxlib.h randart.h stuff.h unrand.h 
 religion.o: bang.h describe.h dungeon.h effects.h enum.h externs.h it_use2.h itemname.h linuxlib.h misc.h monplace.h mutation.h ouch.h player.h shopping.h spells.h spells1.h spells3.h stuff.h 
 rumours.o: defines.h linuxlib.h 
-shopping.o: describe.h enum.h externs.h invent.h itemname.h linuxlib.h player.h struct.h stuff.h 
+shopping.o: describe.h enum.h externs.h invent.h itemname.h linuxlib.h player.h stuff.h 
 skills.o: enum.h externs.h linuxlib.h player.h skills.h skills2.h stuff.h 
 skills2.o: enum.h externs.h linuxlib.h 
 spell.o: beam.h effects.h enum.h externs.h fight.h it_use2.h items.h linuxlib.h monplace.h mutation.h player.h religion.h skills.h spell.h spells.h spells0.h spells1.h spells2.h spells3.h stuff.h transfor.h view.h 

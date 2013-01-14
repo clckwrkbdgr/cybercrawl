@@ -26,15 +26,12 @@
 #include "it_use2.h"
 #include "view.h"
 
-/*void zapping(char ztype, int power, struct bolt beams [1])
-char spell_direction(struct dist spelld [1], struct bolt beam [1])*/
-
 void surge_power(int spell);
 
 void cast_a_spell(void)
 {
 
-char spc = 0;
+int spc = 0;
 int spc2 = 0;
 int spellh = 0;
 int powc = 0;
@@ -57,7 +54,7 @@ int keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
-	char unthing = spell_list();
+	int unthing = spell_list();
 redraw_screen();
 
 	if (unthing == 2) return;
@@ -140,7 +137,7 @@ naughty(9, 1 + random2(5));
 
 
 
-char your_spells(int spc2, int powc, char allow_fail)
+int your_spells(int spc2, int powc, int allow_fail)
 {
 int dem_hor = 0;
 int dem_hor2 = 0;
@@ -169,7 +166,7 @@ int spfl = random2(33) + random2(34) + random2(35);
    mpr("Nothing appears to happen.");
    return 0;
   }
-  char sptype = 0;
+  int sptype = 0;
   do
   {
    sptype = 11 + random2(13);

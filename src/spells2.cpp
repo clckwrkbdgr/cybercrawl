@@ -22,14 +22,14 @@
 #include "itemname.h"
 #include "monstuff.h"
 
-int raise_corpse(int corps, char corx, char cory, int corps_beh, int corps_hit, int actual);
+int raise_corpse(int corps, int corx, int cory, int corps_beh, int corps_hit, int actual);
 
 extern int wield_change; /* defined in output.cc */
 
 
-char detect_traps(void)
+int detect_traps(void)
 {
-char traps_found = 0;
+int traps_found = 0;
 int count_x;
 
   for (count_x = 0; count_x < NTRAPS; count_x ++)
@@ -50,9 +50,9 @@ return traps_found;
 
 }
 
-char detect_items(int map_radius)
+int detect_items(int map_radius)
 {
-char traps_found = 0;
+int traps_found = 0;
 
   mpr("You detect items!");
 
@@ -74,9 +74,9 @@ return traps_found;
 }
 
 
-char detect_creatures(int map_radius)
+int detect_creatures(int map_radius)
 {
-char traps_found = 0;
+int traps_found = 0;
 
   mpr("You detect creatures!");
 
@@ -255,7 +255,7 @@ return number_raised;
 
 }
 
-int animate_a_corpse(char axps_char, char ayps_char, int corps_beh, int corps_hit, char class_allowed)
+int animate_a_corpse(int axps_char, int ayps_char, int corps_beh, int corps_hit, int class_allowed)
 {
 	int axps = axps_char, ayps = ayps_char;
 
@@ -275,7 +275,7 @@ return 0;
 } // end of int animate_a_corpse
 
 
-int raise_corpse(int corps, char corx, char cory, int corps_beh, int corps_hit, int actual)
+int raise_corpse(int corps, int corx, int cory, int corps_beh, int corps_hit, int actual)
 {
 
 if (mons_zombie_size(mitm.iplus [corps]) == 0) return 0;
@@ -297,10 +297,10 @@ void cast_twisted(int power, int corps_beh, int corps_hit)
 int total_mass = 0;
 int old_item = 501;
 int number_raised = 0;
-char coloured = corps_beh;
+int coloured = corps_beh;
 coloured = corps_hit;
 coloured = 0;
-char type_resurr = 23;
+int type_resurr = 23;
 
 int rotted = 0;
 
@@ -367,7 +367,7 @@ create_monster(type_resurr, 0, 7, you[0].x_pos, you[0].y_pos, you[0].pet_target,
 }
 
 
-char brand_weapon(char which_brand, int power)
+int brand_weapon(int which_brand, int power)
 {
 
 int duration_affected = 0;
@@ -450,8 +450,8 @@ void manage_shock_shield(void)
 you[0].shock_shield --;
 if (you[0].shock_shield == 0) return;
 
-   char stx = 0;
-   char sty = 0;
+   int stx = 0;
+   int sty = 0;
 
  for (stx = -1; stx < 2; stx++)
    {
@@ -509,7 +509,7 @@ void turn_undead(int pow)
 {
 
 int tu = 0, p;
-char brek = 0;
+int brek = 0;
 
 mpr("You attempt to repel the cyborgs.");
 
@@ -562,7 +562,7 @@ void holy_word(int pow)
 {
 
 int tu = 0, p;
-char brek = 0;
+int brek = 0;
 
  mpr("You speak a Word of immense power!");
 
@@ -814,7 +814,7 @@ return 1;
 } // end vamp drain
 
 
-int burn_freeze(int pow, char b_f)
+int burn_freeze(int pow, int b_f)
 {
 int mgr = 0;
 struct dist bmove [1];
@@ -883,7 +883,7 @@ int summon_elemental(int pow, int restricted_type, int unfriendly)
 int type_summoned = 0;
 int numsc = 21 + random2(pow) / 5;
 
-char summ_success = 0;
+int summ_success = 0;
 struct dist smove [1];
 
 if (numsc > 25) numsc = 25;

@@ -21,7 +21,10 @@
 #include "priest.h"
 #include "randart.h"
 #include "skills.h"
+#include "skills2.h"
+#include "spells.h"
 #include "spells0.h"
+#include "spells1.h"
 #include "spells2.h"
 #include "spells3.h"
 #include "stuff.h"
@@ -30,33 +33,7 @@
 
 extern int wield_change; /* defined in output.cc */
 
-void blink(void);
-void random_blink(void);
-void stinkcl(char cl_x, char cl_y, struct bolt beam [1]);
-
-void cast_big_c(int pow, char cty);
-void big_cloud(char clouds, char cl_x, char cl_y, int pow);
-char cast_lesser_healing(int mabil);
-char cast_greater_healing(int mabil);
-char cast_greatest_healing(int mabil);
-char healing_spell(int healed);
-void cast_revivification(int mabil);
-void cast_cure_poison(int mabil);
-void purification(void);
-void cast_deaths_door(int pow);
-void abjuration(int pow);
-void extension(int pow);
-void ice_armour(int pow, char extending);
-void stone_scales(int pow);
-void missile_prot(int pow);
-void deflection(int pow);
-void cast_regen(int pow);
-void cast_berserk(void);
-void cast_swiftness(int power);
-void cast_fly(int power);
-void cast_insulation(int power);
-void cast_teleport_control(int power);
-void cast_resist_poison(int power);
+int healing_spell(int healed);
 
 
 void blink(void)
@@ -179,10 +156,10 @@ void fireball(int power)
 void cast_fire_storm(int powc)
 {
 
-   char stx = 0;
-   char sty = 0;
-   char cl_x = 0;
-			char cl_y = 0;
+   int stx = 0;
+   int sty = 0;
+   int cl_x = 0;
+			int cl_y = 0;
    int summd = 0;
 
  mpr("Where?");
@@ -245,7 +222,7 @@ viewwindow(1);
 
 
 
-char spell_direction(struct dist spelld [1], struct bolt beam [1])
+int spell_direction(struct dist spelld [1], struct bolt beam [1])
 {
 	mpr("Which direction? (* to target)");
 	if (you[0].prev_targ != MHITNOT && you[0].prev_targ < MNST) {
@@ -289,7 +266,7 @@ std::string equip_type(int sc_read_2)
 	return "";
 }
 
-void identify(char pow)
+void identify(int pow)
 {
    int id_used = 1;
 
@@ -370,7 +347,7 @@ if (spelld[0].nothing == -1)
 	return;
 }
 
-char ig = grd [spelld[0].target_x] [spelld[0].target_y];
+int ig = grd [spelld[0].target_x] [spelld[0].target_y];
 
 if (see_grid(spelld[0].target_x, spelld[0].target_y) == 0)
 {
@@ -454,11 +431,11 @@ stinkcl(beam[0].bx, beam[0].by, beam);
 }
 
 
-void stinkcl(char cl_x, char cl_y, struct bolt beam [1])
+void stinkcl(int cl_x, int cl_y, struct bolt beam [1])
 {
 
-   char stx = 0;
-   char sty = 0;
+   int stx = 0;
+   int sty = 0;
 
 	for (stx = -1; stx < 2; stx++)
    {
@@ -489,7 +466,7 @@ void stinkcl(char cl_x, char cl_y, struct bolt beam [1])
 
 
 
-void cast_big_c(int pow, char cty)
+void cast_big_c(int pow, int cty)
 {
 
  mpr("Where do you want to put it?");
@@ -513,10 +490,10 @@ big_cloud(cty, cdis[0].target_x, cdis[0].target_y, pow);
 }
 
 
-void big_cloud(char clouds, char cl_x, char cl_y, int pow) //, struct bolt beam [1])
+void big_cloud(int clouds, int cl_x, int cl_y, int pow) //, struct bolt beam [1])
 {
-   char stx = 0;
-   char sty = 0;
+   int stx = 0;
+   int sty = 0;
    int lasts = 0;
 
 /*if (clouds % 100 == 3) beam[0].colour = WHITE;
@@ -545,21 +522,21 @@ if (clouds % 100 == 4) beam[0].colour = LIGHTGREEN;*/
 
 
 
-char cast_lesser_healing(void)
+int cast_lesser_healing(void)
 {
 
  return healing_spell(5 + random2(4) + random2(4)); // + random2(mabil / 5));
 
 } // end of lesser healing
 
-char cast_greater_healing(void)
+int cast_greater_healing(void)
 {
 
  return healing_spell(15 + random2(15) + random2(15));// + random2(mabil / 2));
 
 } // end of void cast_greater_healing
 
-char cast_greatest_healing(void)
+int cast_greatest_healing(void)
 {
 
  return healing_spell(20 + random2(25) + random2(25));// + random2(mabil) + random2(mabil));
@@ -568,7 +545,7 @@ char cast_greatest_healing(void)
 
 
 
-char healing_spell(int healed)
+int healing_spell(int healed)
 {
 int mgr = 0;
 struct dist bmove [1];
@@ -834,7 +811,7 @@ if (you[0].duration [DUR_DEATH_CHANNEL] > 0) cast_death_channel(pow);
 
 } // end extension
 
-void ice_armour(int pow, char extending)
+void ice_armour(int pow, int extending)
 {
 
 //if (pow > 100) pow = 100;

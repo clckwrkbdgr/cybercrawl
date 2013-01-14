@@ -39,7 +39,7 @@ int book_thing;
 int keyin;
 
 
-char miscast_effect(char sp_type, char mag_pow, char mag_fail, char force_effect)
+int miscast_effect(int sp_type, int mag_pow, int mag_fail, int force_effect)
 {
 
 /*
@@ -51,7 +51,7 @@ force_effect forces a certain effect to occur. Currently unused.
 
 struct bolt beam [1];
 
-char loopj = 0;
+int loopj = 0;
 int spec_effect = 0;
 int hurted = 0;
 
@@ -1124,7 +1124,7 @@ return 0;
 
 #include <bitset>
 
-char learn_a_spell(int splbook, char bitty)
+int learn_a_spell(int splbook, int bitty)
 {
 	int found_a_one = 0;
 	bitty ++;
@@ -1249,10 +1249,9 @@ return 1;
 
 }
 
-void read_book(char book_read_char)
+void read_book(int book_read)
 {
-	int book_read = book_read_char;
-char key2 = 0;
+int key2 = 0;
 
 /* remember that this function is called from staff spells as well. */
 if (you[0].inv_class [book_read] == 11) key2 = spellbook_contents(you[0].inv_plus [book_read], you[0].inv_type [book_read] + 40);
@@ -1338,7 +1337,7 @@ if (learn_a_spell(spell_container, sc_read_2) != 1)
 
 
 int specspell = which_spell_in_book(you[0].inv_type [spell_container], learned);
-char is_good = 1;
+int is_good = 1;
 
 
 if (you[0].spell_no == 21 && specspell != 43) //if changed, must also change for priest in level_change. You can always memorise selective amnesia

@@ -1040,7 +1040,7 @@ while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) 
 						case SP_UNK2_DRACONIAN: mpr(""); break;
 					}
 					more();
-					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
+					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl).c_str(), you[0].species);
 					you[0].hp_ch = 1;
 					you[0].ep_ch = 1;
 					you[0].strength_ch = 1;
@@ -1084,7 +1084,7 @@ while (you[0].xp > exp_needed(you[0].xl + 2, you[0].species) && you[0].xl < 27) 
 				{
 					mpr("Your scales start turning grey.");
 					more();
-					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl), you[0].species);
+					draw_border(BROWN, you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl).c_str(), you[0].species);
 					you[0].hp_ch = 1;
 					you[0].ep_ch = 1;
 					you[0].strength_ch = 1;

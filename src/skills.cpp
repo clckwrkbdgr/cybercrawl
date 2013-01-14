@@ -12,9 +12,9 @@
 #include "stuff.h"
 
 
-void exercise2(char exsk, char deg);
+void exercise2(int exsk, int deg);
 
-void exercise(char exsk, char deg)
+void exercise(int exsk, int deg)
 {
 	while (deg > 0) {
 		exercise2(exsk, 1);
@@ -23,13 +23,10 @@ void exercise(char exsk, char deg)
 }
 
 
-void exercise2(char exsk_char, char deg)
+void exercise2(int exsk, int deg)
 {
-	int exsk = exsk_char;
-
  int skill_change = deg * (you[0].skills [exsk] + 1);// + 3;
- char title [40];
- char old_best_skill = best_skill(0, 50, 99);
+ int old_best_skill = best_skill(0, 50, 99);
 
 // does not yet allow for loss of skill levels.
  if (you[0].exp_available <= 0 && (exsk != SK_SPELLCASTING || you[0].skills [SK_SPELLCASTING] > 0)) return;
@@ -204,9 +201,7 @@ if (exsk < SK_SLINGS)
 
         if (best_skill(0, 50, 99) != old_best_skill || old_best_skill == exsk)
         {
-         strcpy(title, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
-         redraw_skill(you[0].your_name, title);
-//       draw_border(BROWN, you[0].your_name, title);
+         redraw_skill(you[0].your_name, skill_title(best_skill(0, 50, 99), you[0].skills [best_skill(0, 50, 99)], you[0].clas, you[0].xl));
         }
  }
  if (you[0].exp_available <= 0) you[0].exp_available = 0;

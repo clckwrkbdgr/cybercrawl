@@ -30,9 +30,9 @@ extern int wield_change; /* defined in output.cc */
 void cast_selective_amnesia(void)
 {
 
-char spc = 0;
+int spc = 0;
 int spc2 = 0;
-char ep_gain = 0;
+int ep_gain = 0;
 int keyin = 0;
 
 if (you[0].spell_no == 0)
@@ -49,7 +49,7 @@ keyin = get_ch();
 
 if (keyin == '?' || keyin == '*')
 {
-	char unthing = spell_list();
+	int unthing = spell_list();
 redraw_screen();
 
 	if (unthing == 2) return;
@@ -331,14 +331,14 @@ you[0].ep_ch = 1;
 
 }
 
-void dancing_weapon(int pow, char force_hostile)
+void dancing_weapon(int pow, int force_hostile)
 {
 int numsc = 21 + random2(pow) / 5;
 if (numsc > 25) numsc = 25;
 
 int summs = 0;
 int i = 0;
-char behavi = 7;
+int behavi = 7;
 int empty [2];
 
 if (empty_surrounds(you[0].x_pos, you[0].y_pos, 67, 0, empty) == 0)
@@ -420,7 +420,7 @@ you[0].duration [DUR_TELEPORT] = 4 + random2(3);
 
 
 
-void you_teleport2(char allow_control)
+void you_teleport2(int allow_control)
 {
 
 int plox [2];
@@ -490,9 +490,9 @@ void entomb(void)
 int srx = 0;
 int sry = 0;
 
-char chance_found = 4;
+int chance_found = 4;
 
-char number_built = 0;
+int number_built = 0;
 
 //if (you[0].clas == 3) chance_found = 2;
 for (srx = you[0].x_pos - 1; srx < you[0].x_pos + 2; srx ++)
@@ -603,13 +603,13 @@ Type recalled:
 0 = anything
 1 = undead only (Kiku religion ability)
 */
-void recall(char type_recalled)
+void recall(int type_recalled)
 {
 int i;
 int j = 0;
 int k = 1;
 int l = MNST - 1;
-char recalled = 0;
+int recalled = 0;
 
 if (random2(2) == 0)
 {
@@ -659,7 +659,7 @@ if (recalled == 0) mpr("Nothing appears to have answered your call.");
 void portal(void)
 {
 
-char dir_sign = 0;
+int dir_sign = 0;
 
 if (you[0].where_are_you != 0) // && you[0].where_are_you < 10)
 {
@@ -679,7 +679,7 @@ if (grd [you[0].x_pos] [you[0].y_pos] != 67)
 }
 
 mpr("Which direction ('<' for up, '>' for down, 'x' to quit)?");
-get_dir : char keyi = get_ch();
+get_dir : int keyi = get_ch();
 if (keyi != '<' && keyi != '>' && keyi != 'x') goto get_dir;
 if (keyi == '<' && you[0].your_level == 0)
 {

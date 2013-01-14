@@ -1,8 +1,8 @@
 
-char miscast_effect(char sp_type, char mag_pow, char mag_fail, char force_effect);
-char learn_a_spell(int splbook, char bitty);
+int miscast_effect(int sp_type, int mag_pow, int mag_fail, int force_effect);
+int learn_a_spell(int splbook, int bitty);
 int which_spellbook(void);
-void read_book(char book_read);
+void read_book(int book_read);
 void which_spell(void);
 
 

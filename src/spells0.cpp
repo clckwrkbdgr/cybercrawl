@@ -1,4 +1,3 @@
-#include "spells0.h"
 #include <string.h>
 #include "linuxlib.h"
 
@@ -11,31 +10,17 @@
 #include "itemname.h"
 #include "player.h"
 #include "dungeon.h"
-
-int spell_hunger(int spell_value, int spell);
-int which_spell_in_book(int sbook_type, int spl);
-char spellbook_contents(int plus, int type);
-char spell_value(int spell);
-int spell_type(int spell, int typy);
-int spell_spec(int spell, int power);
-char spell_fail(int spell);
-void print_slash(char already);
-char spell_list(void);
+#include "spells0.h"
 
 
-char spell_list(void)
+int spell_list(void)
 {
-char st_pass [60];
-
    int j;
-   char lines = 0;
+   int lines = 0;
    int anything = 0;
-   char strng [5] = "";
-   char ft;
-   char ki;
-   char already = 0;
+   int ki;
+   int already = 0;
 
-   strcpy(st_pass, "");
 
    clrscr();
 
@@ -93,14 +78,9 @@ lines++;
 			anything ++;
 			if (lines > 0) cprintf(EOL);
 			lines++;
-				cprintf(" ");
-				if (j < 26) ft = (char) j + 97;
-					else ft = (char) j  + 65;
-				strng [0] = ft;
-				cprintf(strng);
-			cprintf(" - ");
-
-			cprintf(spell_name(you[0].spells [j]).c_str());
+			Format format(" @1 - @2");
+			format << char((j < 26) ? (j + 97) : (j  + 65)) << spell_name(you[0].spells [j]);
+			cprintf(format.str().c_str());
 
    gotoxy(35, wherey());
    already = 0;
@@ -276,7 +256,7 @@ if (spell_f > 0)
 }
 
 
-void print_slash(char already)
+void print_slash(int already)
 {
 
  if (already == 1) cprintf("/");
@@ -284,7 +264,7 @@ void print_slash(char already)
 }
 
 
-char spell_fail(int spell)
+int spell_fail(int spell)
 {
 
 int chance = 60;
@@ -902,90 +882,7 @@ would have to be types with short names (limited space in the spell windows).
 
 
 
-/*
-
-char spell_value(char spell)
-{
-
-switch(spell)
-{
-	case 0: return 10; // identify
-	case 1: return 8; // teleportation
-	case 2: return 6; // cause fear
-	case 3: return 1; // noise
-	case 4: return 7; // remove curse
-	case 5: return 1; // magic missile
-	case 6: return 7; // fireball
-	case 13: return 5; // conjure flame
-   case 14: return 6; // dig
-   case 15: return 6; // firebolt
-   case 16: return 6; // bolt of freezing cold
-   case 17: return 8; // bolt of lightning
-   case 20: return 7; // polymorph other
-   case 21: return 3;
-   case 22: return 4;
-   case 23: return 4;
-   case 24: return 3;
-   case 25: return 6; // invisibility
-   case 26: return 2; // throw flame
-   case 27: return 2; // throw frost
-   case 28: return 4; // controlled blink
-   case 29: return 11; // freezing cloud
-   case 30: return 3; // stinking cloud
-   case 31: return 12; // ring of flames
-   case 32: return 2; //  restore strength:
-   case 33: return 2; //          int
-   case 34: return 2; //          dex
-   case 35: return 6; // venom bolt
-   case 36: return 4; // toxic radiance - uses lots of food?
-   case 37: return 9; // teleport other
-   case 38: return 3; // lesser healing
-   case 39: return 8; // greater healing
-   case 40: return 3; // cure poison
-   case 41: return 6; // purification
-   case 42: return 13; // death's door
-   case 43: return 4; // selective amnesia
-   case 44: return 10; // mass confusion
-   case 45: return 6; // smiting
-   case 46: return 3; // repel undead
-   case 47: return 10; // holy word
-   case 48: return 3; // detect curse
-   case 49: return 1; // summon small mammal
-   case 50: return 6; // Abjuration
-   case 51: return 6; // summon scorpions
-   case 52: return 3; // levitation
-   case 53: return 7; // bolt of draining
-   case 54: return 12; // splinters
-   case 55: return 8; // innacuracy
-   case 56: return 6; // poisonous cloud
-   case 57: return 15; // fire storm
-   case 58: return 2; // detect traps
-   case 59: return 2; // random blink
-   case 60: return 6; // Isk's blast
-   case 61: return 6; // swarm
-   case 62: return 12; // Summon Thing
-   case 63: return 6; // Enslavement
-   case 64: return 5; // Magic Mapping
-   case 65: return 3; // heal other
-   case 66: return 11; // Animate dead
-   case 67: return 1; // Pain
-   case 68: return 5; // Extension
-   case 69: return 10; // Control Undead
-   case 70: return 3; // animate skeleton
-   case 71: return 5; // vampiric draining
-   case 72: return 16; // summon greater undead
-   case 73: return 3; // detect items
-   case 74: return 9; // reviv
-default: return 2;
-
-}
-
-return 1;
-
-}
-*/
-
-char spell_value(int spell)
+int spell_value(int spell)
 {
 
 switch(spell)
@@ -1307,24 +1204,18 @@ std::string spell_name(int spell)
 
 #include <bitset>
 
-char spellbook_contents(int plus, int type)
+int spellbook_contents(int plus, int type)
 {
 
-char st_pass [60];
 
 int numby = plus;
 int j;
 int spelcount = 0;
-char strng [2] = "";
-char ft = 0;
 
-//char st_pass [60];
-char already = 0;
+int already = 0;
 
 
-   strcpy(st_pass, "");
 
-  strcpy(st_pass, "");
 
   clrscr();
 
@@ -1346,25 +1237,9 @@ cprintf(" Programs                           Type                      Level"EOL
 
       if (stringy [j] != 49) continue;
 
-				cprintf(" ");
-				if (spelcount < 26) ft = (char) spelcount + 97;
-					else ft = (char) spelcount + 65;
-
-               strcpy(strng, "");
-
-				strng [0] = ft;
-            strng [1] = 0;
-
-				cprintf(strng);
-
-			cprintf(" - ");
-
-//			spell_name(???, st_pass);
-
-//			cprintf(st_pass);
-
-
-			cprintf(spell_name(spell_types [j]).c_str());
+	  Format format(" @1 - @2");
+	  format << char((spelcount < 26) ? (spelcount + 97) : (spelcount + 65)) << spell_name(spell_types [j]);
+	  cprintf(format.str().c_str());
 
          //cprintf("A spell");
 
@@ -1476,7 +1351,7 @@ cprintf(" Programs                           Type                      Level"EOL
    //cprintf(stringy);
 
 
-char keyn = getkey();
+int keyn = getkey();
 if (keyn == 0) getkey();
 
 return keyn;
@@ -1526,7 +1401,7 @@ return spell;
 } // end of spell_hunger
 
 
-char undead_can_memorise(int spell)
+int undead_can_memorise(int spell)
 {
 
 switch(spell)
