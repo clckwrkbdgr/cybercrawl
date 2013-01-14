@@ -157,13 +157,13 @@ void beam(struct bolt beam [1])
 			} else beam[0].move_x = 0;
 		}
 
-        if (strcmp(beam[0].beam_name, "blast of poison") == 0)
+        if (beam[0].beam_name == "blast of poison")
         {
 	        if (beam[0].thing_thrown != 2) place_cloud(4, beam[0].bx, beam[0].by, random2(4) + 2);
           	else place_cloud(104, beam[0].bx, beam[0].by, random2(4) + 2);
         }
 
-        if (strcmp(beam[0].beam_name, "blast of poison") == 0 && beam[0].bx == beam[0].target_x && beam[0].by == beam[0].target_y)
+        if (beam[0].beam_name == "blast of poison" && beam[0].bx == beam[0].target_x && beam[0].by == beam[0].target_y)
         {
          	if (beam[0].thing_thrown != 2) big_cloud(4, beam[0].bx, beam[0].by, 0);
           	else big_cloud(104, beam[0].bx, beam[0].by, 0);
@@ -398,7 +398,7 @@ void beam(struct bolt beam [1])
     						return;
    						}
 		   				mpr("Pain shoots through your body!");
-   						strcpy(beam[0].beam_name, "program");
+   						beam[0].beam_name = "program";
                         if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
    						 ouch(random2(beam[0].hit), 0, 22);
                           else
@@ -407,7 +407,7 @@ void beam(struct bolt beam [1])
    						return;
   	 				case 15:
    						mpr("You are blasted!");
-   						strcpy(beam[0].beam_name, "program");
+   						beam[0].beam_name = "program";
                         if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
    						 ouch(random2(beam[0].hit), 0, 22);
                           else
@@ -457,7 +457,7 @@ void beam(struct bolt beam [1])
 
 /*	check_your_resists(); */
 
-			if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(3, 6); // also above
+			if (beam[0].flavour == 2 || beam[0].beam_name == "hellfire") scrolls_burn(3, 6); // also above
  			if (beam[0].flavour == 3) scrolls_burn(3, 8);
 
             if (beam[0].thing_thrown == 1 || beam[0].thing_thrown == 3)
@@ -561,7 +561,7 @@ void beam(struct bolt beam [1])
                       if (menv [o].m_class >= 389 && menv [o].m_class <= 393) mimic_alert(o);
                     }
 
-					if (beam[0].flavour == 10 && strcmp(beam[0].beam_name, "hellfire") != 0)
+					if (beam[0].flavour == 10 && beam[0].beam_name != "hellfire")
 					{
 						explosion1(beam);
                         beam[0].aim_down = 0;
@@ -681,7 +681,7 @@ void beam(struct bolt beam [1])
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
  					menv[o].m_hp -= random2(beam[0].hit);
-	 				strcpy(beam[0].beam_name, "program");
+	 				beam[0].beam_name = "program";
  					int killer = 0;
 					switch(beam[0].thing_thrown)
 					{
@@ -712,15 +712,15 @@ void beam(struct bolt beam [1])
 				{
 				 	if (mons_holiness(menv [o].m_class) > 0) goto it_resists;
  					msg("@1 convulses in agony!") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
- 					if (strstr(beam[0].beam_name, "agony") != NULL)
+ 					if (beam[0].beam_name.find("agony") != std::string::npos)
  					{
   						menv[o].m_hp = menv[o].m_hp / 2;
   						if (menv [o].m_hp <= 1) menv [o].m_hp = 1;
-  						strcpy(beam[0].beam_name, "agony");
+  						beam[0].beam_name = "agony";
  					} else
 	 				{
   						menv[o].m_hp -= random2(beam[0].hit);
-  						strcpy(beam[0].beam_name, "pain");
+  						beam[0].beam_name = "pain";
  					}
  					int killer = 0;
 					switch(beam[0].thing_thrown)
@@ -743,7 +743,7 @@ void beam(struct bolt beam [1])
 				{
  					msg("@1 is blasted.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
  					menv[o].m_hp -= random2(beam[0].hit + 1);
-	 				strcpy(beam[0].beam_name, "program");
+	 				beam[0].beam_name = "program";
  					int killer = 0;
 					switch(beam[0].thing_thrown)
 					{
@@ -952,7 +952,7 @@ brek = 0;*/
 			      	return;
 			    }
 
-				if (strcmp(beam[0].beam_name, "orb of electricity") == 0 || strcmp(beam[0].beam_name, "metal orb") == 0 || strcmp(beam[0].beam_name, "great blast of cold") == 0)
+				if (beam[0].beam_name == "orb of electricity" || beam[0].beam_name == "metal orb" || beam[0].beam_name == "great blast of cold")
 				{
 					explosion1(beam);
 	                beam[0].aim_down = 0;
@@ -967,33 +967,33 @@ brek = 0;*/
 
 	  		}
 
-  			if (strcmp(beam[0].beam_name, "orb of energy") == 0)
+  			if (beam[0].beam_name == "orb of energy")
 			{
   				place_cloud(7, beam[0].bx, beam[0].by, random2(5) + 1);
 	 	 	}
 
-  			if (strcmp(beam[0].beam_name, "great blast of cold") == 0)
+  			if (beam[0].beam_name == "great blast of cold")
 			{
   				place_cloud(3, beam[0].bx, beam[0].by, random2(5) + 3);
 	 	 	}
 
-  			if (strcmp(beam[0].beam_name, "ball of steam") == 0)
+  			if (beam[0].beam_name == "ball of steam")
 	  		{
 		  		place_cloud(8, beam[0].bx, beam[0].by, random2(5) + 1);
   			}
 
-  			if (strcmp(beam[0].beam_name, "sticky flame") == 0)
+  			if (beam[0].beam_name == "sticky flame")
   			{
   				place_cloud(10, beam[0].bx, beam[0].by, random2(4) + 1);
  			}
 
-  			if (strcmp(beam[0].beam_name, "poison gas") == 0)
+  			if (beam[0].beam_name == "poison gas")
   			{
    				if (beam[0].thing_thrown != 2) place_cloud(4, beam[0].bx, beam[0].by, random2(4) + 2);
 		    	else place_cloud(104, beam[0].bx, beam[0].by, random2(4) + 2);
   			}
 
-       		if (strcmp(beam[0].beam_name, "foul vapour") == 0 && beam[0].bx == beam[0].target_x && beam[0].by == beam[0].target_y)
+       		if (beam[0].beam_name == "foul vapour" && beam[0].bx == beam[0].target_x && beam[0].by == beam[0].target_y)
 	        {
 	         	if (beam[0].thing_thrown != 2) big_cloud(2, beam[0].bx, beam[0].by, 0);
 	          	 else big_cloud(102, beam[0].bx, beam[0].by, 0);
@@ -1038,7 +1038,7 @@ brek = 0;*/
 						  	beam[0].aim_down = 0;
  							return;
 	 					}
-						if (strcmp(beam[0].beam_name, "orb of electricity") == 0 || strcmp(beam[0].beam_name, "metal orb") == 0 || strcmp(beam[0].beam_name, "great blast of cold") == 0)
+						if (beam[0].beam_name == "orb of electricity" || beam[0].beam_name == "metal orb" || beam[0].beam_name == "great blast of cold")
 						{
 							explosion1(beam);
 		                    beam[0].aim_down = 0;
@@ -1067,13 +1067,13 @@ brek = 0;*/
 
  						hurted = check_your_resists(hurted, beam[0].flavour);
 
- 						if (strstr(beam[0].beam_name, "poison") != NULL && beam[0].flavour != 6 && player_res_poison() == 0 && random2(hurted) - random2(player_AC()) > 0)
+ 						if (beam[0].beam_name.find("poison") != std::string::npos && beam[0].flavour != 6 && player_res_poison() == 0 && random2(hurted) - random2(player_AC()) > 0)
  						{
   							mpr("You are poisoned.");
   							you[0].poison += 1 + random2(3);
  						}
 
-						if (beam[0].flavour == 20 || beam[0].flavour == 20 || (beam[0].flavour == 2 && strcmp(beam[0].beam_name, "ball of steam") != 0) || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(2, 6);
+						if (beam[0].flavour == 20 || beam[0].flavour == 20 || (beam[0].flavour == 2 && beam[0].beam_name != "ball of steam") || beam[0].beam_name == "hellfire") scrolls_burn(2, 6);
  						if (beam[0].flavour == 3) scrolls_burn(2, 8);
 
  						hurted -= random2(player_AC() + 1);
@@ -1091,7 +1091,7 @@ brek = 0;*/
 
 						you[0].hp_ch = 1;
 
-			            if (strcmp(beam[0].beam_name, "sticky flame") == 0 && (you[0].species != SP_MOTTLED_DRACONIAN || you[0].xl < 6))
+			            if (beam[0].beam_name == "sticky flame" && (you[0].species != SP_MOTTLED_DRACONIAN || you[0].xl < 6))
 				        {
 						   if (you[0].equip [EQ_BODY_ARMOUR] == -1 || you[0].inv_type [you[0].equip [EQ_BODY_ARMOUR]] != 25)
 				                you[0].duration [DUR_LIQUID_FLAMES] += 1 + random2(3) + random2(3) + random2(3);
@@ -1115,7 +1115,7 @@ brek = 0;*/
 					beam[0].aim_down = 0;
 					return;
 				}
-				if (strcmp(beam[0].beam_name, "orb of electricity") == 0 || strcmp(beam[0].beam_name, "metal orb") == 0 || strcmp(beam[0].beam_name, "great blast of cold") == 0)
+				if (beam[0].beam_name == "orb of electricity" || beam[0].beam_name == "metal orb" || beam[0].beam_name == "great blast of cold")
 				{
 					explosion1(beam);
 	                beam[0].aim_down = 0;
@@ -1203,11 +1203,11 @@ brek = 0;*/
 						}
 		                else
 						{
-							if (strcmp(beam[0].beam_name, "sticky flame") == 0)
+							if (beam[0].beam_name == "sticky flame")
     							sticky_flame_monster(o, 0, hurted);
 
                  /* looks for missiles which aren't poison but are poison*ed* */
-			                if (strstr(beam[0].beam_name, "poison") != NULL && beam[0].flavour != 6 && random2(hurted) - random2(menv [o].m_AC) > 0)
+			                if (beam[0].beam_name.find("poison") != std::string::npos && beam[0].flavour != 6 && random2(hurted) - random2(menv [o].m_AC) > 0)
 		                    switch(beam[0].thing_thrown)
 						    {
 						     	case 1:
@@ -1230,7 +1230,7 @@ brek = 0;*/
 							return;
 						}
 
-						if (strcmp(beam[0].beam_name, "orb of electricity") == 0 || strcmp(beam[0].beam_name, "metal orb") == 0 || strcmp(beam[0].beam_name, "great blast of cold") == 0)
+						if (beam[0].beam_name == "orb of electricity" || beam[0].beam_name == "metal orb" || beam[0].beam_name == "great blast of cold")
 						{
 							explosion1(beam);
 	                        beam[0].aim_down = 0;
@@ -1279,7 +1279,7 @@ brek = 0;*/
 
 	if (beam [0].colour == 200) return;
 
-	if (strcmp(beam[0].beam_name, "orb of electricity") == 0 || strcmp(beam[0].beam_name, "metal orb") == 0 || strcmp(beam[0].beam_name, "great blast of cold") == 0)
+	if (beam[0].beam_name == "orb of electricity" || beam[0].beam_name == "metal orb" || beam[0].beam_name == "great blast of cold")
 	{
 		explosion1(beam);
         beam[0].aim_down = 0;
@@ -1527,7 +1527,7 @@ int check_mons_resists(struct bolt beam [1], int o, int hurted)
 	} /* end of switch */
 
 
-	if (strcmp(beam[0].beam_name, "hellfire") == 0 || beam[0].flavour == 20)
+	if (beam[0].beam_name == "hellfire" || beam[0].flavour == 20)
 	{
 		if (mons_res_fire(menv [o].m_class) == 2)
 		{
@@ -2071,7 +2071,7 @@ which tells the monster what it'll hit if it breathes/casts etc.
 */
 void tracer_f(int i, struct bolt beem [1])
 {
-	strcpy(beem[0].beam_name, "0tracer");
+	beem[0].beam_name = "0tracer";
 	beem[0].trac_hit_mons = mons_see_invis(menv [i].m_class);
 	beem[0].tracer = 0;
 	beem[0].tracer_mons = 0;

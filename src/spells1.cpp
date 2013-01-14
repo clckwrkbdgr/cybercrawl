@@ -414,7 +414,7 @@ beam[0].target_y = spelld[0].target_y;
 beam[0].source_x = you[0].x_pos;
 beam[0].source_y = you[0].y_pos;
 
-strcpy(beam[0].beam_name, "ball of vapour");
+beam[0].beam_name = "ball of vapour";
 beam[0].colour = GREEN;
 beam[0].range = 7;
 beam[0].damage = 0;

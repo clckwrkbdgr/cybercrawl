@@ -42,7 +42,7 @@ void explosion1(struct bolt beam [1])
 	int exsize = 0;
 
 
-	if (strcmp(beam[0].beam_name, "hellfire") == 0)
+	if (beam[0].beam_name == "hellfire")
 	{
     	if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The hellfire explodes!");
 	    else mpr("You hear a strangely unpleasant explosion.");
@@ -51,7 +51,7 @@ void explosion1(struct bolt beam [1])
 		beam[0].flavour = 13; // hellfire
 	}
 
-	if (strcmp(beam[0].beam_name, "golden flame") == 0)
+	if (beam[0].beam_name == "golden flame")
 	{
 	    if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The flame explodes!");
 	    else mpr("You hear a strange explosion.");
@@ -60,7 +60,7 @@ void explosion1(struct bolt beam [1])
 	}
 
 
-	if (strcmp(beam[0].beam_name, "fireball") == 0)
+	if (beam[0].beam_name == "fireball")
 	{
 	    if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The fireball explodes!");
         else mpr("You hear an explosion.");
@@ -69,7 +69,7 @@ void explosion1(struct bolt beam [1])
 		beam[0].flavour = 2;
 	}
 
-	if (strcmp(beam[0].beam_name, "orb of electricity") == 0)
+	if (beam[0].beam_name == "orb of electricity")
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb of electricity explodes!");
         else mpr("You hear a clap of thunder!");
@@ -80,29 +80,29 @@ void explosion1(struct bolt beam [1])
         exsize = 1;
 	}
 
-	if (strcmp(beam[0].beam_name, "blast") == 0)
+	if (beam[0].beam_name == "blast")
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb of energy explodes.");
         else mpr("You hear an explosion.");
         exsize = 0;
 	}
 
-	if (strcmp(beam[0].beam_name, "metal orb") == 0)
+	if (beam[0].beam_name == "metal orb")
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The orb explodes into a blast of deadly shrapnel!");
         else mpr("You hear an explosion!");
-        strcpy(beam[0].beam_name, "blast of shrapnel");
+        beam[0].beam_name = "blast of shrapnel";
 		beam[0].type = '#';
 		beam[0].damage += 100; // it should already be set for this.
 		beam[0].flavour = 19; /* sets it from pure damage to shrapnel, which is absorbed extra by armour */
         exsize = 0;
 	}
 
-	if (strcmp(beam[0].beam_name, "great blast of cold") == 0)
+	if (beam[0].beam_name == "great blast of cold")
 	{
         if (see_grid(beam[0].bx, beam[0].by) == 1 || (you[0].x_pos == beam[0].bx && you[0].y_pos == beam[0].by)) mpr("The blast explodes into a great storm of ice!");
          else mpr("You hear a raging storm!");
-        strcpy(beam[0].beam_name, "ice storm");
+        beam[0].beam_name = "ice storm";
 		beam[0].type = '#';
 		beam[0].damage += 100; // it should already be set for this.
         beam[0].colour = WHITE;
@@ -252,7 +252,7 @@ void explosion(int ex_size, struct bolt beam [1])
 			{
  				if (mitm.iclass [igrd [beam[0].bx] [beam[0].by]] == 6)
  				{
-  					if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0)
+  					if (beam[0].flavour == 2 || beam[0].beam_name == "hellfire")
   					{
    						destroy_item(igrd [beam[0].bx] [beam[0].by]);
    						if (see_grid(beam[0].bx, beam[0].by) == 1)
@@ -300,7 +300,7 @@ void explosion(int ex_size, struct bolt beam [1])
 
  				if (hurted <= 0) hurted = 0;
 
- 				if (beam[0].flavour == 2 || strcmp(beam[0].beam_name, "hellfire") == 0) scrolls_burn(5, 6);
+ 				if (beam[0].flavour == 2 || beam[0].beam_name == "hellfire") scrolls_burn(5, 6);
  				if (beam[0].flavour == 3) scrolls_burn(5, 8);
  				if (beam[0].flavour == 11) scrolls_burn(2, 4); // spores!
 
@@ -336,7 +336,7 @@ void explosion(int ex_size, struct bolt beam [1])
 
 				}
 			} else
-				if (strcmp(beam[0].beam_name, "ice storm") == 0)
+				if (beam[0].beam_name == "ice storm")
 				{
                  place_cloud(3, beam[0].bx, beam[0].by, 2 + random2(3) + random2(3));
 				}

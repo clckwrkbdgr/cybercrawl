@@ -990,12 +990,6 @@ switch(you[0].inv_dam [armour_wear_2] % 30)
 
 }
 
-/* case 2: strcat(glog, " of fire resistance"); break;
- case 3: strcat(glog, " of cold resistance"); break;
- case 4: strcat(glog, " of you[0].poison resistance"); break;
- case 5: strcat(glog, " of see invisible"); break;
-*/
-
 }
 
 if (you[0].inv_dam [armour_wear_2] % 30 >= 25)
@@ -1343,7 +1337,7 @@ beam[0].source_x = you[0].x_pos;
 beam[0].source_y = you[0].y_pos;
 beam[0].colour = you[0].inv_col [throw_2];
 /*in_name(throw_2, 6);    <-- Don't use this: "the 10 +0 darts hit the x" */
-strcpy(beam[0].beam_name, in_name(throw_2, 1, 6).c_str());
+beam[0].beam_name = in_name(throw_2, 1, 6);
 beam[0].thing_thrown = 1;
 
 
@@ -1428,10 +1422,10 @@ if (you[0].inv_class [throw_2] == OBJ_WEAPONS || you[0].inv_class [throw_2] == O
 		{
 			beam[0].damage += 1 + random2(5);
 			beam[0].flavour = 2;
-			strcpy(beam[0].beam_name, "bolt of ");
-			if (you[0].inv_dam [throw_2] % 30 == 3 || you[0].inv_dam [throw_2] % 30 == 4)
-				strcat(beam[0].beam_name, "poison ");
-			strcat(beam[0].beam_name, "flame");
+			bool is_poison = (you[0].inv_dam [throw_2] % 30 == 3 || you[0].inv_dam [throw_2] % 30 == 4);
+			std::string name = "bolt of ";
+			name += (is_poison ? "poison " : "flame");
+			beam[0].beam_name = name;
 			beam[0].colour = RED;
 			beam[0].type = 35;
 			beam[0].thing_thrown = 3;
@@ -1441,10 +1435,9 @@ if (you[0].inv_class [throw_2] == OBJ_WEAPONS || you[0].inv_class [throw_2] == O
 		{
 			beam[0].damage += 1 + random2(5);
 			beam[0].flavour = 3;
-			strcpy(beam[0].beam_name, "bolt of ");
-			if (you[0].inv_dam [throw_2] % 30 == 3 || you[0].inv_dam [throw_2] % 30 == 4)
-				strcat(beam[0].beam_name, "poison ");
-			strcat(beam[0].beam_name, "frost");
+			bool is_poison = (you[0].inv_dam [throw_2] % 30 == 3 || you[0].inv_dam [throw_2] % 30 == 4);
+			std::string name = "bolt of ";
+			name += (is_poison ? "poison " : "frost");
 			beam[0].colour = WHITE;
 			beam[0].type = 35;
 			beam[0].thing_thrown = 3;
@@ -2776,7 +2769,7 @@ if (you[0].inv_type [sc_read_2] == SCR_ENCHANT_WEAPON_II && you[0].inv_class [yo
 		beam[0].flavour = 2;
 		beam[0].bx = you[0].x_pos;
 		beam[0].by = you[0].y_pos;
-		strcpy(beam[0].beam_name, "fiery explosion");
+		beam[0].beam_name = "fiery explosion";
 		beam[0].colour = RED;
 		beam[0].thing_thrown = 1;
 		explosion(1, beam);
@@ -3070,7 +3063,7 @@ case SCR_IMMOLATION: // immolation
 	beam[0].flavour = 2; // <=- not sure about this
 	beam[0].bx = you[0].x_pos;
 	beam[0].by = you[0].y_pos;
-	strcpy(beam[0].beam_name, "fiery explosion");
+	beam[0].beam_name = "fiery explosion";
 	beam[0].colour = RED;
 	beam[0].thing_thrown = 1; // your explosion, (not someone else's explosion)
 	explosion(1, beam);

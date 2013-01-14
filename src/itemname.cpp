@@ -1484,30 +1484,6 @@ mss [OBJ_FOOD] [25] = 100;*/
 mss [OBJ_MISCELLANY] [MISC_BOTTLED_EFREET] = 250; // flask
 mss [OBJ_MISCELLANY] [MISC_CRYSTAL_BALL_OF_SEEING] = 200; // crystal ball
 
-/*
-	case 0: strcat(glog , "meat ration"); break;
-	case 1: strcat(glog , "bread ration"); break;
-	case 2: strcat(glog , "pear"); break;
-	case 3: strcat(glog , "apple"); break; // make this less common.
-	case 4: strcat(glog , "choko"); break;
-	case 5: strcat(glog , "honeycomb"); break;
-	case 6: strcat(glog , "royal jell"); break; // maybe a joke monster of the same name? - mix something with jelly crystals?
-	case 7: strcat(glog , "snozzcumber"); break;
- case 8: strcat(glog , "slice of pizza"); break;
- case 9: strcat(glog , "apricot"); break;
- case 10: strcat(glog , "orange"); break;
- case 11: strcat(glog , "banana"); break;
- case 12: strcat(glog , "strawberr"); break;
- case 13: strcat(glog , "rambutan"); break;
- case 14: strcat(glog , "lemon"); break;
- case 15: strcat(glog , "grape"); break;
- case 16: strcat(glog , "sultana"); break;
- case 17: strcat(glog , "lychee"); break;
- case 18: strcat(glog , "beef jerk"); break;
- case 19: strcat(glog , "cheese"); break;
- case 20: strcat(glog , "sausage"); break;
-*/
-
 	// weapons: blunt weapons are first to help grouping them together
 	//  note: AC prop can't be 0 or -ve because of division.
 	// 	  If it's 1, makes no difference

@@ -1305,22 +1305,22 @@ void step_into_a_trap()
 		int weapon;
 		switch(trap_type) {
 			case 0:
-				strcpy(beam[0].beam_name, " dart");
+				beam[0].beam_name = " dart";
 				beam[0].damage = 4;
 				dart_trap(trap_known, trap_index, beam);
 				break;
 			case 1:
-				strcpy(beam[0].beam_name, "n arrow");
+				beam[0].beam_name = "n arrow";
 				beam[0].damage = 7;
 				dart_trap(trap_known, trap_index, beam);
 				break;
 			case 2:
-				strcpy(beam[0].beam_name, " spear");
+				beam[0].beam_name = " spear";
 				beam[0].damage = 10;
 				dart_trap(trap_known, trap_index, beam);
 				break;
 			case 3:
-				strcpy(beam[0].beam_name, "n axe");
+				beam[0].beam_name = "n axe";
 				beam[0].damage = 15;
 				dart_trap(trap_known, trap_index, beam);
 				break;
@@ -1340,7 +1340,7 @@ void step_into_a_trap()
 				forget_map(random2(50) + random2(50) + 2);
 				break;
 			case 7:
-				strcpy(beam[0].beam_name, " bolt");
+				beam[0].beam_name = " bolt";
 				beam[0].damage = 13;
 				dart_trap(trap_known, trap_index, beam);
 				break;

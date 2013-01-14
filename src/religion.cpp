@@ -513,7 +513,7 @@ okay_try_again : if (niceness == 0 || random2(3) == 0) /* bad things */
   beam[0].flavour = 5;
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "blast of lightning");
+  beam[0].beam_name = "blast of lightning";
   beam[0].colour = LIGHTCYAN;
   beam[0].thing_thrown = 1; /* your explosion */
   explosion(1, beam);

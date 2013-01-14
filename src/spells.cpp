@@ -130,7 +130,7 @@ switch(spec_effect)
   beam[0].flavour = 0; // <=- not sure about this
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = random2(15) + 1;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(0, beam);
@@ -153,7 +153,7 @@ switch(spec_effect)
   beam[0].flavour = 0; // <=- not sure about this
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = random2(15) + 1;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(random2(2), beam);
@@ -765,7 +765,7 @@ switch(spec_effect)
   beam[0].flavour = 2;
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = RED;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(0, beam);
@@ -789,7 +789,7 @@ switch(spec_effect)
   beam[0].flavour = 2;
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "fireball");
+  beam[0].beam_name = "fireball";
   beam[0].colour = RED;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(random2(2), beam);
@@ -854,7 +854,7 @@ switch(spec_effect)
   beam[0].flavour = 3;
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = WHITE;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(0, beam);
@@ -929,7 +929,7 @@ switch(spec_effect)
   beam[0].flavour = 19; // shrapnel
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = CYAN;
   if (random2(5) == 0) beam[0].colour = BROWN;
   if (random2(5) == 0) beam[0].colour = LIGHTCYAN;
@@ -999,7 +999,7 @@ switch(spec_effect)
   beam[0].flavour = 5;
   beam[0].bx = you[0].x_pos;
   beam[0].by = you[0].y_pos;
-  strcpy(beam[0].beam_name, "explosion");
+  beam[0].beam_name = "explosion";
   beam[0].colour = LIGHTBLUE;
   beam[0].thing_thrown = 1; // your explosion (is this right?)
   explosion(0 + (random2(4) != 0), beam);

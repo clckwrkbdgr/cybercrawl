@@ -656,7 +656,6 @@ switch(food_eat_3)
 	case 2: // pear
         if (you[0].mutation [MUT_CARNIVOROUS] > 0) mpr ("Blech - you need meat!");
 	 else mpr("Mmmm... Yummy pear.");
-	//incrl();
 	//hung += 300;
 	//delay_t = 1;
 	//delay_doing = 0;
@@ -671,7 +670,6 @@ switch(food_eat_3)
 	case 4:
         if (you[0].mutation [MUT_CARNIVOROUS] > 0) mpr ("Blech - you need meat!");
 	 else 	mpr("That choko was very bland.");
-	//incrl();
 	//hung += 300;
 	//delay_t = 1;
 	//delay_doing = 0;

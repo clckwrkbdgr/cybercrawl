@@ -146,7 +146,7 @@ switch(beam[0].type)
  mpr("You are engulfed in a burst of hellfire!");
  hurted = random2(10) + random2(10) + 5;
  beam[0].flavour = 20; // lava, but it's hellfire anyway
- strcpy(beam[0].beam_name, "hellfire"); // for ouch
+ beam[0].beam_name = "hellfire"; // for ouch
  hurted = check_your_resists(hurted, beam[0].flavour);
  scrolls_burn(4, 6);
  ouch(hurted, beam[0].beam_source, 3);
@@ -156,7 +156,7 @@ switch(beam[0].type)
  case DMNBM_SMITING: // smiting
  mpr("Something smites you!");
  hurted = random2(6) + random2(6) + 7;
- strcpy(beam[0].beam_name, "smiting"); // for ouch
+ beam[0].beam_name = "smiting"; // for ouch
  ouch(hurted, beam[0].beam_source, 3);
  you[0].hp_ch = 1;
  break;
@@ -201,7 +201,7 @@ switch(beam[0].type)
   {
  		msg("@1 is engulfed in hellfire.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
   }
-  strcpy(beam[0].beam_name, "hellfire");
+  beam[0].beam_name = "hellfire";
   beam[0].flavour = 20;
   hurted = 0;
   hurted += random2(10) + random2(5) + 5;
@@ -219,7 +219,7 @@ switch(beam[0].type)
   {
  		msg("@1 is smitten.") << monam (menv [o].m_sec, menv [o].m_class, menv [o].m_ench [2], 0);
   }
-  strcpy(beam[0].beam_name, "smiting");
+  beam[0].beam_name = "smiting";
   beam[0].flavour = 0;
   hurted = 0;
   hurted += random2(6) + random2(6) + 7;

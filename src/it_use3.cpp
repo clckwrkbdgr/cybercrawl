@@ -695,7 +695,7 @@ case 12:
 	beam[0].flavour = 2; // <=- not sure about this
 	beam[0].bx = you[0].x_pos;
 	beam[0].by = you[0].y_pos;
-	strcpy(beam[0].beam_name, "fiery explosion");
+	beam[0].beam_name = "fiery explosion";
 	beam[0].colour = RED;
 	beam[0].thing_thrown = 1; // your explosion, (not someone else's explosion)
 	explosion(1, beam);

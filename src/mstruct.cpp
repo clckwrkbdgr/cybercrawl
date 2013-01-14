@@ -599,53 +599,52 @@ int mons_pan(int mcls) // is the monster to be found in pandemonium
 
 switch(mcls)
 {
-case 5: //strcat(gmon_name, "fungus"); break;
-case 13: //strcat(gmon_name, "necrophage"); break;
-case 15: //strcat(gmon_name, "phantom"); break;
-case 23: //strcat(gmon_name, "abomination"); break;
-case 25: //break;
-case 35: //strcat(gmon_name, "jelly"); break;
-case 37: //strcat(gmon_name, "lich"); break;
-case 38: //strcat(gmon_name, "mummy"); break;
-case 43: //strcat(gmon_name, "rakshasa"); break;
-case 46: //strcat(gmon_name, "unseen horror"); break;
-case 47: //strcat(gmon_name, "vampire"); break;
-case 48: //strcat(gmon_name, "wraith"); break;
-case 49: //strcat(gmon_name, "abomination"); break;
-case 51: //break;
-// strcat(gmon_name, "large zombie"); break;
-case 59: //strcat(gmon_name, "giant eyeball"); break;
-case 60: //strcat(gmon_name, "wight"); break;
-case 63: //strcat(gmon_name, "shadow"); break;
-case 64: //strcat(gmon_name, "hungry ghost"); break;
-case 65: //strcat(gmon_name, "eye of draining"); break;
-case 68: //strcat(gmon_name, "efreet"); break;
-case 69: //strcat(gmon_name, "brain worm"); break;
-case 70: //strcat(gmon_name, "giant orange brain"); break;
-case 72: //strcat(gmon_name, "flying skull"); break;
-case 76: //strcat(gmon_name, "slime creature"); break;
-case 77: //strcat(gmon_name, "freezing wraith"); break;
-case 78: //strcat(gmon_name, "rakshasa"); break;
-case 79: //strcat(gmon_name, "great orb of eyes"); break;
-case 107: //break;
-case 108: //// ske
-case 116: //strcat(gmon_name, "clay golem"); break;
-case 117: //strcat(gmon_name, "wood golem"); break;
-case 118: //strcat(gmon_name, "stone golem"); break;
-case 119: //strcat(gmon_name, "iron golem"); break;
-case 120: //strcat(gmon_name, "crystal golem"); break;
-case 121: //strcat(gmon_name, "toenail golem"); break;
-case 122: //strcat(gmon_name, "mottled dragon"); break;
-case 123: //strcat(gmon_name, "earth elemental"); break;
-case 124: //strcat(gmon_name, "fire elemental"); break;
-case 125: //strcat(gmon_name, "air elemental"); break;
-case 130: //strcat(gmon_name, "spectre"); break;
-case 131: //strcat(gmon_name, "pulsating lump"); break;
-case 136: //strcat(gmon_name, "stone giant"); break; // stoned giant
-case 137: //strcat(gmon_name, "flayed ghost"); break;
-case 140: //strcat(gmon_name, "insubstantial wisp"); break;
-case 110: //strcat(gmon_name, "necromancer"); break;
-case 111: //strcat(gmon_name, "wizard"); break;
+case 5:
+case 13:
+case 15:
+case 23:
+case 25:
+case 35:
+case 37:
+case 38:
+case 43:
+case 46:
+case 47:
+case 48:
+case 49:
+case 51:
+case 59:
+case 60:
+case 63:
+case 64:
+case 65:
+case 68:
+case 69:
+case 70:
+case 72:
+case 76:
+case 77:
+case 78:
+case 79:
+case 107:
+case 108:
+case 116:
+case 117:
+case 118:
+case 119:
+case 120:
+case 121:
+case 122:
+case 123:
+case 124:
+case 125:
+case 130:
+case 131:
+case 136:
+case 137:
+case 140:
+case 110:
+case 111:
 case 220:
 case 221:
 case 222:

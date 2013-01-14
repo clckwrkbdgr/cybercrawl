@@ -59,35 +59,35 @@ int func_pass [10];
 			{
 
 			case 0:
-			strcpy(beem[0].beam_name, " dart");
+			beem[0].beam_name = " dart";
 			beem[0].damage = 4;
 			beem[0].colour = 1;
 			beem[0].type = 3;
 			break;
 
 			case 1:
-			strcpy(beem[0].beam_name, "n arrow");
+			beem[0].beam_name = "n arrow";
 			beem[0].damage = 7;
 			beem[0].colour = 1;
 			beem[0].type = 1;
 			break;
 
 			case 2:
-			strcpy(beem[0].beam_name, " spear");
+			beem[0].beam_name = " spear";
 			beem[0].damage = 10;
 			beem[0].colour = 0;
 			beem[0].type = 11;
 			break;
 
 			case 3:
-			strcpy(beem[0].beam_name, "n axe");
+			beem[0].beam_name = "n axe";
 			beem[0].damage = 15;
 			beem[0].colour = 0;
 			beem[0].type = 9;
 			break;
 
 			case 7:
-			strcpy(beem[0].beam_name, " bolt");
+			beem[0].beam_name = " bolt";
 			beem[0].damage = 13;
 			beem[0].colour = 1;
 			beem[0].type = MI_BOLT;
@@ -358,7 +358,7 @@ int func_pass [10];
 func_pass [8] = menv [i].m_HD * 12;
 
 int ufdg = mons_spells(spell_cast, func_pass);
-strcpy(beem[0].beam_name, spell_beam_name(spell_cast).c_str());
+beem[0].beam_name = spell_beam_name(spell_cast);
 
 beem[0].ench_power = beem[0].damage; // !!!
 beem[0].colour = func_pass [0];
@@ -491,19 +491,19 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 
 	beem[0].source_x = menv [i].m_x; beem[0].source_y = menv [i].m_y;
 
-		strcpy(beem[0].beam_name, monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4).c_str()); //gmon_name [mons_class [i]]);
+		beem[0].beam_name = monam (menv [i].m_sec, menv [i].m_class, menv [i].m_ench [2], 4);
   switch(menv [i].m_class)
   {
   case 73:
   case 29:
   case 148:
   case 306: // Xtahua
-  strcat(beem[0].beam_name, "'s blast of flame");
+  beem[0].beam_name += "'s blast of flame";
   beem[0].flavour = 2;
   beem[0].colour = RED;
   break;
   case 75:
-  strcat(beem[0].beam_name, "'s blast of cold");
+  beem[0].beam_name += "'s blast of cold";
   beem[0].flavour = 3;
   beem[0].colour = WHITE;
   break;
@@ -614,10 +614,10 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 					beem[0].hit += 2;
 					beem[0].damage += 1 + random2(5);
 					beem[0].flavour = 2;
-					strcpy(beem[0].beam_name, "bolt of ");
+					beem[0].beam_name = "bolt of ";
 					if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
-						strcat(beem[0].beam_name, "poison ");
-					strcat(beem[0].beam_name, "flame");
+						beem[0].beam_name += "poison ";
+					beem[0].beam_name += "flame";
 					beem[0].colour = RED;
 					beem[0].type = 35;
 					beem[0].thing_thrown = 4;
@@ -627,10 +627,10 @@ if (beem[0].move_x != 0 || beem[0].move_y != 0)
 					beem[0].hit += 2;
 					beem[0].damage += 1 + random2(5);
 					beem[0].flavour = 3;
-					strcpy(beem[0].beam_name, "bolt of ");
+					beem[0].beam_name = "bolt of ";
 					if (mitm.idam [hand_used] % 30 == 3 || mitm.idam [hand_used] % 30 ==  4)
-						strcat(beem[0].beam_name, "poison ");
-					strcat(beem[0].beam_name, "frost");
+						beem[0].beam_name += "poison ";
+					beem[0].beam_name += "frost";
 					beem[0].colour = WHITE;
 					beem[0].type = 35;
 					beem[0].thing_thrown = 4;
@@ -678,7 +678,7 @@ if (mons_near(i) == 1)
 	beam[0].flavour = 11; // <=- not sure about this
 	beam[0].bx = menv [i].m_x;
 	beam[0].by = menv [i].m_y;
-	strcpy(beam[0].beam_name, "explosion of spores");
+	beam[0].beam_name = "explosion of spores";
 	beam[0].colour = LIGHTGREY;
 	beam[0].thing_thrown = 2; // someone else's explosion
 	explosion(1, beam);

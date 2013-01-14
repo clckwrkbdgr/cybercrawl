@@ -803,7 +803,7 @@ beem[0].target_y = beem[0].trac_targ_y;
 beem[0].aim_down = 1;
 	beem[0].range = random2(10) + 5;
 	beem[0].source_x = menv [i].m_x; beem[0].source_y = menv [i].m_y;
-		strcpy(beem[0].beam_name, "glob of radioactive waste");
+		beem[0].beam_name = "glob of radioactive waste";
 		beem[0].damage = 108;
 		beem[0].colour = RED;
 		beem[0].type = '#'; /* hash # */
@@ -834,7 +834,7 @@ beem[0].aim_down = 1;
 viewwindow(1);
 	beem[0].range = random2(10) + 5;
 	beem[0].source_x = menv [i].m_x; beem[0].source_y = menv [i].m_y;
-		strcpy(beem[0].beam_name, "bolt of electricity");
+		beem[0].beam_name = "bolt of electricity";
 		beem[0].damage = 105;
 		beem[0].colour = LIGHTCYAN;
 		beem[0].type = 35; // hash #
@@ -925,7 +925,7 @@ if (menv [i].m_inv [1] != 501) // manticore
 {
 		hand_used = menv [i].m_inv [1];
 		beem[0].range = 6;
-		strcpy(beem[0].beam_name, it_name(hand_used, 1, 6).c_str());
+		beem[0].beam_name = it_name(hand_used, 1, 6);
 		mons_throw(i, beem, hand_used);
 		//mmov_x = 0;
 /*		if (brek == 1)
@@ -1169,7 +1169,7 @@ out_of_scroll : if (menv [i].m_inv [5] != 501 && random2(2) == 0 && menv [i].m_b
         func_pass [8] = 25; // menv [i].m_HD * 7;
 
         int ufdg = mons_spells(mzap, func_pass);
-        strcpy(beem[0].beam_name, spell_beam_name(mzap).c_str());
+        beem[0].beam_name = spell_beam_name(mzap);
 
         beem[0].ench_power = beem[0].damage; // !!!
         beem[0].colour = func_pass [0];
@@ -1459,7 +1459,7 @@ if (random2(10) < 8)
 		if (beem[0].tracer != 0 || (beem[0].trac_targ != MHITYOU && beem[0].trac_hit_mons != 0)) // doesn't need to worry about you[0].haste
 		{
  		beem[0].range = 6;
- 		strcpy(beem[0].beam_name, it_name(hand_used, 1, 6).c_str());
+ 		beem[0].beam_name = it_name(hand_used, 1, 6);
  		mons_throw(i, beem, hand_used);
 		continue;
 /* 		if (brek == 1)
@@ -2130,7 +2130,7 @@ if (mons_near(i) == 0) return;
 
 beam[0].move_x = beam[0].trac_targ_x - menv [i].m_x;
 beam[0].move_y = beam[0].trac_targ_y - menv [i].m_y;
- strcpy(beam[0].beam_name, "plant spit");
+ beam[0].beam_name = "plant spit";
 
 	beam[0].type = '#';
 	beam[0].source_x = menv [i].m_x;

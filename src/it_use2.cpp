@@ -104,7 +104,7 @@ if (ztype == 14)
    noisy(25, you[0].x_pos, you[0].y_pos);
 }
 
-strcpy(beams[0].beam_name, get_beam_name(ztype).c_str());
+beams[0].beam_name = get_beam_name(ztype);
 
 beams[0].colour = func_pass [0];
 beams[0].range = func_pass [1];

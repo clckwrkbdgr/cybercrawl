@@ -2,11 +2,6 @@
 #include "defines.h"
 #include "message.h"
 
-extern char info [200];
-extern char st_prn [20];
-
-extern char str_pass [80];
-
 extern int gmon_use [1000];
 extern int mcolour [1000];
 extern int show_green;
@@ -24,28 +19,30 @@ struct dist
 
 struct bolt
 {
- int range, type, colour, flavour, source_x, source_y;
- int damage, ench_power, hit, bx, by, target_x;
- int target_y;
-/* char beam_flavour, wand_id;*/
- int wand_id;
- int aim_down;
- int thing_thrown;
-/*, beam_type;*/
- int move_x, move_y;
- int trac_targ;
- int tracer_mons;
- int trac_hit_tamed;
- int trac_hit_mons;
- int tracer;
- int trac_targ_x, trac_targ_y;
-/* int beam_hit;*/
+	int range, type, colour, flavour, source_x, source_y;
+	int damage, ench_power, hit, bx, by, target_x;
+	int target_y;
+	int wand_id;
+	int aim_down;
+	int thing_thrown;
+	int move_x, move_y;
+	int trac_targ;
+	int tracer_mons;
+	int trac_hit_tamed;
+	int trac_hit_mons;
+	int tracer;
+	int trac_targ_x, trac_targ_y;
 
- /* If a monster fired it, which monster? */
- int beam_source;
+	/* If a monster fired it, which monster? */
+	int beam_source;
 
- char beam_name [40];
+	//char beam_name [40];
+	std::string beam_name;
 
+	bolt()
+		: range(0), type(0), colour(0), flavour(0), source_x(0), source_y(0), damage(0), ench_power(0), hit(0), bx(0), by(0), target_x(0), target_y(0),
+		wand_id(0), aim_down(0), thing_thrown(0), move_x(0), move_y(0),
+		trac_targ(0), tracer_mons(0), trac_hit_tamed(0), trac_hit_mons(0), tracer(0), trac_targ_x(0), trac_targ_y(0), beam_source(0), beam_name("invalid") {}
 };
 
 struct player

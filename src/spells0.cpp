@@ -507,39 +507,6 @@ types of you[0].spells:
 21 = poison
 */
 
-/*
-if (enhanced == 1)
-{
- strcpy(info, "You feel a surge of power.");
- incrl();
-}
-if (enhanced == 2)
-{
- strcpy(info, "You feel a strong surge of power.");
- incrl();
-}
-if (enhanced >= 3) // how would you get this???
-{
- strcpy(info, "You feel a huge surge of power!");
- incrl();
-}
-if (enhanced == -1)
-{
- strcpy(info, "You feel a numb sensation.");
- incrl();
-}
-if (enhanced == -2)
-{
- strcpy(info, "You feel an extremely numb sensation.");
- incrl();
-}
-if (enhanced <= -3)
-{
- strcpy(info, "You feel an extraordinarily numb sensation.");
- incrl();
-}
-*/
-
 if (enhanced > 0)
 {
  for (s = 0; s < enhanced; s++)
