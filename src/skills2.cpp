@@ -42,11 +42,11 @@ std::string skills[50][5] = {
 {"Traps & Doors",  "Disarmer", "Trapper", "Trapper", "Trapper"}, // traps
 
 {"Unarmed Combat", "Brawler", "Boxer", "Martial Artist", "Martial Artist"},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
+{""},
+{""},
+{""},
+{""},
+{""},
 
 {"Hacking",   "Newbee", "Programmer", "Hacker", "Superhacker"}, // spellcasting
 {"Conjurations",   "Evoker", "Conjurer", "Destroyer", "Annihilator"}, // conjure
@@ -75,18 +75,18 @@ std::string skills[50][5] = {
 
 {"Employing",	   "Believer", "Servant", "Worldly Agent", "Invoker"},
 
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-{NULL},
-/*{NULL},
-{NULL},
-{NULL},
-{NULL}*/
+{""},
+{""},
+{""},
+{""},
+{""},
+{""},
+{""},
+{""},
+/*{""},
+{""},
+{""},
+{""}*/
 };
 
 int spec_skills [36] [39] =
