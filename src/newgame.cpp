@@ -124,7 +124,7 @@ for (glorpo = 0; glorpo < your_nam.size(); glorpo ++)
 }
 
 
-strcpy(you[0].your_name, your_nam.c_str());
+you[0].your_name = your_nam;
 
 std::string name = you[0].your_name;
 if(name.size() > 6) {
@@ -343,7 +343,7 @@ clrscr(); // Otherwise it looks ugly under Win NT, or so I'm told
 
 cprintf(EOL EOL);
 cprintf("Welcome, ");
-cprintf(you[0].your_name);
+cprintf(you[0].your_name.c_str());
 cprintf(" the ");
 cprintf(species_name(you[0].species).c_str());
 cprintf("."EOL EOL);

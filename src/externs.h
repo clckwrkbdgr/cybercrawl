@@ -47,104 +47,60 @@ struct bolt
 
 struct player
 {
-int turnover;
-int prev_targ;
-
-char your_name [30];
-
-int species;
-int run_x;
-int run_y;
-int running;
-
-/*
-Make these all functions:
-int teleport;
-int see_invis;
-int res_fire;
-int res_poison;
-int res_cold;
-int fast_run;
-int sust_abil;
-int deaths_door;
-int magic_battery;
-int spec_fire;
-int spec_cold;
-int spec_poison;
-int prot_life;
-int berserker;
-int energy;*/
-int special_wield;
-int deaths_door;
-int shock_shield;
-
-int corpse_count;
-int disease;
-
-/* Function
-int res_magic ;
-*/
-int max_level;
-
-int x_pos;
-int y_pos;
-
-int hunger;
-int hunger_inc;
-int equip [NO_EQUIP];
-/* list in player.cc */
-
-int hp;
-int hp_max;
-int base_hp; // this is what is affected by necrophages etc
-int base_hp2;
-int ep;
-int ep_max;
-int base_ep;
-int base_ep2;
-
-int strength;
-int intel;
-int dex;
-int max_strength;
-int max_intel;
-int max_dex;
-
-
-/* xxx_ch variables : determine whether new value is printed next turn.
-Set to 1 if value is changed. */
-int hung_ch;
-int hung_state; /* normal */
-int burden_ch;
-int hp_ch;
-int ep_ch;
-int strength_ch;
-int intel_ch;
-int dex_ch;
-int xp_ch;
-int AC_ch; /* remember that the AC shown = 10 - AC */
-int gp_ch;
-int evasion_ch;
-
-/* Functions:
-int AC;
-int evasion;
-int shield_class;
-int rate_regen;
-int ep_rate_regen;
-*/
-
-int incr_regen;
-int ep_incr_regen;
-
-int xp;
-int xl;
-int gp;
-int clas;
-char clasnam [30];
-int speed;
-int time_taken;
-
+	int turnover;
+	int prev_targ;
+	std::string your_name;
+	int species;
+	int run_x;
+	int run_y;
+	int running;
+	int special_wield;
+	int deaths_door;
+	int shock_shield;
+	int corpse_count;
+	int disease;
+	int max_level;
+	int x_pos;
+	int y_pos;
+	int hunger;
+	int hunger_inc;
+	int equip [NO_EQUIP]; // list in player.cc
+	int hp;
+	int hp_max;
+	int base_hp; // this is what is affected by necrophages etc
+	int base_hp2;
+	int ep;
+	int ep_max;
+	int base_ep;
+	int base_ep2;
+	int strength;
+	int intel;
+	int dex;
+	int max_strength;
+	int max_intel;
+	int max_dex;
+	// xxx_ch variables : determine whether new value is printed next turn.  Set to 1 if value is changed.
+	int hung_ch;
+	int hung_state; // normal
+	int burden_ch;
+	int hp_ch;
+	int ep_ch;
+	int strength_ch;
+	int intel_ch;
+	int dex_ch;
+	int xp_ch;
+	int AC_ch; // remember that the AC shown = 10 - AC
+	int gp_ch;
+	int evasion_ch;
+	int incr_regen;
+	int ep_incr_regen;
+	int xp;
+	int xl;
+	int gp;
+	int clas;
+	char clasnam [30];
+	int speed;
+	int time_taken;
 	int inv_class [52];
 	int inv_type [52];
 	int inv_plus [52];
@@ -154,72 +110,49 @@ int time_taken;
 	int inv_col [52];
 	int inv_quant [52];
 	int inv_no; // number of items carried.
-
- int burden;
- int burden_state;
-int spells [25];
-int spell_no;
-int spell_levels;
-int char_direction ;
-// 0 = going down
-// 1 = going up!
-int pet_target;
-
-int your_level;
-
-int duration [30]; // lots of durational things. Why didn't I do this for haste etc right from the start? Oh well.
-/* There's a list of these in player.cc */
-
-int invis ;
-int conf;
-int paralysis;
-int slow ;
-int haste ; // haste
-int might ; // might
-int lev ; // levitation
-int poison ; // poison!!
-int rotting ;
-int berserker;
-
-int attribute [30]; // various attributes, eg resist lightning
-/* list in player.cc */
-
-int is_undead;
-/* 0 - is alive
-   1 - is undead, but can still eat/drink etc (eg vampire)
-   2 - is undead (mummy etc)*/
-
-int delay_doing;
-int delay_t;
-
-int skills [50];
-int practise_skill [50];
-int skill_points [50];
-int exp_available;
-
-int item_description [5] [50];
-int unique_items [50];
-int unique_creatures [50];
-int level_type;
-
-
-
-int where_are_you;
-
-int branch_stairs [30];
-
-int religion;
-int piety;
-int gods [100];
-
-int mutation [100];
-int demon_pow [100];
-int mpower;
-
-int had_item [50];
-
-int betrayal;
-
+	int burden;
+	int burden_state;
+	int spells [25];
+	int spell_no;
+	int spell_levels;
+	int char_direction; // 0 = going down, 1 = going up!
+	int pet_target;
+	int your_level;
+	int duration [30]; // lots of durational things. Why didn't I do this for haste etc right from the start? Oh well. There's a list of these in player.cc
+	int invis;
+	int conf;
+	int paralysis;
+	int slow;
+	int haste;
+	int might;
+	int lev;
+	int poison;
+	int rotting;
+	int berserker;
+	int attribute [30]; // various attributes, eg resist lightning. list in player.cc
+	int is_undead; // 0 - is alive, 1 - is undead, but can still eat/drink etc (eg vampire), 2 - is undead (mummy etc)
+	int delay_doing;
+	int delay_t;
+	int skills [50];
+	int practise_skill [50];
+	int skill_points [50];
+	int exp_available;
+	int item_description [5] [50];
+	int unique_items [50];
+	int unique_creatures [50];
+	int level_type;
+	int where_are_you;
+	int branch_stairs [30];
+	int religion;
+	int piety;
+	int gods [100];
+	int mutation [100];
+	int demon_pow [100];
+	int mpower;
+	int had_item [50];
+	int betrayal;
+	player()
+		: turnover(0), prev_targ(0), your_name(""), species(0), run_x(0), run_y(0), running(0), special_wield(0), deaths_door(0), shock_shield(0), corpse_count(0), disease(0), max_level(0), x_pos(0), y_pos(0), hunger(0), hunger_inc(0), hp(0), hp_max(0), base_hp(0), base_hp2(0), ep(0), ep_max(0), base_ep(0), base_ep2(0), strength(0), intel(0), dex(0), max_strength(0), max_intel(0), max_dex(0), hung_ch(0), hung_state(0), burden_ch(0), hp_ch(0), ep_ch(0), strength_ch(0), intel_ch(0), dex_ch(0), xp_ch(0), AC_ch(0), gp_ch(0), evasion_ch(0), incr_regen(0), ep_incr_regen(0), xp(0), xl(0), gp(0), clas(0), speed(0), time_taken(0), inv_no(0), burden(0), burden_state(0), spell_no(0), spell_levels(0), char_direction(0), pet_target(0), your_level(0), invis(0), conf(0), paralysis(0), slow(0), haste(0), might(0), lev(0), poison(0), rotting(0), berserker(0), is_undead(0), delay_doing(0), delay_t(0), exp_available(0), level_type(0), where_are_you(0), religion(0), piety(0), mpower(0), betrayal(0) {}
 };
 
 extern struct player you [1];

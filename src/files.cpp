@@ -201,10 +201,11 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
 
   strcpy(corr_level, "");
   if (you[0].your_level<10) strcpy(corr_level, "0");
-  strcat(corr_level, to_string(you[0].your_level).c_str());
+  std::string istr = to_string(you[0].your_level);
+  strcat(corr_level, istr.c_str());
   corr_level [2] = you[0].where_are_you + 97;
   corr_level [3] = 0; /* null-terminate it */
-  strncpy(cha_fil, you[0].your_name, 6);
+  strncpy(cha_fil, you[0].your_name.c_str(), 6);
   cha_fil [6] = 0;
   strcat(cha_fil, ".");
   if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
@@ -762,7 +763,7 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
   strcat(extens, to_string(level_saved).c_str());
   extens [2] = where_were_you + 97;
   extens [3] = 0; /* null-terminate it */
-  strncpy(cha_fil, you[0].your_name, 6);
+  strncpy(cha_fil, you[0].your_name.c_str(), 6);
   cha_fil [6] = 0;
   strcat(cha_fil, ".");
   if (was_a_labyrinth == 1) strcat(cha_fil, "lab"); /* temporary level */
@@ -940,7 +941,7 @@ void save_game (char leave_game) {
   char char_f [15];
   int i, j;
 
-  strncpy(char_f, you[0].your_name, 6);
+  strncpy(char_f, you[0].your_name.c_str(), 6);
   char_f [6] = 0;
   strcat(char_f, ".sav");
   int datalen=30+35+10+69+6+5+25+2+30+5+25+12*52+50*5+50*4+50+50+6*50+50+50+30+30+30+100+50+100+NO_UNRANDARTS;
@@ -1164,7 +1165,7 @@ void restore_game () {
   char char_f [15];
   int i, j;
 
-  strncpy(char_f, you[0].your_name, 6);
+  strncpy(char_f, you[0].your_name.c_str(), 6);
   char_f [6] = 0;
   strcat(char_f, ".sav");
 //  int handle = open(char_f, O_RDONLY, S_IWRITE, S_IREAD);

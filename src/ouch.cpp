@@ -624,9 +624,8 @@ void end_game(int end_status, const std::string & death_string)
 
 
 	clrscr();
-	clrscr();
 	cprintf("Goodbye, ");
-	cprintf(you[0].your_name);
+	cprintf(you[0].your_name.c_str());
 	cprintf(".");
 	cprintf(EOL EOL);
 	cprintf(death_string.c_str());

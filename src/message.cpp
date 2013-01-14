@@ -15,11 +15,13 @@ Message msg(const std::string & format_string) {
 std::string to_string(int value, int width)
 {
 	std::ostringstream out;
-	if(width != 0) {
+	if(width >= 0) {
 		out << std::setw(width);
 	}
 	out << value;
-	return out.str();
+	std::string result = out.rdbuf()->str();
+	result = out.str();
+	return result;
 }
 
 int scrloc = 1; // Line of next (previous?) message.
