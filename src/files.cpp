@@ -1,6 +1,4 @@
 /* This file was optimized & heavily rewritten by Alexey Guzeev */
-
-
 #include "linuxlib.h"
 
 #include "externs.h"
@@ -29,6 +27,8 @@
 #include "stuff.h"
 #include "view.h"
 
+enum { NO_SPELL_FOUND = 250 };
+
 /*
 Order for looking for conjurations for the 1st & 2nd spell slots,
 when finding spells to be remembered by a player's ghost:
@@ -54,7 +54,7 @@ int search_order_conj [] = {
 67, // pain
 115, // sting
 5, // m dart
-250, // terminate search
+NO_SPELL_FOUND, // terminate search
 };
 
 /*
@@ -76,7 +76,7 @@ int search_order_third [] = {
 /* 10 */
 28, // controlled blink
 59, // blink
-250, // end search
+NO_SPELL_FOUND, // end search
 };
 
 
@@ -95,7 +95,7 @@ int search_order_misc [] = {
 20, // polymorph other
 37, // teleport other
 14, // dig
-250, // end search
+NO_SPELL_FOUND, // end search
 };
 
 /* Last slot (emergency) can only be teleport self or blink. */
@@ -126,10 +126,11 @@ extern int your_sign; /* these two are defined in view.cc */
 extern int your_colour;
 
 int translate_spell(int spel);
-int search_third_list(int ignore_spell);
-int search_second_list(int ignore_spell);
-int search_first_list(int ignore_spell);
-char find_spell(int which_sp);
+int search_spell_list(int * spell_list, int ignore_spell = NO_SPELL_FOUND, int * secondary_spell_list = NULL);
+//int search_third_list(int ignore_spell);
+//int search_second_list(int ignore_spell);
+//int search_first_list(int ignore_spell);
+bool find_spell(int which_sp);
 void add_spells(int buffer [40]);
 void generate_random_demon(void);
 
@@ -1346,83 +1347,108 @@ void restore_game () {
 } /* end of restore_game() */
 
 
-void save_ghost () {
-  if ((you[0].your_level<=1) || (you[0].is_undead!=0)) return;
-  char corr_level[10];
-  char cha_fil [40];
-  corr_level[0]=0;
-  if (you[0].your_level<10) strcpy(corr_level, "0");
-  strcat(corr_level, to_string(you[0].your_level).c_str());
-  corr_level[2]=you[0].where_are_you+'a';
-  corr_level[3]=0; /* null-terminate it */
-  strcpy(cha_fil, "bones.");
-  if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-  else strcat(cha_fil, corr_level);
-
-//  int gfile=open(cha_fil, S_IWRITE, S_IREAD);
-  FILE *gfile=fopen(cha_fil, "rb");
-  if (gfile!=NULL) {
-    fclose(gfile);
-    return;
-  }
-
-  int buf1[40];
-  for (int i=0; i<20; ++i) buf1[i]=you[0].your_name[i];
-  buf1[20]=(you[0].hp_max>=120)?(150):(you[0].hp_max);
-  buf1[21]=player_evasion();
-  buf1[22]=player_AC();
-  buf1[23]=player_see_invis();
-  buf1[24]=player_res_fire();
-  /* note - as ghosts, automatically get res poison + prot_life */
-  buf1[25]=player_res_cold();
-  buf1[26]=you[0].attribute[ATTR_RESIST_LIGHTNING];
-
-  int d=4;
-  int e=0;
-  if (you[0].species==SP_TROLL) d+=you[0].xl;
-  d += you[0].skills [SK_UNARMED_COMBAT]; /* Unarmed combat */
-  if (you[0].equip[EQ_WEAPON]!= -1)
-  {
-    if (you[0].inv_class[you[0].equip[EQ_WEAPON]]==0)
-    {
-      d=property(you[0].inv_class[you[0].equip[EQ_WEAPON]], you[0].inv_type[you[0].equip[EQ_WEAPON]], 0);
-      if (you[0].inv_dam[you[0].equip[EQ_WEAPON]]<180) e=you[0].inv_dam[you[0].equip[EQ_WEAPON]]%30;
-      if (you[0].inv_dam[you[0].equip[EQ_WEAPON]]%30>=25) e=randart_wpn_properties(you[0].inv_class[you[0].equip[EQ_WEAPON]], you[0].inv_type[you[0].equip[EQ_WEAPON]], you[0].inv_dam[you[0].equip[EQ_WEAPON]], you[0].inv_plus[you[0].equip[EQ_WEAPON]], you[0].inv_plus2[you[0].equip[EQ_WEAPON]], 0, RAP_BRAND);
-    }
-    if (you[0].inv_class[you[0].equip[EQ_WEAPON]]==11) d=5;
-  }
-
-  if (((you[0].equip[EQ_WEAPON]!=-1) && (you[0].inv_class[you[0].equip[EQ_WEAPON]]==0)) ||
-      (you[0].inv_class[you[0].equip[EQ_WEAPON]]==11)) {
-    d*=26+you[0].skills[weapon_skill(you[0].inv_class[you[0].equip[EQ_WEAPON]], you[0].inv_type[you[0].equip[EQ_WEAPON]])];
-    d/=25;
-  }
-
-  d*=31+you[0].skills[SK_FIGHTING];
-  d/=30;
-
-  d+=you[0].strength/4;
-  if (d>50) d=50;
-
-  buf1[27]=d;
-  buf1[28]=e;
-  buf1[29]=you[0].species;
-  buf1[30]=best_skill(0, 50, 99);
-  buf1[31]=you[0].skills[best_skill(0, 50, 99)];
-  buf1[32]=you[0].xl;
-  buf1[33]=you[0].clas;
-  add_spells(buf1);
-
-  gfile=fopen(cha_fil, "wb"); //open(cha_fil, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
-  if (gfile==NULL) {
-   msg("Error creating ghost file: @1") << cha_fil;
-   more();
-   return;
-  }
-  write2(gfile, (char*)buf1, 40);
-  fclose(gfile);
+int calculate_ghost_damage()
+{
+	int damage = you[0].skills[SK_UNARMED_COMBAT] + (you[0].species == SP_TROLL) ? (4 + you[0].xl) : 4;
+	int weapon = you[0].equip[EQ_WEAPON];
+	if (weapon!= -1) {
+		if(you[0].inv_class[weapon] == 0) {
+			damage = property(you[0].inv_class[weapon], you[0].inv_type[weapon], 0);
+		}
+		if(you[0].inv_class[weapon] == 11) {
+			damage = 5;
+		}
+		if(you[0].inv_class[weapon] == 0 || you[0].inv_class[weapon] == 11) {
+			damage *= 26 + you[0].skills[weapon_skill(you[0].inv_class[weapon], you[0].inv_type[weapon])];
+			damage /= 25;
+		}
+	}
+	damage *= 31 + you[0].skills[SK_FIGHTING];
+	damage /= 30;
+	damage += you[0].strength / 4;
+	return (damage <= 50) ? damage : 50;
 }
 
+int calculate_ghost_evasion()
+{
+	int evasion = 4;
+	int weapon = you[0].equip[EQ_WEAPON];
+	if(weapon != -1) {
+		if(you[0].inv_class[weapon] == 0) {
+			if(you[0].inv_dam[weapon] < 180) {
+				evasion=you[0].inv_dam[weapon] % 30;
+			}
+			if(you[0].inv_dam[weapon] % 30 >= 25) {
+				evasion = randart_wpn_properties(you[0].inv_class[weapon], you[0].inv_type[weapon], you[0].inv_dam[weapon], you[0].inv_plus[weapon], you[0].inv_plus2[weapon], 0, RAP_BRAND);
+			}
+		}
+	}
+	return evasion;
+}
+
+bool file_exists(const std::string & filename)
+{
+	FILE *gfile = fopen(filename.c_str(), "rb");
+	if(gfile != NULL) {
+		fclose(gfile);
+		return true;
+	}
+	return false;
+}
+
+bool save_int_array(const std::string & filename, int * array, int count)
+{
+	FILE * gfile = fopen(filename.c_str(), "wb");
+	if(gfile == NULL) {
+		return false;
+	}
+	fwrite((char*)array, 1, count, gfile);
+	fclose(gfile);
+	return true;
+}
+
+void save_ghost()
+{
+	if(you[0].your_level <= 1 || you[0].is_undead != 0)
+		return;
+
+	std::string file_ext = to_string(you[0].your_level, 2) + char(you[0].where_are_you + 'a');
+	std::string filename = "bones." + ((you[0].level_type != 0) ? "lab" : file_ext);
+	if(file_exists(filename)) {
+		return;
+	}
+
+	int buffer[40];
+	for(int i = 0; i < 20; ++i) {
+		buffer[i] = you[0].your_name[i];
+	}
+	buffer[20] = (you[0].hp_max < 120) ? you[0].hp_max : 150;
+	buffer[21] = player_evasion();
+	buffer[22] = player_AC();
+	buffer[23] = player_see_invis();
+	buffer[24] = player_res_fire();
+	buffer[25] = player_res_cold(); // note - as ghosts, automatically get res poison + prot_life
+	buffer[26] = you[0].attribute[ATTR_RESIST_LIGHTNING];
+	buffer[27] = calculate_ghost_damage();
+	buffer[28] = calculate_ghost_evasion();
+	buffer[29] = you[0].species;
+	buffer[30] = best_skill(0, 50, 99);
+	buffer[31] = you[0].skills[best_skill(0, 50, 99)];
+	buffer[32] = you[0].xl;
+	buffer[33] = you[0].clas;
+	// Death is a traumatic experience, so ghosts only remember a few spells.
+	buffer[34] = translate_spell(search_spell_list(search_order_conj));
+	buffer[35] = translate_spell(search_spell_list(search_order_conj, buffer [34]));
+	buffer[36] = translate_spell(search_spell_list(search_order_third));
+	buffer[37] = translate_spell(search_spell_list(search_order_misc, NO_SPELL_FOUND, search_order_conj));
+	buffer[38] = translate_spell(find_spell(14) ? 14 : search_spell_list(search_order_conj, buffer [37], search_order_conj));
+	buffer[39] = translate_spell(find_spell(1) ? 1 : ((find_spell(28) || find_spell(59)) ? 28 : NO_SPELL_FOUND)); // Looks for blink/tport for emergency slot
+
+	if(!save_int_array(filename, buffer, 40)) {
+		msg("Error creating ghost file: @1") << filename;
+		more();
+	}
+}
 
 int write2(FILE *file, char *buffer, int count)
 {
@@ -1431,316 +1457,230 @@ int write2(FILE *file, char *buffer, int count)
 
 int read2(FILE *file, char *buffer, int count)
 {
-
-return fread(buffer, 1, count, file);
-
+	return fread(buffer, 1, count, file);
 }
 
-/*
-Used when creating ghosts: goes through and finds spells for the ghost to
-cast. Death is a traumatic experience, so ghosts only remember a few spells.
-*/
-void add_spells(int buffer [40])
+int search_spell_list(int * spell_list, int ignore_spell, int * secondary_spell_list)
 {
-
-int i = 0;
-
-buffer [34] = 250;
-buffer [35] = 250;
-buffer [36] = 250;
-buffer [37] = 250;
-buffer [38] = 250;
-buffer [39] = 250;
-
-buffer [34] = search_first_list(250);
-buffer [35] = search_first_list(buffer [34]);
-buffer [36] = search_second_list(250);
-buffer [37] = search_third_list(250);
-if (buffer [37] == 250) buffer [37] = search_first_list(250);
-buffer [38] = search_first_list(buffer [37]);
-if (buffer [38] == 250) buffer [38] = search_first_list(buffer [37]);
-if (find_spell(14) == 1) buffer [38] = 14;
-
-/* Looks for blink/tport for emergency slot */
-if (find_spell(28) == 1 || find_spell(59) == 1) buffer [39] = 28;
-if (find_spell(1) == 1) buffer [39] = 1;
-
-for (i = 34; i < 40; i ++)
-{
- buffer [i] = translate_spell(buffer [i]);
-}
-
-}
-
-int search_first_list(int ignore_spell)
-{
-
-int i;
-
-for (i = 0; i < 20; i ++)
-{
- if (search_order_conj [i] == 250) return 250;
- if (search_order_conj [i] == ignore_spell) continue;
- if (find_spell(search_order_conj [i]) == 1) return search_order_conj [i];
-}
-return 250;
-}
-
-int search_second_list(int ignore_spell)
-{
-
-int i;
-
-for (i = 0; i < 20; i ++)
-{
- if (search_order_third [i] == 250) return 250;
- if (search_order_third [i] == ignore_spell) continue;
- if (find_spell(search_order_third [i]) == 1) return search_order_third [i];
-}
-return 250;
-}
-
-int search_third_list(int ignore_spell)
-{
-
-int i;
-
-for (i = 0; i < 20; i ++)
-{
- if (search_order_misc [i] == 250) return 250;
- if (search_order_misc [i] == ignore_spell) continue;
- if (find_spell(search_order_misc [i]) == 1) return search_order_misc [i];
-}
-return 250;
+	for(int i = 0; spell_list[i] != NO_SPELL_FOUND; i ++) {
+		if(spell_list[i] == ignore_spell) continue;
+		if(find_spell(spell_list[i])) return spell_list[i];
+	}
+	if(secondary_spell_list) {
+		return search_spell_list(secondary_spell_list, ignore_spell);
+	}
+	return NO_SPELL_FOUND;
 }
 
 /*
 Searches for a specific spell, according to search order in the global arrays
 defined start of file (top to bottom).
 */
-char find_spell(int which_sp)
+bool find_spell(int which_sp)
 {
-
-int i = 0;
-
-for (i = 0; i < 21; i ++)
-{
- if (you[0].spells [i] == which_sp) return 1;
+	for(int i = 0; i < 21; i ++) {
+		if(you[0].spells [i] == which_sp) {
+			return true;
+		}
+	}
+	return false;
 }
 
-return 0;
-
-}
-
-
-/*
-When passed the number for a player spell, returns the equivalent monster
-spell. Returns 250 on failure (no equiv).
-*/
+// When passed the number for a player spell, returns the equivalent monster
+//spell. Returns NO_SPELL_FOUND on failure (no equiv).
 int translate_spell(int spel)
 {
- switch(spel)
- {
-  case 1: return 14;
-  case 5: return 0;
-  case 6: return 12;
-  case 14: return 18;
-  case 15: return 8;
-  case 16: return 9;
-  case 17: return 10;
-  case 20: return 43;
-  case 21: return 4;
-  case 22: return 5;
-  case 23: return 3;
-  case 24: return 6;
-  case 25: return 11;
-  case 26: return 1;
-  case 27: return 2;
-  case 28: return 16; /* approximate */
-/*  case 29: return ; no freezing/mephitic cloud yet
-  case 30: return ; */
-  case 35: return 7;
-  case 37: return 15;
-  case 49: return 21; /* approximate */
-  case 53: return 19;
-  case 54: return 17;
-  case 59: return 16;
-  case 60: return 22;
-  case 62: return 24; /* approximate */
-  case 66: return 28;
-  case 67: return 29;
-  case 72: return 42; /* approximate */
-  case 79: return 31;
-  case 82: return 33;
-  case 113: return 52;
-  case 115: return 38;
-  case 119: return 27;
-  case 120: return 33;
-  case 121: return 51;
-  case 128: return 39;
-  case 129: return 40;
-  case 148: return 48; /* Too powerful to give ghosts Torment for Agony? Nah. */
-  case 151: return 45;
-  case 158: return 48;
-  default: return 100;
- }
-
-return 100;
-
+	switch(spel) {
+		case 1: return 14;
+		case 5: return 0;
+		case 6: return 12;
+		case 14: return 18;
+		case 15: return 8;
+		case 16: return 9;
+		case 17: return 10;
+		case 20: return 43;
+		case 21: return 4;
+		case 22: return 5;
+		case 23: return 3;
+		case 24: return 6;
+		case 25: return 11;
+		case 26: return 1;
+		case 27: return 2;
+		case 28: return 16; /* approximate */
+		case 35: return 7;
+		case 37: return 15;
+		case 49: return 21; /* approximate */
+		case 53: return 19;
+		case 54: return 17;
+		case 59: return 16;
+		case 60: return 22;
+		case 62: return 24; /* approximate */
+		case 66: return 28;
+		case 67: return 29;
+		case 72: return 42; /* approximate */
+		case 79: return 31;
+		case 82: return 33;
+		case 113: return 52;
+		case 115: return 38;
+		case 119: return 27;
+		case 120: return 33;
+		case 121: return 51;
+		case 128: return 39;
+		case 129: return 40;
+		case 148: return 48; /* Too powerful to give ghosts Torment for Agony? Nah. */
+		case 151: return 45;
+		case 158: return 48;
+		default: return NO_SPELL_FOUND;
+	}
+	return NO_SPELL_FOUND;
 }
-
 
 void generate_random_demon(void)
 {
+	int rdem = 0;
+	int i = 0;
 
-int rdem = 0;
-int i = 0;
+	for (rdem = 0; rdem < MNST + 1; rdem ++)
+	{
+		if (rdem == MNST) return; /* obviously no random demon */
+		if (menv [rdem].m_class == 401) break; /* found one! */
+	}
 
-for (rdem = 0; rdem < MNST + 1; rdem ++)
-{
- if (rdem == MNST) return; /* obviously no random demon */
- if (menv [rdem].m_class == 401) break; /* found one! */
-}
+	strcpy(ghost.gname, make_name(random2(250), random2(250), random2(250), 3).c_str());
 
-strcpy(ghost.gname, make_name(random2(250), random2(250), random2(250), 3).c_str());
+	ghost.ghs [0] = 50 + random2(50) + random2(50) + random2(50) + random2(50);
+	if (random2(3) == 0) ghost.ghs [0] += random2(50) + random2(50);
+	/* hp - could be defined below (as could ev, AC etc). Oh well, too late */
 
-ghost.ghs [0] = 50 + random2(50) + random2(50) + random2(50) + random2(50);
-if (random2(3) == 0) ghost.ghs [0] += random2(50) + random2(50);
-/* hp - could be defined below (as could ev, AC etc). Oh well, too late */
+	ghost.ghs [1] = 5 + random2(10); /* evasion */
+	ghost.ghs [2] = random2(0); /* AC */
+	if (random2(3) == 0) ghost.ghs [3] = 1; else ghost.ghs [3] = 0; /* see inv */
+	if (random2(3) != 0)
+	{
+		ghost.ghs [4] = 0; /* res_fire */
+		if (random2(4) == 0) ghost.ghs [4] = 99;
+		if (random2(4) == 0) ghost.ghs [4] = 102;
+	} else ghost.ghs [4] = 101;
+	if (random2(3) != 0)
+	{
+		ghost.ghs [5] = 0; /* res_cold */
+		if (random2(4) == 0) ghost.ghs [5] = 99;
+	} else ghost.ghs [5] = 101;
+	/* demons, as ghosts, automatically get res poison + prot_life */
+	if (random2(3) != 0)
+	{
+		ghost.ghs [6] = 0; /* res_elec */
+	} else ghost.ghs [6] = 1;
 
-ghost.ghs [1] = 5 + random2(10); /* evasion */
-ghost.ghs [2] = random2(0); /* AC */
-if (random2(3) == 0) ghost.ghs [3] = 1; else ghost.ghs [3] = 0; /* see inv */
-if (random2(3) != 0)
-{
- ghost.ghs [4] = 0; /* res_fire */
- if (random2(4) == 0) ghost.ghs [4] = 99;
- if (random2(4) == 0) ghost.ghs [4] = 102;
-} else ghost.ghs [4] = 101;
-if (random2(3) != 0)
-{
- ghost.ghs [5] = 0; /* res_cold */
- if (random2(4) == 0) ghost.ghs [5] = 99;
-} else ghost.ghs [5] = 101;
-/* demons, as ghosts, automatically get res poison + prot_life */
-if (random2(3) != 0)
-{
- ghost.ghs [6] = 0; /* res_elec */
-} else ghost.ghs [6] = 1;
+	ghost.ghs [7] = 10 + random2(20) + random2(20) + random2(20); /* damage in combat */
+	ghost.ghs [8] = 0; /* special attack type (uses weapon brand code) */
+	if (random2(2) == 0)
+	{
+		ghost.ghs [8] = random2(17);
+		if (ghost.ghs [8] == 3 || ghost.ghs [8] == 5 || ghost.ghs [8] == 7 || ghost.ghs [8] == 11 || ghost.ghs [8] == 12 || ghost.ghs [8] == 14)
+			ghost.ghs [8] = 0; /* some brands inappropriate (eg holy wrath) */
+	}
+	ghost.ghs [9] = 0; /* ghost species - used for: is demon a spellcaster? */
+	if (random2(3) != 0) ghost.ghs [9] = 1;
+	ghost.ghs [10] = random2(3); /* ghost best skill - used for: does demon fly? */
+	if (random2(3) == 0) ghost.ghs [10] = 0;
+	ghost.ghs [11] = 0; /* vacant - ghost best skill level */
+	ghost.ghs [12] = 10 + random2(10); /* Hit Dice */
+	ghost.ghs [13] = 0; /* ghost class - used for: does demon cycle colours? */
+	if (random2(10) == 0) ghost.ghs [13] = 1;
 
-ghost.ghs [7] = 10 + random2(20) + random2(20) + random2(20); /* damage in combat */
-ghost.ghs [8] = 0; /* special attack type (uses weapon brand code) */
-if (random2(2) == 0)
-{
- ghost.ghs [8] = random2(17);
- if (ghost.ghs [8] == 3 || ghost.ghs [8] == 5 || ghost.ghs [8] == 7 || ghost.ghs [8] == 11 || ghost.ghs [8] == 12 || ghost.ghs [8] == 14)
-  ghost.ghs [8] = 0; /* some brands inappropriate (eg holy wrath) */
-}
-ghost.ghs [9] = 0; /* ghost species - used for: is demon a spellcaster? */
-if (random2(3) != 0) ghost.ghs [9] = 1;
-ghost.ghs [10] = random2(3); /* ghost best skill - used for: does demon fly? */
-if (random2(3) == 0) ghost.ghs [10] = 0;
-ghost.ghs [11] = 0; /* vacant - ghost best skill level */
-ghost.ghs [12] = 10 + random2(10); /* Hit Dice */
-ghost.ghs [13] = 0; /* ghost class - used for: does demon cycle colours? */
-if (random2(10) == 0) ghost.ghs [13] = 1;
+	menv [rdem].m_HD = ghost.ghs [12];
+	menv [rdem].m_hp = ghost.ghs [0];
+	menv [rdem].m_hp_max = ghost.ghs [0];
+	menv [rdem].m_AC = ghost.ghs [2];
+	menv [rdem].m_ev = ghost.ghs [1];
+	menv [rdem].m_speed = 10;
+	if (random2(3) == 0) menv [rdem].m_speed = 6 + random2(13);
+	menv [rdem].m_speed_inc = 70;
+	menv [rdem].m_sec = 1 + random2(15); /* demon's colour */
 
-menv [rdem].m_HD = ghost.ghs [12];
-menv [rdem].m_hp = ghost.ghs [0];
-menv [rdem].m_hp_max = ghost.ghs [0];
-menv [rdem].m_AC = ghost.ghs [2];
-menv [rdem].m_ev = ghost.ghs [1];
-menv [rdem].m_speed = 10;
-if (random2(3) == 0) menv [rdem].m_speed = 6 + random2(13);
-menv [rdem].m_speed_inc = 70;
-menv [rdem].m_sec = 1 + random2(15); /* demon's colour */
+	ghost.ghs [14] = 250;
+	ghost.ghs [15] = 250;
+	ghost.ghs [16] = 250;
+	ghost.ghs [17] = 250;
+	ghost.ghs [18] = 250;
+	ghost.ghs [19] = 250;
 
-ghost.ghs [14] = 250;
-ghost.ghs [15] = 250;
-ghost.ghs [16] = 250;
-ghost.ghs [17] = 250;
-ghost.ghs [18] = 250;
-ghost.ghs [19] = 250;
+	/* This bit uses the list of player spells to find appropriate spells
+	   for the demon, then converts those spells to the monster spell indices.
+	   Some special monster-only spells are at the end. */
+	if (ghost.ghs [9] == 1)
+	{
+		if (random2(2) == 0)
+			do
+			{
+				if (random2(3) == 0) break;
+				ghost.ghs [14] = search_order_conj [i];
+				i ++;
+				if (search_order_conj [i] == NO_SPELL_FOUND) break;
+			} while(1);
 
-/* This bit uses the list of player spells to find appropriate spells
-for the demon, then converts those spells to the monster spell indices.
-Some special monster-only spells are at the end. */
-if (ghost.ghs [9] == 1)
-{
- if (random2(2) == 0)
-  do
-  {
-   if (random2(3) == 0) break;
-   ghost.ghs [14] = search_order_conj [i];
-   i ++;
-   if (search_order_conj [i] == 250) break;
-  } while(1);
+		if (random2(2) == 0)
+			do
+			{
+				if (random2(3) == 0) break;
+				ghost.ghs [15] = search_order_conj [i];
+				i ++;
+				if (search_order_conj [i] == NO_SPELL_FOUND) break;
+			} while(1);
 
- if (random2(2) == 0)
-  do
-  {
-   if (random2(3) == 0) break;
-   ghost.ghs [15] = search_order_conj [i];
-   i ++;
-   if (search_order_conj [i] == 250) break;
-  } while(1);
+		if (random2(4) != 0)
+			do
+			{
+				if (random2(3) == 0) break;
+				ghost.ghs [16] = search_order_third [i];
+				i ++;
+				if (search_order_third [i] == NO_SPELL_FOUND) break;
+			} while(1);
 
- if (random2(4) != 0)
-  do
-  {
-   if (random2(3) == 0) break;
-   ghost.ghs [16] = search_order_third [i];
-   i ++;
-   if (search_order_third [i] == 250) break;
-  } while(1);
+		if (random2(2) == 0)
+			do
+			{
+				if (random2(3) == 0) break;
+				ghost.ghs [17] = search_order_misc [i];
+				i ++;
+				if (search_order_misc [i] == NO_SPELL_FOUND) break;
+			} while(1);
 
- if (random2(2) == 0)
-  do
-  {
-   if (random2(3) == 0) break;
-   ghost.ghs [17] = search_order_misc [i];
-   i ++;
-   if (search_order_misc [i] == 250) break;
-  } while(1);
+		if (random2(2) == 0)
+			do
+			{
+				if (random2(3) == 0) break;
+				ghost.ghs [18] = search_order_misc [i];
+				i ++;
+				if (search_order_misc [i] == NO_SPELL_FOUND) break;
+			} while(1);
 
- if (random2(2) == 0)
-  do
-  {
-   if (random2(3) == 0) break;
-   ghost.ghs [18] = search_order_misc [i];
-   i ++;
-   if (search_order_misc [i] == 250) break;
-  } while(1);
+		if (random2(2) == 0) ghost.ghs [19] = 59; /* blink */
+		if (random2(2) == 0) ghost.ghs [19] = 1; /* teleport */
 
- if (random2(2) == 0) ghost.ghs [19] = 59; /* blink */
- if (random2(2) == 0) ghost.ghs [19] = 1; /* teleport */
+		for (i = 14; i < 20; i ++)
+		{
+			ghost.ghs [i] = translate_spell(ghost.ghs [i]);
+		} /* Converts the player spell indices to monster spell ones */
 
- for (i = 14; i < 20; i ++)
- {
-  ghost.ghs [i] = translate_spell(ghost.ghs [i]);
- } /* Converts the player spell indices to monster spell ones */
+		/* give demon a chance for some monster-only spells: */
+		if (random2(25) == 0) ghost.ghs [14] = 50; /* metal splinters */
+		if (random2(25) == 0) ghost.ghs [14] = 37; /* eye of devas */
+		if (random2(25) == 0) ghost.ghs [15] = 26; /* steam */
+		if (random2(25) == 0) ghost.ghs [15] = 35; /* blast */
+		if (random2(25) == 0) ghost.ghs [15] = 49; /* fiend's hellfire */
+		if (random2(25) == 0) ghost.ghs [16] = 30; /* smiting */
+		if (random2(25) == 0) ghost.ghs [16] = 20; /* burst of hellfire */
+		if (random2(25) == 0) ghost.ghs [16] = 20; /* burst of hellfire */
+		if (random2(15) == 0) ghost.ghs [18] = 18; /* dig */
 
-/* give demon a chance for some monster-only spells: */
-if (random2(25) == 0) ghost.ghs [14] = 50; /* metal splinters */
-if (random2(25) == 0) ghost.ghs [14] = 37; /* eye of devas */
-if (random2(25) == 0) ghost.ghs [15] = 26; /* steam */
-if (random2(25) == 0) ghost.ghs [15] = 35; /* blast */
-if (random2(25) == 0) ghost.ghs [15] = 49; /* fiend's hellfire */
-if (random2(25) == 0) ghost.ghs [16] = 30; /* smiting */
-if (random2(25) == 0) ghost.ghs [16] = 20; /* burst of hellfire */
-if (random2(25) == 0) ghost.ghs [16] = 20; /* burst of hellfire */
-if (random2(15) == 0) ghost.ghs [18] = 18; /* dig */
+		/* and demon-summoning should be fairly common: */
+		if (random2(12) == 0) ghost.ghs [16] = 51; /* summon class 1 demons */
+		if (random2(12) == 0) ghost.ghs [16] = 27; /* summon demons */
+		if (random2(20) == 0) ghost.ghs [17] = 51; /* summon class 1 demons */
+		if (random2(20) == 0) ghost.ghs [17] = 27; /* summon demons */
 
-/* and demon-summoning should be fairly common: */
-if (random2(12) == 0) ghost.ghs [16] = 51; /* summon class 1 demons */
-if (random2(12) == 0) ghost.ghs [16] = 27; /* summon demons */
-if (random2(20) == 0) ghost.ghs [17] = 51; /* summon class 1 demons */
-if (random2(20) == 0) ghost.ghs [17] = 27; /* summon demons */
-
-
-if (ghost.ghs [17] == 250) ghost.ghs [17] = 27; /* at least they can summon demons */
-
-}
-
-
+		if (ghost.ghs [17] == 250) ghost.ghs [17] = 27; /* at least they can summon demons */
+	}
 }
