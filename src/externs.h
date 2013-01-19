@@ -98,7 +98,7 @@ struct player
 	int xl;
 	int gp;
 	int clas;
-	char clasnam [30];
+	std::string clasnam;
 	int speed;
 	int time_taken;
 	int inv_class [52];
@@ -152,7 +152,7 @@ struct player
 	int had_item [50];
 	int betrayal;
 	player()
-		: turnover(0), prev_targ(0), your_name(""), species(0), run_x(0), run_y(0), running(0), special_wield(0), deaths_door(0), shock_shield(0), corpse_count(0), disease(0), max_level(0), x_pos(0), y_pos(0), hunger(0), hunger_inc(0), hp(0), hp_max(0), base_hp(0), base_hp2(0), ep(0), ep_max(0), base_ep(0), base_ep2(0), strength(0), intel(0), dex(0), max_strength(0), max_intel(0), max_dex(0), hung_ch(0), hung_state(0), burden_ch(0), hp_ch(0), ep_ch(0), strength_ch(0), intel_ch(0), dex_ch(0), xp_ch(0), AC_ch(0), gp_ch(0), evasion_ch(0), incr_regen(0), ep_incr_regen(0), xp(0), xl(0), gp(0), clas(0), speed(0), time_taken(0), inv_no(0), burden(0), burden_state(0), spell_no(0), spell_levels(0), char_direction(0), pet_target(0), your_level(0), invis(0), conf(0), paralysis(0), slow(0), haste(0), might(0), lev(0), poison(0), rotting(0), berserker(0), is_undead(0), delay_doing(0), delay_t(0), exp_available(0), level_type(0), where_are_you(0), religion(0), piety(0), mpower(0), betrayal(0) {}
+		: turnover(0), prev_targ(0), your_name(""), species(0), run_x(0), run_y(0), running(0), special_wield(0), deaths_door(0), shock_shield(0), corpse_count(0), disease(0), max_level(0), x_pos(0), y_pos(0), hunger(0), hunger_inc(0), hp(0), hp_max(0), base_hp(0), base_hp2(0), ep(0), ep_max(0), base_ep(0), base_ep2(0), strength(0), intel(0), dex(0), max_strength(0), max_intel(0), max_dex(0), hung_ch(0), hung_state(0), burden_ch(0), hp_ch(0), ep_ch(0), strength_ch(0), intel_ch(0), dex_ch(0), xp_ch(0), AC_ch(0), gp_ch(0), evasion_ch(0), incr_regen(0), ep_incr_regen(0), xp(0), xl(0), gp(0), clas(0), clasnam(""), speed(0), time_taken(0), inv_no(0), burden(0), burden_state(0), spell_no(0), spell_levels(0), char_direction(0), pet_target(0), your_level(0), invis(0), conf(0), paralysis(0), slow(0), haste(0), might(0), lev(0), poison(0), rotting(0), berserker(0), is_undead(0), delay_doing(0), delay_t(0), exp_available(0), level_type(0), where_are_you(0), religion(0), piety(0), mpower(0), betrayal(0) {}
 };
 
 extern struct player you [1];

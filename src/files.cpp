@@ -107,18 +107,112 @@ public:
 		if(file == NULL) {
 			return;
 		}
+		valid = true;
 	}
 	virtual ~FileWriter() {
 		fclose(file);
 	}
 	bool is_valid() { return valid; }
+	bool skip_bytes(size_t count) {
+		char bytes[count];
+		for(size_t i = 0; i < count; ++i) {
+			bytes[i] = 0;
+		}
+		size_t written = fwrite(&bytes, 1, count, file);
+		return (written == count);
+	}
+	bool str_value(std::string string, size_t count) {
+		for(size_t i = 0; i < count; ++i) {
+			if(i < string.size()) {
+				char_value(string[i]);
+			} else {
+				char ch = 0;
+				char_value(ch);
+			}
+		}
+		return true;
+	}
+	bool char_value(char value) {
+		size_t written = fwrite(&value, sizeof(value), 1, file);
+		return (written == 1);
+	}
 	bool int_value(int value) {
 		size_t written = fwrite(&value, sizeof(value), 1, file);
 		return (written == 1);
 	}
+	bool unrandart(int value) {
+		return int_value(does_unrandart_exist(value));
+	}
+	bool identity(int type, int value) {
+		int identy[4][50];
+		save_id(identy); // TODO Just awful.
+		return int_value(identy[type][value]);
+	}
 private:
 	FileWriter(FileWriter&) : valid(false), file(NULL) {}
 	FileWriter & operator=(FileWriter&) { return * this; }
+	bool valid;
+	FILE * file;
+};
+
+class FileReader {
+public:
+	FileReader(const std::string & filename)
+		: valid(false), file(NULL)
+	{
+		file = fopen(filename.c_str(), "rb");
+		if(file == NULL) {
+			return;
+		}
+		valid = true;
+	}
+	virtual ~FileReader() {
+		fclose(file);
+	}
+	bool is_valid() { return valid; }
+	bool skip_bytes(size_t count) {
+		char zero = 0;
+		size_t read = fread(&zero, 1, count, file);
+		return (read == count);
+	}
+	bool str_value(std::string & string, int count) {
+		for(int i = 0; i < count; ++i) {
+			char ch;
+			char_value(ch);
+			if(ch) {
+				string += ch;
+			}
+		}
+		return true;
+	}
+	bool char_value(char & value) {
+		size_t read = fread(&value, sizeof(value), 1, file);
+		return (read == 1);
+	}
+	bool int_value(int & value) {
+		size_t read = fread(&value, sizeof(value), 1, file);
+		return (read == 1);
+	}
+	bool unrandart(int value) {
+		int v;
+		bool result = int_value(v);
+		set_unrandart_exist(value, v);
+		return result;
+	}
+	bool identity(int type, int value) {
+		int ch;
+		bool result = int_value(ch);
+		switch (type) {
+			case 0: set_id(OBJ_WANDS, value, ch); break;
+			case 1: set_id(OBJ_SCROLLS, value, ch); break;
+			case 2: set_id(OBJ_JEWELLERY, value, ch); break;
+			case 3: set_id(OBJ_POTIONS, value, ch); break;
+		}
+		return result;
+	}
+private:
+	FileReader(FileReader&) : valid(false), file(NULL) {}
+	FileReader & operator=(FileReader&) { return * this; }
 	bool valid;
 	FILE * file;
 };
@@ -149,9 +243,6 @@ extern int your_colour;
 
 int translate_spell(int spel);
 int search_spell_list(int * spell_list, int ignore_spell = NO_SPELL_FOUND, int * secondary_spell_list = NULL);
-//int search_third_list(int ignore_spell);
-//int search_second_list(int ignore_spell);
-//int search_first_list(int ignore_spell);
 bool find_spell(int which_sp);
 void add_spells(int buffer [40]);
 void generate_random_demon(void);
@@ -959,415 +1050,198 @@ void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
   fclose(handle);
 }
 
-
-void save_game (char leave_game) {
-  char char_f [15];
-  int i, j;
-
-  strncpy(char_f, you[0].your_name.c_str(), 6);
-  char_f [6] = 0;
-  strcat(char_f, ".sav");
-  int datalen=30+35+10+69+6+5+25+2+30+5+25+12*52+50*5+50*4+50+50+6*50+50+50+30+30+30+100+50+100+NO_UNRANDARTS;
-  char *buf=(char*)malloc(datalen);
-  char *p=buf;
-
-  for (j=0; j<30; ++j) {
-    int ch=you[0].your_name[j];
-    if ((ch==26) || (ch==27)) ch=0;
-    *p++=ch;
-  }
-
-  *p++=you[0].religion;
-  *p++=you[0].piety;
-  *p++=you[0].invis;
-  *p++=you[0].conf;
-  *p++=you[0].paralysis;
-  *p++=you[0].slow;
-  *p++=you[0].shock_shield;
-  *p++=you[0].rotting;
-  *p++=0;
-  *p++=you[0].deaths_door;
-  *p++=your_sign;
-  *p++=your_colour;
-  *p++=0;
-  *p++=you[0].pet_target;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=you[0].spell_levels;
-  *p++=you[0].max_level;
-  *p++=you[0].where_are_you;
-  *p++=you[0].char_direction;
-  *p++=you[0].your_level;
-  *p++=you[0].is_undead;
-  *p++=you[0].special_wield;
-  *p++=you[0].berserker;
-  *p++=0;
-  *p++=you[0].level_type;
-  *p++=you[0].corpse_count;
-  *p++=you[0].disease;
-  *p++=0;
-  *p++=0;
-  *p++=you[0].species;
-
-  save_int(&p, you[0].hp, 5);
-  save_int(&p, you[0].hp, 5);
-
-  if (you[0].haste>215) you[0].haste=215;
-  *p++=you[0].haste;
-  if (you[0].might>215) you[0].might=215;
-  *p++=you[0].might;
-  if (you[0].lev>215) you[0].lev=215;
-  *p++=you[0].lev;
-  if (you[0].poison>215) you[0].poison=215;
-  *p++=you[0].poison;
-  *p++=0;
-
-  save_int(&p, you[0].hunger, 6);
-
-  *p++=0;
-  for (i=0; i<NO_EQUIP; ++i) *p++=you[0].equip[i];
-  *p++=you[0].ep;
-  *p++=you[0].ep_max;
-  *p++=you[0].strength;
-  *p++=you[0].intel;
-  *p++=you[0].dex;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=you[0].incr_regen;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-
-  save_int(&p, (int)(you[0].incr_regen*100), 5);
-  save_int(&p, you[0].xp, 7);
-  save_int(&p, you[0].gp, 5);
-
-  *p++=you[0].clas;
-  *p++=you[0].xl;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-
-  save_int(&p, you[0].exp_available, 6);
-
-  /* max values */
-  *p++=you[0].max_strength;
-  *p++=you[0].max_intel;
-  *p++=you[0].max_dex;
-  *p++=you[0].hunger_inc;
-  *p++=you[0].ep_incr_regen;
-
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-  *p++=0;
-
-  save_int(&p, you[0].base_hp, 5);
-  save_int(&p, you[0].base_hp2, 5);
-  save_int(&p, you[0].base_ep, 5);
-  save_int(&p, you[0].base_ep2, 5);
-
-  *p++=(int)you[0].x_pos;
-  *p++=(int)you[0].y_pos;
-
-  for (j=0; j<30; ++j) *p++=you[0].clasnam[j];
-
-  save_int(&p, you[0].burden, 5);
-
-  for (i=0; i<25; ++i) *p++=you[0].spells[i];
-
-  for (i=0; i<52; ++i) {
-    *p++=you[0].inv_class[i];
-    *p++=you[0].inv_type[i];
-    *p++=you[0].inv_plus[i];
-    *p++=you[0].inv_dam[i];
-    *p++=you[0].inv_col[i];
-    *p++=you[0].inv_ident[i];
-    save_int(&p, you[0].inv_quant[i], 5);
-    *p++=you[0].inv_plus2[i];
-  }
-
-  for (i=0; i<5; ++i) {
-    for (j=0; j<50; ++j) *p++=you[0].item_description[i][j];
-  }
-
-  int identy[4][50];
-  save_id(identy);
-
-  for (i=0; i<4; ++i) {
-    for (j=0; j<50; ++j) *p++=identy[i][j];
-  }
-
-  for (j=0; j<50; ++j) *p++=you[0].skills[j]; /* skills! */
-
-  for (j=0; j<50; ++j) *p++=you[0].practise_skill[j]; /* skills! */
-
-  for (j=0; j<50; ++j) save_int(&p, you[0].skill_points[j], 6);
-
-  for (j=0; j<50; ++j) *p++=you[0].unique_items[j]; /* unique items */
-
-  for (j=0; j<50; ++j) *p++=you[0].unique_creatures[j]; /* unique beasties */
-
-  for (j=0; j<30; ++j) *p++=you[0].duration[j];
-
-  for (j=0; j<30; ++j) *p++=you[0].attribute[j];
-
-  for (j=0; j<30; ++j) *p++=you[0].branch_stairs[j];
-
-  for (j=0; j<100; ++j) *p++=you[0].mutation[j];
-
-  for (j=0; j<50; ++j) *p++=you[0].had_item[j];
-
-  for (j=0; j<100; ++j) *p++=you[0].demon_pow[j];
-
-  for (j = 0; j < NO_UNRANDARTS; ++j) *p++= does_unrandart_exist(j);
-
-  if (p!=buf+datalen) {
-    perror("opa (3)...");
-    end(-1);
-  }
-
-/* Use the first one to amend already created files, and the second to create
-   new - the 2nd will be used eventually, as save games will be deleted after
-   loading. */
-
-//  int handle=open(char_f, O_CREAT|O_TRUNC|O_BINARY, 0660);
-  FILE *handle=//open(char_f, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
-   fopen(char_f, "wb");
-  if (handle==NULL)
-  {
-    perror("Unable to open file for writing");
-    end(-1);
-  }
-  int retval=write2(handle, buf, datalen);
-  free(buf);
-  if (datalen!=retval)
-  {
-    perror("opa (4)...");
-    end(-1);
-  }
-  fclose(handle);
-
-  if (!leave_game) return;
-
-/*if (you[0].level_type != 0) was_a_labyrinth = 1;*/
-  if (you[0].level_type == 0) save_level(you[0].your_level, 0, you[0].where_are_you);
-  else save_level(you[0].your_level, 1, you[0].where_are_you);
-/* save_level(you[0].your_level);*/
-
-/* was_a_labyrinth = 0;*/
-
-  clrscr();
-  cprintf("See you soon!");
-
-  end(0);
-
-} /* end of save_game() */
-
-
-void restore_game () {
-  char char_f [15];
-  int i, j;
-
-  strncpy(char_f, you[0].your_name.c_str(), 6);
-  char_f [6] = 0;
-  strcat(char_f, ".sav");
-//  int handle = open(char_f, O_RDONLY, S_IWRITE, S_IREAD);
-  FILE *handle=//open(char_f, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
-   fopen(char_f, "rb");
-  if (handle==NULL) {
-    perror("Unable to open file for reading");
-    end(-1);
-  }
-
-  int datalen=30+35+10+69+6+5+25+2+30+5+25+12*52+50*5+50*4+50+50+6*50+50+50+30+30+30+100+50+100+NO_UNRANDARTS;
-  char *buf=(char*)malloc(datalen);
-  char *p=buf;
-  if (datalen!=read2(handle, buf, datalen)) {
-    free(buf);
-    perror("Unable to read file");
-    end(-1);
-  }
-  fclose(handle);
-
-  for (j=0; j<30; ++j) you[0].your_name [j]=*p++;
-
-  you[0].religion=*p++;
-  you[0].piety=*p++;
-  you[0].invis=*p++;
-  you[0].conf=*p++;
-  you[0].paralysis=*p++;
-  you[0].slow=*p++;
-  you[0].shock_shield=*p++;
-  you[0].rotting=*p++;
-/*you[0].magic_battery=*p++-40;*/ ++p;
-  you[0].deaths_door=*p++;
-  your_sign=*p++;
-  your_colour=*p++;
-/*you[0].spec_poison=*p++-40;*/ ++p;
-  you[0].pet_target=*p++;
-/*you[0].prot_life=*p++-40;*/ ++p;
-/*  you[0].res_magic=load_int(&p, 5);*/ p+=5;
-  you[0].spell_levels=*p++;
-  you[0].max_level=*p++;
-  you[0].where_are_you=*p++;
-  you[0].char_direction=*p++;
-  you[0].your_level=*p++;
-  you[0].is_undead=*p++;
-  you[0].special_wield=*p++;
-  you[0].berserker=*p++;
-/*you[0].energy=*p++;*/ ++p;
-  you[0].level_type=*p++;
-  you[0].corpse_count=*p++;
-  you[0].disease=*p++;
-/*you[0].spec_death=*p++;*/ ++p;
-/*you[0].spec_holy=*p++;*/ ++p;
-  you[0].species=*p++;
-  you[0].hp=load_int(&p, 5);
-  you[0].hp_max=load_int(&p, 5);
-  you[0].haste=*p++;
-  you[0].might=*p++;
-  you[0].lev=*p++;
-  you[0].poison=*p++;
-  ++p;
-  you[0].hunger=load_int(&p, 6);
-
-/*you[0].item_wielded=*p++;*/ ++p;
-
-  for (i=0; i<NO_EQUIP; ++i) you[0].equip[i]=*p++;
-
-  you[0].ep=*p++;
-  you[0].ep_max=*p++;
-  you[0].strength=*p++;
-  you[0].intel=*p++;
-  you[0].dex=*p++;
-
-/*you[0].AC=*p++-80;*/ ++p;
-/*you[0].evasion=*p++;*/ ++p;
-/*you[0].damage=*p++;*/ ++p;
-  p+=2;
-  you[0].incr_regen=*p++;
-  p+=3;
-  p+=5;
-
-  you[0].xp=load_int(&p, 7);
-  you[0].gp=load_int(&p, 5);
-
-  you[0].clas=*p++;
-  you[0].xl=*p++;
-  p+=14;
-
-  you[0].exp_available=load_int(&p, 6);
-
-  you[0].max_strength=*p++;
-  you[0].max_intel=*p++;
-  you[0].max_dex=*p++;
-  you[0].hunger_inc=*p++;
-  you[0].ep_incr_regen=*p++;
-
-  p+=5;
-
-  you[0].base_hp=load_int(&p, 5);
-  you[0].base_hp2=load_int(&p, 5);
-  you[0].base_ep=load_int(&p, 5);
-  you[0].base_ep2=load_int(&p, 5);
-
-  you[0].x_pos=(int)*p++;
-  you[0].y_pos=(int)*p++;
-
-  for (i=0; i<30; ++i) you[0].clasnam[i]=*p++;
-
-  you[0].burden=load_int(&p, 5);
-
-  you[0].spell_no = 0;
-  for (i=0; i<25; ++i) {
-    you[0].spells[i]=*p++;
-    if (you[0].spells[i]!=210) ++you[0].spell_no;
-  }
-
-  you[0].inv_no = 0;
-  for (i=0; i<52; ++i) {
-    you[0].inv_class[i]=*p++;
-    you[0].inv_type[i]=*p++;
-    you[0].inv_plus[i]=*p++;
-    you[0].inv_dam[i]=*p++;
-    you[0].inv_col[i]=*p++;
-    you[0].inv_ident[i]=*p++;
-
-    you[0].inv_quant[i]=load_int(&p, 5);
-
-    you[0].inv_plus2[i]=*p++;
-    if (you[0].inv_quant[i]>0) ++you[0].inv_no;
-  }
-
-  for (i=0; i<5; ++i) {
-    for (j=0; j<50; ++j) you[0].item_description[i][j]=*p++;
-  }
-
-  for (i=0; i<4; ++i) {
-    for (j=0; j<50; ++j) {
-      int ch=*p++;
-      switch (i) {
-        case 0: set_id(OBJ_WANDS, j, ch); break;
-        case 1: set_id(OBJ_SCROLLS, j, ch); break;
-        case 2: set_id(OBJ_JEWELLERY, j, ch); break;
-        case 3: set_id(OBJ_POTIONS, j, ch); break;
-      }
-    }
-  }
-
-  for (j=0; j<50; ++j) you[0].skills[j]=*p++; /* skills! */
-
-  for (j=0; j<50; ++j) you[0].practise_skill[j]=*p++; /* skills! */
-
-  for (j=0; j<50; ++j) you[0].skill_points[j]=load_int(&p, 6);
-
-  for (j=0; j<50; ++j) you[0].unique_items[j]=*p++; /* unique items */
-
-  for (j=0; j<50; ++j) you[0].unique_creatures[j]=*p++; /* unique creatures */
-
-  for (j=0; j<30; ++j) you[0].duration[j]=*p++;
-
-  for (j=0; j<30; ++j) you[0].attribute[j]=*p++;
-
-  for (j=0; j<30; ++j) you[0].branch_stairs[j]=*p++;
-
-  for (j=0; j<100; ++j) you[0].mutation[j]=*p++;
-
-  for (j=0; j<50; ++j) you[0].had_item[j]=*p++;
-
-  for (j=0; j<100; ++j) you[0].demon_pow[j]=*p++;
-
-  for (j = 0; j < NO_UNRANDARTS; ++j) set_unrandart_exist(j, *p++);
-
-  if (p!=buf+datalen) {
-    free(buf);
-    perror("opa (5)...");
-    end(-1);
-  }
-  free(buf);
-
-} /* end of restore_game() */
-
+template<class T>
+void file_you(T & file)
+{
+	file.str_value(you[0].your_name, 30);
+	file.int_value(you[0].religion);
+	file.int_value(you[0].piety);
+	file.int_value(you[0].invis);
+	file.int_value(you[0].conf);
+	file.int_value(you[0].paralysis);
+	file.int_value(you[0].slow);
+	file.int_value(you[0].shock_shield);
+	file.int_value(you[0].rotting);
+	file.skip_bytes(1);
+	file.int_value(you[0].deaths_door);
+	file.int_value(your_sign);
+	file.int_value(your_colour);
+	file.skip_bytes(1);
+	file.int_value(you[0].pet_target);
+	file.skip_bytes(1);
+	file.skip_bytes(5);
+	file.int_value(you[0].spell_levels);
+	file.int_value(you[0].max_level);
+	file.int_value(you[0].where_are_you);
+	file.int_value(you[0].char_direction);
+	file.int_value(you[0].your_level);
+	file.int_value(you[0].is_undead);
+	file.int_value(you[0].special_wield);
+	file.int_value(you[0].berserker);
+	file.skip_bytes(1);
+	file.int_value(you[0].level_type);
+	file.int_value(you[0].corpse_count);
+	file.int_value(you[0].disease);
+	file.skip_bytes(1);
+	file.skip_bytes(1);
+	file.int_value(you[0].species);
+	file.int_value(you[0].hp);
+	file.int_value(you[0].hp_max);
+	file.int_value(you[0].haste);
+	file.int_value(you[0].might);
+	file.int_value(you[0].lev);
+	file.int_value(you[0].poison);
+	file.skip_bytes(1);
+	file.int_value(you[0].hunger);
+	file.skip_bytes(1);
+	for(int i = 0; i < NO_EQUIP; ++i) {
+		file.int_value(you[0].equip[i]);
+	}
+	file.int_value(you[0].ep);
+	file.int_value(you[0].ep_max);
+	file.int_value(you[0].strength);
+	file.int_value(you[0].intel);
+	file.int_value(you[0].dex);
+	file.skip_bytes(1);
+	file.skip_bytes(1);
+	file.skip_bytes(1);
+	file.skip_bytes(2);
+	file.int_value(you[0].incr_regen);
+	file.skip_bytes(3);
+	file.skip_bytes(5);
+	file.int_value(you[0].xp);
+	file.int_value(you[0].gp);
+	file.int_value(you[0].clas);
+	file.int_value(you[0].xl);
+	file.skip_bytes(14);
+	file.int_value(you[0].exp_available);
+	file.int_value(you[0].max_strength);
+	file.int_value(you[0].max_intel);
+	file.int_value(you[0].max_dex);
+	file.int_value(you[0].hunger_inc);
+	file.int_value(you[0].ep_incr_regen);
+	file.skip_bytes(5);
+	file.int_value(you[0].base_hp);
+	file.int_value(you[0].base_hp2);
+	file.int_value(you[0].base_ep);
+	file.int_value(you[0].base_ep2);
+	file.int_value(you[0].x_pos);
+	file.int_value(you[0].y_pos);
+	file.str_value(you[0].clasnam, 30);
+	file.int_value(you[0].burden);
+
+	you[0].spell_no = 0;
+	for(int i = 0; i < 25; ++i) {
+		file.int_value(you[0].spells[i]);
+		if(you[0].spells[i] != 210) {
+			++you[0].spell_no;
+		}
+	}
+
+	you[0].inv_no = 0;
+	for(int i = 0; i < 52; ++i) {
+		file.int_value(you[0].inv_class[i]);
+		file.int_value(you[0].inv_type[i]);
+		file.int_value(you[0].inv_plus[i]);
+		file.int_value(you[0].inv_dam[i]);
+		file.int_value(you[0].inv_col[i]);
+		file.int_value(you[0].inv_ident[i]);
+		file.int_value(you[0].inv_quant[i]);
+		file.int_value(you[0].inv_plus2[i]);
+		if (you[0].inv_quant[i]>0) {
+			++you[0].inv_no;
+		}
+	}
+
+	for(int i = 0; i < 5; ++i) {
+		for(int j = 0; j < 50; ++j) {
+			file.int_value(you[0].item_description[i][j]);
+		}
+	}
+
+	for(int i = 0; i < 4; ++i) {
+		for(int j = 0; j < 50; ++j) {
+			file.identity(i, j);
+		}
+	}
+
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].skills[j]);
+	}
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].practise_skill[j]);
+	}
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].skill_points[j]);
+	}
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].unique_items[j]);
+	}
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].unique_creatures[j]);
+	}
+	for(int j = 0; j < 30; ++j) {
+		file.int_value(you[0].duration[j]);
+	}
+	for(int j = 0; j < 30; ++j) {
+		file.int_value(you[0].attribute[j]);
+	}
+	for(int j = 0; j < 30; ++j) {
+		file.int_value(you[0].branch_stairs[j]);
+	}
+	for(int j = 0; j < 100; ++j) {
+		file.int_value(you[0].mutation[j]);
+	}
+	for(int j = 0; j < 50; ++j) {
+		file.int_value(you[0].had_item[j]);
+	}
+	for(int j = 0; j < 100; ++j) {
+		file.int_value(you[0].demon_pow[j]);
+	}
+	for(int j = 0; j < NO_UNRANDARTS; ++j) {
+		file.unrandart(j);
+	}
+}
+
+void save_game (bool leave_game)
+{
+	std::string filename = you[0].your_name;
+	filename = (filename.size() > 6) ? std::string(filename, 0, 6) : filename;
+	filename += ".sav";
+	FileWriter file(filename);
+	if(!file.is_valid()) {
+		perror("Unable to open file for writing");
+		end(-1);
+	}
+
+	file_you(file);
+
+	if (!leave_game) return;
+
+	if(you[0].level_type == 0) {
+		save_level(you[0].your_level, 0, you[0].where_are_you);
+	} else {
+		save_level(you[0].your_level, 1, you[0].where_are_you);
+	}
+
+	clrscr();
+	cprintf("See you soon!");
+	end(0);
+}
+
+void restore_game()
+{
+	std::string filename = you[0].your_name;
+	filename = (filename.size() > 6) ? std::string(filename, 0, 6) : filename;
+	filename += ".sav";
+	FileReader file(filename);
+	if(!file.is_valid()) {
+		perror("Unable to open file for reading");
+		end(-1);
+	}
+
+	file_you(file);
+}
 
 int calculate_ghost_damage()
 {

@@ -484,7 +484,7 @@ for (i = 0; i < 30; i ++)
 switch(you[0].clas)
 {
 case JOB_FIGHTER: // fighter
-	strcpy(you[0].clasnam, "fighter");
+	you[0].clasnam = "fighter";
 	you[0].hp = 14; you[0].hp_max = 14;
 	you[0].ep = 0; you[0].ep_max = 0;
 /*	you[0].f_abil = 10;
@@ -673,7 +673,7 @@ if (you[0].species != SP_OGRE && you[0].species != SP_TROLL)
 break;
 
 case JOB_WIZARD: // wizard
-	strcpy(you[0].clasnam, "Hacker");
+	you[0].clasnam = "Hacker";
 	you[0].hp = 10; you[0].hp_max = 10;
 	you[0].ep = 3; you[0].ep_max = 3;
 /*	you[0].f_abil = 5;
@@ -752,7 +752,7 @@ break;
 
 
 case JOB_PRIEST: // priest
-	strcpy(you[0].clasnam, "Operator");
+	you[0].clasnam = "Operator";
         you[0].piety = 45;
 	you[0].hp = 12; you[0].hp_max = 12;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -849,7 +849,7 @@ break;
 
 
 case JOB_THIEF: // thief
-	strcpy(you[0].clasnam, "Thief");
+	you[0].clasnam = "Thief";
 	you[0].hp = 11; you[0].hp_max = 11;
 	you[0].ep = 0; you[0].ep_max = 0;
 /*	you[0].f_abil = 7;
@@ -926,7 +926,7 @@ case JOB_THIEF: // thief
 break;
 
 case JOB_GLADIATOR: // Gladiator
-	strcpy(you[0].clasnam, "Gladiator");
+	you[0].clasnam = "Gladiator";
 	you[0].hp = 15; you[0].hp_max = 15;
 	you[0].ep = 0; you[0].ep_max = 0;
 /*	you[0].f_abil = 11;
@@ -1011,7 +1011,7 @@ break;
 
 
 case JOB_NECROMANCER: // Necromancer
-	strcpy(you[0].clasnam, "Cyborgizator");
+	you[0].clasnam = "Cyborgizator";
 	you[0].hp = 10; you[0].hp_max = 10;
 	you[0].ep = 3; you[0].ep_max = 3;
 /*	you[0].f_abil = 5;
@@ -1063,7 +1063,7 @@ break;
 
 
 case JOB_PALADIN: // paladin
-	strcpy(you[0].clasnam, "Paladin");
+	you[0].clasnam = "Paladin";
 	you[0].religion = GOD_SHINING_ONE;
         you[0].piety = 28;
 	you[0].hp = 14; you[0].hp_max = 14;
@@ -1123,7 +1123,7 @@ case JOB_PALADIN: // paladin
 break;
 
 case JOB_ASSASSIN: // assassin
-	strcpy(you[0].clasnam, "assassin");
+	you[0].clasnam = "assassin";
 	you[0].hp = 12; you[0].hp_max = 12;
 	you[0].ep = 0; you[0].ep_max = 0;
 /*	you[0].f_abil = 9;
@@ -1184,7 +1184,7 @@ case JOB_ASSASSIN: // assassin
 break;
 
 case JOB_BERSERKER: // Barbarian
-	strcpy(you[0].clasnam, "Berserker");
+	you[0].clasnam = "Berserker";
 	you[0].religion = GOD_TROG;
 	you[0].piety = 35;
 	you[0].hp = 15; you[0].hp_max = 15;
@@ -1311,7 +1311,7 @@ if (you[0].species != SP_OGRE && you[0].species != SP_TROLL)
 break;
 
 case JOB_RANGER: // Ranger
-	strcpy(you[0].clasnam, "Ranger");
+	you[0].clasnam = "Ranger";
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 0; you[0].ep_max = 0;
 /*	you[0].f_abil = 9;
@@ -1381,16 +1381,16 @@ case JOB_EARTH_ELEMENTALIST:
 case JOB_VENOM_MAGE:
 case JOB_TRANSMUTER:
 case JOB_WARPER:
-    if (you[0].clas == JOB_CONJURER) strcpy(you[0].clasnam, "conjurer");
-	if (you[0].clas == JOB_ENCHANTER) strcpy(you[0].clasnam, "Designer");
-	if (you[0].clas == JOB_FIRE_ELEMENTALIST) strcpy(you[0].clasnam, "Fire Scientist");
-	if (you[0].clas == JOB_ICE_ELEMENTALIST) strcpy(you[0].clasnam, "Ice Scientist");
-	if (you[0].clas == JOB_SUMMONER) strcpy(you[0].clasnam, "Summoner");
-	if (you[0].clas == JOB_AIR_ELEMENTALIST) strcpy(you[0].clasnam, "Air Scientist");
-	if (you[0].clas == JOB_EARTH_ELEMENTALIST) strcpy(you[0].clasnam, "Earth Scientist");
-	if (you[0].clas == JOB_VENOM_MAGE) strcpy(you[0].clasnam, "Venom Hacker");
-	if (you[0].clas == JOB_TRANSMUTER) strcpy(you[0].clasnam, "transmuter");
-	if (you[0].clas == JOB_WARPER) strcpy(you[0].clasnam, "warper");
+    if (you[0].clas == JOB_CONJURER) you[0].clasnam = "conjurer";
+	if (you[0].clas == JOB_ENCHANTER) you[0].clasnam = "Designer";
+	if (you[0].clas == JOB_FIRE_ELEMENTALIST) you[0].clasnam = "Fire Scientist";
+	if (you[0].clas == JOB_ICE_ELEMENTALIST) you[0].clasnam = "Ice Scientist";
+	if (you[0].clas == JOB_SUMMONER) you[0].clasnam = "Summoner";
+	if (you[0].clas == JOB_AIR_ELEMENTALIST) you[0].clasnam = "Air Scientist";
+	if (you[0].clas == JOB_EARTH_ELEMENTALIST) you[0].clasnam = "Earth Scientist";
+	if (you[0].clas == JOB_VENOM_MAGE) you[0].clasnam = "Venom Hacker";
+	if (you[0].clas == JOB_TRANSMUTER) you[0].clasnam = "transmuter";
+	if (you[0].clas == JOB_WARPER) you[0].clasnam = "warper";
 
         switch(random() % 8) /* get a random lvl 1 attack spell - later overwritten for most classes*/
 	{
@@ -1584,7 +1584,7 @@ break;
 
 
 case JOB_CRUSADER: // Crusader
-	strcpy(you[0].clasnam, "Crusader");
+	you[0].clasnam = "Crusader";
 /*        you[0].piety = 75;*/
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -1640,7 +1640,7 @@ break;
 
 
 case JOB_DEATH_KNIGHT: // Death knight
-	strcpy(you[0].clasnam, "Death Knight");
+	you[0].clasnam = "Death Knight";
 /*        you[0].piety = 75;*/
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -1730,7 +1730,7 @@ else
 break;
 
 case JOB_CHAOS_KNIGHT: // Chaos knight
-	strcpy(you[0].clasnam, "Knight of Chaos");
+	you[0].clasnam = "Knight of Chaos";
 /*        you[0].piety = 75;*/
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -1788,7 +1788,7 @@ break;
 
 
 case JOB_HEALER: // Healer
-	strcpy(you[0].clasnam, "Healer");
+	you[0].clasnam = "Healer";
         you[0].piety = 45;
 	you[0].hp = 15; you[0].hp_max = 15;
 	you[0].ep = 1; you[0].ep_max = 1;
@@ -1849,7 +1849,7 @@ break;
 
 
 case JOB_REAVER: // Reaver
-	strcpy(you[0].clasnam, "Reaver");
+	you[0].clasnam = "Reaver";
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 1; you[0].ep_max = 1;
         you[0].speed = 10;
@@ -1896,7 +1896,7 @@ case JOB_REAVER: // Reaver
 break;
 
 case JOB_STALKER: // stalker
-	strcpy(you[0].clasnam, "stalker");
+	you[0].clasnam = "stalker";
 	you[0].hp = 11; you[0].hp_max = 11;
 	you[0].ep = 1; you[0].ep_max = 1;
 	you[0].inv_quant [0] = 1;
@@ -1955,7 +1955,7 @@ case JOB_STALKER: // stalker
 break;
 
 case JOB_MONK: // Monk
-	strcpy(you[0].clasnam, "Monk");
+	you[0].clasnam = "Monk";
 	you[0].hp = 13; you[0].hp_max = 13;
 	you[0].ep = 0; you[0].ep_max = 0;
 	you[0].inv_class [0] = OBJ_ARMOUR;
