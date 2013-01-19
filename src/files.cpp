@@ -98,8 +98,30 @@ int search_order_misc [] = {
 NO_SPELL_FOUND, // end search
 };
 
-/* Last slot (emergency) can only be teleport self or blink. */
-
+class FileWriter {
+public:
+	FileWriter(const std::string & filename)
+		: valid(false), file(NULL)
+	{
+		file = fopen(filename.c_str(), "wb");
+		if(file == NULL) {
+			return;
+		}
+	}
+	virtual ~FileWriter() {
+		fclose(file);
+	}
+	bool is_valid() { return valid; }
+	bool int_value(int value) {
+		size_t written = fwrite(&value, sizeof(value), 1, file);
+		return (written == 1);
+	}
+private:
+	FileWriter(FileWriter&) : valid(false), file(NULL) {}
+	FileWriter & operator=(FileWriter&) { return * this; }
+	bool valid;
+	FILE * file;
+};
 
 int write2(FILE *file, char *buffer, int count);
 int read2(FILE *file, char *buffer, int count);
@@ -1418,35 +1440,40 @@ void save_ghost()
 		return;
 	}
 
-	int buffer[40];
-	for(int i = 0; i < 20; ++i) {
-		buffer[i] = you[0].your_name[i];
-	}
-	buffer[20] = (you[0].hp_max < 120) ? you[0].hp_max : 150;
-	buffer[21] = player_evasion();
-	buffer[22] = player_AC();
-	buffer[23] = player_see_invis();
-	buffer[24] = player_res_fire();
-	buffer[25] = player_res_cold(); // note - as ghosts, automatically get res poison + prot_life
-	buffer[26] = you[0].attribute[ATTR_RESIST_LIGHTNING];
-	buffer[27] = calculate_ghost_damage();
-	buffer[28] = calculate_ghost_evasion();
-	buffer[29] = you[0].species;
-	buffer[30] = best_skill(0, 50, 99);
-	buffer[31] = you[0].skills[best_skill(0, 50, 99)];
-	buffer[32] = you[0].xl;
-	buffer[33] = you[0].clas;
-	// Death is a traumatic experience, so ghosts only remember a few spells.
-	buffer[34] = translate_spell(search_spell_list(search_order_conj));
-	buffer[35] = translate_spell(search_spell_list(search_order_conj, buffer [34]));
-	buffer[36] = translate_spell(search_spell_list(search_order_third));
-	buffer[37] = translate_spell(search_spell_list(search_order_misc, NO_SPELL_FOUND, search_order_conj));
-	buffer[38] = translate_spell(find_spell(14) ? 14 : search_spell_list(search_order_conj, buffer [37], search_order_conj));
-	buffer[39] = translate_spell(find_spell(1) ? 1 : ((find_spell(28) || find_spell(59)) ? 28 : NO_SPELL_FOUND)); // Looks for blink/tport for emergency slot
-
-	if(!save_int_array(filename, buffer, 40)) {
+	FileWriter file(filename);
+	if(!file.is_valid()) {
 		msg("Error creating ghost file: @1") << filename;
 		more();
+		return;
+	}
+
+	int spells[6]; // Death is a traumatic experience, so ghosts only remember a few spells.
+	spells[0] = translate_spell(search_spell_list(search_order_conj));
+	spells[1] = translate_spell(search_spell_list(search_order_conj, spells[0]));
+	spells[2] = translate_spell(search_spell_list(search_order_third));
+	spells[3] = translate_spell(search_spell_list(search_order_misc, NO_SPELL_FOUND, search_order_conj));
+	spells[4] = translate_spell(find_spell(14) ? 14 : search_spell_list(search_order_conj, spells[3], search_order_conj));
+	spells[5] = translate_spell(find_spell(1) ? 1 : ((find_spell(28) || find_spell(59)) ? 28 : NO_SPELL_FOUND)); // Looks for blink/tport for emergency slot
+
+	for(int i = 0; i < 20; ++i) {
+		file.int_value(you[0].your_name[i]);
+	}
+	file.int_value((you[0].hp_max < 120) ? you[0].hp_max : 150);
+	file.int_value(player_evasion());
+	file.int_value(player_AC());
+	file.int_value(player_see_invis());
+	file.int_value(player_res_fire());
+	file.int_value(player_res_cold()); // note - as ghosts, automatically get res poison + prot_life
+	file.int_value(you[0].attribute[ATTR_RESIST_LIGHTNING]);
+	file.int_value(calculate_ghost_damage());
+	file.int_value(calculate_ghost_evasion());
+	file.int_value(you[0].species);
+	file.int_value(best_skill(0, 50, 99));
+	file.int_value(you[0].skills[best_skill(0, 50, 99)]);
+	file.int_value(you[0].xl);
+	file.int_value(you[0].clas);
+	for(int i = 0; i < 6; ++i) {
+		file.int_value(spells[i]);
 	}
 }
 
