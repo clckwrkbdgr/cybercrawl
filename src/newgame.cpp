@@ -3219,7 +3219,7 @@ for (i = 0; i < 20; i ++)
 
 int ic = 0;
 
-strcpy(ghost.gname, "");
+ghost.gname = "";
 for (ic = 0; ic < 20; ic ++)
 {
  ghost.ghs [ic] = 0;

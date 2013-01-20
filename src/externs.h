@@ -237,10 +237,10 @@ struct environ
 
 extern struct environ env [1]; // make this global to main module
 
-struct ghost_struct
-{
- char gname [20];
- int ghs [20];
+struct ghost_struct {
+	std::string gname;
+	int ghs [20];
+	ghost_struct() : gname("") {}
 };
 
 extern struct ghost_struct ghost;

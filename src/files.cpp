@@ -244,9 +244,9 @@ extern int your_colour;
 int translate_spell(int spel);
 int search_spell_list(int * spell_list, int ignore_spell = NO_SPELL_FOUND, int * secondary_spell_list = NULL);
 bool find_spell(int which_sp);
-void add_spells(int buffer [40]);
 void generate_random_demon(void);
 
+/*
 static void save_int (char **pp, int val, int digits) {
   char *p=*pp;
   std::string thing_quant;
@@ -256,6 +256,7 @@ static void save_int (char **pp, int val, int digits) {
   for (int i=0; i<digits; ++i) *p++=thing_quant[i];
   *pp=p;
 }
+*/
 
 
 static int load_int (char **pp, int digits) {
@@ -273,781 +274,762 @@ static int load_int (char **pp, int digits) {
 }
 
 
+void clear_clouds()
+{
+	for (int clouty=0; clouty<CLOUDS; ++clouty) {
+		env[0].cloud_type[clouty]=0;
+		env[0].cgrid[env[0].cloud_x [clouty]] [env[0].cloud_y [clouty]]=CNG;
+		env[0].cloud_decay[clouty]=0;
+		--env[0].cloud_no;
+	}
+	env[0].cloud_no=0;
+}
+
+struct FollowersData {
+	int following;
+	int fmenv;
+	int foll_class [8];
+	int foll_hp [8];
+	int foll_hp_max [8];
+	int foll_HD [8];
+	int foll_AC [8];
+	char foll_ev [8];
+	int foll_speed [8];
+	int foll_speed_inc [8];
+	int foll_targ_1_x [8];
+	int foll_targ_1_y [8];
+	int foll_inv [8] [8];
+	int foll_beh [8];
+	int foll_sec [8];
+	int foll_hit [8];
+	int foll_ench [8] [3];
+	int foll_ench_1 [8];
+	int minvc;
+	int fit_iclass [8] [8];
+	int fit_itype [8] [8];
+	int fit_iplus [8] [8];
+	int fit_iplus2 [8] [8];
+	int fit_idam [8] [8];
+	int fit_iquant [8] [8];
+	int fit_icol [8] [8];
+	char fit_iid [8] [8];
+
+	void add_followers();
+	void set_followers();
+};
+
+void FollowersData::set_followers()
+{
+	following = 0;
+	fmenv = -1;
+	int count_x;
+	int count_y;
+	for (int ic = 0; ic < 2; ic ++) {
+		for (count_x = you[0].x_pos - 6; count_x < you[0].x_pos + 7; count_x ++) {
+			for (count_y = you[0].y_pos - 6; count_y < you[0].y_pos + 7; count_y ++) {
+				if ((ic==0) &&
+						(
+						 (count_x<you[0].x_pos-1) ||
+						 (count_x>you[0].x_pos+1) ||
+						 (count_y<you[0].y_pos-1) ||
+						 (count_y>you[0].y_pos+1)
+						)
+				   ) continue;
+				if ((count_x==you[0].x_pos) && (count_y==you[0].y_pos)) continue;
+				if ((mgrd[count_x][count_y]!=MNG) || (grd[count_x][count_y]<67)) continue;
+				while (menv [following].m_class != -1) {
+					following ++;
+					if (following >= MNST) return;
+				}
+
+				while (fmenv < 7) {
+					fmenv ++;
+					if (foll_class [fmenv] == -1) continue;
+					menv [following].m_class = foll_class [fmenv];
+					menv [following].m_hp = foll_hp [fmenv];
+					menv [following].m_hp_max = foll_hp_max [fmenv];
+					menv [following].m_HD = foll_HD [fmenv];
+					menv [following].m_AC = foll_AC [fmenv];
+					menv [following].m_ev = foll_ev [fmenv];
+					menv [following].m_speed = foll_speed [fmenv];
+					menv [following].m_speed_inc = foll_speed_inc [fmenv];
+					menv [following].m_x = count_x;
+					menv [following].m_y = count_y;
+					menv [following].m_targ_1_x = 0;
+					menv [following].m_targ_1_y = 0;
+					for (minvc = 0; minvc < 8; minvc ++) {
+						if (fit_iquant[fmenv][minvc]==0) {
+							menv [following].m_inv [minvc] = 501;
+							continue;
+						}
+						int itmf = 0;
+						while (mitm.iquant[itmf]>0) ++itmf;
+						menv [following].m_inv [minvc] = itmf;
+						mitm.iclass [itmf] = fit_iclass [fmenv] [minvc];
+						mitm.itype [itmf] = fit_itype [fmenv] [minvc];
+						mitm.iplus [itmf] = fit_iplus [fmenv] [minvc];
+						mitm.iplus2 [itmf] = fit_iplus2 [fmenv] [minvc];
+						mitm.idam [itmf] = fit_idam [fmenv] [minvc];
+						mitm.iquant [itmf] = fit_iquant [fmenv] [minvc];
+						mitm.icol [itmf] = fit_icol [fmenv] [minvc];
+						mitm.iid [itmf] = fit_iid [fmenv] [minvc];
+						mitm.ilink [itmf] = 501;
+					}
+					menv [following].m_beh = foll_beh [fmenv];
+					menv [following].m_sec = foll_sec [fmenv];
+					menv [following].m_hit = foll_hit [fmenv];
+					menv [following].m_ench_1 = foll_ench_1 [fmenv];
+					menv [following].m_ench [0] = foll_ench [fmenv] [0];
+					menv [following].m_ench [1] = foll_ench [fmenv] [1];
+					menv [following].m_ench [2] = foll_ench [fmenv] [2];
+					mgrd [count_x] [count_y] = following;
+					break;
+				}
+			}
+		}
+	}
+}
+
+void FollowersData::add_followers()
+{
+	for(int count_x = you[0].x_pos - 1; count_x < you[0].x_pos + 2; count_x ++) {
+		for (int count_y = you[0].y_pos - 1; count_y < you[0].y_pos + 2; count_y ++) {
+			if (count_x == you[0].x_pos && count_y == you[0].y_pos) continue;
+			following ++;
+			foll_class [following] = -1;
+			if (mgrd [count_x] [count_y] == MNG) continue;
+			fmenv = mgrd [count_x] [count_y];
+			if ((menv[fmenv].m_class==400) || (menv[fmenv].m_class==19) || (menv[fmenv].m_class == 401) || (menv[fmenv].m_class==56) || (menv[fmenv].m_class==-1)) continue;
+			if (menv [fmenv].m_class >= MLAVA0) continue;
+			if (menv [fmenv].m_speed_inc < 50) continue;
+			foll_class [following] = menv [fmenv].m_class;
+
+			foll_hp [following] = menv [fmenv].m_hp;
+			foll_hp_max [following] = menv [fmenv].m_hp_max;
+			foll_HD [following] = menv [fmenv].m_HD;
+			foll_AC [following] = menv [fmenv].m_AC;
+			foll_ev [following] = menv [fmenv].m_ev;
+			foll_speed [following] = menv [fmenv].m_speed;
+			foll_speed_inc [following] = menv [fmenv].m_speed_inc;
+			foll_targ_1_x [following] = menv [fmenv].m_targ_1_x;
+			foll_targ_1_y [following] = menv [fmenv].m_targ_1_y;
+			for (minvc=0; minvc<8; ++minvc) foll_inv[following][minvc]=501;
+			for (minvc=0; minvc<8; ++minvc) {
+				if (menv[fmenv].m_inv[minvc]==501) {
+					fit_iquant[following][minvc]=0;
+					continue;
+				}
+				fit_iclass [following] [minvc] = mitm.iclass [menv [fmenv].m_inv [minvc]];
+				fit_itype [following] [minvc] = mitm.itype [menv [fmenv].m_inv [minvc]];
+				fit_iplus [following] [minvc] = mitm.iplus [menv [fmenv].m_inv [minvc]];
+				fit_iplus2 [following] [minvc] = mitm.iplus2 [menv [fmenv].m_inv [minvc]];
+				fit_idam [following] [minvc] = mitm.idam [menv [fmenv].m_inv [minvc]];
+				fit_iquant [following] [minvc] = mitm.iquant [menv [fmenv].m_inv [minvc]];
+				fit_icol [following] [minvc] = mitm.icol [menv [fmenv].m_inv [minvc]];
+				fit_iid [following] [minvc] = mitm.iid [menv [fmenv].m_inv [minvc]];
+				destroy_item(menv [fmenv].m_inv [minvc]);
+			}
+
+			foll_beh [following] = menv [fmenv].m_beh;
+			foll_sec [following] = menv [fmenv].m_sec;
+			foll_hit [following] = menv [fmenv].m_hit;
+			foll_ench_1 [following] = menv [fmenv].m_ench_1;
+			foll_ench [following] [0] = menv [fmenv].m_ench [0];
+			foll_ench [following] [1] = menv [fmenv].m_ench [1];
+			foll_ench [following] [2] = menv [fmenv].m_ench [2];
+
+			/* now for the icky part:*/
+			for (int j=0; j<3; ++j) menv [fmenv].m_ench[j]=0;
+			menv [fmenv].m_ench_1 = 0;
+			menv [fmenv].m_class = -1;
+			menv [fmenv].m_hp = 0;
+			menv [fmenv].m_hp_max = 0;
+			menv [fmenv].m_HD = 0;
+			menv [fmenv].m_AC = 0;
+			menv [fmenv].m_ev = 0;
+			mgrd [count_x] [count_y] = MNG;
+		}
+	}
+}
+
 void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2) {
-  int j = 0;
-  int i, count_x, count_y;
-  char cha_fil [80];
+	int count_x, count_y;
+	char cha_fil [80];
+	char corr_level [4];
+	FollowersData followers;
 
-  char corr_level [4];
+	strcpy(corr_level, "");
+	if (you[0].your_level<10) strcpy(corr_level, "0");
+	std::string istr = to_string(you[0].your_level);
+	strcat(corr_level, istr.c_str());
+	corr_level [2] = you[0].where_are_you + 97;
+	corr_level [3] = 0; /* null-terminate it */
+	strncpy(cha_fil, you[0].your_name.c_str(), 6);
+	cha_fil [6] = 0;
+	strcat(cha_fil, ".");
+	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
+	else strcat(cha_fil, corr_level);
 
-  char already_saved = 0;
+	you[0].prev_targ=MHITNOT;
 
-  int foll_class [8];
-  int foll_hp [8];
-  int foll_hp_max [8];
-  int foll_HD [8];
-  int foll_AC [8];
-  char foll_ev [8];
-  int foll_speed [8];
-  int foll_speed_inc [8];
+	if (moving_level==1) {
+		clear_clouds();
+	}
 
-  int foll_targ_1_x [8];
-  int foll_targ_1_y [8];
-  int foll_inv [8] [8];
-  int foll_beh [8];
-  int foll_sec [8];
-  int foll_hit [8];
+	if (want_followers == 1 && just_made_new_lev == 0) {
+		followers.add_followers();
+		if(was_a_labyrinth == 0) {
+			save_level(old_level, 0, where_were_you2);
+		}
+		was_a_labyrinth = 0;
+	}
 
-  int foll_ench [8] [3];
-  int foll_ench_1 [8];
+	ghost.gname = "";
+	for (int ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
 
-  int fit_iclass [8] [8];
-  int fit_itype [8] [8];
-  int fit_iplus [8] [8];
-  int fit_iplus2 [8] [8];
-  int fit_idam [8] [8];
-  int fit_iquant [8] [8];
-  int fit_icol [8] [8];
-  char fit_iid [8] [8];
+	FILE *handle;
+	int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
+	if (handle2 != -1)
+	{
+		close(handle2);
+		handle = fopen(cha_fil, "rb");
+	} else { /* generate new level */
+		ghost.gname = "";
+		for (int imn=0; imn<20; ++imn) ghost.ghs[imn]=0;
 
-  int itmf = 0;
-  int ic = 0;
+		builder(you[0].your_level, you[0].level_type);
 
-  strcpy(corr_level, "");
-  if (you[0].your_level<10) strcpy(corr_level, "0");
-  std::string istr = to_string(you[0].your_level);
-  strcat(corr_level, istr.c_str());
-  corr_level [2] = you[0].where_are_you + 97;
-  corr_level [3] = 0; /* null-terminate it */
-  strncpy(cha_fil, you[0].your_name.c_str(), 6);
-  cha_fil [6] = 0;
-  strcat(cha_fil, ".");
-  if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-  else strcat(cha_fil, corr_level);
+		if (you[0].level_type == 3) generate_random_demon();
 
-  you[0].prev_targ=MHITNOT;
+		if (random2(3) == 0 && you[0].your_level > 1)
+		{
+			strcpy(corr_level, "");
+			if (you[0].your_level<10) strcpy(corr_level, "0");
+			strcat(corr_level, to_string(you[0].your_level).c_str());
+			corr_level[2]=you[0].where_are_you+97;
+			corr_level [3] = 0; /* null-terminate it */
+			strcpy(cha_fil, "bones.");
+			if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
+			else strcat(cha_fil, corr_level);
 
-  int following = -1;
-  int fmenv = 0;
+			int gfile2 = open(cha_fil, S_IWRITE, S_IREAD);
 
-  int minvc = 0;
+			if (gfile2!=-1) {
+				close(gfile2);
+				//        gfile = open(cha_fil, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
+				//        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
+				FILE *gfile = fopen(cha_fil, "rb");
+				if (gfile==NULL) {
+					msg("Error opening ghost file: @1") << cha_fil;
+					more();
+				} else {
+					char buf1[40];
+					read2(gfile, buf1, 40);
+					fclose(gfile);
+					for (int iiii=0; iiii<20; ++iiii) ghost.gname[iiii]=buf1[iiii];
+					ghost.ghs[0]=buf1[20];
+					ghost.ghs[1]=buf1[21];
+					ghost.ghs[2]=buf1[22];
+					ghost.ghs[3]=buf1[23];
+					ghost.ghs[4]=buf1[24];
+					ghost.ghs[5]=buf1[25];
+					ghost.ghs[6]=buf1[26];
+					ghost.ghs[7]=buf1[27];
+					ghost.ghs[8]=buf1[28];
+					/* note - as ghosts, automatically get res poison + prot_life */
+					ghost.ghs[9]=buf1[29];
+					ghost.ghs[10]=buf1[30];
+					ghost.ghs[11]=buf1[31];
+					ghost.ghs[12]=buf1[32];
+					ghost.ghs[13]=buf1[33];
 
-  if (moving_level==1) {
-    for (int clouty=0; clouty<CLOUDS; ++clouty) {
-      env[0].cloud_type[clouty]=0;
-      env[0].cgrid[env[0].cloud_x [clouty]] [env[0].cloud_y [clouty]]=CNG;
-      env[0].cloud_decay[clouty]=0;
-      --env[0].cloud_no;
-    }
-    env[0].cloud_no=0;
-  }
+					ghost.ghs[14]=buf1[34];
+					ghost.ghs[15]=buf1[35];
+					ghost.ghs[16]=buf1[36];
+					ghost.ghs[17]=buf1[37];
+					ghost.ghs[18]=buf1[38];
+					ghost.ghs[19]=buf1[39];
+					unlink(cha_fil);
+					for (int imn = 0; imn < MNST - 10; imn ++) {
+						if (menv [imn].m_class!=-1) continue;
+						menv [imn].m_class = 400;
+						menv [imn].m_HD = ghost.ghs [12];
+						menv [imn].m_hp = ghost.ghs [0];
+						menv [imn].m_hp_max = ghost.ghs [0];
+						menv [imn].m_AC = ghost.ghs [2];
+						menv [imn].m_ev = ghost.ghs [1];
+						menv [imn].m_speed = 10;
+						menv [imn].m_speed_inc = 70;
+						if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
+							menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
+						do {
+							menv [imn].m_x = random2(60) + 10;
+							menv [imn].m_y = random2(50) + 10;
+						} while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
+						mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
+						break;
+					}
+				}
+			}
+		}
 
-  if (want_followers == 1 && just_made_new_lev == 0) {
-    for (count_x = you[0].x_pos - 1; count_x < you[0].x_pos + 2; count_x ++) {
-      for (count_y = you[0].y_pos - 1; count_y < you[0].y_pos + 2; count_y ++) {
-        if (count_x == you[0].x_pos && count_y == you[0].y_pos) continue;
-        following ++;
-        foll_class [following] = -1;
-        if (mgrd [count_x] [count_y] == MNG) continue;
-        fmenv = mgrd [count_x] [count_y];
-        if ((menv[fmenv].m_class==400) || (menv[fmenv].m_class==19) || (menv[fmenv].m_class == 401) || (menv[fmenv].m_class==56) || (menv[fmenv].m_class==-1)) continue;
-        if (menv [fmenv].m_class >= MLAVA0) continue;
-        if (menv [fmenv].m_speed_inc < 50) continue;
-        foll_class [following] = menv [fmenv].m_class;
+		for (int i = 0; i < GXM; i ++) {
+			for (int j = 0; j < GYM; j ++) {
+				env[0].map [i] [j] = 0;
+				if ((you[0].char_direction==1) && (you[0].level_type!=3)) {
+					/* closes all the gates if you're on the way out */
+					if ((grd[i][j]==69) || (grd[i][j]==96) || (grd[i][j]==99)) grd[i][j]=98;
+				}
+				env[0].cgrid [i] [j] = CNG;
+			}
+		}
 
-        foll_hp [following] = menv [fmenv].m_hp;
-        foll_hp_max [following] = menv [fmenv].m_hp_max;
-        foll_HD [following] = menv [fmenv].m_HD;
-        foll_AC [following] = menv [fmenv].m_AC;
-        foll_ev [following] = menv [fmenv].m_ev;
-        foll_speed [following] = menv [fmenv].m_speed;
-        foll_speed_inc [following] = menv [fmenv].m_speed_inc;
-        foll_targ_1_x [following] = menv [fmenv].m_targ_1_x;
-        foll_targ_1_y [following] = menv [fmenv].m_targ_1_y;
-        for (minvc=0; minvc<8; ++minvc) foll_inv[following][minvc]=501;
-        for (minvc=0; minvc<8; ++minvc) {
-          if (menv[fmenv].m_inv[minvc]==501) {
-            fit_iquant[following][minvc]=0;
-            continue;
-          }
-          fit_iclass [following] [minvc] = mitm.iclass [menv [fmenv].m_inv [minvc]];
-          fit_itype [following] [minvc] = mitm.itype [menv [fmenv].m_inv [minvc]];
-          fit_iplus [following] [minvc] = mitm.iplus [menv [fmenv].m_inv [minvc]];
-          fit_iplus2 [following] [minvc] = mitm.iplus2 [menv [fmenv].m_inv [minvc]];
-          fit_idam [following] [minvc] = mitm.idam [menv [fmenv].m_inv [minvc]];
-          fit_iquant [following] [minvc] = mitm.iquant [menv [fmenv].m_inv [minvc]];
-          fit_icol [following] [minvc] = mitm.icol [menv [fmenv].m_inv [minvc]];
-          fit_iid [following] [minvc] = mitm.iid [menv [fmenv].m_inv [minvc]];
-          destroy_item(menv [fmenv].m_inv [minvc]);
-        }
+		for (int i = 0; i < MNST; i ++) {
+			if (menv[i].m_class==255) menv[i].m_class=-1;
+		}
 
-        foll_beh [following] = menv [fmenv].m_beh;
-        foll_sec [following] = menv [fmenv].m_sec;
-        foll_hit [following] = menv [fmenv].m_hit;
-        foll_ench_1 [following] = menv [fmenv].m_ench_1;
-        foll_ench [following] [0] = menv [fmenv].m_ench [0];
-        foll_ench [following] [1] = menv [fmenv].m_ench [1];
-        foll_ench [following] [2] = menv [fmenv].m_ench [2];
+		if (just_made_new_lev == 0) {
+			if (stair_taken == 69 || stair_taken == 81) stair_taken = 86;
+			else if (stair_taken < 86) stair_taken += 4;
+			else if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
+			else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
+			else if (stair_taken > 90) stair_taken = 86;
+			else if (stair_taken == 67) stair_taken = 67;
+			else stair_taken -= 4;
 
-        /* now for the icky part:*/
-        for (j=0; j<3; ++j) menv [fmenv].m_ench[j]=0;
-        menv [fmenv].m_ench_1 = 0;
-        menv [fmenv].m_class = -1;
-        menv [fmenv].m_hp = 0;
-        menv [fmenv].m_hp_max = 0;
-        menv [fmenv].m_HD = 0;
-        menv [fmenv].m_AC = 0;
-        menv [fmenv].m_ev = 0;
-        mgrd [count_x] [count_y] = MNG;
-      }
-    }
-    if (was_a_labyrinth == 0) save_level(old_level, 0, where_were_you2);
-    already_saved = 1;
-    was_a_labyrinth = 0;
-  } /* end if level_type == 0*/
+			for (count_x = 0; count_x < GXM; count_x ++) {
+				for (count_y = 0; count_y < GYM; count_y ++) {
+					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
+				}
+			}
 
-  strcpy(ghost.gname, "");
-  for (ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
+			if (stair_taken < 86) stair_taken=82;
+			else stair_taken=86;
 
-  FILE *handle;
-  int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-  if (handle2 != -1)
-  {
-   	 close(handle2);
-     handle = fopen(cha_fil, "rb");
-  } else
-//  if (handle2==-1)
-    { /* generate new level */
-    strcpy(ghost.gname, "");
-    for (int imn=0; imn<20; ++imn) ghost.ghs[imn]=0;
-
-    builder(you[0].your_level, you[0].level_type);
-
-    if (you[0].level_type == 3) generate_random_demon();
-
-    if (random2(3) == 0 && you[0].your_level > 1)
-    {
-      strcpy(corr_level, "");
-      if (you[0].your_level<10) strcpy(corr_level, "0");
-      strcat(corr_level, to_string(you[0].your_level).c_str());
-      corr_level[2]=you[0].where_are_you+97;
-      corr_level [3] = 0; /* null-terminate it */
-      strcpy(cha_fil, "bones.");
-      if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-      else strcat(cha_fil, corr_level);
-
-      int gfile2 = open(cha_fil, S_IWRITE, S_IREAD);
-
-      if (gfile2!=-1) {
-        close(gfile2);
-//        gfile = open(cha_fil, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
-//        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-       FILE *gfile = fopen(cha_fil, "rb");
-        if (gfile==NULL) {
-          msg("Error opening ghost file: @1") << cha_fil;
-          more();
-        } else {
-          char buf1[40];
-          read2(gfile, buf1, 40);
-          fclose(gfile);
-          for (int iiii=0; iiii<20; ++iiii) ghost.gname[iiii]=buf1[iiii];
-          ghost.ghs[0]=buf1[20];
-          ghost.ghs[1]=buf1[21];
-          ghost.ghs[2]=buf1[22];
-          ghost.ghs[3]=buf1[23];
-          ghost.ghs[4]=buf1[24];
-          ghost.ghs[5]=buf1[25];
-          ghost.ghs[6]=buf1[26];
-          ghost.ghs[7]=buf1[27];
-          ghost.ghs[8]=buf1[28];
-          /* note - as ghosts, automatically get res poison + prot_life */
-          ghost.ghs[9]=buf1[29];
-          ghost.ghs[10]=buf1[30];
-          ghost.ghs[11]=buf1[31];
-          ghost.ghs[12]=buf1[32];
-          ghost.ghs[13]=buf1[33];
-
-          ghost.ghs[14]=buf1[34];
-          ghost.ghs[15]=buf1[35];
-          ghost.ghs[16]=buf1[36];
-          ghost.ghs[17]=buf1[37];
-          ghost.ghs[18]=buf1[38];
-          ghost.ghs[19]=buf1[39];
-          unlink(cha_fil);
-          for (int imn = 0; imn < MNST - 10; imn ++) {
-            if (menv [imn].m_class!=-1) continue;
-            menv [imn].m_class = 400;
-            menv [imn].m_HD = ghost.ghs [12];
-            menv [imn].m_hp = ghost.ghs [0];
-            menv [imn].m_hp_max = ghost.ghs [0];
-            menv [imn].m_AC = ghost.ghs [2];
-            menv [imn].m_ev = ghost.ghs [1];
-            menv [imn].m_speed = 10;
-            menv [imn].m_speed_inc = 70;
-            if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
-              menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
-            do {
-              menv [imn].m_x = random2(60) + 10;
-              menv [imn].m_y = random2(50) + 10;
-            } while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
-            mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
-            break;
-          }
-        }
-      }
-    }
-
-    for (i = 0; i < GXM; i ++) {
-      for (j = 0; j < GYM; j ++) {
-        env[0].map [i] [j] = 0;
-        if ((you[0].char_direction==1) && (you[0].level_type!=3)) {
-          /* closes all the gates if you're on the way out */
-          if ((grd[i][j]==69) || (grd[i][j]==96) || (grd[i][j]==99)) grd[i][j]=98;
-        }
-        env[0].cgrid [i] [j] = CNG;
-      }
-    }
-
-    for (i = 0; i < MNST; i ++) {
-      if (menv[i].m_class==255) menv[i].m_class=-1;
-    }
-
-    if (just_made_new_lev == 0) {
-      if (stair_taken == 69 || stair_taken == 81) stair_taken = 86;
-      else if (stair_taken < 86) stair_taken += 4;
-      else if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
-      else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
-      else if (stair_taken > 90) stair_taken = 86;
-      else if (stair_taken == 67) stair_taken = 67;
-      else stair_taken -= 4;
-
-      for (count_x = 0; count_x < GXM; count_x ++) {
-        for (count_y = 0; count_y < GYM; count_y ++) {
-          if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-        }
-      }
-
-      if (stair_taken < 86) stair_taken=82;
-      else stair_taken=86;
-
-      for (count_x = 0; count_x < GXM; count_x ++) {
-        for (count_y = 0; count_y < GYM; count_y ++) {
-          if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-        }
-      }
-      for (count_x = 0; count_x < GXM; count_x ++)
-      {
-        for (count_y = 0; count_y < GYM; count_y ++)
-        {
-          if (grd [count_x] [count_y] == 67) goto found_stair;
-        }
-      }
-    }
+			for (count_x = 0; count_x < GXM; count_x ++) {
+				for (count_y = 0; count_y < GYM; count_y ++) {
+					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
+				}
+			}
+			for (count_x = 0; count_x < GXM; count_x ++)
+			{
+				for (count_y = 0; count_y < GYM; count_y ++)
+				{
+					if (grd [count_x] [count_y] == 67) goto found_stair;
+				}
+			}
+		}
 
 found_stair :
 
-    if (just_made_new_lev == 0) {
-      you[0].x_pos = count_x;
-      you[0].y_pos = count_y;
-    }
+		if (just_made_new_lev == 0) {
+			you[0].x_pos = count_x;
+			you[0].y_pos = count_y;
+		}
 
-    if ((you[0].level_type==1) || (you[0].level_type==2)) grd[you[0].x_pos][you[0].y_pos]=67;
+		if ((you[0].level_type==1) || (you[0].level_type==2)) grd[you[0].x_pos][you[0].y_pos]=67;
+		
+		if (((you[0].level_type==0) || (you[0].level_type==3)) && (want_followers==1) && (just_made_new_lev==0)) {
+			followers.set_followers();
+		} /* end if level_type == 0 */
 
-    following = 0;
-    fmenv = -1;
+		reset_ch();
 
-    if (((you[0].level_type==0) || (you[0].level_type==3)) && (want_followers==1) && (just_made_new_lev==0)) {
-      for (ic = 0; ic < 2; ic ++) {
-        for (count_x = you[0].x_pos - 6; count_x < you[0].x_pos + 7; count_x ++) {
-          for (count_y = you[0].y_pos - 6; count_y < you[0].y_pos + 7; count_y ++) {
-            if ((ic==0) &&
-                (
-                 (count_x<you[0].x_pos-1) ||
-                 (count_x>you[0].x_pos+1) ||
-                 (count_y<you[0].y_pos-1) ||
-                 (count_y>you[0].y_pos+1)
-                )
-               ) continue;
-            if ((count_x==you[0].x_pos) && (count_y==you[0].y_pos)) continue;
-            if ((mgrd[count_x][count_y]!=MNG) || (grd[count_x][count_y]<67)) continue;
-            while (menv [following].m_class != -1) {
-             following ++;
-             if (following >= MNST) goto out_of_foll;
-            }
+		moving_level = 0;
 
-            while (fmenv < 7) {
-              fmenv ++;
-              if (foll_class [fmenv] == -1) continue;
-              menv [following].m_class = foll_class [fmenv];
-              menv [following].m_hp = foll_hp [fmenv];
-              menv [following].m_hp_max = foll_hp_max [fmenv];
-              menv [following].m_HD = foll_HD [fmenv];
-              menv [following].m_AC = foll_AC [fmenv];
-              menv [following].m_ev = foll_ev [fmenv];
-              menv [following].m_speed = foll_speed [fmenv];
-              menv [following].m_speed_inc = foll_speed_inc [fmenv];
-              menv [following].m_x = count_x;
-              menv [following].m_y = count_y;
-              menv [following].m_targ_1_x = 0;
-              menv [following].m_targ_1_y = 0;
-              for (minvc = 0; minvc < 8; minvc ++) {
-                if (fit_iquant[fmenv][minvc]==0) {
-                  menv [following].m_inv [minvc] = 501;
-                  continue;
-                }
-                itmf = 0;
-                while (mitm.iquant[itmf]>0) ++itmf;
-                menv [following].m_inv [minvc] = itmf;
-                mitm.iclass [itmf] = fit_iclass [fmenv] [minvc];
-                mitm.itype [itmf] = fit_itype [fmenv] [minvc];
-                mitm.iplus [itmf] = fit_iplus [fmenv] [minvc];
-                mitm.iplus2 [itmf] = fit_iplus2 [fmenv] [minvc];
-                mitm.idam [itmf] = fit_idam [fmenv] [minvc];
-                mitm.iquant [itmf] = fit_iquant [fmenv] [minvc];
-                mitm.icol [itmf] = fit_icol [fmenv] [minvc];
-                mitm.iid [itmf] = fit_iid [fmenv] [minvc];
-                mitm.ilink [itmf] = 501;
-              }
-              menv [following].m_beh = foll_beh [fmenv];
-              menv [following].m_sec = foll_sec [fmenv];
-              menv [following].m_hit = foll_hit [fmenv];
-              menv [following].m_ench_1 = foll_ench_1 [fmenv];
-              menv [following].m_ench [0] = foll_ench [fmenv] [0];
-              menv [following].m_ench [1] = foll_ench [fmenv] [1];
-              menv [following].m_ench [2] = foll_ench [fmenv] [2];
-              mgrd [count_x] [count_y] = following;
-              break;
-            }
-          }
-        }
-      }
-    } /* end if level_type == 0 */
-out_of_foll :
+		for (int i = 0; i < MNST; i++) {
+			if (menv [i].m_class == -1) continue;
+			for (int j = 0; j < 8; j ++) {
+				if (menv [i].m_inv [j] == 501) continue;
+				if (mitm.ilink [menv [i].m_inv [j]] != 501) {
+					/* items carried by monsters shouldn't be linked */
+					mitm.ilink [menv [i].m_inv [j]] = 501;
+				}
+			}
+		}
 
-    reset_ch();
+		if (you[0].level_type == 3) {
+			for (int count_x = 0; count_x < GXM; count_x ++) {
+				for (count_y = 0; count_y < GYM; count_y ++) {
+					if ((grd[count_x][count_y]>=86) && (grd[count_x][count_y]<=89)) {
+						grd [count_x] [count_y] = 67;
+						if (random2(30) == 0) grd [count_x] [count_y] = 100;
+					}
+					if ((grd[count_x][count_y]>=81) && (grd[count_x][count_y]<=85)) {
+						grd [count_x] [count_y] = 101;
+					}
+				}
+			}
+		}
 
-    moving_level = 0;
+		save_level(you[0].your_level, (you[0].level_type != 0), you[0].where_are_you);
+		return;
+	}
 
-    for (i = 0; i < MNST; i++) {
-      if (menv [i].m_class == -1) continue;
-      for (j = 0; j < 8; j ++) {
-        if (menv [i].m_inv [j] == 501) continue;
-        if (mitm.ilink [menv [i].m_inv [j]] != 501) {
-          /* items carried by monsters shouldn't be linked */
-          mitm.ilink [menv [i].m_inv [j]] = 501;
-        }
-      }
-    }
+	moving_level = 0;
 
-    if (you[0].level_type == 3) {
-      for (count_x = 0; count_x < GXM; count_x ++) {
-        for (count_y = 0; count_y < GYM; count_y ++) {
-          if ((grd[count_x][count_y]>=86) && (grd[count_x][count_y]<=89)) {
-            grd [count_x] [count_y] = 67;
-            if (random2(30) == 0) grd [count_x] [count_y] = 100;
-          }
-          if ((grd[count_x][count_y]>=81) && (grd[count_x][count_y]<=85)) {
-            grd [count_x] [count_y] = 101;
-          }
-        }
-      }
-    }
+	for (count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
 
-    save_level(you[0].your_level, (you[0].level_type != 0), you[0].where_are_you);
-    return;
-  }
+	for (int i = 0; i < GXM; i ++) {
+		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
+	}
 
-  moving_level = 0;
+	const int datalen=20+20+4*80*70+3*NTRAPS+25*ITEMS+1+9*CLOUDS+5*8+5*20+(18+5+5+5+5+8*5)*MNST;
+	char *buf=(char*)malloc(datalen);
+	char *p=buf;
+	int retval=read2(handle, buf, datalen);
+	if (datalen!=retval) {
+		perror("opa (7)...");
+		Format format(EOL"Wanted to read @1 bytes; could only read @2.");
+		format << datalen << retval;
+		cprintf(format.str().c_str());
+		end(-1);
+	}
+	fclose(handle);
 
-  for (count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
+	for (int i=0; i<20; ++i) ghost.gname[i]=*p++;
+	for (int i=0; i<20; ++i) ghost.ghs[i]=*p++;
+	//  for (j=0; j<20; ++j) ghost.ghs[j]-=30;
 
-  for (i = 0; i < GXM; i ++) {
-    for (j = 0; j < GYM; j ++) igrd [i] [j] = 501;
-  }
+	for (count_x = 0; count_x < GXM; count_x ++) {
+		for (count_y = 0; count_y < GYM; count_y ++) {
+			grd[count_x][count_y]=*p++;
+			env[0].map[count_x][count_y]=*p++;
+			if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
+			mgrd [count_x] [count_y] = MNG; ++p;
+			if ((mgrd[count_x][count_y]!=MNG) &&
+					(
+					 (menv[mgrd[count_x][count_y]].m_class==-1) ||
+					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
+					 (menv[mgrd[count_x][count_y]].m_y!=count_y)
+					)) {
+				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
+			}
+			env[0].cgrid[count_x][count_y]=*p++;
+		}
+	}
 
-  const int datalen=20+20+4*80*70+3*NTRAPS+25*ITEMS+1+9*CLOUDS+5*8+5*20+(18+5+5+5+5+8*5)*MNST;
-  char *buf=(char*)malloc(datalen);
-  char *p=buf;
-  int retval=read2(handle, buf, datalen);
-  if (datalen!=retval) {
-    perror("opa (7)...");
-	Format format(EOL"Wanted to read @1 bytes; could only read @2.");
-	format << datalen << retval;
-    cprintf(format.str().c_str());
-    end(-1);
-  }
-  fclose(handle);
+	for (int i = 0; i < NTRAPS; i ++) {
+		env[0].trap_type[i]=*p++;
+		env[0].trap_x[i]=*p++;
+		env[0].trap_y[i]=*p++;
+	}
 
-  for (i=0; i<20; ++i) ghost.gname[i]=*p++;
-  for (i=0; i<20; ++i) ghost.ghs[i]=*p++;
-//  for (j=0; j<20; ++j) ghost.ghs[j]-=30;
+	for (count_x = 0; count_x < GXM; count_x ++) {
+		for (count_y = 0; count_y < GYM; count_y ++) {
+			if ((igrd[count_x][count_y]<0) || (igrd[count_x][count_y]>501)) {
+				igrd [count_x] [count_y] = 501;
+			}
+		}
+	}
 
-  for (count_x = 0; count_x < GXM; count_x ++) {
-    for (count_y = 0; count_y < GYM; count_y ++) {
-      grd[count_x][count_y]=*p++;
-      env[0].map[count_x][count_y]=*p++;
-      if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
-      mgrd [count_x] [count_y] = MNG; ++p;
-      if ((mgrd[count_x][count_y]!=MNG) &&
-          (
-           (menv[mgrd[count_x][count_y]].m_class==-1) ||
-           (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
-           (menv[mgrd[count_x][count_y]].m_y!=count_y)
-          )) {
-        mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
-      }
-      env[0].cgrid[count_x][count_y]=*p++;
-    }
-  }
+	for (int i=0; i<ITEMS; ++i) {
+		mitm.iclass[i]=*p++;
+		mitm.itype[i]=*p++;
+		mitm.iplus[i]=*p++;
+		mitm.idam[i]=*p++;
+		mitm.iquant[i]=load_int(&p, 6);
+		mitm.icol[i]=*p++;
+		mitm.ix[i]=*p++;
+		mitm.iy[i]=*p++;
+		mitm.iid[i]=*p++;
+		mitm.ilink[i]=load_int(&p, 5)-40000;
+		igrd[mitm.ix[i]][mitm.iy[i]]=load_int(&p, 5)-40000;
+		mitm.iplus2[i]=*p++;
+		if (mitm.iclass[i]==100) {
+			mitm.iquant[i]=0;
+			mitm.ilink[i]=501;
+		}
+	}
 
-  for (i = 0; i < NTRAPS; i ++) {
-    env[0].trap_type[i]=*p++;
-    env[0].trap_x[i]=*p++;
-    env[0].trap_y[i]=*p++;
-  }
+	env[0].cloud_no=*p++;
 
-  for (count_x = 0; count_x < GXM; count_x ++) {
-    for (count_y = 0; count_y < GYM; count_y ++) {
-      if ((igrd[count_x][count_y]<0) || (igrd[count_x][count_y]>501)) {
-        igrd [count_x] [count_y] = 501;
-      }
-    }
-  }
+	for (int i=0; i<CLOUDS; ++i) {
+		env[0].cloud_x[i]=*p++;
+		env[0].cloud_y[i]=*p++;
+		env[0].cloud_type[i]=*p++;
+		env[0].cloud_decay[i]=load_int(&p, 5);
+		++p;
+	}
 
-  for (i=0; i<ITEMS; ++i) {
-    mitm.iclass[i]=*p++;
-    mitm.itype[i]=*p++;
-    mitm.iplus[i]=*p++;
-    mitm.idam[i]=*p++;
-    mitm.iquant[i]=load_int(&p, 6);
-    mitm.icol[i]=*p++;
-    mitm.ix[i]=*p++;
-    mitm.iy[i]=*p++;
-    mitm.iid[i]=*p++;
-    mitm.ilink[i]=load_int(&p, 5)-40000;
-    igrd[mitm.ix[i]][mitm.iy[i]]=load_int(&p, 5)-40000;
-    mitm.iplus2[i]=*p++;
-    if (mitm.iclass[i]==100) {
-      mitm.iquant[i]=0;
-      mitm.ilink[i]=501;
-    }
-  }
+	for (int i=0; i<5; ++i) {
+		env[0].keeper_name[i][0]=*p++;
+		env[0].keeper_name[i][1]=*p++;
+		env[0].keeper_name[i][2]=*p++;
+		env[0].sh_x[i]=*p++;
+		env[0].sh_y[i]=*p++;
+		env[0].sh_greed[i]=*p++;
+		env[0].sh_type[i]=*p++;
+		env[0].sh_level[i]=*p++;
+		if (mgrd[env[0].sh_x[i]-1][env[0].sh_y[i]-1]==31) {
+			cprintf("x");
+			getkey();
+		}
+	}
 
-  env[0].cloud_no=*p++;
+	for (int i = 0; i < 20; i ++) env[0].mons_alloc[i]=load_int(&p, 5)-10000;
 
-  for (i=0; i<CLOUDS; ++i) {
-    env[0].cloud_x[i]=*p++;
-    env[0].cloud_y[i]=*p++;
-    env[0].cloud_type[i]=*p++;
-    env[0].cloud_decay[i]=load_int(&p, 5);
-    ++p;
-  }
+	for (count_x=0; count_x<MNST; ++count_x) {
+		p+=3;
+		menv[count_x].m_AC=*p++;
+		menv[count_x].m_ev=*p++;
+		menv[count_x].m_HD=*p++;
+		menv[count_x].m_speed=*p++;
+		menv[count_x].m_speed_inc=*p++;
+		menv[count_x].m_beh=*p++;
+		menv[count_x].m_x=*p++;
+		menv[count_x].m_y=*p++;
+		menv[count_x].m_targ_1_x=*p++;
+		menv[count_x].m_targ_1_y=*p++;
+		++p;
+		menv[count_x].m_ench_1=*p++;
+		for (int j=0; j<3; ++j) menv[count_x].m_ench[j]=*p++;
+		menv[count_x].m_class=load_int(&p, 5)-40080;
+		menv[count_x].m_hp=load_int(&p, 5)-40000;
+		menv[count_x].m_hp_max=load_int(&p, 5)-40000;
+		menv[count_x].m_sec=load_int(&p, 5)-40000;
+		for (int j=0; j<8; ++j) menv[count_x].m_inv[j]=load_int(&p, 5)-40000;
+		for (int j=0; j<MNST; ++j) {
+			if (menv[j].m_class!=-1) mgrd[menv[j].m_x][menv [j].m_y]=j;
+		}
+	}
 
-  for (i=0; i<5; ++i) {
-    env[0].keeper_name[i][0]=*p++;
-    env[0].keeper_name[i][1]=*p++;
-    env[0].keeper_name[i][2]=*p++;
-    env[0].sh_x[i]=*p++;
-    env[0].sh_y[i]=*p++;
-    env[0].sh_greed[i]=*p++;
-    env[0].sh_type[i]=*p++;
-    env[0].sh_level[i]=*p++;
-    if (mgrd[env[0].sh_x[i]-1][env[0].sh_y[i]-1]==31) {
-      cprintf("x");
-      getkey();
-    }
-  }
+	reset_ch();
 
-  for (i = 0; i < 20; i ++) env[0].mons_alloc[i]=load_int(&p, 5)-10000;
+	free(buf);
+	if (p!=buf+datalen) {
+		perror("opa (6)...");
+		end(-1);
+	}
 
-  for (count_x=0; count_x<MNST; ++count_x) {
-    p+=3;
-    menv[count_x].m_AC=*p++;
-    menv[count_x].m_ev=*p++;
-    menv[count_x].m_HD=*p++;
-    menv[count_x].m_speed=*p++;
-    menv[count_x].m_speed_inc=*p++;
-    menv[count_x].m_beh=*p++;
-    menv[count_x].m_x=*p++;
-    menv[count_x].m_y=*p++;
-    menv[count_x].m_targ_1_x=*p++;
-    menv[count_x].m_targ_1_y=*p++;
-    ++p;
-    menv[count_x].m_ench_1=*p++;
-    for (j=0; j<3; ++j) menv[count_x].m_ench[j]=*p++;
-    menv[count_x].m_class=load_int(&p, 5)-40080;
-    menv[count_x].m_hp=load_int(&p, 5)-40000;
-    menv[count_x].m_hp_max=load_int(&p, 5)-40000;
-    menv[count_x].m_sec=load_int(&p, 5)-40000;
-    for (j=0; j<8; ++j) menv[count_x].m_inv[j]=load_int(&p, 5)-40000;
-    for (j=0; j<MNST; ++j) {
-      if (menv[j].m_class!=-1) mgrd[menv[j].m_x][menv [j].m_y]=j;
-    }
-  }
-
-  reset_ch();
-
-  free(buf);
-  if (p!=buf+datalen) {
-    perror("opa (6)...");
-    end(-1);
-  }
-
-  for (i = 0; i < GXM; i ++) {
-    for (j = 0; j < GYM; j ++) {
-      if (igrd [i] [j] < 0 || igrd [i] [j] > 501) igrd [i] [j] = 501;
-    }
-  }
-  for (i = 0; i < MNST; i ++) {
-    for (j = 0; j < 8; j ++) {
-      if ((menv[i].m_inv[j]<0) || (menv[i].m_inv[j]>501)) menv[i].m_inv[j]=501;
-      if (menv [i].m_inv [j] != 501) mitm.ilink [menv [i].m_inv [j]] = 501;
-    }
-  }
-  for (i = 0; i < ITEMS; i ++) {
-    if (mitm.ilink [i] > 501) mitm.ilink [i] = 501;
-  }
-  for (i = 0; i < MNST; i++) {
-    if (menv [i].m_class == -1) continue;
-    for (j = 0; j < 8; j ++) {
-      if (menv [i].m_inv [j] == 501) continue;
-      if (mitm.ilink [menv [i].m_inv [j]] != 501) {
-        mitm.ilink [menv [i].m_inv [j]] = 501;
-      }
-    }
-  }
-  if (you[0].your_level == 35 && stair_taken >= 86) {
-    do {
-     you[0].x_pos = 10 + random2(GXM - 10);
-     you[0].y_pos = 10 + random2(GYM - 10);
-    } while ((grd[you[0].x_pos][you[0].y_pos]!=67) || (mgrd[you[0].x_pos][you[0].y_pos]!=MNG));
-    count_x = you[0].x_pos;
-    count_y = you[0].y_pos;
-    goto found_stair;
-  } else {
-	if (stair_taken == 67)
-     for (count_x = 0; count_x < GXM; count_x ++)
-     {
-       for (count_y = 0; count_y < GYM; count_y ++)
-       {
-         if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-       }
-     }
-    if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
-    else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
-    else if (stair_taken < 86) stair_taken += 4;
-    else stair_taken -= 4;
-    for (count_x = 0; count_x < GXM; count_x ++) {
-      for (count_y = 0; count_y < GYM; count_y ++) {
-        if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-      }
-    }
-    if (stair_taken < 86) stair_taken = 82;
-    else stair_taken = 86;
-    for (count_x = 0; count_x < GXM; count_x ++) {
-      for (count_y = 0; count_y < GYM; count_y ++) {
-        if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-      }
-    }
-  }
-  for (count_x = 0; count_x < GXM; count_x ++) {
-    for (count_y = 0; count_y < GYM; count_y ++) {
-      if ((mgrd[count_x][count_y]!=MNG) &&
-          (
-           (menv[mgrd[count_x][count_y]].m_class==-1)  ||
-           (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
-           (menv [mgrd [count_x] [count_y]].m_y != count_y)
-          )
-         ) {
-        mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
-      }
-    }
-  }
+	for (int i = 0; i < GXM; i ++) {
+		for (int j = 0; j < GYM; j ++) {
+			if (igrd [i] [j] < 0 || igrd [i] [j] > 501) igrd [i] [j] = 501;
+		}
+	}
+	for (int i = 0; i < MNST; i ++) {
+		for (int j = 0; j < 8; j ++) {
+			if ((menv[i].m_inv[j]<0) || (menv[i].m_inv[j]>501)) menv[i].m_inv[j]=501;
+			if (menv [i].m_inv [j] != 501) mitm.ilink [menv [i].m_inv [j]] = 501;
+		}
+	}
+	for (int i = 0; i < ITEMS; i ++) {
+		if (mitm.ilink [i] > 501) mitm.ilink [i] = 501;
+	}
+	for (int i = 0; i < MNST; i++) {
+		if (menv [i].m_class == -1) continue;
+		for (int j = 0; j < 8; j ++) {
+			if (menv [i].m_inv [j] == 501) continue;
+			if (mitm.ilink [menv [i].m_inv [j]] != 501) {
+				mitm.ilink [menv [i].m_inv [j]] = 501;
+			}
+		}
+	}
+	if (you[0].your_level == 35 && stair_taken >= 86) {
+		do {
+			you[0].x_pos = 10 + random2(GXM - 10);
+			you[0].y_pos = 10 + random2(GYM - 10);
+		} while ((grd[you[0].x_pos][you[0].y_pos]!=67) || (mgrd[you[0].x_pos][you[0].y_pos]!=MNG));
+		count_x = you[0].x_pos;
+		count_y = you[0].y_pos;
+		goto found_stair;
+	} else {
+		if (stair_taken == 67)
+			for (count_x = 0; count_x < GXM; count_x ++)
+			{
+				for (count_y = 0; count_y < GYM; count_y ++)
+				{
+					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
+				}
+			}
+		if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
+		else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
+		else if (stair_taken < 86) stair_taken += 4;
+		else stair_taken -= 4;
+		for (count_x = 0; count_x < GXM; count_x ++) {
+			for (count_y = 0; count_y < GYM; count_y ++) {
+				if (grd [count_x] [count_y] == stair_taken) goto found_stair;
+			}
+		}
+		if (stair_taken < 86) stair_taken = 82;
+		else stair_taken = 86;
+		for (count_x = 0; count_x < GXM; count_x ++) {
+			for (count_y = 0; count_y < GYM; count_y ++) {
+				if (grd [count_x] [count_y] == stair_taken) goto found_stair;
+			}
+		}
+	}
+	for (count_x = 0; count_x < GXM; count_x ++) {
+		for (count_y = 0; count_y < GYM; count_y ++) {
+			if ((mgrd[count_x][count_y]!=MNG) &&
+					(
+					 (menv[mgrd[count_x][count_y]].m_class==-1)  ||
+					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
+					 (menv [mgrd [count_x] [count_y]].m_y != count_y)
+					)
+			   ) {
+				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
+			}
+		}
+	}
 } /* end of void load_level(); */
 
+void setup_ix_iy()
+{
+	for (int frx = 0; frx < MNST; frx ++) {
+		for (int fry = 0; fry < 8; fry ++) {
+			if (menv [frx].m_inv [fry] != 501) {
+				mitm.ix [menv [frx].m_inv [fry]] = 2;
+				mitm.iy [menv [frx].m_inv [fry]] = 2;
+				mitm.ilink [menv [frx].m_inv [fry]] = 501;
+			}
+		}
+	}
 
-void save_level (int level_saved, char was_a_labyrinth, char where_were_you) {
-  char cha_fil[20];
-  char extens[5];
-  int count_x, count_y;
-  int i, j;
+	for (int count_x = 0; count_x < 80; count_x ++) {
+		for (int count_y = 0; count_y < 70; count_y ++) {
 
-  strcpy(extens, "");
-  if (level_saved < 10) strcpy(extens, "0");
-  strcat(extens, to_string(level_saved).c_str());
-  extens [2] = where_were_you + 97;
-  extens [3] = 0; /* null-terminate it */
-  strncpy(cha_fil, you[0].your_name.c_str(), 6);
-  cha_fil [6] = 0;
-  strcat(cha_fil, ".");
-  if (was_a_labyrinth == 1) strcat(cha_fil, "lab"); /* temporary level */
-  else strcat(cha_fil, extens);
+			int count_out = 0;
 
-  you[0].prev_targ=MHITNOT;
+			if (igrd [count_x] [count_y] < 0 || igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
+			if (igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
+			if (igrd [count_x] [count_y] == 501) continue;
 
-  int fry;
-  int frx;
+			int frx = igrd [count_x] [count_y];
 
-/* Setting up ix & iy, which aren't normally used: */
+			while(frx != 501) {
+				mitm.ix [frx] = count_x;
+				mitm.iy [frx] = count_y;
 
-  for (frx = 0; frx < MNST; frx ++) {
-    for (fry = 0; fry < 8; fry ++) {
-      if (menv [frx].m_inv [fry] != 501) {
-        mitm.ix [menv [frx].m_inv [fry]] = 2;
-        mitm.iy [menv [frx].m_inv [fry]] = 2;
-        mitm.ilink [menv [frx].m_inv [fry]] = 501;
-      }
-    }
-  }
+				if (frx > 501 || frx < 0) {
+					Format format("Error! Item out of bounds: @1");
+					format << frx;
+					cprintf(format.str().c_str());
+					if (getkey() == 0) getkey();
+					cprintf(EOL);
+					break;
+				}
 
-  for (count_x = 0; count_x < 80; count_x ++) {
-    for (count_y = 0; count_y < 70; count_y ++) {
+				frx = mitm.ilink [frx];
+				++count_out;
+				if (count_out > 1000) {
+					count_out = 0;
+					mitm.ilink [frx] = 501;
+					mpr("Item link error.");
+					break;
+				}
 
-      int count_out = 0;
+				if (frx == 501) break;
+			}
+		}
+	}
+}
 
-      if (igrd [count_x] [count_y] < 0 || igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
-      if (igrd [count_x] [count_y] > 501) igrd [count_x] [count_y] = 501;
-      if (igrd [count_x] [count_y] == 501) continue;
+void save_level (int level_saved, int was_a_labyrinth, int where_were_you) {
+	std::string file_ext = to_string(level_saved, 2) + char(where_were_you + 'a');
+	std::string your_name = you[0].your_name;
+	your_name = (your_name.size() > 6) ? std::string(your_name, 0, 6) : your_name;
+	std::string filename = your_name + "." + ((was_a_labyrinth != 0) ? "lab" : file_ext);
 
-      frx = igrd [count_x] [count_y];
+	you[0].prev_targ=MHITNOT;
+	setup_ix_iy(); // Setting up ix & iy, which aren't normally used.
 
-      while(frx != 501) {
-        mitm.ix [frx] = count_x;
-        mitm.iy [frx] = count_y;
+	FileWriter file(filename);
+	if(!file.is_valid()) {
+		perror("opa (1)...");
+		end(-1);
+	}
 
-        if (frx > 501 || frx < 0) {
-			Format format("Error! Item out of bounds: @1");
-			format << frx;
-          cprintf(format.str().c_str());
-          if (getkey() == 0) getkey();
-          cprintf(EOL);
-          break;
-        }
+	file.str_value(ghost.gname, 20);
+	for (int i=0; i<20; ++i) {
+		file.int_value(ghost.ghs[i]);
+	}
 
-        fry = mitm.ilink [frx];
-        frx = fry;
-        ++count_out;
-        if (count_out > 1000) {
-          count_out = 0;
-          mitm.ilink [frx] = 501;
-          mpr("Item link error.");
-          break;
-        }
+	for (int count_x = 0; count_x < 80; count_x ++) {
+		for (int count_y = 0; count_y < 70; count_y++) {
+			file.int_value(grd [count_x] [count_y]);
+			file.int_value(env[0].map [count_x] [count_y]);
+			file.int_value(mgrd [count_x] [count_y]);
+			file.int_value(env[0].cgrid [count_x] [count_y]);
+		}
+	}
 
-        if (frx == 501) break;
-      }
-    }
-  }
+	for (int i=0; i<NTRAPS; ++i) {
+		file.int_value(env[0].trap_type [i]);
+		file.int_value(env[0].trap_x [i]);
+		file.int_value(env[0].trap_y [i]);
+	}
 
-  const int datalen=20+20+4*80*70+3*NTRAPS+25*ITEMS+1+9*CLOUDS+5*8+5*20+(18+5+5+5+5+8*5)*MNST;
-  char *buf=(char*)malloc(datalen);
-  char *p=buf;
+	for (int i=0; i<ITEMS; ++i) {
+		file.int_value(mitm.iclass[i]);
+		file.int_value(mitm.itype[i]);
+		file.int_value(mitm.iplus[i]);
+		file.int_value(mitm.idam[i]);
+		file.int_value(mitm.iquant[i]);
+		file.int_value(mitm.icol[i]);
+		file.int_value(mitm.ix[i]);
+		file.int_value(mitm.iy[i]);
+		file.int_value(mitm.iid[i]);
+		if(mitm.iquant[i]==0) {
+			mitm.ilink[i]=501;
+		}
+		file.int_value(mitm.ilink[i]+40000);
+		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]+40000);
+		file.int_value(mitm.iplus2[i]);
+	}
 
-  int ghost_bak[20];
-  for (j = 0; j < 20; j ++) ghost_bak [j] = ghost.ghs [j];
-  for (i=0; i<20; ++i) *p++=ghost.gname[i];
-  for (i=0; i<20; ++i) *p++=ghost_bak[i];
+	file.int_value(env[0].cloud_no);
 
-  for (count_x = 0; count_x < 80; count_x ++) {
-    for (count_y = 0; count_y < 70; count_y++) {
-      *p++=(grd [count_x] [count_y]);
-      *p++=env[0].map [count_x] [count_y];
-      *p++=mgrd [count_x] [count_y];
-      *p++=env[0].cgrid [count_x] [count_y];
-    }
-  }
+	for (int i = 0; i < CLOUDS; i ++) {
+		file.int_value(env[0].cloud_x[i]);
+		file.int_value(env[0].cloud_y[i]);
+		file.int_value(env[0].cloud_type[i]);
+		file.int_value(env[0].cloud_decay[i]);
+		file.skip_bytes(1);
+	}
 
-  for (i=0; i<NTRAPS; ++i) {
-    *p++=env[0].trap_type [i];
-    *p++=env[0].trap_x [i];
-    *p++=env[0].trap_y [i];
-  }
+	for (int i = 0; i < 5; i ++) {
+		file.int_value(env[0].keeper_name [i] [0]);
+		file.int_value(env[0].keeper_name [i] [1]);
+		file.int_value(env[0].keeper_name [i] [2]);
+		file.int_value(env[0].sh_x [i]);
+		file.int_value(env[0].sh_y [i]);
+		file.int_value(env[0].sh_greed [i]);
+		file.int_value(env[0].sh_type [i]);
+		file.int_value(env[0].sh_level [i]);
+	}
 
-  for (i=0; i<ITEMS; ++i) {
-    *p++=mitm.iclass[i];
-    *p++=mitm.itype[i];
-    *p++=mitm.iplus[i];
-    *p++=mitm.idam[i];
-    save_int(&p, mitm.iquant[i], 6);
-    *p++=mitm.icol[i];
-    *p++=mitm.ix[i];
-    *p++=mitm.iy[i];
-    *p++=mitm.iid[i];
-    if (mitm.iquant[i]==0) mitm.ilink[i]=501;
-    save_int(&p, mitm.ilink[i]+40000, 5);
-    save_int(&p, igrd[mitm.ix[i]][mitm.iy[i]]+40000, 5);
-    *p++=mitm.iplus2[i];
-  }
+	for (int i=0; i<20; ++i) {
+		file.int_value(env[0].mons_alloc[i]+10000);
+	}
 
-  *p++=env[0].cloud_no;
-
-  for (i = 0; i < CLOUDS; i ++) {
-    *p++=env[0].cloud_x[i];
-    *p++=env[0].cloud_y[i];
-    *p++=env[0].cloud_type[i];
-    save_int(&p, env[0].cloud_decay[i], 5);
-    *p++=0;
-  }
-
-  for (i = 0; i < 5; i ++) {
-    *p++=env[0].keeper_name [i] [0];
-    *p++=env[0].keeper_name [i] [1];
-    *p++=env[0].keeper_name [i] [2];
-    *p++=env[0].sh_x [i];
-    *p++=env[0].sh_y [i];
-    *p++=env[0].sh_greed [i];
-    *p++=env[0].sh_type [i];
-    *p++=env[0].sh_level [i];
-    if (mgrd [env[0].sh_x [i] - 1] [env[0].sh_y [i] - 1] == 31) {
-      cprintf("y");
-      getkey();
-    }
-  }
-
-  for (i=0; i<20; ++i) save_int(&p, env[0].mons_alloc[i]+10000, 5);
-
-  for (i = 0; i < MNST; i++) {
-    *p++=5;
-    *p++=5;
-    *p++=5;
-    *p++=menv [i].m_AC;
-    *p++=menv [i].m_ev;
-    *p++=menv [i].m_HD;
-    *p++=(menv [i].m_speed);
-    *p++=menv [i].m_speed_inc;
-    *p++=menv [i].m_beh;
-    *p++=menv [i].m_x;
-    *p++=menv [i].m_y;
-    *p++=menv [i].m_targ_1_x;
-    *p++=menv [i].m_targ_1_y;
-//    *p++=5;
-    *p++=0;
-    *p++=menv [i].m_ench_1;
-    for (j = 0; j < 3; j++) *p++=menv [i].m_ench [j];
-    save_int(&p, menv[i].m_class+40080, 5);
-    save_int(&p, menv[i].m_hp+40000, 5);
-    save_int(&p, menv[i].m_hp_max+40000, 5);
-    save_int(&p, menv[i].m_sec+40000, 5);
-    for (j = 0; j < 8; j ++) save_int(&p, menv[i].m_inv[j]+40000, 5);
-  }
-
-  if (p!=buf+datalen) {
-    perror("opa (1)...");
-    end(-1);
-  }
-  FILE *handle=fopen(cha_fil, "wb");
-//open(cha_fil, O_RDWR|O_CREAT|O_TRUNC|O_BINARY, 0660);
-  if (handle==NULL) {
-    perror("Oh dear... ");
-    end(-1);
-  }
-  int retval=write2(handle, buf, datalen);
-  free(buf);
-  if (datalen!=retval) {
-    perror("opa (2)...");
-    end(-1);
-  }
-  fclose(handle);
+	for (int i = 0; i < MNST; i++) {
+		file.skip_bytes(5);
+		file.skip_bytes(5);
+		file.skip_bytes(5);
+		file.int_value(menv [i].m_AC);
+		file.int_value(menv [i].m_ev);
+		file.int_value(menv [i].m_HD);
+		file.int_value(menv [i].m_speed);
+		file.int_value(menv [i].m_speed_inc);
+		file.int_value(menv [i].m_beh);
+		file.int_value(menv [i].m_x);
+		file.int_value(menv [i].m_y);
+		file.int_value(menv [i].m_targ_1_x);
+		file.int_value(menv [i].m_targ_1_y);
+		file.skip_bytes(1);
+		file.int_value(menv [i].m_ench_1);
+		for (int j = 0; j < 3; j++) {
+			file.int_value(menv [i].m_ench [j]);
+		}
+		file.int_value(menv[i].m_class+40080);
+		file.int_value(menv[i].m_hp+40000);
+		file.int_value(menv[i].m_hp_max+40000);
+		file.int_value(menv[i].m_sec+40000);
+		for (int j = 0; j < 8; j ++) {
+			file.int_value(menv[i].m_inv[j]+40000);
+		}
+	}
 }
 
 template<class T>
@@ -1447,7 +1429,7 @@ void generate_random_demon(void)
 		if (menv [rdem].m_class == 401) break; /* found one! */
 	}
 
-	strcpy(ghost.gname, make_name(random2(250), random2(250), random2(250), 3).c_str());
+	ghost.gname = make_name(random2(250), random2(250), random2(250), 3);
 
 	ghost.ghs [0] = 50 + random2(50) + random2(50) + random2(50) + random2(50);
 	if (random2(3) == 0) ghost.ghs [0] += random2(50) + random2(50);
