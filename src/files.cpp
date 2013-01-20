@@ -217,6 +217,16 @@ private:
 	FILE * file;
 };
 
+bool file_exists(const std::string & filename)
+{
+	FILE *gfile = fopen(filename.c_str(), "rb");
+	if(gfile != NULL) {
+		fclose(gfile);
+		return true;
+	}
+	return false;
+}
+
 int write2(FILE *file, char *buffer, int count);
 int read2(FILE *file, char *buffer, int count);
 
@@ -259,6 +269,7 @@ static void save_int (char **pp, int val, int digits) {
 */
 
 
+/*
 static int load_int (char **pp, int digits) {
   char *p=*pp;
   char thing_quant[8];
@@ -272,6 +283,7 @@ static int load_int (char **pp, int digits) {
   thing_quant[digits]=0;
   return atoi(thing_quant)-add;
 }
+*/
 
 
 void clear_clouds()
@@ -452,37 +464,30 @@ void FollowersData::add_followers()
 	}
 }
 
-void load_level(FILE * handle)
+void load_level(const std::string & filename)
 {
-	for (int count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
+	FileReader file(filename);
+	if(!file.is_valid()) {
+		cprintf("Cannot open file for reading!");
+		end(-1);
+	}
 
+	for (int count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
 	for (int i = 0; i < GXM; i ++) {
 		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
 	}
 
-	const int datalen=20+20+4*80*70+3*NTRAPS+25*ITEMS+1+9*CLOUDS+5*8+5*20+(18+5+5+5+5+8*5)*MNST;
-	char *buf=(char*)malloc(datalen);
-	char *p=buf;
-	int retval=read2(handle, buf, datalen);
-	if (datalen!=retval) {
-		perror("opa (7)...");
-		Format format(EOL"Wanted to read @1 bytes; could only read @2.");
-		format << datalen << retval;
-		cprintf(format.str().c_str());
-		end(-1);
+	file.str_value(ghost.gname, 20);
+	for(int i=0; i<20; ++i) {
+		file.int_value(ghost.ghs[i]);
 	}
-	fclose(handle);
-
-	for (int i=0; i<20; ++i) ghost.gname[i]=*p++;
-	for (int i=0; i<20; ++i) ghost.ghs[i]=*p++;
-	//  for (j=0; j<20; ++j) ghost.ghs[j]-=30;
 
 	for (int count_x = 0; count_x < GXM; count_x ++) {
 		for (int count_y = 0; count_y < GYM; count_y ++) {
-			grd[count_x][count_y]=*p++;
-			env[0].map[count_x][count_y]=*p++;
+			file.int_value(grd[count_x][count_y]);
+			file.int_value(env[0].map[count_x][count_y]);
 			if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
-			mgrd [count_x] [count_y] = MNG; ++p;
+			mgrd [count_x] [count_y] = MNG;
 			if ((mgrd[count_x][count_y]!=MNG) &&
 					(
 					 (menv[mgrd[count_x][count_y]].m_class==-1) ||
@@ -491,14 +496,14 @@ void load_level(FILE * handle)
 					)) {
 				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
 			}
-			env[0].cgrid[count_x][count_y]=*p++;
+			file.int_value(env[0].cgrid[count_x][count_y]);
 		}
 	}
 
 	for (int i = 0; i < NTRAPS; i ++) {
-		env[0].trap_type[i]=*p++;
-		env[0].trap_x[i]=*p++;
-		env[0].trap_y[i]=*p++;
+		file.int_value(env[0].trap_type[i]);
+		file.int_value(env[0].trap_x[i]);
+		file.int_value(env[0].trap_y[i]);
 	}
 
 	for (int count_x = 0; count_x < GXM; count_x ++) {
@@ -510,83 +515,78 @@ void load_level(FILE * handle)
 	}
 
 	for (int i=0; i<ITEMS; ++i) {
-		mitm.iclass[i]=*p++;
-		mitm.itype[i]=*p++;
-		mitm.iplus[i]=*p++;
-		mitm.idam[i]=*p++;
-		mitm.iquant[i]=load_int(&p, 6);
-		mitm.icol[i]=*p++;
-		mitm.ix[i]=*p++;
-		mitm.iy[i]=*p++;
-		mitm.iid[i]=*p++;
-		mitm.ilink[i]=load_int(&p, 5)-40000;
-		igrd[mitm.ix[i]][mitm.iy[i]]=load_int(&p, 5)-40000;
-		mitm.iplus2[i]=*p++;
+		file.int_value(mitm.iclass[i]);
+		file.int_value(mitm.itype[i]);
+		file.int_value(mitm.iplus[i]);
+		file.int_value(mitm.idam[i]);
+		file.int_value(mitm.iquant[i]);
+		file.int_value(mitm.icol[i]);
+		file.int_value(mitm.ix[i]);
+		file.int_value(mitm.iy[i]);
+		file.int_value(mitm.iid[i]);
+		file.int_value(mitm.ilink[i]);
+		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]);
+		file.int_value(mitm.iplus2[i]);
 		if (mitm.iclass[i]==100) {
 			mitm.iquant[i]=0;
 			mitm.ilink[i]=501;
 		}
 	}
 
-	env[0].cloud_no=*p++;
+	file.int_value(env[0].cloud_no);
 
 	for (int i=0; i<CLOUDS; ++i) {
-		env[0].cloud_x[i]=*p++;
-		env[0].cloud_y[i]=*p++;
-		env[0].cloud_type[i]=*p++;
-		env[0].cloud_decay[i]=load_int(&p, 5);
-		++p;
+		file.int_value(env[0].cloud_x[i]);
+		file.int_value(env[0].cloud_y[i]);
+		file.int_value(env[0].cloud_type[i]);
+		file.int_value(env[0].cloud_decay[i]);
+		file.skip_bytes(1);
 	}
 
 	for (int i=0; i<5; ++i) {
-		env[0].keeper_name[i][0]=*p++;
-		env[0].keeper_name[i][1]=*p++;
-		env[0].keeper_name[i][2]=*p++;
-		env[0].sh_x[i]=*p++;
-		env[0].sh_y[i]=*p++;
-		env[0].sh_greed[i]=*p++;
-		env[0].sh_type[i]=*p++;
-		env[0].sh_level[i]=*p++;
-		if (mgrd[env[0].sh_x[i]-1][env[0].sh_y[i]-1]==31) {
-			cprintf("x");
-			getkey();
-		}
+		file.int_value(env[0].keeper_name[i][0]);
+		file.int_value(env[0].keeper_name[i][1]);
+		file.int_value(env[0].keeper_name[i][2]);
+		file.int_value(env[0].sh_x[i]);
+		file.int_value(env[0].sh_y[i]);
+		file.int_value(env[0].sh_greed[i]);
+		file.int_value(env[0].sh_type[i]);
+		file.int_value(env[0].sh_level[i]);
 	}
 
-	for (int i = 0; i < 20; i ++) env[0].mons_alloc[i]=load_int(&p, 5)-10000;
+	for (int i = 0; i < 20; i ++) {
+		file.int_value(env[0].mons_alloc[i]);
+	}
 
 	for (int count_x=0; count_x<MNST; ++count_x) {
-		p+=3;
-		menv[count_x].m_AC=*p++;
-		menv[count_x].m_ev=*p++;
-		menv[count_x].m_HD=*p++;
-		menv[count_x].m_speed=*p++;
-		menv[count_x].m_speed_inc=*p++;
-		menv[count_x].m_beh=*p++;
-		menv[count_x].m_x=*p++;
-		menv[count_x].m_y=*p++;
-		menv[count_x].m_targ_1_x=*p++;
-		menv[count_x].m_targ_1_y=*p++;
-		++p;
-		menv[count_x].m_ench_1=*p++;
-		for (int j=0; j<3; ++j) menv[count_x].m_ench[j]=*p++;
-		menv[count_x].m_class=load_int(&p, 5)-40080;
-		menv[count_x].m_hp=load_int(&p, 5)-40000;
-		menv[count_x].m_hp_max=load_int(&p, 5)-40000;
-		menv[count_x].m_sec=load_int(&p, 5)-40000;
-		for (int j=0; j<8; ++j) menv[count_x].m_inv[j]=load_int(&p, 5)-40000;
+		file.int_value(menv[count_x].m_AC);
+		file.int_value(menv[count_x].m_ev);
+		file.int_value(menv[count_x].m_HD);
+		file.int_value(menv[count_x].m_speed);
+		file.int_value(menv[count_x].m_speed_inc);
+		file.int_value(menv[count_x].m_beh);
+		file.int_value(menv[count_x].m_x);
+		file.int_value(menv[count_x].m_y);
+		file.int_value(menv[count_x].m_targ_1_x);
+		file.int_value(menv[count_x].m_targ_1_y);
+		file.skip_bytes(1);
+		file.int_value(menv[count_x].m_ench_1);
+		for (int j=0; j<3; ++j) {
+			file.int_value(menv[count_x].m_ench[j]);
+		}
+		file.int_value(menv[count_x].m_class);
+		file.int_value(menv[count_x].m_hp);
+		file.int_value(menv[count_x].m_hp_max);
+		file.int_value(menv[count_x].m_sec);
+		for (int j=0; j<8; ++j) {
+			file.int_value(menv[count_x].m_inv[j]);
+		}
 		for (int j=0; j<MNST; ++j) {
 			if (menv[j].m_class!=-1) mgrd[menv[j].m_x][menv [j].m_y]=j;
 		}
 	}
 
 	reset_ch();
-
-	free(buf);
-	if (p!=buf+datalen) {
-		perror("opa (6)...");
-		end(-1);
-	}
 }
 
 void make_ghost_monster()
@@ -610,8 +610,6 @@ void make_ghost_monster()
 		mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
 		break;
 	}
-
-
 }
 
 void load_ghost()
@@ -792,22 +790,14 @@ void close_all_gates()
 
 void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2)
 {
-	int count_x, count_y;
-	char cha_fil [80];
-	char corr_level [4];
-	FollowersData followers;
-
-	strcpy(corr_level, "");
-	if (you[0].your_level<10) strcpy(corr_level, "0");
-	std::string istr = to_string(you[0].your_level);
-	strcat(corr_level, istr.c_str());
-	corr_level [2] = you[0].where_are_you + 97;
-	corr_level [3] = 0; /* null-terminate it */
-	strncpy(cha_fil, you[0].your_name.c_str(), 6);
-	cha_fil [6] = 0;
-	strcat(cha_fil, ".");
-	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-	else strcat(cha_fil, corr_level);
+	std::string extension;
+	if(you[0].your_level<10) {
+		extension += "0";
+	}
+	extension += to_string(you[0].your_level);
+	extension += you[0].where_are_you + 'a';
+	std::string filename = (you[0].your_name.size() > 6) ? std::string(you[0].your_name, 0, 6) : you[0].your_name;
+	filename += "." + ((you[0].level_type!=0) ? "lab" : extension);
 
 	you[0].prev_targ=MHITNOT;
 
@@ -815,6 +805,7 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
 		clear_clouds();
 	}
 
+	FollowersData followers;
 	if (want_followers == 1 && just_made_new_lev == 0) {
 		followers.add_followers();
 		if(was_a_labyrinth == 0) {
@@ -826,13 +817,9 @@ void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_le
 	ghost.gname = "";
 	for (int ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
 
-	FILE *handle;
-	int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-	if (handle2 != -1)
-	{
-		close(handle2);
-		handle = fopen(cha_fil, "rb");
-		load_level(handle);
+	int count_x, count_y;
+	if(file_exists(filename)) {
+		load_level(filename);
 		clear_item_links();
 		if(!find_stairs_2(stair_taken, count_x, count_y)) {
 			worst_thing_linley_ever_done();
@@ -968,8 +955,8 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		if(mitm.iquant[i]==0) {
 			mitm.ilink[i]=501;
 		}
-		file.int_value(mitm.ilink[i]+40000);
-		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]+40000);
+		file.int_value(mitm.ilink[i]);
+		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]);
 		file.int_value(mitm.iplus2[i]);
 	}
 
@@ -995,13 +982,10 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 	}
 
 	for (int i=0; i<20; ++i) {
-		file.int_value(env[0].mons_alloc[i]+10000);
+		file.int_value(env[0].mons_alloc[i]);
 	}
 
 	for (int i = 0; i < MNST; i++) {
-		file.skip_bytes(5);
-		file.skip_bytes(5);
-		file.skip_bytes(5);
 		file.int_value(menv [i].m_AC);
 		file.int_value(menv [i].m_ev);
 		file.int_value(menv [i].m_HD);
@@ -1017,12 +1001,12 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		for (int j = 0; j < 3; j++) {
 			file.int_value(menv [i].m_ench [j]);
 		}
-		file.int_value(menv[i].m_class+40080);
-		file.int_value(menv[i].m_hp+40000);
-		file.int_value(menv[i].m_hp_max+40000);
-		file.int_value(menv[i].m_sec+40000);
+		file.int_value(menv[i].m_class);
+		file.int_value(menv[i].m_hp);
+		file.int_value(menv[i].m_hp_max);
+		file.int_value(menv[i].m_sec);
 		for (int j = 0; j < 8; j ++) {
-			file.int_value(menv[i].m_inv[j]+40000);
+			file.int_value(menv[i].m_inv[j]);
 		}
 	}
 }
@@ -1257,16 +1241,6 @@ int calculate_ghost_evasion()
 		}
 	}
 	return evasion;
-}
-
-bool file_exists(const std::string & filename)
-{
-	FILE *gfile = fopen(filename.c_str(), "rb");
-	if(gfile != NULL) {
-		fclose(gfile);
-		return true;
-	}
-	return false;
 }
 
 bool save_int_array(const std::string & filename, int * array, int count)
