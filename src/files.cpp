@@ -452,223 +452,9 @@ void FollowersData::add_followers()
 	}
 }
 
-void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2) {
-	int count_x, count_y;
-	char cha_fil [80];
-	char corr_level [4];
-	FollowersData followers;
-
-	strcpy(corr_level, "");
-	if (you[0].your_level<10) strcpy(corr_level, "0");
-	std::string istr = to_string(you[0].your_level);
-	strcat(corr_level, istr.c_str());
-	corr_level [2] = you[0].where_are_you + 97;
-	corr_level [3] = 0; /* null-terminate it */
-	strncpy(cha_fil, you[0].your_name.c_str(), 6);
-	cha_fil [6] = 0;
-	strcat(cha_fil, ".");
-	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-	else strcat(cha_fil, corr_level);
-
-	you[0].prev_targ=MHITNOT;
-
-	if (moving_level==1) {
-		clear_clouds();
-	}
-
-	if (want_followers == 1 && just_made_new_lev == 0) {
-		followers.add_followers();
-		if(was_a_labyrinth == 0) {
-			save_level(old_level, 0, where_were_you2);
-		}
-		was_a_labyrinth = 0;
-	}
-
-	ghost.gname = "";
-	for (int ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
-
-	FILE *handle;
-	int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-	if (handle2 != -1)
-	{
-		close(handle2);
-		handle = fopen(cha_fil, "rb");
-	} else { /* generate new level */
-		ghost.gname = "";
-		for (int imn=0; imn<20; ++imn) ghost.ghs[imn]=0;
-
-		builder(you[0].your_level, you[0].level_type);
-
-		if (you[0].level_type == 3) generate_random_demon();
-
-		if (random2(3) == 0 && you[0].your_level > 1)
-		{
-			strcpy(corr_level, "");
-			if (you[0].your_level<10) strcpy(corr_level, "0");
-			strcat(corr_level, to_string(you[0].your_level).c_str());
-			corr_level[2]=you[0].where_are_you+97;
-			corr_level [3] = 0; /* null-terminate it */
-			strcpy(cha_fil, "bones.");
-			if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-			else strcat(cha_fil, corr_level);
-
-			int gfile2 = open(cha_fil, S_IWRITE, S_IREAD);
-
-			if (gfile2!=-1) {
-				close(gfile2);
-				//        gfile = open(cha_fil, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
-				//        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-				FILE *gfile = fopen(cha_fil, "rb");
-				if (gfile==NULL) {
-					msg("Error opening ghost file: @1") << cha_fil;
-					more();
-				} else {
-					char buf1[40];
-					read2(gfile, buf1, 40);
-					fclose(gfile);
-					for (int iiii=0; iiii<20; ++iiii) ghost.gname[iiii]=buf1[iiii];
-					ghost.ghs[0]=buf1[20];
-					ghost.ghs[1]=buf1[21];
-					ghost.ghs[2]=buf1[22];
-					ghost.ghs[3]=buf1[23];
-					ghost.ghs[4]=buf1[24];
-					ghost.ghs[5]=buf1[25];
-					ghost.ghs[6]=buf1[26];
-					ghost.ghs[7]=buf1[27];
-					ghost.ghs[8]=buf1[28];
-					/* note - as ghosts, automatically get res poison + prot_life */
-					ghost.ghs[9]=buf1[29];
-					ghost.ghs[10]=buf1[30];
-					ghost.ghs[11]=buf1[31];
-					ghost.ghs[12]=buf1[32];
-					ghost.ghs[13]=buf1[33];
-
-					ghost.ghs[14]=buf1[34];
-					ghost.ghs[15]=buf1[35];
-					ghost.ghs[16]=buf1[36];
-					ghost.ghs[17]=buf1[37];
-					ghost.ghs[18]=buf1[38];
-					ghost.ghs[19]=buf1[39];
-					unlink(cha_fil);
-					for (int imn = 0; imn < MNST - 10; imn ++) {
-						if (menv [imn].m_class!=-1) continue;
-						menv [imn].m_class = 400;
-						menv [imn].m_HD = ghost.ghs [12];
-						menv [imn].m_hp = ghost.ghs [0];
-						menv [imn].m_hp_max = ghost.ghs [0];
-						menv [imn].m_AC = ghost.ghs [2];
-						menv [imn].m_ev = ghost.ghs [1];
-						menv [imn].m_speed = 10;
-						menv [imn].m_speed_inc = 70;
-						if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
-							menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
-						do {
-							menv [imn].m_x = random2(60) + 10;
-							menv [imn].m_y = random2(50) + 10;
-						} while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
-						mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
-						break;
-					}
-				}
-			}
-		}
-
-		for (int i = 0; i < GXM; i ++) {
-			for (int j = 0; j < GYM; j ++) {
-				env[0].map [i] [j] = 0;
-				if ((you[0].char_direction==1) && (you[0].level_type!=3)) {
-					/* closes all the gates if you're on the way out */
-					if ((grd[i][j]==69) || (grd[i][j]==96) || (grd[i][j]==99)) grd[i][j]=98;
-				}
-				env[0].cgrid [i] [j] = CNG;
-			}
-		}
-
-		for (int i = 0; i < MNST; i ++) {
-			if (menv[i].m_class==255) menv[i].m_class=-1;
-		}
-
-		if (just_made_new_lev == 0) {
-			if (stair_taken == 69 || stair_taken == 81) stair_taken = 86;
-			else if (stair_taken < 86) stair_taken += 4;
-			else if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
-			else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
-			else if (stair_taken > 90) stair_taken = 86;
-			else if (stair_taken == 67) stair_taken = 67;
-			else stair_taken -= 4;
-
-			for (count_x = 0; count_x < GXM; count_x ++) {
-				for (count_y = 0; count_y < GYM; count_y ++) {
-					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-				}
-			}
-
-			if (stair_taken < 86) stair_taken=82;
-			else stair_taken=86;
-
-			for (count_x = 0; count_x < GXM; count_x ++) {
-				for (count_y = 0; count_y < GYM; count_y ++) {
-					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-				}
-			}
-			for (count_x = 0; count_x < GXM; count_x ++)
-			{
-				for (count_y = 0; count_y < GYM; count_y ++)
-				{
-					if (grd [count_x] [count_y] == 67) goto found_stair;
-				}
-			}
-		}
-
-found_stair :
-
-		if (just_made_new_lev == 0) {
-			you[0].x_pos = count_x;
-			you[0].y_pos = count_y;
-		}
-
-		if ((you[0].level_type==1) || (you[0].level_type==2)) grd[you[0].x_pos][you[0].y_pos]=67;
-		
-		if (((you[0].level_type==0) || (you[0].level_type==3)) && (want_followers==1) && (just_made_new_lev==0)) {
-			followers.set_followers();
-		} /* end if level_type == 0 */
-
-		reset_ch();
-
-		moving_level = 0;
-
-		for (int i = 0; i < MNST; i++) {
-			if (menv [i].m_class == -1) continue;
-			for (int j = 0; j < 8; j ++) {
-				if (menv [i].m_inv [j] == 501) continue;
-				if (mitm.ilink [menv [i].m_inv [j]] != 501) {
-					/* items carried by monsters shouldn't be linked */
-					mitm.ilink [menv [i].m_inv [j]] = 501;
-				}
-			}
-		}
-
-		if (you[0].level_type == 3) {
-			for (int count_x = 0; count_x < GXM; count_x ++) {
-				for (count_y = 0; count_y < GYM; count_y ++) {
-					if ((grd[count_x][count_y]>=86) && (grd[count_x][count_y]<=89)) {
-						grd [count_x] [count_y] = 67;
-						if (random2(30) == 0) grd [count_x] [count_y] = 100;
-					}
-					if ((grd[count_x][count_y]>=81) && (grd[count_x][count_y]<=85)) {
-						grd [count_x] [count_y] = 101;
-					}
-				}
-			}
-		}
-
-		save_level(you[0].your_level, (you[0].level_type != 0), you[0].where_are_you);
-		return;
-	}
-
-	moving_level = 0;
-
-	for (count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
+void load_level(FILE * handle)
+{
+	for (int count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
 
 	for (int i = 0; i < GXM; i ++) {
 		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
@@ -691,8 +477,8 @@ found_stair :
 	for (int i=0; i<20; ++i) ghost.ghs[i]=*p++;
 	//  for (j=0; j<20; ++j) ghost.ghs[j]-=30;
 
-	for (count_x = 0; count_x < GXM; count_x ++) {
-		for (count_y = 0; count_y < GYM; count_y ++) {
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
 			grd[count_x][count_y]=*p++;
 			env[0].map[count_x][count_y]=*p++;
 			if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
@@ -715,8 +501,8 @@ found_stair :
 		env[0].trap_y[i]=*p++;
 	}
 
-	for (count_x = 0; count_x < GXM; count_x ++) {
-		for (count_y = 0; count_y < GYM; count_y ++) {
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
 			if ((igrd[count_x][count_y]<0) || (igrd[count_x][count_y]>501)) {
 				igrd [count_x] [count_y] = 501;
 			}
@@ -769,7 +555,7 @@ found_stair :
 
 	for (int i = 0; i < 20; i ++) env[0].mons_alloc[i]=load_int(&p, 5)-10000;
 
-	for (count_x=0; count_x<MNST; ++count_x) {
+	for (int count_x=0; count_x<MNST; ++count_x) {
 		p+=3;
 		menv[count_x].m_AC=*p++;
 		menv[count_x].m_ev=*p++;
@@ -801,7 +587,188 @@ found_stair :
 		perror("opa (6)...");
 		end(-1);
 	}
+}
 
+void load_ghost()
+{
+	char corr_level [4];
+	char cha_fil [80];
+	strcpy(corr_level, "");
+	if (you[0].your_level<10) strcpy(corr_level, "0");
+	strcat(corr_level, to_string(you[0].your_level).c_str());
+	corr_level[2]=you[0].where_are_you+97;
+	corr_level [3] = 0; /* null-terminate it */
+	strcpy(cha_fil, "bones.");
+	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
+	else strcat(cha_fil, corr_level);
+
+	int gfile2 = open(cha_fil, S_IWRITE, S_IREAD);
+
+	if (gfile2!=-1) {
+		close(gfile2);
+		//        gfile = open(cha_fil, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
+		//        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
+		FILE *gfile = fopen(cha_fil, "rb");
+		if (gfile==NULL) {
+			msg("Error opening ghost file: @1") << cha_fil;
+			more();
+		} else {
+			char buf1[40];
+			read2(gfile, buf1, 40);
+			fclose(gfile);
+			for (int iiii=0; iiii<20; ++iiii) ghost.gname[iiii]=buf1[iiii];
+			ghost.ghs[0]=buf1[20];
+			ghost.ghs[1]=buf1[21];
+			ghost.ghs[2]=buf1[22];
+			ghost.ghs[3]=buf1[23];
+			ghost.ghs[4]=buf1[24];
+			ghost.ghs[5]=buf1[25];
+			ghost.ghs[6]=buf1[26];
+			ghost.ghs[7]=buf1[27];
+			ghost.ghs[8]=buf1[28];
+			/* note - as ghosts, automatically get res poison + prot_life */
+			ghost.ghs[9]=buf1[29];
+			ghost.ghs[10]=buf1[30];
+			ghost.ghs[11]=buf1[31];
+			ghost.ghs[12]=buf1[32];
+			ghost.ghs[13]=buf1[33];
+
+			ghost.ghs[14]=buf1[34];
+			ghost.ghs[15]=buf1[35];
+			ghost.ghs[16]=buf1[36];
+			ghost.ghs[17]=buf1[37];
+			ghost.ghs[18]=buf1[38];
+			ghost.ghs[19]=buf1[39];
+			unlink(cha_fil);
+			for (int imn = 0; imn < MNST - 10; imn ++) {
+				if (menv [imn].m_class!=-1) continue;
+				menv [imn].m_class = 400;
+				menv [imn].m_HD = ghost.ghs [12];
+				menv [imn].m_hp = ghost.ghs [0];
+				menv [imn].m_hp_max = ghost.ghs [0];
+				menv [imn].m_AC = ghost.ghs [2];
+				menv [imn].m_ev = ghost.ghs [1];
+				menv [imn].m_speed = 10;
+				menv [imn].m_speed_inc = 70;
+				if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
+					menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
+				do {
+					menv [imn].m_x = random2(60) + 10;
+					menv [imn].m_y = random2(50) + 10;
+				} while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
+				mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
+				break;
+			}
+		}
+	}
+}
+
+bool find_stairs(int stair_taken, int & count_x, int & count_y)
+{
+	if (stair_taken == 69 || stair_taken == 81) stair_taken = 86;
+	else if (stair_taken < 86) stair_taken += 4;
+	else if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
+	else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
+	else if (stair_taken > 90) stair_taken = 86;
+	else if (stair_taken == 67) stair_taken = 67;
+	else stair_taken -= 4;
+
+	for (count_x = 0; count_x < GXM; count_x ++) {
+		for (count_y = 0; count_y < GYM; count_y ++) {
+			if (grd [count_x] [count_y] == stair_taken) return true;
+		}
+	}
+
+	if (stair_taken < 86) stair_taken=82;
+	else stair_taken=86;
+
+	for (count_x = 0; count_x < GXM; count_x ++) {
+		for (count_y = 0; count_y < GYM; count_y ++) {
+			if (grd [count_x] [count_y] == stair_taken) return true;
+		}
+	}
+	for (count_x = 0; count_x < GXM; count_x ++)
+	{
+		for (count_y = 0; count_y < GYM; count_y ++)
+		{
+			if (grd [count_x] [count_y] == 67) return true;
+		}
+	}
+	return false;
+}
+
+void worst_thing_linley_ever_done()
+{
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
+			if ((mgrd[count_x][count_y]!=MNG) &&
+					(
+					 (menv[mgrd[count_x][count_y]].m_class==-1)  ||
+					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
+					 (menv [mgrd [count_x] [count_y]].m_y != count_y)
+					)
+			   ) {
+				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
+			}
+		}
+	}
+}
+
+bool find_stairs_2(int stair_taken, int & count_x, int & count_y)
+{
+	if (you[0].your_level == 35 && stair_taken >= 86) {
+		do {
+			you[0].x_pos = 10 + random2(GXM - 10);
+			you[0].y_pos = 10 + random2(GYM - 10);
+		} while ((grd[you[0].x_pos][you[0].y_pos]!=67) || (mgrd[you[0].x_pos][you[0].y_pos]!=MNG));
+		count_x = you[0].x_pos;
+		count_y = you[0].y_pos;
+		return true;
+	} else {
+		if (stair_taken == 67)
+			for (count_x = 0; count_x < GXM; count_x ++)
+			{
+				for (count_y = 0; count_y < GYM; count_y ++)
+				{
+					if (grd [count_x] [count_y] == stair_taken) return true;
+				}
+			}
+		if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
+		else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
+		else if (stair_taken < 86) stair_taken += 4;
+		else stair_taken -= 4;
+		for (count_x = 0; count_x < GXM; count_x ++) {
+			for (count_y = 0; count_y < GYM; count_y ++) {
+				if (grd [count_x] [count_y] == stair_taken) return true;
+			}
+		}
+		if (stair_taken < 86) stair_taken = 82;
+		else stair_taken = 86;
+		for (count_x = 0; count_x < GXM; count_x ++) {
+			for (count_y = 0; count_y < GYM; count_y ++) {
+				if (grd [count_x] [count_y] == stair_taken) return true;
+			}
+		}
+	}
+	return false;
+}
+
+void unlink_monster_items()
+{
+	for (int i = 0; i < MNST; i++) {
+		if (menv [i].m_class == -1) continue;
+		for (int j = 0; j < 8; j ++) {
+			if (menv [i].m_inv [j] == 501) continue;
+			if (mitm.ilink [menv [i].m_inv [j]] != 501) {
+				/* items carried by monsters shouldn't be linked */
+				mitm.ilink [menv [i].m_inv [j]] = 501;
+			}
+		}
+	}
+}
+
+void clear_item_links()
+{
 	for (int i = 0; i < GXM; i ++) {
 		for (int j = 0; j < GYM; j ++) {
 			if (igrd [i] [j] < 0 || igrd [i] [j] > 501) igrd [i] [j] = 501;
@@ -816,63 +783,115 @@ found_stair :
 	for (int i = 0; i < ITEMS; i ++) {
 		if (mitm.ilink [i] > 501) mitm.ilink [i] = 501;
 	}
-	for (int i = 0; i < MNST; i++) {
-		if (menv [i].m_class == -1) continue;
-		for (int j = 0; j < 8; j ++) {
-			if (menv [i].m_inv [j] == 501) continue;
-			if (mitm.ilink [menv [i].m_inv [j]] != 501) {
-				mitm.ilink [menv [i].m_inv [j]] = 501;
+	unlink_monster_items();
+}
+
+void place_some_3_level_things()
+{
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
+			if ((grd[count_x][count_y]>=86) && (grd[count_x][count_y]<=89)) {
+				grd [count_x] [count_y] = 67;
+				if (random2(30) == 0) grd [count_x] [count_y] = 100;
+			}
+			if ((grd[count_x][count_y]>=81) && (grd[count_x][count_y]<=85)) {
+				grd [count_x] [count_y] = 101;
 			}
 		}
 	}
-	if (you[0].your_level == 35 && stair_taken >= 86) {
-		do {
-			you[0].x_pos = 10 + random2(GXM - 10);
-			you[0].y_pos = 10 + random2(GYM - 10);
-		} while ((grd[you[0].x_pos][you[0].y_pos]!=67) || (mgrd[you[0].x_pos][you[0].y_pos]!=MNG));
-		count_x = you[0].x_pos;
-		count_y = you[0].y_pos;
-		goto found_stair;
-	} else {
-		if (stair_taken == 67)
-			for (count_x = 0; count_x < GXM; count_x ++)
-			{
-				for (count_y = 0; count_y < GYM; count_y ++)
-				{
-					if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-				}
+}
+
+void close_all_gates()
+{
+	for (int i = 0; i < GXM; i ++) {
+		for (int j = 0; j < GYM; j ++) {
+			env[0].map [i] [j] = 0;
+			if ((you[0].char_direction==1) && (you[0].level_type!=3)) {
+				/* closes all the gates if you're on the way out */
+				if ((grd[i][j]==69) || (grd[i][j]==96) || (grd[i][j]==99)) grd[i][j]=98;
 			}
-		if (stair_taken >= 130 && stair_taken < 150) stair_taken -= 20;
-		else if (stair_taken >= 110 && stair_taken < 130) stair_taken += 20;
-		else if (stair_taken < 86) stair_taken += 4;
-		else stair_taken -= 4;
-		for (count_x = 0; count_x < GXM; count_x ++) {
-			for (count_y = 0; count_y < GYM; count_y ++) {
-				if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-			}
-		}
-		if (stair_taken < 86) stair_taken = 82;
-		else stair_taken = 86;
-		for (count_x = 0; count_x < GXM; count_x ++) {
-			for (count_y = 0; count_y < GYM; count_y ++) {
-				if (grd [count_x] [count_y] == stair_taken) goto found_stair;
-			}
+			env[0].cgrid [i] [j] = CNG;
 		}
 	}
-	for (count_x = 0; count_x < GXM; count_x ++) {
-		for (count_y = 0; count_y < GYM; count_y ++) {
-			if ((mgrd[count_x][count_y]!=MNG) &&
-					(
-					 (menv[mgrd[count_x][count_y]].m_class==-1)  ||
-					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
-					 (menv [mgrd [count_x] [count_y]].m_y != count_y)
-					)
-			   ) {
-				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
-			}
+}
+
+void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2)
+{
+	int count_x, count_y;
+	char cha_fil [80];
+	char corr_level [4];
+	FollowersData followers;
+
+	strcpy(corr_level, "");
+	if (you[0].your_level<10) strcpy(corr_level, "0");
+	std::string istr = to_string(you[0].your_level);
+	strcat(corr_level, istr.c_str());
+	corr_level [2] = you[0].where_are_you + 97;
+	corr_level [3] = 0; /* null-terminate it */
+	strncpy(cha_fil, you[0].your_name.c_str(), 6);
+	cha_fil [6] = 0;
+	strcat(cha_fil, ".");
+	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
+	else strcat(cha_fil, corr_level);
+
+	you[0].prev_targ=MHITNOT;
+
+	if (moving_level==1) {
+		clear_clouds();
+	}
+
+	if (want_followers == 1 && just_made_new_lev == 0) {
+		followers.add_followers();
+		if(was_a_labyrinth == 0) {
+			save_level(old_level, 0, where_were_you2);
+		}
+		was_a_labyrinth = 0;
+	}
+
+	ghost.gname = "";
+	for (int ic=0; ic<20; ++ic) ghost.ghs [ic] = 0;
+
+	FILE *handle;
+	int handle2 = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
+	if (handle2 != -1)
+	{
+		close(handle2);
+		handle = fopen(cha_fil, "rb");
+		load_level(handle);
+		clear_item_links();
+		if(!find_stairs_2(stair_taken, count_x, count_y)) {
+			worst_thing_linley_ever_done();
+			return;
+		}
+	} else { /* generate new level */
+		builder(you[0].your_level, you[0].level_type);
+		if (you[0].level_type == 3) generate_random_demon();
+		if (random2(3) == 0 && you[0].your_level > 1) {
+			load_ghost();
+		}
+		close_all_gates();
+		for (int i = 0; i < MNST; i ++) {
+			if (menv[i].m_class==255) menv[i].m_class=-1;
+		}
+		if (just_made_new_lev == 0) {
+			find_stairs(stair_taken, count_x, count_y);
 		}
 	}
-} /* end of void load_level(); */
+	if (just_made_new_lev == 0) {
+		you[0].x_pos = count_x;
+		you[0].y_pos = count_y;
+	}
+	if ((you[0].level_type==1) || (you[0].level_type==2)) grd[you[0].x_pos][you[0].y_pos]=67;
+	if (((you[0].level_type==0) || (you[0].level_type==3)) && (want_followers==1) && (just_made_new_lev==0)) {
+		followers.set_followers();
+	}
+	reset_ch();
+	unlink_monster_items();
+	if (you[0].level_type == 3) {
+		place_some_3_level_things();
+	}
+	save_level(you[0].your_level, (you[0].level_type != 0), you[0].where_are_you);
+}
 
 void setup_ix_iy()
 {
@@ -925,7 +944,8 @@ void setup_ix_iy()
 	}
 }
 
-void save_level (int level_saved, int was_a_labyrinth, int where_were_you) {
+void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
+{
 	std::string file_ext = to_string(level_saved, 2) + char(where_were_you + 'a');
 	std::string your_name = you[0].your_name;
 	your_name = (your_name.size() > 6) ? std::string(your_name, 0, 6) : your_name;
