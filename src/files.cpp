@@ -589,78 +589,53 @@ void load_level(FILE * handle)
 	}
 }
 
+void make_ghost_monster()
+{
+	for (int imn = 0; imn < MNST - 10; imn ++) {
+		if (menv [imn].m_class!=-1) continue;
+		menv [imn].m_class = 400;
+		menv [imn].m_HD = ghost.ghs [12];
+		menv [imn].m_hp = ghost.ghs [0];
+		menv [imn].m_hp_max = ghost.ghs [0];
+		menv [imn].m_AC = ghost.ghs [2];
+		menv [imn].m_ev = ghost.ghs [1];
+		menv [imn].m_speed = 10;
+		menv [imn].m_speed_inc = 70;
+		if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
+			menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
+		do {
+			menv [imn].m_x = random2(60) + 10;
+			menv [imn].m_y = random2(50) + 10;
+		} while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
+		mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
+		break;
+	}
+
+
+}
+
 void load_ghost()
 {
-	char corr_level [4];
-	char cha_fil [80];
-	strcpy(corr_level, "");
-	if (you[0].your_level<10) strcpy(corr_level, "0");
-	strcat(corr_level, to_string(you[0].your_level).c_str());
-	corr_level[2]=you[0].where_are_you+97;
-	corr_level [3] = 0; /* null-terminate it */
-	strcpy(cha_fil, "bones.");
-	if (you[0].level_type!=0) strcat(cha_fil, "lab"); /* temporary level */
-	else strcat(cha_fil, corr_level);
-
-	int gfile2 = open(cha_fil, S_IWRITE, S_IREAD);
-
-	if (gfile2!=-1) {
-		close(gfile2);
-		//        gfile = open(cha_fil, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0660);
-		//        gfile = open(cha_fil, O_RDONLY, O_CREAT | O_TRUNC | O_BINARY, 0660);
-		FILE *gfile = fopen(cha_fil, "rb");
-		if (gfile==NULL) {
-			msg("Error opening ghost file: @1") << cha_fil;
-			more();
-		} else {
-			char buf1[40];
-			read2(gfile, buf1, 40);
-			fclose(gfile);
-			for (int iiii=0; iiii<20; ++iiii) ghost.gname[iiii]=buf1[iiii];
-			ghost.ghs[0]=buf1[20];
-			ghost.ghs[1]=buf1[21];
-			ghost.ghs[2]=buf1[22];
-			ghost.ghs[3]=buf1[23];
-			ghost.ghs[4]=buf1[24];
-			ghost.ghs[5]=buf1[25];
-			ghost.ghs[6]=buf1[26];
-			ghost.ghs[7]=buf1[27];
-			ghost.ghs[8]=buf1[28];
-			/* note - as ghosts, automatically get res poison + prot_life */
-			ghost.ghs[9]=buf1[29];
-			ghost.ghs[10]=buf1[30];
-			ghost.ghs[11]=buf1[31];
-			ghost.ghs[12]=buf1[32];
-			ghost.ghs[13]=buf1[33];
-
-			ghost.ghs[14]=buf1[34];
-			ghost.ghs[15]=buf1[35];
-			ghost.ghs[16]=buf1[36];
-			ghost.ghs[17]=buf1[37];
-			ghost.ghs[18]=buf1[38];
-			ghost.ghs[19]=buf1[39];
-			unlink(cha_fil);
-			for (int imn = 0; imn < MNST - 10; imn ++) {
-				if (menv [imn].m_class!=-1) continue;
-				menv [imn].m_class = 400;
-				menv [imn].m_HD = ghost.ghs [12];
-				menv [imn].m_hp = ghost.ghs [0];
-				menv [imn].m_hp_max = ghost.ghs [0];
-				menv [imn].m_AC = ghost.ghs [2];
-				menv [imn].m_ev = ghost.ghs [1];
-				menv [imn].m_speed = 10;
-				menv [imn].m_speed_inc = 70;
-				if (ghost.ghs [14] != 250 || ghost.ghs [15] != 250 || ghost.ghs [16] != 250 || ghost.ghs [17] != 250 || ghost.ghs [18] != 250 || ghost.ghs [19] != 250)
-					menv [imn].m_sec = 119; else menv [imn].m_sec = 250;
-				do {
-					menv [imn].m_x = random2(60) + 10;
-					menv [imn].m_y = random2(50) + 10;
-				} while ((grd[menv[imn].m_x][menv[imn].m_y]!=67) || (mgrd[menv[imn].m_x][menv[imn].m_y]!=MNG));
-				mgrd [menv [imn].m_x] [menv [imn].m_y] = imn;
-				break;
-			}
-		}
+	std::string extension;
+	if(you[0].your_level<10) {
+		extension += "0";
 	}
+	extension += to_string(you[0].your_level);
+	extension += (you[0].where_are_you + 'a');
+	std::string filename = "bones." + ((you[0].level_type != 0) ? "lab" : extension);
+
+	FileReader file(filename);
+	if(!file.is_valid()) {
+		msg("Error opening ghost file: @1") << filename;
+		more();
+		return;
+	}
+
+	file.str_value(ghost.gname, 20);
+	for(int i=0; i<20; ++i) {
+		file.int_value(ghost.ghs[i]);
+	}
+	make_ghost_monster();
 }
 
 bool find_stairs(int stair_taken, int & count_x, int & count_y)
