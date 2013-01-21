@@ -256,36 +256,6 @@ int search_spell_list(int * spell_list, int ignore_spell = NO_SPELL_FOUND, int *
 bool find_spell(int which_sp);
 void generate_random_demon(void);
 
-/*
-static void save_int (char **pp, int val, int digits) {
-  char *p=*pp;
-  std::string thing_quant;
-  int add=1;
-  for (int i=1; i<digits; ++i) add*=10;
-  thing_quant = to_string(val+add);
-  for (int i=0; i<digits; ++i) *p++=thing_quant[i];
-  *pp=p;
-}
-*/
-
-
-/*
-static int load_int (char **pp, int digits) {
-  char *p=*pp;
-  char thing_quant[8];
-  int add=1;
-  thing_quant[0]=*p++;
-  for (int i=1; i<digits; ++i) {
-    thing_quant[i]=*p++;
-    add*=10;
-  }
-  *pp=p;
-  thing_quant[digits]=0;
-  return atoi(thing_quant)-add;
-}
-*/
-
-
 void clear_clouds()
 {
 	for (int clouty=0; clouty<CLOUDS; ++clouty) {
