@@ -12,6 +12,9 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 #include "dungeon.h"
 #include "files.h"
@@ -103,42 +106,24 @@ public:
 	FileWriter(const std::string & filename)
 		: valid(false), file(NULL)
 	{
-		file = fopen(filename.c_str(), "wb");
-		if(file == NULL) {
-			return;
-		}
-		valid = true;
+		file.open(filename.c_str());
+		valid = file.is_open();
 	}
 	virtual ~FileWriter() {
-		fclose(file);
+		file.close();
 	}
 	bool is_valid() { return valid; }
-	bool skip_bytes(size_t count) {
-		char bytes[count];
-		for(size_t i = 0; i < count; ++i) {
-			bytes[i] = 0;
-		}
-		size_t written = fwrite(&bytes, 1, count, file);
-		return (written == count);
-	}
-	bool str_value(std::string string, size_t count) {
-		for(size_t i = 0; i < count; ++i) {
-			if(i < string.size()) {
-				char_value(string[i]);
-			} else {
-				char ch = 0;
-				char_value(ch);
-			}
-		}
-		return true;
+	bool str_value(std::string string, size_t /*count*/) {
+		file << string << std::endl;
+		return file.good();
 	}
 	bool char_value(char value) {
-		size_t written = fwrite(&value, sizeof(value), 1, file);
-		return (written == 1);
+		file << value << std::endl;
+		return file.good();
 	}
 	bool int_value(int value) {
-		size_t written = fwrite(&value, sizeof(value), 1, file);
-		return (written == 1);
+		file << value << std::endl;
+		return file.good();
 	}
 	bool unrandart(int value) {
 		return int_value(does_unrandart_exist(value));
@@ -152,46 +137,38 @@ private:
 	FileWriter(FileWriter&) : valid(false), file(NULL) {}
 	FileWriter & operator=(FileWriter&) { return * this; }
 	bool valid;
-	FILE * file;
+	std::ofstream file;
 };
 
 class FileReader {
 public:
 	FileReader(const std::string & filename)
-		: valid(false), file(NULL)
+		: valid(false), file()
 	{
-		file = fopen(filename.c_str(), "rb");
-		if(file == NULL) {
-			return;
-		}
-		valid = true;
+		file.open(filename.c_str());
+		valid = file.is_open();
 	}
 	virtual ~FileReader() {
-		fclose(file);
+		file.close();
 	}
 	bool is_valid() { return valid; }
-	bool skip_bytes(size_t count) {
-		char zero = 0;
-		size_t read = fread(&zero, 1, count, file);
-		return (read == count);
-	}
-	bool str_value(std::string & string, int count) {
-		for(int i = 0; i < count; ++i) {
-			char ch;
-			char_value(ch);
-			if(ch) {
-				string += ch;
-			}
-		}
-		return true;
+	bool str_value(std::string & string, int /*count*/) {
+		std::getline(file, string);
+		return file.good();
 	}
 	bool char_value(char & value) {
-		size_t read = fread(&value, sizeof(value), 1, file);
-		return (read == 1);
+		std::string tmp;
+		std::getline(file, tmp);
+		std::istringstream in(tmp);
+		in >> value;
+		return file.good();
 	}
 	bool int_value(int & value) {
-		size_t read = fread(&value, sizeof(value), 1, file);
-		return (read == 1);
+		std::string tmp;
+		std::getline(file, tmp);
+		std::istringstream in(tmp);
+		in >> value;
+		return file.good();
 	}
 	bool unrandart(int value) {
 		int v;
@@ -214,7 +191,7 @@ private:
 	FileReader(FileReader&) : valid(false), file(NULL) {}
 	FileReader & operator=(FileReader&) { return * this; }
 	bool valid;
-	FILE * file;
+	std::ifstream file;
 };
 
 bool file_exists(const std::string & filename)
@@ -226,9 +203,6 @@ bool file_exists(const std::string & filename)
 	}
 	return false;
 }
-
-int write2(FILE *file, char *buffer, int count);
-int read2(FILE *file, char *buffer, int count);
 
 static void reset_ch () {
   you[0].hp_ch = 1;
@@ -243,7 +217,6 @@ static void reset_ch () {
   you[0].hung_ch = 1;
   you[0].hung_state = 3;
 }
-
 
 struct ghost_struct ghost;
 
@@ -434,6 +407,9 @@ void FollowersData::add_followers()
 	}
 }
 
+template<class T>
+void file_level(T & file)
+
 void load_level(const std::string & filename)
 {
 	FileReader file(filename);
@@ -447,6 +423,7 @@ void load_level(const std::string & filename)
 		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
 	}
 
+
 	file.str_value(ghost.gname, 20);
 	for(int i=0; i<20; ++i) {
 		file.int_value(ghost.ghs[i]);
@@ -456,32 +433,15 @@ void load_level(const std::string & filename)
 		for (int count_y = 0; count_y < GYM; count_y ++) {
 			file.int_value(grd[count_x][count_y]);
 			file.int_value(env[0].map[count_x][count_y]);
-			if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
-			mgrd [count_x] [count_y] = MNG;
-			if ((mgrd[count_x][count_y]!=MNG) &&
-					(
-					 (menv[mgrd[count_x][count_y]].m_class==-1) ||
-					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
-					 (menv[mgrd[count_x][count_y]].m_y!=count_y)
-					)) {
-				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
-			}
+			file.int_value(mgrd [count_x] [count_y]);
 			file.int_value(env[0].cgrid[count_x][count_y]);
 		}
 	}
 
-	for (int i = 0; i < NTRAPS; i ++) {
+	for (int i = 0; i < NTRAPS; ++i) {
 		file.int_value(env[0].trap_type[i]);
 		file.int_value(env[0].trap_x[i]);
 		file.int_value(env[0].trap_y[i]);
-	}
-
-	for (int count_x = 0; count_x < GXM; count_x ++) {
-		for (int count_y = 0; count_y < GYM; count_y ++) {
-			if ((igrd[count_x][count_y]<0) || (igrd[count_x][count_y]>501)) {
-				igrd [count_x] [count_y] = 501;
-			}
-		}
 	}
 
 	for (int i=0; i<ITEMS; ++i) {
@@ -497,10 +457,6 @@ void load_level(const std::string & filename)
 		file.int_value(mitm.ilink[i]);
 		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]);
 		file.int_value(mitm.iplus2[i]);
-		if (mitm.iclass[i]==100) {
-			mitm.iquant[i]=0;
-			mitm.ilink[i]=501;
-		}
 	}
 
 	file.int_value(env[0].cloud_no);
@@ -510,7 +466,6 @@ void load_level(const std::string & filename)
 		file.int_value(env[0].cloud_y[i]);
 		file.int_value(env[0].cloud_type[i]);
 		file.int_value(env[0].cloud_decay[i]);
-		file.skip_bytes(1);
 	}
 
 	for (int i=0; i<5; ++i) {
@@ -524,36 +479,63 @@ void load_level(const std::string & filename)
 		file.int_value(env[0].sh_level[i]);
 	}
 
-	for (int i = 0; i < 20; i ++) {
+	for (int i = 0; i < 20; ++i) {
 		file.int_value(env[0].mons_alloc[i]);
 	}
 
-	for (int count_x=0; count_x<MNST; ++count_x) {
-		file.int_value(menv[count_x].m_AC);
-		file.int_value(menv[count_x].m_ev);
-		file.int_value(menv[count_x].m_HD);
-		file.int_value(menv[count_x].m_speed);
-		file.int_value(menv[count_x].m_speed_inc);
-		file.int_value(menv[count_x].m_beh);
-		file.int_value(menv[count_x].m_x);
-		file.int_value(menv[count_x].m_y);
-		file.int_value(menv[count_x].m_targ_1_x);
-		file.int_value(menv[count_x].m_targ_1_y);
-		file.skip_bytes(1);
-		file.int_value(menv[count_x].m_ench_1);
+	for (int i=0; i<MNST; ++i) {
+		file.int_value(menv[i].m_AC);
+		file.int_value(menv[i].m_ev);
+		file.int_value(menv[i].m_HD);
+		file.int_value(menv[i].m_speed);
+		file.int_value(menv[i].m_speed_inc);
+		file.int_value(menv[i].m_beh);
+		file.int_value(menv[i].m_x);
+		file.int_value(menv[i].m_y);
+		file.int_value(menv[i].m_targ_1_x);
+		file.int_value(menv[i].m_targ_1_y);
+		file.int_value(menv[i].m_ench_1);
 		for (int j=0; j<3; ++j) {
-			file.int_value(menv[count_x].m_ench[j]);
+			file.int_value(menv[i].m_ench[j]);
 		}
-		file.int_value(menv[count_x].m_class);
-		file.int_value(menv[count_x].m_hp);
-		file.int_value(menv[count_x].m_hp_max);
-		file.int_value(menv[count_x].m_sec);
+		file.int_value(menv[i].m_class);
+		file.int_value(menv[i].m_hp);
+		file.int_value(menv[i].m_hp_max);
+		file.int_value(menv[i].m_sec);
 		for (int j=0; j<8; ++j) {
-			file.int_value(menv[count_x].m_inv[j]);
+			file.int_value(menv[i].m_inv[j]);
 		}
-		for (int j=0; j<MNST; ++j) {
-			if (menv[j].m_class!=-1) mgrd[menv[j].m_x][menv [j].m_y]=j;
+	}
+
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
+			if (env[0].map [count_x] [count_y] == 201) env[0].map [count_x] [count_y] = 239;
+			mgrd [count_x] [count_y] = MNG;
+			if ((mgrd[count_x][count_y]!=MNG) &&
+					(
+					 (menv[mgrd[count_x][count_y]].m_class==-1) ||
+					 (menv[mgrd[count_x][count_y]].m_x!=count_x) ||
+					 (menv[mgrd[count_x][count_y]].m_y!=count_y)
+					)) {
+				mgrd [count_x] [count_y] = MNG; /* This is one of the worst things I've ever done */
+			}
 		}
+	}
+	for (int i=0; i<ITEMS; ++i) {
+		if (mitm.iclass[i]==100) {
+			mitm.iquant[i]=0;
+			mitm.ilink[i]=501;
+		}
+	}
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y ++) {
+			if ((igrd[count_x][count_y]<0) || (igrd[count_x][count_y]>501)) {
+				igrd [count_x] [count_y] = 501;
+			}
+		}
+	}
+	for (int j=0; j<MNST; ++j) {
+		if (menv[j].m_class!=-1) mgrd[menv[j].m_x][menv [j].m_y]=j;
 	}
 
 	reset_ch();
@@ -582,15 +564,20 @@ void make_ghost_monster()
 	}
 }
 
-void load_ghost()
+std::string construct_filename(const std::string & name, int level, int where_are_you, bool is_labyrinth)
 {
 	std::string extension;
-	if(you[0].your_level<10) {
+	if(level < 10) {
 		extension += "0";
 	}
-	extension += to_string(you[0].your_level);
-	extension += (you[0].where_are_you + 'a');
-	std::string filename = "bones." + ((you[0].level_type != 0) ? "lab" : extension);
+	extension += to_string(level);
+	extension += (where_are_you + 'a');
+	return name + "." + (is_labyrinth ? "lab" : extension);
+}
+
+void load_ghost()
+{
+	std::string filename = construct_filename("bones", you[0].your_level, you[0].where_are_you, (you[0].level_type != 0));
 
 	FileReader file(filename);
 	if(!file.is_valid()) {
@@ -760,14 +747,7 @@ void close_all_gates()
 
 void load (int stair_taken, char moving_level, char was_a_labyrinth, char old_level, char want_followers, char just_made_new_lev, char where_were_you2)
 {
-	std::string extension;
-	if(you[0].your_level<10) {
-		extension += "0";
-	}
-	extension += to_string(you[0].your_level);
-	extension += you[0].where_are_you + 'a';
-	std::string filename = (you[0].your_name.size() > 6) ? std::string(you[0].your_name, 0, 6) : you[0].your_name;
-	filename += "." + ((you[0].level_type!=0) ? "lab" : extension);
+	std::string filename = construct_filename(you[0].your_name, you[0].your_level, you[0].where_are_you, (you[0].level_type != 0));
 
 	you[0].prev_targ=MHITNOT;
 
@@ -878,10 +858,7 @@ void setup_ix_iy()
 
 void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 {
-	std::string file_ext = to_string(level_saved, 2) + char(where_were_you + 'a');
-	std::string your_name = you[0].your_name;
-	your_name = (your_name.size() > 6) ? std::string(your_name, 0, 6) : your_name;
-	std::string filename = your_name + "." + ((was_a_labyrinth != 0) ? "lab" : file_ext);
+	std::string filename = construct_filename(you[0].your_name, level_saved, where_were_you, was_a_labyrinth);
 
 	you[0].prev_targ=MHITNOT;
 	setup_ix_iy(); // Setting up ix & iy, which aren't normally used.
@@ -892,13 +869,19 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		end(-1);
 	}
 
+	for (int i=0; i<ITEMS; ++i) {
+		if(mitm.iquant[i]==0) {
+			mitm.ilink[i]=501;
+		}
+	}
+
 	file.str_value(ghost.gname, 20);
 	for (int i=0; i<20; ++i) {
 		file.int_value(ghost.ghs[i]);
 	}
 
-	for (int count_x = 0; count_x < 80; count_x ++) {
-		for (int count_y = 0; count_y < 70; count_y++) {
+	for (int count_x = 0; count_x < GXM; count_x ++) {
+		for (int count_y = 0; count_y < GYM; count_y++) {
 			file.int_value(grd [count_x] [count_y]);
 			file.int_value(env[0].map [count_x] [count_y]);
 			file.int_value(mgrd [count_x] [count_y]);
@@ -922,9 +905,6 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		file.int_value(mitm.ix[i]);
 		file.int_value(mitm.iy[i]);
 		file.int_value(mitm.iid[i]);
-		if(mitm.iquant[i]==0) {
-			mitm.ilink[i]=501;
-		}
 		file.int_value(mitm.ilink[i]);
 		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]);
 		file.int_value(mitm.iplus2[i]);
@@ -932,15 +912,14 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 
 	file.int_value(env[0].cloud_no);
 
-	for (int i = 0; i < CLOUDS; i ++) {
+	for (int i = 0; i < CLOUDS; ++i) {
 		file.int_value(env[0].cloud_x[i]);
 		file.int_value(env[0].cloud_y[i]);
 		file.int_value(env[0].cloud_type[i]);
 		file.int_value(env[0].cloud_decay[i]);
-		file.skip_bytes(1);
 	}
 
-	for (int i = 0; i < 5; i ++) {
+	for (int i = 0; i < 5; ++i) {
 		file.int_value(env[0].keeper_name [i] [0]);
 		file.int_value(env[0].keeper_name [i] [1]);
 		file.int_value(env[0].keeper_name [i] [2]);
@@ -966,7 +945,6 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		file.int_value(menv [i].m_y);
 		file.int_value(menv [i].m_targ_1_x);
 		file.int_value(menv [i].m_targ_1_y);
-		file.skip_bytes(1);
 		file.int_value(menv [i].m_ench_1);
 		for (int j = 0; j < 3; j++) {
 			file.int_value(menv [i].m_ench [j]);
@@ -993,14 +971,10 @@ void file_you(T & file)
 	file.int_value(you[0].slow);
 	file.int_value(you[0].shock_shield);
 	file.int_value(you[0].rotting);
-	file.skip_bytes(1);
 	file.int_value(you[0].deaths_door);
 	file.int_value(your_sign);
 	file.int_value(your_colour);
-	file.skip_bytes(1);
 	file.int_value(you[0].pet_target);
-	file.skip_bytes(1);
-	file.skip_bytes(5);
 	file.int_value(you[0].spell_levels);
 	file.int_value(you[0].max_level);
 	file.int_value(you[0].where_are_you);
@@ -1009,12 +983,9 @@ void file_you(T & file)
 	file.int_value(you[0].is_undead);
 	file.int_value(you[0].special_wield);
 	file.int_value(you[0].berserker);
-	file.skip_bytes(1);
 	file.int_value(you[0].level_type);
 	file.int_value(you[0].corpse_count);
 	file.int_value(you[0].disease);
-	file.skip_bytes(1);
-	file.skip_bytes(1);
 	file.int_value(you[0].species);
 	file.int_value(you[0].hp);
 	file.int_value(you[0].hp_max);
@@ -1022,9 +993,7 @@ void file_you(T & file)
 	file.int_value(you[0].might);
 	file.int_value(you[0].lev);
 	file.int_value(you[0].poison);
-	file.skip_bytes(1);
 	file.int_value(you[0].hunger);
-	file.skip_bytes(1);
 	for(int i = 0; i < NO_EQUIP; ++i) {
 		file.int_value(you[0].equip[i]);
 	}
@@ -1033,25 +1002,17 @@ void file_you(T & file)
 	file.int_value(you[0].strength);
 	file.int_value(you[0].intel);
 	file.int_value(you[0].dex);
-	file.skip_bytes(1);
-	file.skip_bytes(1);
-	file.skip_bytes(1);
-	file.skip_bytes(2);
 	file.int_value(you[0].incr_regen);
-	file.skip_bytes(3);
-	file.skip_bytes(5);
 	file.int_value(you[0].xp);
 	file.int_value(you[0].gp);
 	file.int_value(you[0].clas);
 	file.int_value(you[0].xl);
-	file.skip_bytes(14);
 	file.int_value(you[0].exp_available);
 	file.int_value(you[0].max_strength);
 	file.int_value(you[0].max_intel);
 	file.int_value(you[0].max_dex);
 	file.int_value(you[0].hunger_inc);
 	file.int_value(you[0].ep_incr_regen);
-	file.skip_bytes(5);
 	file.int_value(you[0].base_hp);
 	file.int_value(you[0].base_hp2);
 	file.int_value(you[0].base_ep);
@@ -1136,9 +1097,7 @@ void file_you(T & file)
 
 void save_game (bool leave_game)
 {
-	std::string filename = you[0].your_name;
-	filename = (filename.size() > 6) ? std::string(filename, 0, 6) : filename;
-	filename += ".sav";
+	std::string filename = you[0].your_name + ".sav";
 	FileWriter file(filename);
 	if(!file.is_valid()) {
 		perror("Unable to open file for writing");
@@ -1162,9 +1121,7 @@ void save_game (bool leave_game)
 
 void restore_game()
 {
-	std::string filename = you[0].your_name;
-	filename = (filename.size() > 6) ? std::string(filename, 0, 6) : filename;
-	filename += ".sav";
+	std::string filename = you[0].your_name + ".sav";
 	FileReader file(filename);
 	if(!file.is_valid()) {
 		perror("Unable to open file for reading");
@@ -1213,24 +1170,12 @@ int calculate_ghost_evasion()
 	return evasion;
 }
 
-bool save_int_array(const std::string & filename, int * array, int count)
-{
-	FILE * gfile = fopen(filename.c_str(), "wb");
-	if(gfile == NULL) {
-		return false;
-	}
-	fwrite((char*)array, 1, count, gfile);
-	fclose(gfile);
-	return true;
-}
-
 void save_ghost()
 {
 	if(you[0].your_level <= 1 || you[0].is_undead != 0)
 		return;
 
-	std::string file_ext = to_string(you[0].your_level, 2) + char(you[0].where_are_you + 'a');
-	std::string filename = "bones." + ((you[0].level_type != 0) ? "lab" : file_ext);
+	std::string filename = construct_filename("bones", you[0].your_level, you[0].where_are_you, (you[0].level_type != 0));
 	if(file_exists(filename)) {
 		return;
 	}
@@ -1270,16 +1215,6 @@ void save_ghost()
 	for(int i = 0; i < 6; ++i) {
 		file.int_value(spells[i]);
 	}
-}
-
-int write2(FILE *file, char *buffer, int count)
-{
-	return fwrite(buffer, 1, count, file);
-}
-
-int read2(FILE *file, char *buffer, int count)
-{
-	return fread(buffer, 1, count, file);
 }
 
 int search_spell_list(int * spell_list, int ignore_spell, int * secondary_spell_list)
