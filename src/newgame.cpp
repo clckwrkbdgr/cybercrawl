@@ -18,6 +18,7 @@
 #include "randart.h"
 #include "skills2.h"
 #include "stuff.h"
+#include "files.h"
 
 int class_allowed(int speci, int clas);
 void init_player(void);
@@ -55,18 +56,7 @@ std::string input_name()
 
 bool char_already_exists()
 {
-	std::string name = you[0].your_name;
-	if(name.size() > 6) {
-		name = std::string(name, 0, 6);
-	}
-	cprintf(std::string(name + ".sav").c_str());
-	int handle = open(std::string(name + ".sav").c_str(), S_IWRITE, S_IREAD);
-	if (handle != -1) {
-		close(handle);
-		return true;
-	}
-	close(handle);
-	return false;
+	return file_exists(you[0].your_name + ".sav");
 }
 
 void apply_species(int species)

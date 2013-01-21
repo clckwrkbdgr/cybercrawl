@@ -1,5 +1,6 @@
 
 #include "linuxlib.h"
+#include "stuff.h"
 
 #include <vector>
 #include <string.h>
@@ -376,7 +377,7 @@ finished_spells:
 		dmp[i] += "\n";
 		str_length = dmp [i].size();
 		if (str_length > 79) str_length = 79;
-		write(handle, std::string(dmp[i], 0, str_length).data(), str_length);
+		write(handle, substring(dmp[i], str_length).data(), str_length);
 	}
 
 	close(handle);

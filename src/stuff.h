@@ -5,4 +5,4 @@ int see_grid(int grx, int gry);
 int magic_ability(int mag_abil, int intel);
 void end(int end_arg);
 void redraw_screen(void);
-
+std::string substring(const std::string & string, size_t size);

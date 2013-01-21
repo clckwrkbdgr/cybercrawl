@@ -478,7 +478,7 @@ std::string weapon_category(int item_class, int item_type)
 
 std::string weapon_description(ItemInfo item)
 {
-	std::string unrandart_description = std::string(unrandart_descrip(1, item.item_class, item.type, item.plus, item.plus2));
+	std::string unrandart_description = unrandart_descrip(1, item.item_class, item.type, item.plus, item.plus2);
 	bool is_unrandart = (item.dam % 30 == 25 && unrandart_description.size() != 0);
 	bool is_missile_device = (item.type >= 13 && item.type <= 16);
 	bool is_virused = (item.plus >= 100 && item.id >= 1);

@@ -718,7 +718,7 @@ if (you[0].level_type == 1 || you[0].level_type == 2 || you[0].level_type == 3)
 {
 
 Format format("@1.lab");
-format << std::string(you[0].your_name, 6);
+format << substring(you[0].your_name, 6);
 unlink(format.str().c_str());
 
 #ifdef DEBUG

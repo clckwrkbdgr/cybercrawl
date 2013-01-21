@@ -15,6 +15,14 @@
 
 extern int wield_change;
 
+std::string substring(const std::string & string, size_t size)
+{
+	if(string.size() < size) {
+		return string;
+	}
+	return std::string(string, 0, size);
+}
+
 int random2(int randmax)
 {
  if (randmax <= 0) return 0;

@@ -11,6 +11,7 @@
 #include "itemname.h"
 #include "player.h"
 #include "ouch.h"
+#include "stuff.h"
 
 int wield_change;
 
@@ -171,7 +172,7 @@ void print_stats(void)
 			if (you[0].equip [EQ_WEAPON] <= 25) putch(you[0].equip [EQ_WEAPON] + 97);
 			else putch(you[0].equip [EQ_WEAPON] + 39);
 			cprintf(" - ");
-			cprintf(std::string(in_name(you[0].equip [EQ_WEAPON], 3), 0, 34).c_str());
+			cprintf(substring(in_name(you[0].equip [EQ_WEAPON], 3), 34).c_str());
 			textcolor(LIGHTGREY);
 		} else
 		{

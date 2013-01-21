@@ -309,7 +309,7 @@ void process_control(int keyin, int & move_x, int & move_y) // FIXME References 
 				  //  case '^': disarm_trap(); break;
 
 		case '#':
-				  if (dump_char(0, std::string(you[0].your_name, 6).c_str()) == 1)
+				  if (dump_char(0, substring(you[0].your_name, 6).c_str()) == 1)
 					  mpr("Char dumped successfully.");
 				  else
 					  mpr("Char dump unsuccessful! Sorry about that.");

@@ -514,7 +514,8 @@ void ouch(int dam, int death_source, int death_type)
 	std::string death_string;
 	death_string += to_string(points, 9);
 
-	death_string += std::string(you[0].your_name, 14);
+	// TODO here:
+	death_string += substring(you[0].your_name, 14);
 	death_string += "-";
 	death_string += species_abbr(you[0].species);
 	death_string += you[0].clasnam [0];
@@ -533,28 +534,22 @@ void ouch(int dam, int death_source, int death_type)
 
 void end_game(int end_status, const std::string & death_string)
 {
-	int handle, i;
 	int status2 = end_status;
 	set_status(end_status);
 
 	int sysg = 0;
 
-	std::string short_name = std::string(you[0].your_name, 6);
+	std::string short_name = you[0].your_name;
 
 	int fi = 0;
 	int fi2 = 0;
 
 	for (fi2 = 0; fi2 < 30; fi2 ++) {
 		for (fi = 0; fi < 50; fi ++) {
-			Format format("@1.@2@3@4");
-			format << short_name << ((fi < 10) ? "0" : "") << fi << char(fi2 + 97);
-			handle = open(format.str().c_str(), S_IWRITE, S_IREAD);
-
-			if (handle != -1)
-			{
-				close(handle);
-				unlink(format.str().c_str());
-			} else close(handle);
+			std::string filename = construct_filename(short_name, fi, fi2, false);
+			if(file_exists(filename)) {
+				unlink(filename.c_str());
+			}
 		}
 	}
 
@@ -572,12 +567,12 @@ void end_game(int end_status, const std::string & death_string)
 	more();
 
 
-	for (i = 0; i < 52; i ++)
+	for (int i = 0; i < 52; i ++)
 	{
 		you[0].inv_ident [i] = 3;
 	}
 
-	for (i = 0; i < 52; i ++)
+	for (int i = 0; i < 52; i ++)
 	{
 		if (you[0].inv_class [i] != 0)
 		{
@@ -596,7 +591,7 @@ void end_game(int end_status, const std::string & death_string)
 	int p = 0;
 	for (p = 0; p < 52; p ++)
 	{
-		for (i = 0; i < ITEMS; i++)
+		for (int i = 0; i < ITEMS; i++)
 		{
 			if (mitm.iquant [i] == 0)
 			{
@@ -617,7 +612,7 @@ void end_game(int end_status, const std::string & death_string)
 	} // end of p loop
 
 
-	for (i = 0; i < ITEMS; i ++)
+	for (int i = 0; i < ITEMS; i ++)
 	{
 		mitm.iid [i] = 0;
 	}
