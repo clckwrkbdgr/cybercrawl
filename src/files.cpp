@@ -409,21 +409,7 @@ void FollowersData::add_followers()
 
 template<class T>
 void file_level(T & file)
-
-void load_level(const std::string & filename)
 {
-	FileReader file(filename);
-	if(!file.is_valid()) {
-		cprintf("Cannot open file for reading!");
-		end(-1);
-	}
-
-	for (int count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
-	for (int i = 0; i < GXM; i ++) {
-		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
-	}
-
-
 	file.str_value(ghost.gname, 20);
 	for(int i=0; i<20; ++i) {
 		file.int_value(ghost.ghs[i]);
@@ -506,6 +492,22 @@ void load_level(const std::string & filename)
 			file.int_value(menv[i].m_inv[j]);
 		}
 	}
+}
+
+void load_level(const std::string & filename)
+{
+	FileReader file(filename);
+	if(!file.is_valid()) {
+		cprintf("Cannot open file for reading!");
+		end(-1);
+	}
+
+	for (int count_x = 0; count_x < ITEMS; count_x ++) mitm.ilink[count_x]=501;
+	for (int i = 0; i < GXM; i ++) {
+		for (int j = 0; j < GYM; j ++) igrd [i] [j] = 501;
+	}
+
+	file_level(file);
 
 	for (int count_x = 0; count_x < GXM; count_x ++) {
 		for (int count_y = 0; count_y < GYM; count_y ++) {
@@ -875,88 +877,7 @@ void save_level (int level_saved, int was_a_labyrinth, int where_were_you)
 		}
 	}
 
-	file.str_value(ghost.gname, 20);
-	for (int i=0; i<20; ++i) {
-		file.int_value(ghost.ghs[i]);
-	}
-
-	for (int count_x = 0; count_x < GXM; count_x ++) {
-		for (int count_y = 0; count_y < GYM; count_y++) {
-			file.int_value(grd [count_x] [count_y]);
-			file.int_value(env[0].map [count_x] [count_y]);
-			file.int_value(mgrd [count_x] [count_y]);
-			file.int_value(env[0].cgrid [count_x] [count_y]);
-		}
-	}
-
-	for (int i=0; i<NTRAPS; ++i) {
-		file.int_value(env[0].trap_type [i]);
-		file.int_value(env[0].trap_x [i]);
-		file.int_value(env[0].trap_y [i]);
-	}
-
-	for (int i=0; i<ITEMS; ++i) {
-		file.int_value(mitm.iclass[i]);
-		file.int_value(mitm.itype[i]);
-		file.int_value(mitm.iplus[i]);
-		file.int_value(mitm.idam[i]);
-		file.int_value(mitm.iquant[i]);
-		file.int_value(mitm.icol[i]);
-		file.int_value(mitm.ix[i]);
-		file.int_value(mitm.iy[i]);
-		file.int_value(mitm.iid[i]);
-		file.int_value(mitm.ilink[i]);
-		file.int_value(igrd[mitm.ix[i]][mitm.iy[i]]);
-		file.int_value(mitm.iplus2[i]);
-	}
-
-	file.int_value(env[0].cloud_no);
-
-	for (int i = 0; i < CLOUDS; ++i) {
-		file.int_value(env[0].cloud_x[i]);
-		file.int_value(env[0].cloud_y[i]);
-		file.int_value(env[0].cloud_type[i]);
-		file.int_value(env[0].cloud_decay[i]);
-	}
-
-	for (int i = 0; i < 5; ++i) {
-		file.int_value(env[0].keeper_name [i] [0]);
-		file.int_value(env[0].keeper_name [i] [1]);
-		file.int_value(env[0].keeper_name [i] [2]);
-		file.int_value(env[0].sh_x [i]);
-		file.int_value(env[0].sh_y [i]);
-		file.int_value(env[0].sh_greed [i]);
-		file.int_value(env[0].sh_type [i]);
-		file.int_value(env[0].sh_level [i]);
-	}
-
-	for (int i=0; i<20; ++i) {
-		file.int_value(env[0].mons_alloc[i]);
-	}
-
-	for (int i = 0; i < MNST; i++) {
-		file.int_value(menv [i].m_AC);
-		file.int_value(menv [i].m_ev);
-		file.int_value(menv [i].m_HD);
-		file.int_value(menv [i].m_speed);
-		file.int_value(menv [i].m_speed_inc);
-		file.int_value(menv [i].m_beh);
-		file.int_value(menv [i].m_x);
-		file.int_value(menv [i].m_y);
-		file.int_value(menv [i].m_targ_1_x);
-		file.int_value(menv [i].m_targ_1_y);
-		file.int_value(menv [i].m_ench_1);
-		for (int j = 0; j < 3; j++) {
-			file.int_value(menv [i].m_ench [j]);
-		}
-		file.int_value(menv[i].m_class);
-		file.int_value(menv[i].m_hp);
-		file.int_value(menv[i].m_hp_max);
-		file.int_value(menv[i].m_sec);
-		for (int j = 0; j < 8; j ++) {
-			file.int_value(menv[i].m_inv[j]);
-		}
-	}
+	file_level(file);
 }
 
 template<class T>
