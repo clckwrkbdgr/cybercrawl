@@ -1,4 +1,6 @@
 /* 4/17/81 (Berkeley) @(#)curses.h	1.7 */
+#include <ncurses.h>
+#if 0
 # ifndef WINDOW
 
 # include	<stdio.h>
@@ -135,3 +137,4 @@ WINDOW	*initscr(), *newwin(), *subwin();
 char	*longname();
 
 # endif
+#endif

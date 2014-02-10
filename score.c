@@ -38,6 +38,8 @@ typedef struct sc_ent	SCORE;
 
 SCORE	*scores;
 
+void endit();
+
 score(amount, flags, monst)
 register int amount, flags;
 register char monst;
@@ -49,7 +51,7 @@ register char monst;
     register SCORE *endsp;
     SCORE sbuf;
     static struct stat stbuf;
-    int	endit(), sccomp();
+    int	sccomp();
 
     /*
      * Open file and read list

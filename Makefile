@@ -15,12 +15,13 @@ CFILES=	vers.c armor.c chase.c command.c daemon.c daemons.c fight.c \
 	init.c io.c list.c main.c misc.c monsters.c move.c newlevel.c \
 	options.c pack.c passages.c potions.c rings.c rip.c rooms.c \
 	save.c scrolls.c sticks.c things.c weapons.c wizard.c
-CFLAGS= -O 
+CFLAGS= -O -Werror
 PROFLAGS= -p -O
-LDFLAGS=-i	# For PDP-11's
+#LDFLAGS=-i	# For PDP-11's
 #LDFLAGS=	# For VAXes
 VGRIND=/usr/ucb/vgrind
-CRLIB=	/usr/lib/libcurses.a
+CRLIB= -lcurses
+#CRLIB=	/usr/lib/libncurses.a
 #CRLIB=	/ra/csr/arnold/=lib/=curses/crlib
 #CRLIB=	/ra/csr/toy/_nc/crlib
 PCRLIB= -lcurses
@@ -41,16 +42,16 @@ GET=	echo
 .DEFAULT:
 	$(GET) $@
 
+rogue: newvers a.out
+	cp a.out rogue
+	strip rogue
+
 a.out: $(HDRS) $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(CRLIB) -ltermlib
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(CRLIB)
 	size a.out
 
 k.out: $(HDRS) $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(CRLIB) -ltermlib -o k.out
-
-rogue: newvers a.out
-	cp a.out rogue
-	strip rogue
 
 install: rogue
 	cp rogue $(DESTDIR)/u/games/rogue

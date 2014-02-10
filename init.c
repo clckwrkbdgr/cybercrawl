@@ -6,6 +6,7 @@
 
 #include "curses.h"
 #include <ctype.h>
+#include <string.h>
 #include "rogue.h"
 
 bool playing = TRUE, running = FALSE, wizard = FALSE;
@@ -505,8 +506,10 @@ struct h_list helpstr[] = {
     'd',	"	drop object",
     'c',	"	call object",
     'o',	"	examine/set options",
-    CTRL(L),	"	redraw screen",
-    CTRL(R),	"	repeat last message",
+    'L' & 037,	"	redraw screen",
+    'R' & 037,	"	repeat last message",
+    //CTRL('L'),	"	redraw screen",
+    //CTRL('R'),	"	repeat last message",
     ESCAPE,	"	cancel command",
     'v',	"	print program version number",
     '!',	"	shell escape",

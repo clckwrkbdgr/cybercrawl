@@ -17,12 +17,15 @@
 #include "curses.h"
 #include <signal.h>
 #include <pwd.h>
+#include <string.h>
 #include "machdep.h"
 #include "rogue.h"
 
 #ifdef CHECKTIME
 static int num_checks;		/* times we've gone over in checkout() */
 #endif
+
+bool _endwin;
 
 main(argc, argv, envp)
 char **argv;
@@ -34,7 +37,7 @@ char **envp;
     register struct object *obj;
     struct passwd *getpwuid();
     char *getpass(), *crypt();
-    int quit(), lowtime;
+    int lowtime;
     long now;
 
         if (getuid()!=0) nice(1);  /* lower priority slightly */
@@ -62,7 +65,8 @@ char **envp;
      * Check to see if he is a wizard
      */
     if (argc >= 2 && argv[1][0] == '\0')
-	if (strcmp(PASSWD, crypt(getpass("Wizard's password: "), "mT")) == 0)
+	if (strcmp(PASSWD, getpass("Wizard's password: ")) == 0)
+	//if (strcmp(PASSWD, crypt(getpass("Wizard's password: "), "mT")) == 0)
 	{
 	    wizard = TRUE;
 	    argv++;
@@ -209,7 +213,7 @@ char **envp;
  *	Exit the program abnormally.
  */
 
-endit()
+void endit()
 {
     fatal("Ok, if you want to exit that badly, I'll have to allow it\n");
 }
@@ -259,7 +263,7 @@ register int number, sides;
 /*
  * handle stop and start signals
  */
-tstp()
+void tstp()
 {
     mvcur(0, COLS - 1, LINES - 1, 0);
     endwin();
@@ -276,10 +280,12 @@ tstp()
 }
 # endif
 
+void quit();
+
 setup()
 {
 #ifdef CHECKTIME
-    int  checkout();
+    void  checkout();
 #endif
 
 #ifndef DUMP
@@ -287,7 +293,7 @@ setup()
     signal(SIGILL, auto_save);
     signal(SIGTRAP, auto_save);
     signal(SIGIOT, auto_save);
-    signal(SIGEMT, auto_save);
+    //signal(SIGEMT, auto_save);
     signal(SIGFPE, auto_save);
     signal(SIGBUS, auto_save);
     signal(SIGSEGV, auto_save);
@@ -329,7 +335,7 @@ playit()
      * set up defaults for slow terminals
      */
 
-    if (_tty.sg_ospeed < B1200)
+    if (false /*_tty.sg_ospeed < B1200*/)
     {
 	terse = TRUE;
 	jump = TRUE;
@@ -385,7 +391,7 @@ author()
 #endif
 
 #ifdef CHECKTIME
-checkout()
+void checkout()
 {
     static char *msgs[] = {
 	"The load is too high to be playing.  Please leave in %d minutes",
@@ -496,7 +502,7 @@ roguenotes()
 	short nread;
 
 	if ((notef = fopen (RNOTES, "r")) != NULL) {
-		while ((nread = fread (buf, 1, sizeof (buf), notef)) != NULL)
+		while ((nread = fread (buf, 1, sizeof (buf), notef)) != 0)
 			fwrite (buf, 1, nread, stdout);
 		fclose (notef);
 		printf ("\n[Press return to continue]");

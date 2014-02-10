@@ -14,7 +14,7 @@
  */
 
 /* #define	MAXUSERS	8	/* max number of users for this game */
-#undef	MAXLOAD		40	/* 10 * max 15 minute load average */
+//#undef	MAXLOAD		40	/* 10 * max 15 minute load average */
 
 #if MAXUSERS|MAXLOAD
 #define	CHECKTIME	10	/* number of minutes between load checks */

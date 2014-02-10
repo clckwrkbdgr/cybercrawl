@@ -8,6 +8,7 @@
 
 #include "curses.h"
 #include <ctype.h>
+#include <string.h>
 #include "rogue.h"
 
 #define	NUM_OPTS	(sizeof optlist / sizeof (OPTION))
@@ -186,7 +187,8 @@ WINDOW *win;
     {
 	if (c == -1)
 	    continue;
-	else if (c == _tty.sg_erase)	/* process erase character */
+	/*
+	else if (c == _tty.sg_erase)	// process erase character 
 	{
 	    if (sp > buf)
 	    {
@@ -198,12 +200,13 @@ WINDOW *win;
 	    }
 	    continue;
 	}
-	else if (c == _tty.sg_kill)	/* process kill character */
+	else if (c == _tty.sg_kill)	// process kill character
 	{
 	    sp = buf;
 	    wmove(win, oy, ox);
 	    continue;
 	}
+	*/
 	else if (sp == buf)
 	    if (c == '-')
 		break;
@@ -317,7 +320,7 @@ strucpy(s1, s2, len)
 register char *s1, *s2;
 register int len;
 {
-    register char *sp;
+    register const char *sp;
 
     while (len--)
     {

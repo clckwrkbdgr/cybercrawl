@@ -1,5 +1,6 @@
 #include "curses.h"
 #include "rogue.h"
+#include <string.h>
 
 /*
  * routines dealing specifically with rings
@@ -7,7 +8,7 @@
  * @(#)rings.c	3.17 (Berkeley) 6/15/81
  */
 
-char *malloc();
+// char *malloc(); // Conflicting decl.
 
 ring_on()
 {

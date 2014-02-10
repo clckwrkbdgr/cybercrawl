@@ -4,6 +4,7 @@
  */
 
 #include "curses.h"
+#include <string.h>
 #include "rogue.h"
 
 quaff()

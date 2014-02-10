@@ -176,14 +176,16 @@ passwd()
     mpos = 0;
     sp = buf;
     while ((c = getchar()) != '\n' && c != '\r' && c != '\033')
+		/*
 	if (c == _tty.sg_kill)
 	    sp = buf;
 	else if (c == _tty.sg_erase && sp > buf)
 	    sp--;
-	else
+	else */
 	    *sp++ = c;
     if (sp == buf)
 	return FALSE;
     *sp = '\0';
-    return (strcmp(PASSWD, crypt(buf, "mT")) == 0);
+    return (strcmp(PASSWD, buf) == 0);
+    //return (strcmp(PASSWD, crypt(buf, "mT")) == 0);
 }

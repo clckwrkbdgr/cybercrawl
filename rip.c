@@ -14,6 +14,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <ctype.h>
+#include <string.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include "machdep.h"
@@ -65,7 +66,8 @@ register char monst;
     killer = killname(monst);
     mvaddstr(17, 28-((strlen(killer)+1)/2), killer);
     mvaddstr(16, 33, vowelstr(killer));
-    mvaddstr(18, 28, sprintf(prbuf, "%2d", lt->tm_year));
+    sprintf(prbuf, "%2d", lt->tm_year);
+    mvaddstr(18, 28, prbuf);
     move(LINES-1, 0);
     draw(stdscr);
     score(purse, 0, monst);
@@ -101,7 +103,6 @@ char monst;
 	"quit",
 	"A total winner",
     };
-    int	endit();
 
     if (flags != -1)
 	endwin();
@@ -122,7 +123,7 @@ char monst;
     {
 	printf("[Press return to continue]");
 	fflush(stdout);
-	gets(prbuf);
+	fgets( prbuf , 255, stdin);
     }
 
     /*
@@ -203,7 +204,7 @@ char monst;
 	    else if (prflags == 2)
 	    {
 		fflush(stdout);
-		gets(prbuf);
+		fgets( prbuf , 255, stdin);
 		if (prbuf[0] == 'd')
 		{
 		    for (sc2 = scp; sc2 < &top_ten[9]; sc2++)

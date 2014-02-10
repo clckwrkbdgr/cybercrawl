@@ -13,6 +13,7 @@
 
 #include "curses.h"
 #include <ctype.h>
+#include <string.h>
 #include "rogue.h"
 
 /*
@@ -22,6 +23,8 @@
 
 static char msgbuf[BUFSIZ];
 static int newpos = 0;
+
+#define doadd printf
 
 /*VARARGS1*/
 msg(fmt, args)
@@ -76,15 +79,16 @@ endmsg()
     draw(cw);
 }
 
+/*
 doadd(fmt, args)
 char *fmt;
 int **args;
 {
     static FILE junk;
 
-    /*
+    *
      * Do the printf into buf
-     */
+     *
     junk._flag = _IOWRT + _IOSTRG;
     junk._ptr = &msgbuf[newpos];
     junk._cnt = 32767;
@@ -92,6 +96,7 @@ int **args;
     putc('\0', &junk);
     newpos = strlen(msgbuf);
 }
+*/
 
 /*
  * step_ok:
@@ -133,14 +138,16 @@ readchar()
  *	Print a readable version of a certain character
  */
 
+/*
 char *
 unctrl(ch)
 char ch;
 {
-    extern char *_unctrl[];		/* Defined in curses library */
+    extern char *_unctrl[];		// Defined in curses library
 
     return _unctrl[ch&0177];
 }
+*/
 
 /*
  * status:
@@ -253,6 +260,7 @@ char *message;
 /*
  * extra functions by DM
  */
+/*
 noecho()
 {
 	struct sgttyb data;
@@ -285,3 +293,4 @@ raw()
 	data.sg_flags |= RAW;
 	stty(_tty_ch, &data);
 }
+*/

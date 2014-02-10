@@ -9,13 +9,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <string.h>
+#include <errno.h>
 #include "rogue.h"
 
 typedef struct stat STAT;
 
-extern char *sys_errlist[], version[], encstr[];
+extern char version[], encstr[];
+//extern char *sys_errlist[], version[], encstr[];
 extern bool _endwin;
-extern int errno;
+//extern int errno;
 
 char *sbrk();
 
@@ -59,7 +62,7 @@ save_game()
 	strcpy(file_name, buf);
 gotfile:
 	if ((savef = fopen(file_name, "w")) == NULL)
-	    msg(sys_errlist[errno]);	/* fake perror() */
+	    msg(strerror(errno));	/* fake perror() */
     } while (savef == NULL);
 
     /*
@@ -74,7 +77,7 @@ gotfile:
  * automatically save a file.  This is used if a HUP signal is
  * recieved
  */
-auto_save()
+void auto_save()
 {
     register FILE *savef;
     register int i;
@@ -167,6 +170,7 @@ char **envp;
 	}
 
     environ = envp;
+	/*
     if (!My_term && isatty(2))
     {
 	register char	*sp;
@@ -179,6 +183,7 @@ char **envp;
     }
     else
 	setterm(Def_term);
+	*/
     strcpy(file_name, file);
     setup();
     clearok(curscr, TRUE);
