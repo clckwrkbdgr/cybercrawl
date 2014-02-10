@@ -504,3 +504,5 @@ long lseek();
 //extern int errno;
 
 struct trap *trap_at();
+
+#define TRACE(X, x) do { printf("\nTRACE %s=%" #X "\n", #x, (x)); fflush(stdout); } while(0)

@@ -46,6 +46,9 @@ rogue: newvers a.out
 	cp a.out rogue
 	strip rogue
 
+run: rogue
+	screen ./rogue
+
 a.out: $(HDRS) $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(CRLIB)
 	size a.out

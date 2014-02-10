@@ -85,30 +85,30 @@ init_player()
  */
 
 static char *rainbow[] = {
-    "Red",
-    "Blue",
-    "Green",
-    "Yellow",
-    "Black",
-    "Brown",
-    "Orange",
-    "Pink",
-    "Purple",
-    "Grey",
-    "White",
-    "Silver",
-    "Gold",
-    "Violet",
-    "Clear",
-    "Vermilion",
-    "Ecru",
-    "Turquoise",
-    "Magenta",
-    "Amber",
-    "Topaz",
-    "Plaid",
-    "Tan",
-    "Tangerine"
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "black",
+    "brown",
+    "orange",
+    "pink",
+    "purple",
+    "grey",
+    "white",
+    "silver",
+    "gold",
+    "violet",
+    "clear",
+    "vermilion",
+    "ecru",
+    "turquoise",
+    "magenta",
+    "amber",
+    "topaz",
+    "plaid",
+    "tan",
+    "tangerine"
 };
 
 #define NCOLORS (sizeof rainbow / sizeof (char *))
@@ -134,69 +134,69 @@ static char *sylls[] = {
 };
 
 static char *stones[] = {
-    "Agate",
-    "Alexandrite",
-    "Amethyst",
-    "Carnelian",
-    "Diamond",
-    "Emerald",
-    "Granite",
-    "Jade",
-    "Kryptonite",
-    "Lapus lazuli",
-    "Moonstone",
-    "Obsidian",
-    "Onyx",
-    "Opal",
-    "Pearl",
-    "Ruby",
-    "Saphire",
-    "Tiger eye",
-    "Topaz",
-    "Turquoise",
+    "agate",
+    "alexandrite",
+    "amethyst",
+    "carnelian",
+    "diamond",
+    "emerald",
+    "granite",
+    "jade",
+    "kryptonite",
+    "lapus lazuli",
+    "moonstone",
+    "obsidian",
+    "onyx",
+    "opal",
+    "pearl",
+    "ruby",
+    "saphire",
+    "tiger eye",
+    "topaz",
+    "turquoise",
 };
 
 #define NSTONES (sizeof stones / sizeof (char *))
 
 static char *wood[] = {
-    "Avocado wood",
-    "Balsa",
-    "Banyan",
-    "Birch",
-    "Cedar",
-    "Cherry",
-    "Cinnibar",
-    "Driftwood",
-    "Ebony",
-    "Eucalyptus",
-    "Hemlock",
-    "Ironwood",
-    "Mahogany",
-    "Manzanita",
-    "Maple",
-    "Oak",
-    "Persimmon wood",
-    "Redwood",
-    "Rosewood",
-    "Teak",
-    "Walnut",
-    "Zebra wood",
+    "avocado wood",
+    "balsa",
+    "banyan",
+    "birch",
+    "cedar",
+    "cherry",
+    "cinnibar",
+    "driftwood",
+    "ebony",
+    "eucalyptus",
+    "hemlock",
+    "ironwood",
+    "mahogany",
+    "manzanita",
+    "maple",
+    "oak",
+    "persimmon wood",
+    "redwood",
+    "rosewood",
+    "teak",
+    "walnut",
+    "zebra wood",
 };
 
 #define NWOOD (sizeof wood / sizeof (char *))
 
 static char *metal[] = {
-    "Aluminium",
-    "Bone",
-    "Brass",
-    "Bronze",
-    "Copper",
-    "Iron",
-    "Lead",
-    "Pewter",
-    "Steel",
-    "Tin",
-    "Zinc",
+    "aluminium",
+    "bone",
+    "brass",
+    "bronze",
+    "copper",
+    "iron",
+    "lead",
+    "pewter",
+    "steel",
+    "tin",
+    "zinc",
 };
 
 #define NMETAL (sizeof metal / sizeof (char *))
@@ -335,13 +335,17 @@ init_colors()
 {
     register int i;
     register char *str;
+	bool used[MAXPOTIONS];
+	memset(used, false, MAXPOTIONS * sizeof(used[0]));
 
     for (i = 0; i < MAXPOTIONS; i++)
     {
+		int index = 0;
 	do
-	    str = rainbow[rnd(NCOLORS)];
-	until (isupper(*str));
-	*str = tolower(*str);
+		index = rnd(NCOLORS);
+	until (!used[index]);
+	str = rainbow[index];
+	used[index] = true;
 	p_colors[i] = str;
 	p_know[i] = FALSE;
 	p_guess[i] = NULL;
@@ -397,14 +401,17 @@ init_stones()
 {
     register int i;
     register char *str;
+	bool used[NSTONES];
+	memset(used, false, NSTONES * sizeof(used[0]));
 
     for (i = 0; i < MAXRINGS; i++)
     {
+		int index = 0;
 	do
-	    str = stones[rnd(NSTONES)];
-	until (isupper(*str));
-	*str = tolower(*str);
-	r_stones[i] = str;
+	    index = rnd(NSTONES);
+	until (!used[index]);
+	used[index] = true;
+	r_stones[i] = stones[index];
 	r_know[i] = FALSE;
 	r_guess[i] = NULL;
 	if (i > 0)
@@ -422,24 +429,37 @@ init_materials()
 {
     register int i;
     register char *str;
+	bool used_metal[NMETAL], used_wood[NWOOD];
+	memset(used_metal, false, NMETAL * sizeof(used_metal[0]));
+	memset(used_wood, false, NWOOD * sizeof(used_wood[0]));
 
     for (i = 0; i < MAXSTICKS; i++)
     {
-	do
+	do {
+		int index = 0;
 	    if (rnd(100) > 50)
 	    {
-		str = metal[rnd(NMETAL)];
-		if (isupper(*str))
+			index = rnd(NMETAL);
+		if (!used_metal[index]) {
+			used_metal[index] = true;
+			str = metal[index];
 			ws_type[i] = "wand";
+			break;
+		}
 	    }
 	    else
 	    {
-		str = wood[rnd(NWOOD)];
-		if (isupper(*str))
+			index = rnd(NWOOD);
+		if (!used_wood[index]) {
+			used_wood[index] = true;
+			str = wood[index];
 			ws_type[i] = "staff";
+			break;
+		}
 	    }
-	until (isupper(*str));
-	*str = tolower(*str);
+	} until (false);
+
+	//*str = tolower(*str);
 	ws_made[i] = str;
 	ws_know[i] = FALSE;
 	ws_guess[i] = NULL;
