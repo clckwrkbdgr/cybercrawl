@@ -1,0 +1,44 @@
+user muuss
+pass cbsoem
+store Makefile Makefile.txt
+store armor.c armor.c
+store chase.c chase.c
+store checkit.c checkit.c
+store command.c command.c
+store curses.h curses.h
+store daemon.c daemon.c
+store daemons.c daemons.c
+store fight.c fight.c
+store helplist helplist.txt
+store init.c init.c
+store io.c io.c
+store linterrs linterrs.txt
+store list.c list.c
+store machdep.h machdep.h
+store main.c main.c
+store misc.c misc.c
+store mkpwd.c mkpwd.c
+store monsters.c monsters.c
+store move.c move.c
+store newlevel.c newlevel.c
+store options.c options.c
+store pack.c pack.c
+store passages.c passages.c
+store potions.c potions.c
+store rings.c rings.c
+store rip.c rip.c
+store rogue.doc rogue.doc
+store rogue.h rogue.h
+store rooms.c rooms.c
+store save.c save.c
+store score.c score.c
+store scrolls.c scrolls.c
+store sticks.c sticks.c
+store thinglist thinglist.txt
+store things.c things.c
+store things.doc things.doc
+store todo todo.txt
+store vers.c vers.c
+store weapons.c weapons.c
+store wizard.c wizard.c
+bye

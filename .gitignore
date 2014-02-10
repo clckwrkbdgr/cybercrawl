@@ -1,0 +1,14 @@
+# Vim
+*.swp
+
+# Build
+*.o
+crawl
+crawl.exe
+
+# Savefiles and morgue
+crawl.log
+morgue.txt
+scores
+*.??a
+*.sav

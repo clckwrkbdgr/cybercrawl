@@ -1,0 +1,82 @@
+From keithe@teklabs Tue Dec 15 16:31:06 1981
+rogue messages      : net.games
+Here are some messages you may get (and their meanings) when
+playing the game:
+
+
+your hands begin to glow red - scroll of confuse monster
+the [room hallway] is light (by a shimmering blue light) - scroll of light
+your [armor] glows faintly for a moment - scroll of enchant armor
+you fall asleep - scroll of sleep
+you hear a faint cry of anguish in the distance - scroll of create monster
+	(which has failed to create a monster)
+*** A scroll of create monster has a randomized chance of succeeding ***
+*** If no monstyer is created, you get this message                  ***
+identify what -- more-- - scroll of identify
+oh now this scroll has a map on it - scroll of magic mapping
+you begin to feel greedy and you sense gold - scroll of gold detection
+you feel a pull downward - scroll of gold detection, but no gold on
+	current level
+your [weapon] glows blue for a moment - scroll of enchant weapon
+you feel a strange sense of loss - scroll of enchant [weapon or armor] but
+	you aren't [wearing any or wielding one]
+you hear a maniacal laughter in the distance - you read a scroll of scare
+	monster, which invalidates the scroll
+as you pick up the scroll it turns to dust - you tried to retrieve a
+	scroll of scare monster
+you feel as if someone is watching over you - scroll of remove curses
+you hear a high pitched humming noise - scroll of aggravate monster
+this scroll seems to be blank - you read a NOP scroll
+you have been granted the boon of genocide - lucky you!
+wait, what's going on here... - potion of confusion
+you feel very sick - potion of poison
+you feel momentarily sick - potion of poison, but you're wearing a ring
+	of retain strength
+you feel better - potion of healing (also restores sight if blind)
+you begin to sense the presence of monsters - potion of monster detection
+you sense the presence of magic on this level - potion of magic detection
+you have a strange feeling for a moment, then it passes - potion of
+	[monster or magic] detection, but none remaining on this level
+you can't move - potion of paralysis
+this potion tastes like [fruit] juice - potion of see invisible
+you suddenly feel much more skillful - potion of raise skill (experience)
+you begin to feel much better - potion of extra healing
+you feel yourself moving much faster - potion of haste self
+hey, this tastes great... - potion of restore strength
+a cloak of darkness falls around you - potion of blindness (uh-oh)
+this potion tastes extremely dull - NOP potion
+what a bizzare schtick - you just zapped with a do nothing stick
+you have a tingling feeling - you just zapped with a staff of drain life,
+	but there were no monsters to drain life from
+you are too weak to use it - you tried to zap with a staff of drain life but
+	you don't have enough hit points left (you must have 2 or more)
+*** A staff of drain life works by reducing YOUR hit points in half, and ***
+*** taking the same amount, divided evenly, from all the monsters in the ***
+*** room. So it's best to use the drain life staff in a room with only   ***
+*** one monster, or better yet, in a hallway, to get most effectiveness. ***
+
+When zapping with an unknown stick (generic term for staff, wand, rod), you
+may get any of the following responses:
+
+nothing happens - your stick is all used up
+
+" " (no response) - any of the following may be true:
+	staff of haste monster
+	staff of slow monster
+	staff of polymorph (but a monster will change to another monster)
+	staff of teleport away (but the monster disappears, temporarily)
+	staff of teleport to (but now you're next to the monster (!))
+	staff of cancellation  This removes a monster's ability to do any
+		of its evil magic on you. The following monsters are thusly
+		affected:
+
+		Rust Monsters 	cannot ruin your armor
+		Floating Eyes	cannot tranfix you
+		Giant Ants	cannot sting you
+		Wraiths		cannot drain your energy
+		Violet Fungi	cannot hold you
+		Leperchauns	cannot steal your gold
+		Nymphs		cannot steal your magic items
+
+		But apparently Umber Hulks can still confuse you.
+
