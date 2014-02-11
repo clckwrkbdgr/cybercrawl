@@ -24,8 +24,6 @@
 static char msgbuf[BUFSIZ];
 static int newpos = 0;
 
-#define doadd printf
-
 /*VARARGS1*/
 msg(fmt, args)
 char *fmt;
@@ -44,7 +42,8 @@ int args;
     /*
      * otherwise add to the message and flush it out
      */
-    doadd(fmt, &args);
+	sprintf(&msgbuf[newpos], fmt, args);
+    newpos = strlen(msgbuf);
     endmsg();
 }
 
@@ -55,7 +54,8 @@ addmsg(fmt, args)
 char *fmt;
 int args;
 {
-    doadd(fmt, &args);
+	sprintf(&msgbuf[newpos], fmt, args);
+    newpos = strlen(msgbuf);
 }
 
 /*
@@ -78,25 +78,6 @@ endmsg()
     newpos = 0;
     draw(cw);
 }
-
-/*
-doadd(fmt, args)
-char *fmt;
-int **args;
-{
-    static FILE junk;
-
-    *
-     * Do the printf into buf
-     *
-    junk._flag = _IOWRT + _IOSTRG;
-    junk._ptr = &msgbuf[newpos];
-    junk._cnt = 32767;
-    _doprnt(fmt, args, &junk);
-    putc('\0', &junk);
-    newpos = strlen(msgbuf);
-}
-*/
 
 /*
  * step_ok:
