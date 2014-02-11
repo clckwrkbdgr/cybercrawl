@@ -3,18 +3,13 @@
 # %W% (Berkeley) %G%
 #
 HDRS=	rogue.h machdep.h
-OBJS=	vers.o armor.o chase.o command.o daemon.o daemons.o fight.o \
-	init.o io.o list.o main.o misc.o monsters.o move.o newlevel.o \
-	options.o pack.o passages.o potions.o rings.o rip.o rooms.o \
-	save.o scrolls.o sticks.o things.o weapons.o wizard.o
-POBJS=	vers.po armor.po chase.po command.po daemon.po daemons.po fight.po \
-	init.po io.po list.po main.po misc.po monsters.po move.po newlevel.po \
-	options.po pack.po passages.po potions.po rings.po rip.po rooms.po \
-	save.po scrolls.po sticks.po things.po weapons.po wizard.po
 CFILES=	vers.c armor.c chase.c command.c daemon.c daemons.c fight.c \
 	init.c io.c list.c main.c misc.c monsters.c move.c newlevel.c \
 	options.c pack.c passages.c potions.c rings.c rip.c rooms.c \
 	save.c scrolls.c sticks.c things.c weapons.c wizard.c
+$(shell mkdir -p tmp)
+OBJS = $(addprefix tmp/,$(CFILES:.c=.o))
+POBJS = $(addprefix tmp/,$(CFILES:.c=.po))
 CFLAGS= -O -Werror
 PROFLAGS= -p -O
 #LDFLAGS=-i	# For PDP-11's
@@ -32,6 +27,10 @@ GET=	echo
 
 .SUFFIXES: .po
 
+rogue: newvers a.out
+	cp a.out rogue
+	strip rogue
+
 .c.po:
 	@echo $(CC) -c $(PROFLAGS) $?
 	@rm -f x.c
@@ -39,12 +38,11 @@ GET=	echo
 	@$(CC) -c $(PROFLAGS) x.c
 	@mv x.o $*.po
 
-.DEFAULT:
-	$(GET) $@
+#.DEFAULT:
+#	$(GET) $@
 
-rogue: newvers a.out
-	cp a.out rogue
-	strip rogue
+tmp/%.o: %.c $(HRDS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 run: rogue
 	screen ./rogue
