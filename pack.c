@@ -77,7 +77,7 @@ bool silent;
     if (obj->o_type == SCROLL && obj->o_which == S_SCARE)
 	if (obj->o_flags & ISFOUND)
 	{
-	    msg("The scroll turns to dust as you pick it up.");
+	    msg("The nanodevice turns to dust as you pick it up.");
 	    detach(lvl_obj, item);
 	    mvaddch(hero.y, hero.x, FLOOR);
 	    return;

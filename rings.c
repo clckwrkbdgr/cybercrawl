@@ -28,9 +28,9 @@ ring_on()
     if (obj->o_type != RING)
     {
 	if (!terse)
-	    msg("It would be difficult to wrap that around a finger");
+	    msg("It would be difficult to wrap that around a wrist");
 	else
-	    msg("Not a ring");
+	    msg("Not a wrist device");
 	return;
     }
 
@@ -52,7 +52,7 @@ ring_on()
     else
     {
 	if (!terse)
-	    msg("You already have a ring on each hand");
+	    msg("You already have a wrist device on each hand");
 	else
 	    msg("Wearing two");
 	return;
@@ -105,9 +105,9 @@ ring_off()
     if (cur_ring[LEFT] == NULL && cur_ring[RIGHT] == NULL)
     {
 	if (terse)
-	    msg("No rings");
+	    msg("No wristbands");
 	else
-	    msg("You aren't wearing any rings");
+	    msg("You aren't wearing any wrist devices");
 	return;
     }
     else if (cur_ring[LEFT] == NULL)
@@ -121,7 +121,7 @@ ring_off()
     obj = cur_ring[ring];
     if (obj == NULL)
     {
-	msg("Not wearing such a ring");
+	msg("Not wearing such a wrist device");
 	return;
     }
     if (dropcheck(obj))
@@ -135,7 +135,7 @@ gethand()
     for (;;)
     {
 	if (terse)
-	    msg("Left or Right ring? ");
+	    msg("Left or Right wrist? ");
 	else
 	    msg("Left hand or right hand? ");
 	if ((c = readchar()) == 'l' || c == 'L')

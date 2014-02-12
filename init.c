@@ -24,31 +24,31 @@ int lastscore = -1;
 #define _x {1,1}
 struct monster monsters[26] = {
 	/* Name		 CARRY	FLAG    str, exp, lvl, amr, hpt, dmg */
-	{ "giant ant",	 0,	ISMEAN,	{ _x, 10,   2,   3, ___, "1d6" } },
-	{ "bat",	 0,	0,	{ _x,  1,   1,   3, ___, "1d2" } },
-	{ "centaur",	 15,	0,	{ _x, 15,   4,   4, ___, "1d6/1d6" } },
-	{ "dragon",	 100,	ISGREED,{ _x,9000, 10,  -1, ___, "1d8/1d8/3d10" } },
-	{ "floating eye",0,	0,	{ _x,  5,   1,   9, ___, "0d0" } },
-	{ "violet fungi",0,	ISMEAN,	{ _x, 85,   8,   3, ___, "000d0" } },
-	{ "gnome",	 10,	0,	{ _x,  8,   1,   5, ___, "1d6" } },
-	{ "hobgoblin",	 0,	ISMEAN,	{ _x,  3,   1,   5, ___, "1d8" } },
+	{ "assassin",	 0,	ISMEAN,	{ _x, 10,   2,   3, ___, "1d6" } },
+	{ "bot",	 0,	0,	{ _x,  1,   1,   3, ___, "1d2" } },
+	{ "commando",	 15,	0,	{ _x, 15,   4,   4, ___, "1d6/1d6" } },
+	{ "destroyer",	 100,	ISGREED,{ _x,9000, 10,  -1, ___, "1d8/1d8/3d10" } },
+	{ "EMP turret",0,	0,	{ _x,  5,   1,   9, ___, "0d0" } },
+	{ "mutated fungi",0,	ISMEAN,	{ _x, 85,   8,   3, ___, "000d0" } },
+	{ "gangster",	 10,	0,	{ _x,  8,   1,   5, ___, "1d6" } },
+	{ "hound",	 0,	ISMEAN,	{ _x,  3,   1,   5, ___, "1d8" } },
 	{ "invisible stalker",0,ISINVIS,{ _x,120,   8,   3, ___, "4d4" } },
-	{ "jackal",	 0,	ISMEAN,	{ _x,  2,   1,   7, ___, "1d2" } },
-	{ "kobold",	 0,	ISMEAN,	{ _x,  1,   1,   7, ___, "1d4" } },
-	{ "leprechaun",	 0,	0,	{ _x, 10,   3,   8, ___, "1d1" } },
+	{ "junkie",	 0,	ISMEAN,	{ _x,  2,   1,   7, ___, "1d2" } },
+	{ "street kid",	 0,	ISMEAN,	{ _x,  1,   1,   7, ___, "1d4" } },
+	{ "looter",	 0,	0,	{ _x, 10,   3,   8, ___, "1d1" } },
 	{ "mimic",	 30,	0,	{ _x,140,   7,   7, ___, "3d4" } },
-	{ "nymph",	 100,	0,	{ _x, 40,   3,   9, ___, "0d0" } },
-	{ "orc",	 15,	ISBLOCK,{ _x,  5,   1,   6, ___, "1d8" } },
-	{ "purple worm", 70,	0,	{ _x,7000, 15,   6, ___, "2d12/2d4" } },
-	{ "quasit",	 30,	ISMEAN,	{ _x, 35,   3,   2, ___, "1d2/1d2/1d4" } },
-	{ "rust monster",0,	ISMEAN,	{ _x, 25,   5,   2, ___, "0d0/0d0" } },
-	{ "snake",	 0,	ISMEAN,	{ _x,  3,   1,   5, ___, "1d3" } },
-	{ "troll",	 50,	ISREGEN|ISMEAN,{ _x, 55,   6,   4, ___, "1d8/1d8/2d6" } },
-	{ "umber hulk",	 40,	ISMEAN,	{ _x,130,   8,   2, ___, "3d4/3d4/2d5" } },
-	{ "vampire",	 20,	ISREGEN|ISMEAN,{ _x,380,   8,   1, ___, "1d10" } },
-	{ "wraith",	 0,	0,	{ _x, 55,   5,   4, ___, "1d6" } },
-	{ "xorn",	 0,	ISMEAN,	{ _x,120,   7,  -2, ___, "1d3/1d3/1d3/4d6" } },
-	{ "yeti",	 30,	0,	{ _x, 50,   4,   6, ___, "1d6/1d6" } },
+	{ "netrunner",	 100,	0,	{ _x, 40,   3,   9, ___, "0d0" } },
+	{ "spec ops",	 15,	ISBLOCK,{ _x,  5,   1,   6, ___, "1d8" } },
+	{ "peacebringer", 70,	0,	{ _x,7000, 15,   6, ___, "2d12/2d4" } },
+	{ "quadruped mutant",	 30,	ISMEAN,	{ _x, 35,   3,   2, ___, "1d2/1d2/1d4" } },
+	{ "reptile",0,	ISMEAN,	{ _x, 25,   5,   2, ___, "0d0/0d0" } },
+	{ "smuggler",	 0,	ISMEAN,	{ _x,  3,   1,   5, ___, "1d3" } },
+	{ "tank",	 50,	ISREGEN|ISMEAN,{ _x, 55,   6,   4, ___, "1d8/1d8/2d6" } },
+	{ "unknown specimen",	 40,	ISMEAN,	{ _x,130,   8,   2, ___, "3d4/3d4/2d5" } },
+	{ "viper",	 20,	ISREGEN|ISMEAN,{ _x,380,   8,   1, ___, "1d10" } },
+	{ "mind wiper",	 0,	0,	{ _x, 55,   5,   4, ___, "1d6" } },
+	{ "exterminator",	 0,	ISMEAN,	{ _x,120,   7,  -2, ___, "1d3/1d3/1d3/4d6" } },
+	{ "yakuza",	 30,	0,	{ _x, 50,   4,   6, ___, "1d6/1d6" } },
 	{ "zombie",	 0,	ISMEAN,	{ _x,  7,   2,   8, ___, "1d8" } }
 };
 #undef ___
@@ -213,21 +213,21 @@ struct magic_item things[NUMTHINGS] = {
 
 struct magic_item s_magic[MAXSCROLLS] = {
     { "monster confusion",	 8, 170 },
-    { "magic mapping",		 5, 180 },
+    { "automapping",		 5, 180 },
     { "light",			10, 100 },
     { "hold monster",		 2, 200 },
     { "sleep",			 5,  50 },
-    { "enchant armor",		 8, 130 },
+    { "upgrade armor",		 8, 130 },
     { "identify",		21, 100 },
     { "scare monster",		 4, 180 },
-    { "gold detection",		 4, 110 },
+    { "credit detection",		 4, 110 },
     { "teleportation",		 7, 175 },
-    { "enchant weapon",		10, 150 },
+    { "upgrade weapon",		10, 150 },
     { "create monster",		 5,  75 },
-    { "remove curse",		 8, 105 },
+    { "unlocking",		 8, 105 },
     { "aggravate monsters",	 1,  60 },
-    { "blank paper",		 1,  50 },
-    { "genocide",		 1, 200 },
+    { "empty device",		 1,  50 },
+    { "gene bomb",		 1, 200 },
 };
 
 struct magic_item p_magic[MAXPOTIONS] = {
@@ -235,10 +235,10 @@ struct magic_item p_magic[MAXPOTIONS] = {
     { "paralysis",		10,  50 },
     { "poison",			 8,  50 },
     { "gain strength",		15, 150 },
-    { "see invisible",		 2, 170 },
+    { "infra-red vision",		 2, 170 },
     { "healing",		15, 130 },
-    { "monster detection",	 6, 120 },
-    { "magic detection",	 6, 105 },
+    { "monster scanner",	 6, 120 },
+    { "technology scanner",	 6, 105 },
     { "raise level",		 2, 220 },
     { "extra healing",		 5, 180 },
     { "haste self",		 4, 200 },
@@ -248,11 +248,11 @@ struct magic_item p_magic[MAXPOTIONS] = {
 };
 
 struct magic_item r_magic[MAXRINGS] = {
-    { "protection",		 9, 200 },
+    { "nano-shielf",		 9, 200 },
     { "add strength",		 9, 200 },
     { "sustain strength",	 5, 180 },
-    { "searching",		10, 200 },
-    { "see invisible",		10, 175 },
+    { "scanner",		10, 200 },
+    { "infra-red vision",		10, 175 },
     { "adornment",		 1, 100 },
     { "aggravate monster",	11, 100 },
     { "dexterity",		 8, 220 },
@@ -265,19 +265,19 @@ struct magic_item r_magic[MAXRINGS] = {
 
 struct magic_item ws_magic[MAXSTICKS] = {
     { "light",			12, 120 },
-    { "striking",		 9, 115 },
-    { "lightning",		 3, 200 },
-    { "fire",			 3, 200 },
-    { "cold",			 3, 200 },
-    { "polymorph",		15, 210 },
-    { "magic missile",		10, 170 },
+    { "machine",		 9, 115 },
+    { "tesla",		 3, 200 },
+    { "plasma",			 3, 200 },
+    { "cryo",			 3, 200 },
+    { "mutation",		15, 210 },
+    { "grenade",		10, 170 },
     { "haste monster",		 9,  50 },
     { "slow monster",		11, 220 },
-    { "drain life",		 9, 210 },
+    { "toxic",		 9, 210 },
     { "nothing",		 1,  70 },
     { "teleport away",		 5, 140 },
-    { "teleport to",		 5,  60 },
-    { "cancellation",		 5, 130 },
+    { "pulling",		 5,  60 },
+    { "discharge",		 5, 130 },
 };
 
 int a_class[MAXARMORS] = {
@@ -292,14 +292,14 @@ int a_class[MAXARMORS] = {
 };
 
 char *a_names[MAXARMORS] = {
-    "leather armor",
-    "ring mail",
-    "studded leather armor",
-    "scale mail",
-    "chain mail",
-    "splint mail",
-    "banded mail",
-    "plate mail",
+    "leather jacket",
+    "kevlar armor",
+    "nanofiber armor",
+    "exoskeleton",
+    "mechanic armor",
+    "power armor",
+    "combat suit",
+    "battle suit",
 };
 
 int a_chances[MAXARMORS] = {
@@ -443,7 +443,7 @@ init_materials()
 		if (!used_metal[index]) {
 			used_metal[index] = true;
 			str = metal[index];
-			ws_type[i] = "wand";
+			ws_type[i] = "gun";
 			break;
 		}
 	    }
@@ -453,7 +453,7 @@ init_materials()
 		if (!used_wood[index]) {
 			used_wood[index] = true;
 			str = wood[index];
-			ws_type[i] = "staff";
+			ws_type[i] = "rifle";
 			break;
 		}
 	    }
@@ -508,21 +508,21 @@ struct h_list helpstr[] = {
     'N',	"	run down & right",
     't',	"<dir>	throw something",
     'f',	"<dir>	forward until find something",
-    'p',	"<dir>	zap a wand in a direction",
-    'z',	"	zap a wand or staff",
+    'p',	"<dir>	fire a gun in a direction",
+    'z',	"	fire a gun or rifle",
     '>',	"	go down a staircase",
     's',	"	search for trap/secret door",
     ' ',	"	(space) rest for a while",
     'i',	"	inventory",
     'I',	"	inventory single item",
-    'q',	"	quaff potion",
-    'r',	"	read paper",
+    'q',	"	quaff vial",
+    'r',	"	run nanodevice",
     'e',	"	eat food",
     'w',	"	wield a weapon",
     'W',	"	wear armor",
     'T',	"	take armor off",
-    'P',	"	put on ring",
-    'R',	"	remove ring",
+    'P',	"	put on wrist device",
+    'R',	"	remove wrist device",
     'd',	"	drop object",
     'c',	"	call object",
     'o',	"	examine/set options",

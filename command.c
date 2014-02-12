@@ -475,22 +475,22 @@ identify()
 	case '|':
 	case '-':
 	    str = "wall of a room";
-	when GOLD: str = "gold";
+	when GOLD: str = "credits";
 	when STAIRS : str = "passage leading down";
 	when DOOR: str = "door";
 	when FLOOR: str = "room floor";
 	when PLAYER: str = "you";
 	when PASSAGE: str = "passage";
 	when TRAP: str = "trap";
-	when POTION: str = "potion";
-	when SCROLL: str = "scroll";
+	when POTION: str = "vial";
+	when SCROLL: str = "nanodevice";
 	when FOOD: str = "food";
 	when WEAPON: str = "weapon";
 	when ' ' : str = "solid rock";
 	when ARMOR: str = "armor";
-	when AMULET: str = "The Amulet of Yendor";
-	when RING: str = "ring";
-	when STICK: str = "wand or staff";
+	when AMULET: str = "Project 2051";
+	when RING: str = "wrist device";
+	when STICK: str = "gun or rifle";
 	otherwise: str = "unknown character";
     }
     msg("'%s' : %s", unctrl(ch), str);

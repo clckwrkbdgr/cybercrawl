@@ -26,9 +26,9 @@ register bool drop;
     {
 	when SCROLL:
 	    if (obj->o_count == 1)
-		strcpy(prbuf, "A scroll ");
+		strcpy(prbuf, "A nanodevice ");
 	    else
-		sprintf(prbuf, "%d scrolls ", obj->o_count);
+		sprintf(prbuf, "%d nanodevices ", obj->o_count);
 	    pb = &prbuf[strlen(prbuf)];
 	    if (s_know[obj->o_which])
 		sprintf(pb, "of %s", s_magic[obj->o_which].mi_name);
@@ -38,9 +38,9 @@ register bool drop;
 		sprintf(pb, "titled '%s'", s_names[obj->o_which]);
         when POTION:
 	    if (obj->o_count == 1)
-		strcpy(prbuf, "A potion ");
+		strcpy(prbuf, "A vial ");
 	    else
-		sprintf(prbuf, "%d potions ", obj->o_count);
+		sprintf(prbuf, "%d vials ", obj->o_count);
 	    pb = &prbuf[strlen(prbuf)];
 	    if (p_know[obj->o_which])
 		sprintf(pb, "of %s(%s)", p_magic[obj->o_which].mi_name,
@@ -49,11 +49,11 @@ register bool drop;
 		sprintf(pb, "called %s(%s)", p_guess[obj->o_which],
 		    p_colors[obj->o_which]);
 	    else if (obj->o_count == 1)
-		sprintf(prbuf, "A%s %s potion",
+		sprintf(prbuf, "A%s %s vial",
 		    vowelstr(p_colors[obj->o_which]),
 		    p_colors[obj->o_which]);
 	    else
-		sprintf(prbuf, "%d %s potions", obj->o_count,
+		sprintf(prbuf, "%d %s vials", obj->o_count,
 		    p_colors[obj->o_which]);
 	when FOOD:
 	    if (obj->o_which == 1)
@@ -87,7 +87,7 @@ register bool drop;
 	    else
 		sprintf(prbuf, "%s", a_names[obj->o_which]);
 	when AMULET:
-	    strcpy(prbuf, "The Amulet of Yendor");
+	    strcpy(prbuf, "The Project 2051");
 	when STICK:
 	    sprintf(prbuf, "A %s ", ws_type[obj->o_which]);
 	    pb = &prbuf[strlen(prbuf)];
@@ -102,13 +102,13 @@ register bool drop;
 		    ws_type[obj->o_which]);
         when RING:
 	    if (r_know[obj->o_which])
-		sprintf(prbuf, "A%s ring of %s(%s)", ring_num(obj),
+		sprintf(prbuf, "A%s wristband of %s(%s)", ring_num(obj),
 		    r_magic[obj->o_which].mi_name, r_stones[obj->o_which]);
 	    else if (r_guess[obj->o_which])
-		sprintf(prbuf, "A ring called %s(%s)",
+		sprintf(prbuf, "A wristband called %s(%s)",
 		    r_guess[obj->o_which], r_stones[obj->o_which]);
 	    else
-		sprintf(prbuf, "A%s %s ring", vowelstr(r_stones[obj->o_which]),
+		sprintf(prbuf, "A%s %s wristband", vowelstr(r_stones[obj->o_which]),
 		    r_stones[obj->o_which]);
 	otherwise:
 	    debug("Picked up something funny");
@@ -146,7 +146,7 @@ money()
 	    {
 		if (!terse)
 		    addmsg("You found ");
-		msg("%d gold pieces.", rp->r_goldval);
+		msg("%d credits.", rp->r_goldval);
 	    }
 	    purse += rp->r_goldval;
 	    rp->r_goldval = 0;
@@ -154,7 +154,7 @@ money()
 	    addch(FLOOR);
 	    return;
 	}
-    msg("That gold must have been counterfeit");
+    msg("That credits must have been counterfeit");
 }
 
 /*
@@ -219,7 +219,7 @@ register struct object *op;
 	    return TRUE;
     if (op->o_flags & ISCURSED)
     {
-	msg("You can't.  It appears to be cursed.");
+	msg("You can't.  It appears to be locked.");
 	return FALSE;
     }
     if (op == cur_weapon)

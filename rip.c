@@ -61,7 +61,7 @@ register char monst;
 	printw("%s\n", *dp++);
     mvaddstr(14, 28-((strlen(whoami)+1)/2), whoami);
     purse -= purse/10;
-    sprintf(buf, "%d Au", purse);
+    sprintf(buf, "%d Cr", purse);
     mvaddstr(15, 28-((strlen(buf)+1)/2), buf);
     killer = killname(monst);
     mvaddstr(17, 28-((strlen(killer)+1)/2), killer);
@@ -252,8 +252,8 @@ total_winner()
     addstr("     Congratulations, you have made it to the light of day!    \n");
     standend();
     addstr("\nYou have joined the elite ranks of those who have escaped the\n");
-    addstr("Dungeons of Doom alive.  You journey home and sell all your loot at\n");
-    addstr("a great profit and are admitted to the fighters guild.\n");
+    addstr("AIRA bunker alive. You journey back to base and sell all your loot at\n");
+    addstr("a great profit and are admitted to the Section 9.\n");
     mvaddstr(LINES - 1, 0, "--Press space to continue--");
     refresh();
     wait_for(' ');
@@ -331,7 +331,7 @@ total_winner()
 	mvprintw(c - 'a' + 1, 0, "%c) %5d  %s", c, worth, inv_name(obj, FALSE));
 	purse += worth;
     }
-    mvprintw(c - 'a' + 1, 0,"   %5d  Gold Peices          ", oldpurse);
+    mvprintw(c - 'a' + 1, 0,"   %5d  Credits              ", oldpurse);
     refresh();
     score(purse, 2);
     exit(0);

@@ -27,12 +27,12 @@ read_scroll()
     if (obj->o_type != SCROLL)
     {
 	if (!terse)
-	    msg("There is nothing on it to read");
+	    msg("There is no way to run it");
 	else
-	    msg("Nothing to read");
+	    msg("Nothing to run");
 	return;
     }
-    msg("As you read the scroll, it vanishes.");
+    msg("As you run the device, it vanishes.");
     /*
      * Calculate the effect it has on the poor guy.
      */
@@ -144,7 +144,7 @@ read_scroll()
 	    /*
 	     * Identify, let the rogue figure something out
 	     */
-	    msg("This scroll is an identify scroll");
+	    msg("This nanodevice is an identify nanodevice");
 	    s_know[S_IDENT] = TRUE;
 	    whatis();
 	when S_MAP:
@@ -152,7 +152,7 @@ read_scroll()
 	     * Scroll of magic mapping.
 	     */
 	    s_know[S_MAP] = TRUE;
-	    msg("Oh, now this scroll has a map on it.");
+	    msg("Oh, now this nanodevice has a map on it.");
 	    overwrite(stdscr, hw);
 	    /*
 	     * Take all the things we want to keep hidden out of the window
@@ -213,7 +213,7 @@ read_scroll()
 		{
 		    s_know[S_GFIND] = TRUE;
 		    show_win(hw,
-			"You begin to feel greedy and you sense gold.--More--");
+			"You begin to feel greedy and you sense credits.--More--");
 		}
 		else msg("You begin to feel a pull downward");
 	    }
@@ -268,7 +268,7 @@ read_scroll()
 	    aggravate();
 	    msg("You hear a high pitched humming noise.");
 	when S_NOP:
-	    msg("This scroll seems to be blank.");
+	    msg("This nanodevice seems to be empty.");
 	when S_GENOCIDE:
 	    msg("You have been granted the boon of genocide");
 	    genocide();

@@ -162,7 +162,7 @@ status()
 	    temp /= 10;
     }
     sprintf(buf, stdscr->_maxx > 79 ?
-		"Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %-2d"
+		"Level: %d  Cred: %-5d  Hp: %*d(%*d)  Str: %-2d"
 		: "L:%d G:%-5d H:%*d(%*d) S:%-2d",
 	level, purse, hpwidth, pstats.s_hpt, hpwidth, max_hp,
 	pstats.s_str.st_str);

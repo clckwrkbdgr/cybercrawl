@@ -121,7 +121,7 @@ quaff()
 		if (show)
 		{
 		    show_win(hw, 
-			"You sense the presence of magic on this level.--More--");
+			"You sense the presence of technology on this level.--More--");
 		    break;
 		}
 	    }

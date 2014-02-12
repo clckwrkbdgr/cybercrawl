@@ -161,7 +161,7 @@ int y, x;
 	{
 	    if (off(*tp, ISFOUND) && !save(VS_MAGIC))
 	    {
-		msg("The umber hulk's gaze has confused you.");
+		msg("The unknown specimen's gaze has confused you.");
 		if (on(player, ISHUH))
 		    lengthen(unconfuse, rnd(20)+HUHDURATION);
 		else

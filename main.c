@@ -118,9 +118,9 @@ char **envp;
 	atoi(getenv("SEED")) :
 	lowtime + getpid());
     if (wizard)
-	printf("Hello %s, welcome to dungeon #%d", whoami, dnum);
+	printf("Hello %s, welcome to bunker #%d\n", whoami, dnum);
     else
-	printf("Hello %s, just a moment while I dig the dungeon...", whoami);
+	printf("Hello %s, just a moment while I build the bunker...\n", whoami);
     fflush(stdout);
     seed = dnum;
     srand(seed);			/* Shake the dice */

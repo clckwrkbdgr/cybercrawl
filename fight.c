@@ -137,7 +137,7 @@ register struct thing *mp;
 		    {
 			addmsg("You are transfixed");
 			if (!terse)
-			    addmsg(" by the gaze of the floating eye.");
+			    addmsg(" by the strike of the EMP turret.");
 			endmsg();
 		    }
 		    no_command += rnd(2)+2;

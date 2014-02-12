@@ -11,13 +11,13 @@
 #define NONE 100
 
 char *w_names[MAXWEAPONS] = {
-    "mace",
-    "long sword",
+    "club",
+    "crowbar",
     "short bow",
     "arrow",
-    "dagger",
+    "knife",
     "rock",
-    "two handed sword",
+    "katana",
     "sling",
     "dart",
     "crossbow",

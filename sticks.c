@@ -12,7 +12,7 @@
 fix_stick(cur)
 register struct object *cur;
 {
-    if (strcmp(ws_type[cur->o_which], "staff") == 0)
+    if (strcmp(ws_type[cur->o_which], "rifle") == 0)
 	cur->o_damage = "2d3";
     else
 	cur->o_damage = "1d1";
@@ -39,12 +39,12 @@ bool gotdir;
     register struct thing *tp;
     register int y, x;
 
-    if ((item = get_item("zap with", STICK)) == NULL)
+    if ((item = get_item("fire with", STICK)) == NULL)
 	return;
     obj = (struct object *) ldata(item);
     if (obj->o_type != STICK)
     {
-	msg("You can't zap with that!");
+	msg("You can't fire with that!");
 	after = FALSE;
 	return;
     }
@@ -176,9 +176,9 @@ bool gotdir;
 		&& !save_throw(VS_MAGIC, ldata(find_mons(unc(bolt.o_pos)))))
 		    hit_monster(unc(bolt.o_pos), &bolt);
 	    else if (terse)
-		msg("Missle vanishes");
+		msg("Grenade vanishes");
 	    else
-		msg("The missle vanishes with a puff of smoke");
+		msg("The grenade vanishes with a puff of smoke");
 	    ws_know[WS_MISSILE] = TRUE;
 	}
 	when WS_HIT:
@@ -261,9 +261,9 @@ bool gotdir;
 	    if (obj->o_which == WS_ELECT)
 		name = "bolt";
 	    else if (obj->o_which == WS_FIRE)
-		name = "flame";
+		name = "plasma";
 	    else
-		name = "ice";
+		name = "icebolt";
 	    for (y = 0; y < BOLT_LENGTH && !used; y++)
 	    {
 		ch = winat(pos.y, pos.x);
