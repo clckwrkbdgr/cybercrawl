@@ -45,7 +45,7 @@ tmp/%.o: %.c $(HRDS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: rogue
-	screen ./rogue
+	screen sh -c './rogue || exec bash'
 
 a.out: $(HDRS) $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(CRLIB)
