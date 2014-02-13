@@ -73,7 +73,7 @@ init_player()
 	pstats.s_str.st_str = 16;
 	pstats.s_str.st_add = 0;
     }
-    pstats.s_dmg = "1d4";
+    strcpy(pstats.s_dmg, "1d4");
     pstats.s_arm = 10;
     max_stats = pstats;
     pack = NULL;

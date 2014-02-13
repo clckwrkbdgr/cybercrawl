@@ -13,67 +13,54 @@
 #include <errno.h>
 #include "rogue.h"
 
+#define AS_IT_IS(var) { &var, sizeof(var) }
+struct as_it_is_var {
+	void * variable;
+	int size;
+} as_it_is[] = {
+	AS_IT_IS(rooms), AS_IT_IS(rdes), AS_IT_IS(between), AS_IT_IS(level),
+	AS_IT_IS(purse), AS_IT_IS(ntraps), AS_IT_IS(no_move), AS_IT_IS(no_command),
+	AS_IT_IS(inpack), AS_IT_IS(max_hp), AS_IT_IS(lastscore), AS_IT_IS(no_food),
+	AS_IT_IS(count), AS_IT_IS(fung_hit), AS_IT_IS(quiet), AS_IT_IS(max_level),
+	AS_IT_IS(food_left), AS_IT_IS(group), AS_IT_IS(hungry_state),
+	AS_IT_IS(whoami), AS_IT_IS(fruit), AS_IT_IS(ch_ret), AS_IT_IS(nh),
+	AS_IT_IS(oldpos), AS_IT_IS(delta), AS_IT_IS(traps), AS_IT_IS(huh),
+	AS_IT_IS(running), AS_IT_IS(playing), AS_IT_IS(wizard), AS_IT_IS(after),
+	AS_IT_IS(notify), AS_IT_IS(fight_flush), AS_IT_IS(terse),
+	AS_IT_IS(door_stop), AS_IT_IS(jump), AS_IT_IS(slow_invent),
+	AS_IT_IS(firstmove), AS_IT_IS(waswizard), AS_IT_IS(askme), AS_IT_IS(amulet),
+	AS_IT_IS(in_shell), AS_IT_IS(take), AS_IT_IS(runch), AS_IT_IS(s_know),
+	AS_IT_IS(p_know), AS_IT_IS(r_know), AS_IT_IS(ws_know),
+	AS_IT_IS(max_stats)
+	{ 0, 0 }
+};
+
+write_game(FILE *savef)
+{
+	struct as_it_is_var * as_var = as_it_is;
+	while((as_var++)->variable) {
+		fwrite(as_var->variable, 1, as_var->size, savef);
+	}
+}
+
+read_game(FILE *savef)
+{
+	struct as_it_is_var * as_var = as_it_is;
+	while((as_var++)->variable) {
+		fread(as_var->variable, 1, as_var->size, savef);
+	}
+}
+
+
 #ifdef VARIABLES_TO_SAVE
 // Contains d_func() pointer
 delayed_action d_list[MAXDAEMONS]
 // Recreate linked_list of thing
-struct linked_list *mlist; // contains coord * t_dest and linked_list[object] * t_pack and stats (s_dmg);
+struct linked_list *mlist; // contains coord * t_dest and linked_list[object] * t_pack;
 // Recreate linked_list of object: contains o_text, o_damage, o_hurldamage
 struct linked_list *lvl_obj;		/* List of objects on this level */
-// contains coord * t_dest and linked_list[object] * t_pack and stats (s_dmg);
+// contains coord * t_dest and linked_list[object] * t_pack;
 struct thing player;			/* The rogue */
-// Contains s_dmg
-struct stats max_stats;			/* The maximum for the player */
-
-// Save/load as it is.
-struct room rooms[MAXROOMS];		/* One for each room -- A level */
-struct rdes rdes[MAXROOMS];
-int between;
-int level;				/* What level rogue is on */
-int purse;				/* How much gold the rogue has */
-int ntraps;				/* Number of traps on this level */
-int no_move;				/* Number of turns held in place */
-int no_command;				/* Number of turns asleep */
-int inpack;				/* Number of things in pack */
-int max_hp;				/* Player's max hit points */
-int lastscore;				/* Score before this turn */
-int no_food;				/* Number of levels without food */
-int count;				/* Number of times to repeat command */
-int fung_hit;				/* Number of time fungi has hit */
-int quiet;				/* Number of quiet turns */
-int max_level;				/* Deepest player has gone */
-int food_left;				/* Amount of food in hero's stomach */
-int group;				/* Current group number */
-int hungry_state;			/* How hungry is he */
-char whoami[80];			/* Name of player */
-char fruit[80];				/* Favorite fruit */
-coord ch_ret
-coord nh;
-coord oldpos;				/* Position before last look() call */
-coord delta;				/* Change indicated to get_dir() */
-traps[MAXTRAPS];
-char huh[80];				/* The last message printed */
-bool running;				/* True if player is running */
-bool playing;				/* True until he quits */
-bool wizard;				/* True if allows wizard commands */
-bool after;				/* True if we want after daemons */
-bool notify;				/* True if player wants to know */
-bool fight_flush;			/* True if toilet input */
-bool terse;				/* True if we should be short */
-bool door_stop;				/* Stop running when we pass a door */
-bool jump;				/* Show running as series of jumps */
-bool slow_invent;			/* Inventory one line at a time */
-bool firstmove;				/* First move after setting door_stop */
-bool waswizard;				/* Was a wizard sometime */
-bool askme;				/* Ask about unidentified things */
-bool amulet;				/* He found the amulet */
-bool in_shell;				/* True if executing a shell */
-char take;				/* Thing the rogue is taking */
-char runch;				/* Direction player is running */
-bool s_know[MAXSCROLLS];		/* Does he know what a scroll does */
-bool p_know[MAXPOTIONS];		/* Does he know what a potion does */
-bool r_know[MAXRINGS];			/* Does he know what a ring does */
-bool ws_know[MAXSTICKS];		/* Does he know what a stick does */
 
 // From player pack.
 struct object *cur_weapon;		/* Which weapon he is weilding */
@@ -180,8 +167,11 @@ register FILE *savef;
     fstat(fileno(savef), &sbuf);
     fwrite("junk", 1, 5, savef);
     fseek(savef, 0L, 0);
+	fwrite(version, 1, strlen(version) + 1, savef);
+	//encwrite(version, strlen(version) + 1, savef);
     _endwin = TRUE;
-    encwrite(version, sbrk(0) - version, savef);
+	write_game(savef);
+    //encwrite(version, sbrk(0) - version, savef);
     fclose(savef);
 }
 
@@ -189,37 +179,40 @@ restore(file, envp)
 register char *file;
 char **envp;
 {
-    register int inf;
+    register FILE* inf;
     extern char **environ;
     char buf[80];
     STAT sbuf2;
 
     if (strcmp(file, "-r") == 0)
 	file = file_name;
-    if ((inf = open(file, 0)) < 0)
+    if ((inf = fopen(file, "r")) == NULL)
     {
 	perror(file);
 	return FALSE;
     }
 
     fflush(stdout);
-    encread(buf, strlen(version) + 1, inf);
+	fread(buf, 1, strlen(version) + 1, inf);
+    //encread(buf, strlen(version) + 1, inf);
     if (strcmp(buf, version) != 0)
     {
 	printf("Sorry, saved game is out of date.\n");
 	return FALSE;
     }
 
-    fstat(inf, &sbuf2);
+    fstat(fileno(inf), &sbuf2);
     fflush(stdout);
-    brk(version + sbuf2.st_size);
-    lseek(inf, 0L, 0);
-    encread(version, (unsigned int) sbuf2.st_size, inf);
+    //brk(version + sbuf2.st_size);
+    //lseek(inf, 0L, 0);
+	read_game(inf);
+    //encread(version, (unsigned int) sbuf2.st_size, inf);
     /*
      * we do not close the file so that we will have a hold of the
      * inode for as long as possible
      */
 
+	/* TODO check inode savescumming.
     if (!wizard)
 	if (sbuf2.st_ino != sbuf.st_ino || sbuf2.st_dev != sbuf.st_dev)
 	{
@@ -231,6 +224,7 @@ char **envp;
 	    printf("Sorry, file has been touched.\n");
 	    return FALSE;
 	}
+	*/
     mpos = 0;
     mvwprintw(cw, 0, 0, "%s: %s", file, ctime(&sbuf2.st_mtime));
 
@@ -285,8 +279,6 @@ char **envp;
     waswizard = wizard;
     clearok(curscr, TRUE);
     touchwin(cw);
-
-	oldrp = roomin(&oldpos);
 
     playit();
     /*NOTREACHED*/

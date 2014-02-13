@@ -337,7 +337,7 @@ struct stats {
     int s_lvl;				/* Level of mastery */
     int s_arm;				/* Armor class */
     int s_hpt;				/* Hit points */
-    char *s_dmg;			/* String describing damage done */
+    char s_dmg[20];			/* String describing damage done */
 };
 
 /*
@@ -514,6 +514,8 @@ extern struct rdes
 	bool	conn[MAXROOMS];		/* possible to connect to room i? */
 	bool	isconn[MAXROOMS];	/* connection been made to room i? */
 	bool	ingraph;		/* this room in graph already? */
-} rdes[];
+} rdes[MAXROOMS];
 
 int lines(), cols(); // Predefined, instead of curses ones.
+coord ch_ret;				/* Where chasing takes you */
+coord nh;

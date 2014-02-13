@@ -44,6 +44,9 @@ rogue: newvers a.out
 tmp/%.o: %.c $(HRDS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+load: rogue
+	screen sh -c './rogue -r || exec bash'
+
 run: rogue
 	screen sh -c './rogue || exec bash'
 
