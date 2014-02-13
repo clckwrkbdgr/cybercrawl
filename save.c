@@ -64,7 +64,7 @@ read_object_list(struct linked_list ** l, FILE* savef)
 
 write_thing(struct thing * t, FILE * savef)
 {
-	fwrite(&t, 1, sizeof(struct thing), savef);
+	fwrite(t, 1, sizeof(struct thing), savef);
 	char t_dest = 0;
 	if(t->t_dest == &hero) {
 		t_dest = 100;
