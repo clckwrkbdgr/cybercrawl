@@ -126,22 +126,6 @@ read_monster_list(struct linked_list ** l, FILE* savef)
 	}
 }
 
-struct allocated_strings {
-	char ** array;
-	int size;
-} alloc_strings[] = {
-	{ s_names, MAXSCROLLS },
-	{ p_colors, MAXPOTIONS },
-	{ r_stones, MAXRINGS },
-	{ ws_made, MAXSTICKS },
-	{ s_guess, MAXSCROLLS },
-	{ p_guess, MAXPOTIONS },
-	{ r_guess, MAXRINGS },
-	{ ws_guess, MAXSTICKS },
-	{ ws_type, MAXSTICKS },
-	{ 0, 0 }
-};
-
 void write_win(WINDOW * win, FILE * savef)
 {
 	int x, y;
@@ -165,6 +149,38 @@ void read_win(WINDOW * win, FILE * savef)
 			char ch;
 			fread(&ch, 1, 1, savef);
 			mvwaddch(win, y, x, ch);
+		}
+	}
+}
+
+void write_string_array(char ** array, int count, FILE * savef)
+{
+	int index;
+	for(index = 0; index < count; ++index) {
+		int length = 0;
+		TRACE(d, array[index]);
+		if(array[index]) {
+			length = strlen(array[index]) + 1;
+			fwrite(&length, 1, sizeof(length), savef);
+			fwrite(array[index], 1, length, savef);
+		} else {
+			fwrite(&length, 1, sizeof(length), savef);
+		}
+	}
+}
+
+void read_string_array(char ** array, int count, FILE * savef)
+{
+	int index;
+	for(index = 0; index < count; ++index) {
+		int length;
+		fread(&length, 1, sizeof(length), savef);
+		TRACE(d, length);
+		if(length) {
+			array[index] = (char *) new(length);
+			fread(array[index], 1, length, savef);
+		} else {
+			array[index] = 0;
 		}
 	}
 }
@@ -239,20 +255,15 @@ write_game(FILE *savef)
 		fwrite(&d, 1, sizeof(d), savef);
 	}
 
-	struct allocated_strings * al_str = alloc_strings;
-	while((al_str++)->array) {
-		int index;
-		for(index = 0; index < al_str->size; ++index) {
-			int length = 0;
-			if(al_str->array[index]) {
-				length = strlen(al_str->array[index]) + 1;
-				fwrite(&length, 1, sizeof(length), savef);
-				fwrite(al_str->array[index], 1, length, savef);
-			} else {
-				fwrite(&length, 1, sizeof(length), savef);
-			}
-		}
-	}
+	write_string_array(s_names, MAXSCROLLS, savef);
+	write_string_array(p_colors, MAXPOTIONS, savef);
+	write_string_array(r_stones, MAXRINGS, savef);
+	write_string_array(ws_made, MAXSTICKS, savef);
+	write_string_array(s_guess, MAXSCROLLS, savef);
+	write_string_array(p_guess, MAXPOTIONS, savef);
+	write_string_array(r_guess, MAXRINGS, savef);
+	write_string_array(ws_guess, MAXSTICKS, savef);
+	write_string_array(ws_type, MAXSTICKS, savef);
 
 	write_win(cw, savef);
 	write_win(mw, savef);
@@ -324,21 +335,15 @@ read_game(FILE *savef)
 		}
 	}
 
-	//s_names[i] = (char *) new(strlen(prbuf)+1;
-	struct allocated_strings * al_str = alloc_strings;
-	while((al_str++)->array) {
-		int index;
-		for(index = 0; index < al_str->size; ++index) {
-			int length;
-			fread(&length, 1, sizeof(length), savef);
-			if(length) {
-				al_str->array[index] = (char *) new(length);
-				fread(al_str->array[index], 1, length, savef);
-			} else {
-				al_str->array[index] = 0;
-			}
-		}
-	}
+	read_string_array(s_names, MAXSCROLLS, savef);
+	read_string_array(p_colors, MAXPOTIONS, savef);
+	read_string_array(r_stones, MAXRINGS, savef);
+	read_string_array(ws_made, MAXSTICKS, savef);
+	read_string_array(s_guess, MAXSCROLLS, savef);
+	read_string_array(p_guess, MAXPOTIONS, savef);
+	read_string_array(r_guess, MAXRINGS, savef);
+	read_string_array(ws_guess, MAXSTICKS, savef);
+	read_string_array(ws_type, MAXSTICKS, savef);
 
 	read_win(cw, savef);
 	read_win(mw, savef);
