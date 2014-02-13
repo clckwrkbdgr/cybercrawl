@@ -35,12 +35,60 @@ struct as_it_is_var {
 	{ 0, 0 }
 };
 
+write_object_list(struct linked_list * l, FILE * savef)
+{
+	char ok = 1, end = 0;
+	struct linked_list * ptr = l;
+	while(ptr) {
+		fwrite(&ok, 1, 1, savef);
+		fwrite(ldata(ptr), 1, sizeof(struct object), savef);
+		ptr = next(ptr);
+	}
+	fwrite(&end, 1, 1, savef);
+}
+
+read_object_list(struct linked_list ** l, FILE* savef)
+{
+	*l = 0;
+	char ok = 1;
+	struct linked_list * ptr;
+	fread(&ok, 1, 1, savef);
+	while(ok) {
+		ptr = new_item(sizeof(struct object));
+		fread(ldata(ptr), 1, sizeof(struct object), savef);
+		attach(*l, ptr);
+
+		fread(&ok, 1, 1, savef);
+	}
+}
+
+
 write_game(FILE *savef)
 {
 	struct as_it_is_var * as_var = as_it_is;
 	while((as_var++)->variable) {
 		fwrite(as_var->variable, 1, as_var->size, savef);
 	}
+
+	if(lvl_obj) {
+		write_object_list(lvl_obj, savef);
+	}
+	
+	fwrite(&player, 1, sizeof(struct thing), savef);
+	char t_dest = 0;
+	if(player.t_dest == &hero) {
+		t_dest = 100;
+	}
+	int i;
+	for(i = 0; i < MAXROOMS; ++i) {
+		if(player.t_dest == &rooms[i].r_gold) {
+			t_dest = 10 + i;
+			break;
+		}
+	}
+	fwrite(&t_dest, 1, sizeof(t_dest), savef);
+	write_object_list(player.t_pack, savef);
+
 }
 
 read_game(FILE *savef)
@@ -49,6 +97,20 @@ read_game(FILE *savef)
 	while((as_var++)->variable) {
 		fread(as_var->variable, 1, as_var->size, savef);
 	}
+
+	read_object_list(&lvl_obj, savef);
+
+	fread(&player, 1, sizeof(struct thing), savef);
+	char t_dest = 0;
+	fread(&t_dest, 1, sizeof(t_dest), savef);
+	if(t_dest == 100) {
+		player.t_dest = &hero;
+	} else if(10 <= t_dest && t_dest < 100) {
+		player.t_dest = &rooms[t_dest - 10].r_gold;
+	} else {
+		player.t_dest = 0;
+	}
+	read_object_list(&player.t_pack, savef);
 }
 
 
@@ -57,10 +119,9 @@ read_game(FILE *savef)
 delayed_action d_list[MAXDAEMONS]
 // Recreate linked_list of thing
 struct linked_list *mlist; // contains coord * t_dest and linked_list[object] * t_pack;
-// Recreate linked_list of object: contains o_text, o_damage, o_hurldamage
-struct linked_list *lvl_obj;		/* List of objects on this level */
 // contains coord * t_dest and linked_list[object] * t_pack;
 struct thing player;			/* The rogue */
+t_dest: none, hero (player.t_pos), room->r_gold
 
 // From player pack.
 struct object *cur_weapon;		/* Which weapon he is weilding */
