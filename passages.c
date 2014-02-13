@@ -12,17 +12,7 @@
  *	Draw all the passages on a level.
  */
 
-do_passages()
-{
-    register struct rdes *r1, *r2;
-    register int i, j;
-    register int roomcount;
-    static struct rdes
-    {
-	bool	conn[MAXROOMS];		/* possible to connect to room i? */
-	bool	isconn[MAXROOMS];	/* connection been made to room i? */
-	bool	ingraph;		/* this room in graph already? */
-    } rdes[MAXROOMS] = {
+struct rdes rdes[MAXROOMS] = {
 	{ { 0, 1, 0, 1, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
 	{ { 1, 0, 1, 0, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
 	{ { 0, 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
@@ -32,7 +22,13 @@ do_passages()
 	{ { 0, 0, 0, 1, 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
 	{ { 0, 0, 0, 0, 1, 0, 1, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
 	{ { 0, 0, 0, 0, 0, 1, 0, 1, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0 },
-    };
+};
+
+do_passages()
+{
+    register struct rdes *r1, *r2;
+    register int i, j;
+    register int roomcount;
 
     /*
      * reinitialize room graph description

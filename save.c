@@ -13,6 +13,86 @@
 #include <errno.h>
 #include "rogue.h"
 
+#ifdef VARIABLES_TO_SAVE
+// Contains d_func() pointer
+delayed_action d_list[MAXDAEMONS]
+// Recreate linked_list of thing
+struct linked_list *mlist; // contains coord * t_dest and linked_list[object] * t_pack and stats (s_dmg);
+// Recreate linked_list of object: contains o_text, o_damage, o_hurldamage
+struct linked_list *lvl_obj;		/* List of objects on this level */
+// contains coord * t_dest and linked_list[object] * t_pack and stats (s_dmg);
+struct thing player;			/* The rogue */
+// Contains s_dmg
+struct stats max_stats;			/* The maximum for the player */
+
+// Save/load as it is.
+struct room rooms[MAXROOMS];		/* One for each room -- A level */
+struct rdes rdes[MAXROOMS];
+int between;
+int level;				/* What level rogue is on */
+int purse;				/* How much gold the rogue has */
+int ntraps;				/* Number of traps on this level */
+int no_move;				/* Number of turns held in place */
+int no_command;				/* Number of turns asleep */
+int inpack;				/* Number of things in pack */
+int max_hp;				/* Player's max hit points */
+int lastscore;				/* Score before this turn */
+int no_food;				/* Number of levels without food */
+int count;				/* Number of times to repeat command */
+int fung_hit;				/* Number of time fungi has hit */
+int quiet;				/* Number of quiet turns */
+int max_level;				/* Deepest player has gone */
+int food_left;				/* Amount of food in hero's stomach */
+int group;				/* Current group number */
+int hungry_state;			/* How hungry is he */
+char whoami[80];			/* Name of player */
+char fruit[80];				/* Favorite fruit */
+coord ch_ret
+coord nh;
+coord oldpos;				/* Position before last look() call */
+coord delta;				/* Change indicated to get_dir() */
+traps[MAXTRAPS];
+char huh[80];				/* The last message printed */
+bool running;				/* True if player is running */
+bool playing;				/* True until he quits */
+bool wizard;				/* True if allows wizard commands */
+bool after;				/* True if we want after daemons */
+bool notify;				/* True if player wants to know */
+bool fight_flush;			/* True if toilet input */
+bool terse;				/* True if we should be short */
+bool door_stop;				/* Stop running when we pass a door */
+bool jump;				/* Show running as series of jumps */
+bool slow_invent;			/* Inventory one line at a time */
+bool firstmove;				/* First move after setting door_stop */
+bool waswizard;				/* Was a wizard sometime */
+bool askme;				/* Ask about unidentified things */
+bool amulet;				/* He found the amulet */
+bool in_shell;				/* True if executing a shell */
+char take;				/* Thing the rogue is taking */
+char runch;				/* Direction player is running */
+bool s_know[MAXSCROLLS];		/* Does he know what a scroll does */
+bool p_know[MAXPOTIONS];		/* Does he know what a potion does */
+bool r_know[MAXRINGS];			/* Does he know what a ring does */
+bool ws_know[MAXSTICKS];		/* Does he know what a stick does */
+
+// From player pack.
+struct object *cur_weapon;		/* Which weapon he is weilding */
+struct object *cur_armor;		/* What a well dresssed rogue wears */
+struct object *cur_ring[2];		/* Which rings are being worn */
+
+// Strings. Recreate using new().
+char *s_names[MAXSCROLLS];		/* Names of the scrolls */
+char *p_colors[MAXPOTIONS];		/* Colors of the potions */
+char *r_stones[MAXRINGS];		/* Stone settings of the rings */
+char *ws_made[MAXSTICKS];		/* What sticks are made of */
+char *s_guess[MAXSCROLLS];		/* Players guess at what scroll is */
+char *p_guess[MAXPOTIONS];		/* Players guess at what potion is */
+char *r_guess[MAXRINGS];		/* Players guess at what ring is */
+char *ws_guess[MAXSTICKS];		/* Players guess at what wand is */
+char *ws_type[MAXSTICKS];		/* Is it a wand or a staff */
+
+#endif
+
 typedef struct stat STAT;
 
 extern char version[], encstr[];
@@ -185,10 +265,29 @@ char **envp;
 	setterm(Def_term);
 	*/
     strcpy(file_name, file);
+	seed = getpid();
+
+	// Afterload.
+    srand(seed);
+
+    init_things();			/* Set up probabilities of things */
+    init_names();			/* Set up names of scrolls */
+    init_colors();			/* Set up colors of potions */
+    init_stones();			/* Set up stone settings of rings */
+    init_materials();			/* Set up materials of wands */
     setup();
+    /*
+     * Set up windows
+     */
+    cw = newwin(LINES, COLS, 0, 0);
+    mw = newwin(LINES, COLS, 0, 0);
+    hw = newwin(LINES, COLS, 0, 0);
+    waswizard = wizard;
     clearok(curscr, TRUE);
     touchwin(cw);
-    srand(getpid());
+
+	oldrp = roomin(&oldpos);
+
     playit();
     /*NOTREACHED*/
 }

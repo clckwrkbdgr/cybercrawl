@@ -506,3 +506,12 @@ long lseek();
 struct trap *trap_at();
 
 #define TRACE(X, x) do { printf("\nTRACE %s=%" #X "\n", #x, (x)); fflush(stdout); } while(0)
+
+int between; // Defined in daemons.c.
+// Defined in passages.c.
+extern struct rdes
+{
+	bool	conn[MAXROOMS];		/* possible to connect to room i? */
+	bool	isconn[MAXROOMS];	/* connection been made to room i? */
+	bool	ingraph;		/* this room in graph already? */
+} rdes[];

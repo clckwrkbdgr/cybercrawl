@@ -248,7 +248,7 @@ struct magic_item p_magic[MAXPOTIONS] = {
 };
 
 struct magic_item r_magic[MAXRINGS] = {
-    { "nano-shielf",		 9, 200 },
+    { "nano-shield",		 9, 200 },
     { "add strength",		 9, 200 },
     { "sustain strength",	 5, 180 },
     { "scanner",		10, 200 },

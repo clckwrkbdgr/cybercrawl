@@ -54,10 +54,9 @@ swander()
  *	Called to roll to see if a wandering monster starts up
  */
 
+int between = 0;
 rollwand()
 {
-    static int between = 0;
-
     if (++between >= 4)
     {
 	if (roll(1, 6) == 4)
