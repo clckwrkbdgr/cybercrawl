@@ -82,7 +82,8 @@ write_thing(struct thing * t, FILE * savef)
 
 read_thing(struct thing * t, FILE * savef)
 {
-	fread(&t, 1, sizeof(struct thing), savef);
+	fread(t, 1, sizeof(struct thing), savef);
+
 	char t_dest = 0;
 	fread(&t_dest, 1, sizeof(t_dest), savef);
 	if(t_dest == 100) {
@@ -90,7 +91,7 @@ read_thing(struct thing * t, FILE * savef)
 	} else if(10 <= t_dest && t_dest < 100) {
 		t->t_dest = &rooms[t_dest - 10].r_gold;
 	} else {
-		t->t_dest = 0;
+		t->t_dest = NULL;
 	}
 	read_object_list(&t->t_pack, savef);
 }
@@ -115,7 +116,8 @@ read_monster_list(struct linked_list ** l, FILE* savef)
 	fread(&ok, 1, 1, savef);
 	while(ok) {
 		ptr = new_item(sizeof(struct thing));
-		read_thing((struct thing *)ldata(ptr), savef);
+		struct thing * t = (struct thing *)ldata(ptr);
+		read_thing(t, savef);
 		attach(*l, ptr);
 
 		fread(&ok, 1, 1, savef);
@@ -135,6 +137,27 @@ write_game(FILE *savef)
 	}
 	write_thing(&player, savef);
 	write_monster_list(mlist, savef);
+
+	int player_weapon = 0, player_armor = 0, player_r_ring = 0, player_l_ring = 0;
+	int index = 1;
+	struct linked_list * ptr = player.t_pack;
+	while(ptr) {
+		if((struct object *)ldata(ptr) == cur_weapon) {
+			player_weapon = index;
+		} else if((struct object *)ldata(ptr) == cur_armor) {
+			player_armor = index;
+		} else if((struct object *)ldata(ptr) == cur_ring[0]) {
+			player_r_ring = index;
+		} else if((struct object *)ldata(ptr) == cur_ring[1]) {
+			player_l_ring = index;
+		}
+		ptr = next(ptr);
+		++index;
+	}
+	fwrite(&player_weapon, 1, sizeof(player_weapon), savef);
+	fwrite(&player_armor, 1, sizeof(player_armor), savef);
+	fwrite(&player_r_ring, 1, sizeof(player_r_ring), savef);
+	fwrite(&player_l_ring, 1, sizeof(player_l_ring), savef);
 }
 
 read_game(FILE *savef)
@@ -147,6 +170,31 @@ read_game(FILE *savef)
 	read_object_list(&lvl_obj, savef);
 	read_thing(&player, savef);
 	read_monster_list(&mlist, savef);
+
+	int player_weapon = 0, player_armor = 0, player_r_ring = 0, player_l_ring = 0;
+	fread(&player_weapon, 1, sizeof(player_weapon), savef);
+	fread(&player_armor, 1, sizeof(player_armor), savef);
+	fread(&player_r_ring, 1, sizeof(player_r_ring), savef);
+	fread(&player_l_ring, 1, sizeof(player_l_ring), savef);
+	int index = 1;
+	struct linked_list * ptr = player.t_pack;
+	cur_weapon = 0;
+	cur_armor = 0;
+	cur_ring[0] = 0;
+	cur_ring[1] = 0;
+	while(ptr) {
+		if(player_weapon == index) {
+			cur_weapon = (struct object *)ldata(ptr);
+		} else if(player_armor == index) {
+			cur_armor = (struct object *)ldata(ptr);
+		} else if(player_r_ring == index) {
+			cur_ring[0] = (struct object *)ldata(ptr);
+		} else if(player_l_ring == index) {
+			cur_ring[1] = (struct object *)ldata(ptr);
+		}
+		ptr = next(ptr);
+		++index;
+	}
 }
 
 
