@@ -429,6 +429,9 @@ char **envp;
     char buf[80];
     STAT sbuf2;
 
+    initscr();				/* Start up cursor package */
+    crmode();				/* Cbreak mode */
+    noecho();				/* Echo off */
     /*
      * Set up windows
      */
