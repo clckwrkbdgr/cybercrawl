@@ -519,3 +519,11 @@ extern struct rdes
 int lines(), cols(); // Predefined, instead of curses ones.
 coord ch_ret;				/* Where chasing takes you */
 coord nh;
+
+#define MAXDAEMONS 20
+struct delayed_action {
+    int d_type;
+    int (*d_func)();
+    int d_arg;
+    int d_time;
+} d_list[MAXDAEMONS];

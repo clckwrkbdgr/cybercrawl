@@ -158,6 +158,32 @@ write_game(FILE *savef)
 	fwrite(&player_armor, 1, sizeof(player_armor), savef);
 	fwrite(&player_r_ring, 1, sizeof(player_r_ring), savef);
 	fwrite(&player_l_ring, 1, sizeof(player_l_ring), savef);
+
+	for(index = 0; index < MAXDAEMONS; ++index) {
+		fwrite(&d_list[index], 1, sizeof(struct delayed_action), savef);
+		enum { NONE, DOCTOR, NOHASTE, ROLLWAND, RUNNERS, SIGHT, STOMACH, SWANDER, UNCONFUSE, UNSEE };
+		int d = 0;
+		if(d_list[index].d_func == doctor) {
+			d = DOCTOR;
+		} else if(d_list[index].d_func == nohaste) {
+			d = NOHASTE;
+		} else if(d_list[index].d_func == rollwand) {
+			d = ROLLWAND;
+		} else if(d_list[index].d_func == runners) {
+			d = RUNNERS;
+		} else if(d_list[index].d_func == sight) {
+			d = SIGHT;
+		} else if(d_list[index].d_func == stomach) {
+			d = STOMACH;
+		} else if(d_list[index].d_func == swander) {
+			d = SWANDER;
+		} else if(d_list[index].d_func == unconfuse) {
+			d = UNCONFUSE;
+		} else if(d_list[index].d_func == unsee) {
+			d = UNSEE;
+		}
+		fwrite(&d, 1, sizeof(d), savef);
+	}
 }
 
 read_game(FILE *savef)
@@ -195,18 +221,29 @@ read_game(FILE *savef)
 		ptr = next(ptr);
 		++index;
 	}
+
+	for(index = 0; index < MAXDAEMONS; ++index) {
+		fread(&d_list[index], 1, sizeof(struct delayed_action), savef);
+		int d = 0;
+		fread(&d, 1, sizeof(d), savef);
+		enum { NONE, DOCTOR, NOHASTE, ROLLWAND, RUNNERS, SIGHT, STOMACH, SWANDER, UNCONFUSE, UNSEE };
+		TRACE(d, d);
+		switch(d) {
+			case DOCTOR: d_list[index].d_func = doctor; break;
+			case NOHASTE: d_list[index].d_func = nohaste; break;
+			case ROLLWAND: d_list[index].d_func = rollwand; break;
+			case RUNNERS: d_list[index].d_func = runners; break;
+			case SIGHT: d_list[index].d_func = sight; break;
+			case STOMACH: d_list[index].d_func = stomach; break;
+			case SWANDER: d_list[index].d_func = swander; break;
+			case UNCONFUSE: d_list[index].d_func = unconfuse; break;
+			case UNSEE: d_list[index].d_func = unsee; break;
+		}
+	}
 }
 
 
 #ifdef VARIABLES_TO_SAVE
-// Contains d_func() pointer
-delayed_action d_list[MAXDAEMONS]
-
-// From player pack.
-struct object *cur_weapon;		/* Which weapon he is weilding */
-struct object *cur_armor;		/* What a well dresssed rogue wears */
-struct object *cur_ring[2];		/* Which rings are being worn */
-
 // Strings. Recreate using new().
 char *s_names[MAXSCROLLS];		/* Names of the scrolls */
 char *p_colors[MAXPOTIONS];		/* Colors of the potions */

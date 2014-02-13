@@ -10,16 +10,10 @@
 
 #define EMPTY 0
 #define DAEMON -1
-#define MAXDAEMONS 20
 
 #define _X_ { EMPTY }
 
-struct delayed_action {
-    int d_type;
-    int (*d_func)();
-    int d_arg;
-    int d_time;
-} d_list[MAXDAEMONS] = {
+struct delayed_action d_list[MAXDAEMONS] = {
     _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_,
     _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_, _X_, 
 };
