@@ -124,6 +124,21 @@ read_monster_list(struct linked_list ** l, FILE* savef)
 	}
 }
 
+struct allocated_strings {
+	char ** array;
+	int size;
+} alloc_strings[] = {
+	{ s_names, MAXSCROLLS },
+	{ p_colors, MAXPOTIONS },
+	{ r_stones, MAXRINGS },
+	{ ws_made, MAXSTICKS },
+	{ s_guess, MAXSCROLLS },
+	{ p_guess, MAXPOTIONS },
+	{ r_guess, MAXRINGS },
+	{ ws_guess, MAXSTICKS },
+	{ ws_type, MAXSTICKS },
+	{ 0, 0 }
+};
 
 write_game(FILE *savef)
 {
@@ -184,6 +199,21 @@ write_game(FILE *savef)
 		}
 		fwrite(&d, 1, sizeof(d), savef);
 	}
+
+	struct allocated_strings * al_str = alloc_strings;
+	while((al_str++)->array) {
+		int index;
+		for(index = 0; index < al_str->size; ++index) {
+			int length = 0;
+			if(al_str->array[index]) {
+				length = strlen(al_str->array[index]) + 1;
+				fwrite(&length, 1, sizeof(length), savef);
+				fwrite(al_str->array[index], 1, length, savef);
+			} else {
+				fwrite(&length, 1, sizeof(length), savef);
+			}
+		}
+	}
 }
 
 read_game(FILE *savef)
@@ -227,7 +257,6 @@ read_game(FILE *savef)
 		int d = 0;
 		fread(&d, 1, sizeof(d), savef);
 		enum { NONE, DOCTOR, NOHASTE, ROLLWAND, RUNNERS, SIGHT, STOMACH, SWANDER, UNCONFUSE, UNSEE };
-		TRACE(d, d);
 		switch(d) {
 			case DOCTOR: d_list[index].d_func = doctor; break;
 			case NOHASTE: d_list[index].d_func = nohaste; break;
@@ -240,22 +269,24 @@ read_game(FILE *savef)
 			case UNSEE: d_list[index].d_func = unsee; break;
 		}
 	}
+
+	//s_names[i] = (char *) new(strlen(prbuf)+1;
+	struct allocated_strings * al_str = alloc_strings;
+	while((al_str++)->array) {
+		int index;
+		for(index = 0; index < al_str->size; ++index) {
+			int length;
+			fread(&length, 1, sizeof(length), savef);
+			if(length) {
+				al_str->array[index] = (char *) new(length);
+				fread(al_str->array[index], 1, length, savef);
+			} else {
+				al_str->array[index] = 0;
+			}
+		}
+	}
 }
 
-
-#ifdef VARIABLES_TO_SAVE
-// Strings. Recreate using new().
-char *s_names[MAXSCROLLS];		/* Names of the scrolls */
-char *p_colors[MAXPOTIONS];		/* Colors of the potions */
-char *r_stones[MAXRINGS];		/* Stone settings of the rings */
-char *ws_made[MAXSTICKS];		/* What sticks are made of */
-char *s_guess[MAXSCROLLS];		/* Players guess at what scroll is */
-char *p_guess[MAXPOTIONS];		/* Players guess at what potion is */
-char *r_guess[MAXRINGS];		/* Players guess at what ring is */
-char *ws_guess[MAXSTICKS];		/* Players guess at what wand is */
-char *ws_type[MAXSTICKS];		/* Is it a wand or a staff */
-
-#endif
 
 typedef struct stat STAT;
 
