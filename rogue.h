@@ -505,7 +505,7 @@ long lseek();
 
 struct trap *trap_at();
 
-#define TRACE(X, x) do { printf("\nTRACE %s=%" #X "\n", #x, (x)); fflush(stdout); } while(0)
+#define TRACE(X, x) do { printf(" %s=%" #X " ", #x, (x)); fflush(stdout); } while(0)
 
 int between; // Defined in daemons.c.
 // Defined in passages.c.

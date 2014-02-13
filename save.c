@@ -14,6 +14,8 @@
 #include "rogue.h"
 
 #define AS_IT_IS(var) { &var, sizeof(var) }
+#define WRITE_AS_IT_IS(var) fwrite(&var, 1, sizeof(var), savef)
+#define READ_AS_IT_IS(var) fread(&var, 1, sizeof(var), savef)
 struct as_it_is_var {
 	void * variable;
 	int size;
@@ -169,10 +171,20 @@ void read_win(WINDOW * win, FILE * savef)
 
 write_game(FILE *savef)
 {
-	struct as_it_is_var * as_var = as_it_is;
-	while((as_var++)->variable) {
-		fwrite(as_var->variable, 1, as_var->size, savef);
-	}
+	WRITE_AS_IT_IS(rooms); WRITE_AS_IT_IS(rdes); WRITE_AS_IT_IS(between); WRITE_AS_IT_IS(level);
+	WRITE_AS_IT_IS(purse); WRITE_AS_IT_IS(ntraps); WRITE_AS_IT_IS(no_move); WRITE_AS_IT_IS(no_command);
+	WRITE_AS_IT_IS(inpack); WRITE_AS_IT_IS(max_hp); WRITE_AS_IT_IS(lastscore); WRITE_AS_IT_IS(no_food);
+	WRITE_AS_IT_IS(count); WRITE_AS_IT_IS(fung_hit); WRITE_AS_IT_IS(quiet); WRITE_AS_IT_IS(max_level);
+	WRITE_AS_IT_IS(food_left); WRITE_AS_IT_IS(group); WRITE_AS_IT_IS(hungry_state);
+	WRITE_AS_IT_IS(whoami); WRITE_AS_IT_IS(fruit); WRITE_AS_IT_IS(ch_ret); WRITE_AS_IT_IS(nh);
+	WRITE_AS_IT_IS(oldpos); WRITE_AS_IT_IS(delta); WRITE_AS_IT_IS(traps); WRITE_AS_IT_IS(huh);
+	WRITE_AS_IT_IS(running); WRITE_AS_IT_IS(playing); WRITE_AS_IT_IS(wizard); WRITE_AS_IT_IS(after);
+	WRITE_AS_IT_IS(notify); WRITE_AS_IT_IS(fight_flush); WRITE_AS_IT_IS(terse);
+	WRITE_AS_IT_IS(door_stop); WRITE_AS_IT_IS(jump); WRITE_AS_IT_IS(slow_invent);
+	WRITE_AS_IT_IS(firstmove); WRITE_AS_IT_IS(waswizard); WRITE_AS_IT_IS(askme); WRITE_AS_IT_IS(amulet);
+	WRITE_AS_IT_IS(in_shell); WRITE_AS_IT_IS(take); WRITE_AS_IT_IS(runch); WRITE_AS_IT_IS(s_know);
+	WRITE_AS_IT_IS(p_know); WRITE_AS_IT_IS(r_know); WRITE_AS_IT_IS(ws_know);
+	WRITE_AS_IT_IS(max_stats);
 
 	if(lvl_obj) {
 		write_object_list(lvl_obj, savef);
@@ -250,10 +262,20 @@ write_game(FILE *savef)
 
 read_game(FILE *savef)
 {
-	struct as_it_is_var * as_var = as_it_is;
-	while((as_var++)->variable) {
-		fread(as_var->variable, 1, as_var->size, savef);
-	}
+	READ_AS_IT_IS(rooms); READ_AS_IT_IS(rdes); READ_AS_IT_IS(between); READ_AS_IT_IS(level);
+	READ_AS_IT_IS(purse); READ_AS_IT_IS(ntraps); READ_AS_IT_IS(no_move); READ_AS_IT_IS(no_command);
+	READ_AS_IT_IS(inpack); READ_AS_IT_IS(max_hp); READ_AS_IT_IS(lastscore); READ_AS_IT_IS(no_food);
+	READ_AS_IT_IS(count); READ_AS_IT_IS(fung_hit); READ_AS_IT_IS(quiet); READ_AS_IT_IS(max_level);
+	READ_AS_IT_IS(food_left); READ_AS_IT_IS(group); READ_AS_IT_IS(hungry_state);
+	READ_AS_IT_IS(whoami); READ_AS_IT_IS(fruit); READ_AS_IT_IS(ch_ret); READ_AS_IT_IS(nh);
+	READ_AS_IT_IS(oldpos); READ_AS_IT_IS(delta); READ_AS_IT_IS(traps); READ_AS_IT_IS(huh);
+	READ_AS_IT_IS(running); READ_AS_IT_IS(playing); READ_AS_IT_IS(wizard); READ_AS_IT_IS(after);
+	READ_AS_IT_IS(notify); READ_AS_IT_IS(fight_flush); READ_AS_IT_IS(terse);
+	READ_AS_IT_IS(door_stop); READ_AS_IT_IS(jump); READ_AS_IT_IS(slow_invent);
+	READ_AS_IT_IS(firstmove); READ_AS_IT_IS(waswizard); READ_AS_IT_IS(askme); READ_AS_IT_IS(amulet);
+	READ_AS_IT_IS(in_shell); READ_AS_IT_IS(take); READ_AS_IT_IS(runch); READ_AS_IT_IS(s_know);
+	READ_AS_IT_IS(p_know); READ_AS_IT_IS(r_know); READ_AS_IT_IS(ws_know);
+	READ_AS_IT_IS(max_stats);
 
 	read_object_list(&lvl_obj, savef);
 	read_thing(&player, savef);
@@ -407,11 +429,11 @@ void auto_save()
 save_file(savef)
 register FILE *savef;
 {
-    wmove(cw, lines()-1, 0);
-    draw(cw);
-    fstat(fileno(savef), &sbuf);
-    fwrite("junk", 1, 5, savef);
-    fseek(savef, 0L, 0);
+    //wmove(cw, lines()-1, 0);
+    //draw(cw);
+    //fstat(fileno(savef), &sbuf);
+    //fwrite("junk", 1, 5, savef);
+    //fseek(savef, 0L, 0);
 	fwrite(version, 1, strlen(version) + 1, savef);
 	//encwrite(version, strlen(version) + 1, savef);
     _endwin = TRUE;
@@ -453,7 +475,7 @@ char **envp;
     fflush(stdout);
 	fread(buf, 1, strlen(version) + 1, inf);
     //encread(buf, strlen(version) + 1, inf);
-    if (strcmp(buf, version) != 0)
+    if (strcmp(version, buf) != 0)
     {
 	printf("Sorry, saved game is out of date.\n");
 	return FALSE;

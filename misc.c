@@ -61,6 +61,7 @@ bool wakeup;
 		if ((y != hero.y || x != hero.x) && show(y, x) == FLOOR)
 		    mvwaddch(cw, y, x, ' ');
     }
+
     inpass = ((rp = roomin(&hero)) == NULL);
     ey = hero.y + 1;
     ex = hero.x + 1;
