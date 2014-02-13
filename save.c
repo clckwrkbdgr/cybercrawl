@@ -140,6 +140,33 @@ struct allocated_strings {
 	{ 0, 0 }
 };
 
+void write_win(WINDOW * win, FILE * savef)
+{
+	int x, y;
+	int w, h;
+	getmaxyx(win, h, w);
+	for(x = 0; x < w; ++x) {
+		for(y = 0; y < h; ++y) {
+			char ch = mvwinch(win, y, x);
+			fwrite(&ch, 1, 1, savef);
+		}
+	}
+}
+
+void read_win(WINDOW * win, FILE * savef)
+{
+	int x, y;
+	int w, h;
+	getmaxyx(win, h, w);
+	for(x = 0; x < w; ++x) {
+		for(y = 0; y < h; ++y) {
+			char ch;
+			fread(&ch, 1, 1, savef);
+			mvwaddch(win, y, x, ch);
+		}
+	}
+}
+
 write_game(FILE *savef)
 {
 	struct as_it_is_var * as_var = as_it_is;
@@ -214,6 +241,11 @@ write_game(FILE *savef)
 			}
 		}
 	}
+
+	write_win(cw, savef);
+	write_win(mw, savef);
+	write_win(hw, savef);
+	write_win(stdscr, savef);
 }
 
 read_game(FILE *savef)
@@ -285,6 +317,11 @@ read_game(FILE *savef)
 			}
 		}
 	}
+
+	read_win(cw, savef);
+	read_win(mw, savef);
+	read_win(hw, savef);
+	read_win(stdscr, savef);
 }
 
 
@@ -359,8 +396,8 @@ void auto_save()
 
     for (i = 0; i < NSIG; i++)
 	signal(i, SIG_IGN);
-    if (file_name[0] != '\0' && (savef = fopen(file_name, "w")) != NULL)
-	save_file(savef);
+    // TODO if (file_name[0] != '\0' && (savef = fopen(file_name, "w")) != NULL)
+	// TODO save_file(savef);
     exit(1);
 }
 
@@ -392,6 +429,16 @@ char **envp;
     char buf[80];
     STAT sbuf2;
 
+    /*
+     * Set up windows
+     */
+    cw = newwin(lines(), cols(), 0, 0);
+    mw = newwin(lines(), cols(), 0, 0);
+    hw = newwin(lines(), cols(), 0, 0);
+    clearok(curscr, TRUE);
+    touchwin(cw);
+
+	// Reading.
     if (strcmp(file, "-r") == 0)
 	file = file_name;
     if ((inf = fopen(file, "r")) == NULL)
@@ -439,17 +486,19 @@ char **envp;
     /*
      * defeat multiple restarting from the same place
      */
+	/*
     if (!wizard)
 	if (sbuf2.st_nlink != 1)
 	{
 	    printf("Cannot restore from a linked file\n");
 	    return FALSE;
 	}
-	else if (unlink(file) < 0)
+	TODO else if (unlink(file) < 0)
 	{
 	    printf("Cannot unlink file\n");
 	    return FALSE;
 	}
+	*/
 
     environ = envp;
 	/*
@@ -473,20 +522,14 @@ char **envp;
     srand(seed);
 
     init_things();			/* Set up probabilities of things */
-    init_names();			/* Set up names of scrolls */
-    init_colors();			/* Set up colors of potions */
-    init_stones();			/* Set up stone settings of rings */
-    init_materials();			/* Set up materials of wands */
+	int i;
+    for (i = 0; i < MAXSCROLLS; i++) {
+		if (i > 0)
+			s_magic[i].mi_prob += s_magic[i-1].mi_prob;
+	}
+    badcheck("scrolls", s_magic, MAXSCROLLS);
     setup();
-    /*
-     * Set up windows
-     */
-    cw = newwin(lines(), cols(), 0, 0);
-    mw = newwin(lines(), cols(), 0, 0);
-    hw = newwin(lines(), cols(), 0, 0);
     waswizard = wizard;
-    clearok(curscr, TRUE);
-    touchwin(cw);
 
     playit();
     /*NOTREACHED*/
