@@ -65,9 +65,9 @@ bool wakeup;
     ey = hero.y + 1;
     ex = hero.x + 1;
     for (x = hero.x - 1; x <= ex; x++)
-	if (x >= 0 && x < COLS) for (y = hero.y - 1; y <= ey; y++)
+	if (x >= 0 && x < cols()) for (y = hero.y - 1; y <= ey; y++)
 	{
-	    if (y <= 0 || y >= LINES - 1)
+	    if (y <= 0 || y >= lines() - 1)
 		continue;
 	    if (isupper(mvwinch(mw, y, x)))
 	    {

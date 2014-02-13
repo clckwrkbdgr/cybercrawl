@@ -25,6 +25,16 @@
 static char msgbuf[BUFSIZ];
 static int newpos = 0;
 
+lines()
+{
+	return LINES >= 25 ? 25 : LINES;
+}
+
+cols()
+{
+	return COLS >= 80 ? 80 : COLS;
+}
+
 /*VARARGS1*/
 void msg(const char * fmt, ...)
 {
@@ -189,7 +199,7 @@ status()
     s_add = pstats.s_str.st_add;
     s_exp = pstats.s_exp; 
     s_ac = (cur_armor != NULL ? cur_armor->o_ac : pstats.s_arm);
-    mvwaddstr(cw, LINES - 1, 0, buf);
+    mvwaddstr(cw, lines() - 1, 0, buf);
     switch (hungry_state)
     {
 	when 0: ;

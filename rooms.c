@@ -21,8 +21,8 @@ do_rooms()
     /*
      * bsze is the maximum room size
      */
-    bsze.x = COLS/3;
-    bsze.y = LINES/3;
+    bsze.x = cols()/3;
+    bsze.y = lines()/3;
     /*
      * Clear things for a new level
      */
@@ -54,9 +54,9 @@ do_rooms()
 	    {
 		rp->r_pos.x = top.x + rnd(bsze.x-2) + 1;
 		rp->r_pos.y = top.y + rnd(bsze.y-2) + 1;
-		rp->r_max.x = -COLS;
-		rp->r_max.x = -LINES;
-	    } until(rp->r_pos.y > 0 && rp->r_pos.y < LINES-1);
+		rp->r_max.x = -cols();
+		rp->r_max.x = -lines();
+	    } until(rp->r_pos.y > 0 && rp->r_pos.y < lines()-1);
 	    continue;
 	}
 	if (rnd(10) < level-1)

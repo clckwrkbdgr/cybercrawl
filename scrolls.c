@@ -157,8 +157,8 @@ read_scroll()
 	    /*
 	     * Take all the things we want to keep hidden out of the window
 	     */
-	    for (i = 0; i < LINES; i++)
-		for (j = 0; j < COLS; j++)
+	    for (i = 0; i < lines(); i++)
+		for (j = 0; j < cols(); j++)
 		{
 		    switch (nch = ch = mvwinch(hw, i, j))
 		    {

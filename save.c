@@ -175,7 +175,7 @@ void auto_save()
 save_file(savef)
 register FILE *savef;
 {
-    wmove(cw, LINES-1, 0);
+    wmove(cw, lines()-1, 0);
     draw(cw);
     fstat(fileno(savef), &sbuf);
     fwrite("junk", 1, 5, savef);
@@ -279,9 +279,9 @@ char **envp;
     /*
      * Set up windows
      */
-    cw = newwin(LINES, COLS, 0, 0);
-    mw = newwin(LINES, COLS, 0, 0);
-    hw = newwin(LINES, COLS, 0, 0);
+    cw = newwin(lines(), cols(), 0, 0);
+    mw = newwin(lines(), cols(), 0, 0);
+    hw = newwin(lines(), cols(), 0, 0);
     waswizard = wizard;
     clearok(curscr, TRUE);
     touchwin(cw);

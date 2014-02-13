@@ -60,7 +60,7 @@ int dy, dx;
      * Check if he tried to move off the screen or make an illegal
      * diagonal move, and stop him if he did.
      */
-    if (nh.x < 0 || nh.x > COLS-1 || nh.y < 0 || nh.y > LINES - 1
+    if (nh.x < 0 || nh.x > cols()-1 || nh.y < 0 || nh.y > lines() - 1
 	|| !diag_ok(&hero, &nh))
     {
 	after = FALSE;
@@ -344,10 +344,10 @@ struct thing *who;
     ey = ret.y + 1;
     ex = ret.x + 1;
     for (y = who->t_pos.y - 1; y <= ey; y++)
-	if (y >= 0 && y < LINES)
+	if (y >= 0 && y < lines())
 	    for (x = who->t_pos.x - 1; x <= ex; x++)
 	    {
-		if (x < 0 || x >= COLS)
+		if (x < 0 || x >= cols())
 		    continue;
 		ch = winat(y, x);
 		if (step_ok(ch))

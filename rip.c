@@ -68,7 +68,7 @@ register char monst;
     mvaddstr(16, 33, vowelstr(killer));
     sprintf(prbuf, "%2d", lt->tm_year);
     mvaddstr(18, 28, prbuf);
-    move(LINES-1, 0);
+    move(lines()-1, 0);
     draw(stdscr);
     score(purse, 0, monst);
     endwin();
@@ -254,7 +254,7 @@ total_winner()
     addstr("\nYou have joined the elite ranks of those who have escaped the\n");
     addstr("AIRA bunker alive. You journey back to base and sell all your loot at\n");
     addstr("a great profit and are admitted to the Section 9.\n");
-    mvaddstr(LINES - 1, 0, "--Press space to continue--");
+    mvaddstr(lines() - 1, 0, "--Press space to continue--");
     refresh();
     wait_for(' ');
     clear();

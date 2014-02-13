@@ -200,7 +200,7 @@ command()
 		    after = FALSE;
 		    if (save_game())
 		    {
-			wmove(cw, LINES-1, 0); 
+			wmove(cw, lines()-1, 0); 
 			wclrtoeol(cw);
 			draw(cw);
 			endwin();
@@ -327,7 +327,7 @@ void quit()
     if (readchar() == 'y')
     {
 	clear();
-	move(LINES-1, 0);
+	move(lines()-1, 0);
 	draw(stdscr);
 	score(purse, 1);
 	exit(0);
@@ -439,7 +439,7 @@ help()
 	cnt++;
 	strp++;
     }
-    wmove(hw, LINES-1, 0);
+    wmove(hw, lines()-1, 0);
     wprintw(hw, "--Press space to continue--");
     draw(hw);
     wait_for(' ');
@@ -549,7 +549,7 @@ shell()
      */
     sh = getenv("SHELL");
     wclear(hw);
-    wmove(hw, LINES-1, 0);
+    wmove(hw, lines()-1, 0);
     draw(hw);
     endwin();
     in_shell = TRUE;

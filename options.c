@@ -90,7 +90,7 @@ option()
     /*
      * Switch back to original screen
      */
-    mvwaddstr(hw, LINES-1, 0, "--Press space to continue--");
+    mvwaddstr(hw, lines()-1, 0, "--Press space to continue--");
     draw(hw);
     wait_for(' ');
     clearok(cw, TRUE);

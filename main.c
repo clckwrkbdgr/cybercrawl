@@ -136,9 +136,9 @@ char **envp;
     /*
      * Set up windows
      */
-    cw = newwin(LINES, COLS, 0, 0);
-    mw = newwin(LINES, COLS, 0, 0);
-    hw = newwin(LINES, COLS, 0, 0);
+    cw = newwin(lines(), cols(), 0, 0);
+    mw = newwin(lines(), cols(), 0, 0);
+    hw = newwin(lines(), cols(), 0, 0);
     waswizard = wizard;
     new_level();			/* Draw current level */
     /*
@@ -227,7 +227,7 @@ fatal(s)
 char *s;
 {
     clear();
-    move(LINES-2, 0);
+    move(lines()-2, 0);
     printw("%s", s);
     draw(stdscr);
     endwin();
@@ -265,7 +265,7 @@ register int number, sides;
  */
 void tstp()
 {
-    mvcur(0, COLS - 1, LINES - 1, 0);
+    mvcur(0, cols() - 1, lines() - 1, 0);
     endwin();
     fflush(stdout);
     kill(0, SIGTSTP);

@@ -269,8 +269,8 @@ add_pass()
 {
     register int y, x, ch;
 
-    for (y = 1; y < LINES - 2; y++)
-	for (x = 0; x < COLS; x++)
+    for (y = 1; y < lines() - 2; y++)
+	for (x = 0; x < cols(); x++)
 	    if ((ch=mvinch(y, x)) == PASSAGE || ch == DOOR || ch == SECRETDOOR)
 		mvwaddch(cw, y, x, ch);
 }

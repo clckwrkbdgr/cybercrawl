@@ -515,3 +515,5 @@ extern struct rdes
 	bool	isconn[MAXROOMS];	/* connection been made to room i? */
 	bool	ingraph;		/* this room in graph already? */
 } rdes[];
+
+int lines(), cols(); // Predefined, instead of curses ones.
