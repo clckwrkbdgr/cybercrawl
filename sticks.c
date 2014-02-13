@@ -13,10 +13,10 @@ fix_stick(cur)
 register struct object *cur;
 {
     if (strcmp(ws_type[cur->o_which], "rifle") == 0)
-	cur->o_damage = "2d3";
+	strcpy(cur->o_damage, "2d3");
     else
-	cur->o_damage = "1d1";
-    cur->o_hurldmg = "1d1";
+	strcpy(cur->o_damage, "1d1");
+    strcpy(cur->o_hurldmg, "1d1");
 
     cur->o_charges = 3 + rnd(5);
     switch (cur->o_which)
@@ -24,7 +24,7 @@ register struct object *cur;
 	when WS_HIT:
 	    cur->o_hplus = 3;
 	    cur->o_dplus = 3;
-	    cur->o_damage = "1d8";
+	    strcpy(cur->o_damage, "1d8");
 	when WS_LIGHT:
 	    cur->o_charges = 10 + rnd(10);
     }
@@ -168,7 +168,8 @@ bool gotdir;
 	{
 	    static struct object bolt =
 	    {
-		'*' , {0, 0}, "", 0, 0, "1d4" , 0, 0, 100, 1
+		'*' , {0, 0}, 0, "\0", "1d4" , 0, 0, 100, 1
+		//'*' , {0, 0}, "", 0, 0, "1d4" , 0, 0, 100, 1
 	    };
 
 	    do_motion(&bolt, delta.y, delta.x);
@@ -192,12 +193,12 @@ bool gotdir;
 	    {
 		if (rnd(20) == 0)
 		{
-		    obj->o_damage = "3d8";
+		    strcpy(obj->o_damage, "3d8");
 		    obj->o_dplus = 9;
 		}
 		else
 		{
-		    obj->o_damage = "1d8";
+		    strcpy(obj->o_damage, "1d8");
 		    obj->o_dplus = 3;
 		}
 		fight(&delta, ch, obj, FALSE);
@@ -245,7 +246,7 @@ bool gotdir;
 	    coord spotpos[BOLT_LENGTH];
 	    static struct object bolt =
 	    {
-		'*' , {0, 0}, "", 0, 0, "6d6" , 0, 0, 100, 0
+		'*' , {0, 0}, 0, "\0", "6d6" , 0, 0, 100, 0
 	    };
 
 

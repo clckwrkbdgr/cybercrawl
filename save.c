@@ -31,7 +31,7 @@ struct as_it_is_var {
 	AS_IT_IS(firstmove), AS_IT_IS(waswizard), AS_IT_IS(askme), AS_IT_IS(amulet),
 	AS_IT_IS(in_shell), AS_IT_IS(take), AS_IT_IS(runch), AS_IT_IS(s_know),
 	AS_IT_IS(p_know), AS_IT_IS(r_know), AS_IT_IS(ws_know),
-	AS_IT_IS(max_stats)
+	AS_IT_IS(max_stats),
 	{ 0, 0 }
 };
 

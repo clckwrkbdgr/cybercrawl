@@ -372,10 +372,10 @@ struct monster {
 struct object {
     int o_type;				/* What kind of object it is */
     coord o_pos;			/* Where it lives on the screen */
-    char *o_text;			/* What it says if you read it */
+    //char *o_text;			/* What it says if you read it */
     char o_launch;			/* What you need to launch it */
-    char *o_damage;			/* Damage if used like sword */
-    char *o_hurldmg;			/* Damage if thrown */
+    char o_damage[10];			/* Damage if used like sword */
+    char o_hurldmg[10];			/* Damage if thrown */
     int o_count;			/* Count for plural objects */
     int o_which;			/* Which object of a type it is */
     int o_hplus;			/* Plusses to hit */

@@ -263,7 +263,8 @@ new_thing()
     item = new_item(sizeof *cur);
     cur = (struct object *) ldata(item);
     cur->o_hplus = cur->o_dplus = 0;
-    cur->o_damage = cur->o_hurldmg = "0d0";
+    strcpy(cur->o_damage, "0d0");
+	strcpy(cur->o_hurldmg, "0d0");
     cur->o_ac = 11;
     cur->o_count = 1;
     cur->o_group = 0;
