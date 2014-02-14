@@ -20,7 +20,7 @@ read_scroll()
     register struct linked_list *titem;
     char buf[80];
 
-    item = get_item("read", SCROLL);
+    item = get_item("run", SCROLL);
     if (item == NULL)
 	return;
     obj = (struct object *) ldata(item);
