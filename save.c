@@ -431,8 +431,8 @@ void auto_save()
 
     for (i = 0; i < NSIG; i++)
 	signal(i, SIG_IGN);
-    // TODO if (file_name[0] != '\0' && (savef = fopen(file_name, "w")) != NULL)
-	// TODO save_file(savef);
+    if (file_name[0] != '\0' && (savef = fopen(file_name, "w")) != NULL)
+	save_file(savef);
     exit(1);
 }
 
@@ -524,19 +524,17 @@ char **envp;
     /*
      * defeat multiple restarting from the same place
      */
-	/*
     if (!wizard)
 	if (sbuf2.st_nlink != 1)
 	{
 	    printf("Cannot restore from a linked file\n");
 	    return FALSE;
 	}
-	TODO else if (unlink(file) < 0)
+	else if (unlink(file) < 0)
 	{
 	    printf("Cannot unlink file\n");
 	    return FALSE;
 	}
-	*/
 
     environ = envp;
 	/*
