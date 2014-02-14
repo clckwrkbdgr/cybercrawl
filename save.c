@@ -464,18 +464,6 @@ char **envp;
     char buf[80];
     STAT sbuf2;
 
-    initscr();				/* Start up cursor package */
-    crmode();				/* Cbreak mode */
-    noecho();				/* Echo off */
-    /*
-     * Set up windows
-     */
-    cw = newwin(lines(), cols(), 0, 0);
-    mw = newwin(lines(), cols(), 0, 0);
-    hw = newwin(lines(), cols(), 0, 0);
-    clearok(curscr, TRUE);
-    touchwin(cw);
-
 	// Reading.
     if (strcmp(file, "-r") == 0)
 	file = file_name;
@@ -493,6 +481,18 @@ char **envp;
 	printf("Sorry, saved game is out of date.\n");
 	return FALSE;
     }
+
+    initscr();				/* Start up cursor package */
+    crmode();				/* Cbreak mode */
+    noecho();				/* Echo off */
+    /*
+     * Set up windows
+     */
+    cw = newwin(lines(), cols(), 0, 0);
+    mw = newwin(lines(), cols(), 0, 0);
+    hw = newwin(lines(), cols(), 0, 0);
+    clearok(curscr, TRUE);
+    touchwin(cw);
 
     fstat(fileno(inf), &sbuf2);
     fflush(stdout);
