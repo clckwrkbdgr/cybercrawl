@@ -56,9 +56,19 @@ read_object_list(struct linked_list ** l, FILE* savef)
 	struct linked_list * ptr;
 	fread(&ok, 1, 1, savef);
 	while(ok) {
-		ptr = new_item(sizeof(struct object));
+		if(*l) {
+			next(ptr) = new_item(sizeof(struct object));
+			struct linked_list * tmp_ptr = ptr;
+			ptr = next(ptr);
+			ptr->l_next = NULL;
+			ptr->l_prev = tmp_ptr;
+		} else {
+			*l = ptr = new_item(sizeof(struct object));
+			ptr->l_next = NULL;
+			ptr->l_prev = NULL;
+		}
+
 		fread(ldata(ptr), 1, sizeof(struct object), savef);
-		attach(*l, ptr);
 
 		fread(&ok, 1, 1, savef);
 	}
@@ -158,7 +168,6 @@ void write_string_array(char ** array, int count, FILE * savef)
 	int index;
 	for(index = 0; index < count; ++index) {
 		int length = 0;
-		TRACE(d, array[index]);
 		if(array[index]) {
 			length = strlen(array[index]) + 1;
 			fwrite(&length, 1, sizeof(length), savef);
@@ -175,7 +184,6 @@ void read_string_array(char ** array, int count, FILE * savef)
 	for(index = 0; index < count; ++index) {
 		int length;
 		fread(&length, 1, sizeof(length), savef);
-		TRACE(d, length);
 		if(length) {
 			array[index] = (char *) new(length);
 			fread(array[index], 1, length, savef);
