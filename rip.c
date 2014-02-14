@@ -104,9 +104,6 @@ char monst;
 	"A total winner",
     };
 
-    if (flags != -1)
-	endwin();
-
     for (scp = top_ten; scp < &top_ten[10]; scp++)
     {
 	scp->sc_score = 0;
@@ -121,9 +118,11 @@ char monst;
     signal(SIGINT, SIG_DFL);
     if (flags != -1)
     {
-	printf("[Press return to continue]");
+	printf("[Press any key to continue]");
 	fflush(stdout);
-	fgets( prbuf , 255, stdin);
+	getch();
+	endwin();
+	//fgets( prbuf , 255, stdin);
     }
 
     /*
