@@ -77,11 +77,21 @@ void addmsg(const char * fmt, ...)
  */
 endmsg()
 {
+	static const char * more = "--More--";
+	static int more_width = 8;
     strcpy(huh, msgbuf);
     if (mpos)
     {
+		if(mpos + strlen(msgbuf) + more_width < cols()) {
+			mvwaddstr(cw, 0, mpos, ". ");
+			mvwaddstr(cw, 0, mpos + 2, msgbuf);
+			mpos += newpos + 2;
+			newpos = 0;
+			draw(cw);
+			return;
+		}
 	wmove(cw, 0, mpos);
-	waddstr(cw, "--More--");
+	waddstr(cw, more);
 	draw(cw);
 	wait_for(' ');
     }
