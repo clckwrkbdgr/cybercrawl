@@ -89,18 +89,16 @@ register bool drop;
 	when AMULET:
 	    strcpy(prbuf, "The Project 2051");
 	when STICK:
-	    sprintf(prbuf, "A %s ", ws_type[obj->o_which]);
-	    pb = &prbuf[strlen(prbuf)];
 	    if (ws_know[obj->o_which])
-		sprintf(pb, "of %s%s(%s)", ws_magic[obj->o_which].mi_name,
-		    charge_str(obj), ws_made[obj->o_which]);
+		sprintf(prbuf, "A %s%s %s (%s)", ws_magic[obj->o_which].mi_name,
+				charge_str(obj), ws_type[obj->o_which], ws_made[obj->o_which]);
 	    else if (ws_guess[obj->o_which])
-		sprintf(pb, "called %s(%s)", ws_guess[obj->o_which],
-		    ws_made[obj->o_which]);
+		sprintf(prbuf, "A %s %s called %s", ws_made[obj->o_which],
+				ws_type[obj->o_which], ws_guess[obj->o_which]);
 	    else
-		sprintf(&prbuf[2], "%s %s", ws_made[obj->o_which],
+		sprintf(prbuf, "A %s %s", ws_made[obj->o_which],
 		    ws_type[obj->o_which]);
-        when RING:
+	when RING:
 	    if (r_know[obj->o_which])
 		sprintf(prbuf, "A%s wristband of %s(%s)", ring_num(obj),
 		    r_magic[obj->o_which].mi_name, r_stones[obj->o_which]);
