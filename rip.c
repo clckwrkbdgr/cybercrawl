@@ -89,6 +89,11 @@ char monst;
 	int sc_level;
 	int sc_uid;
 	char sc_monster;
+	struct stats sc_stats;
+	int sc_hp;
+	int sc_str;
+	int sc_ac;
+	int sc_explvl;
     } top_ten[10];
     register struct sc_ent *scp;
     register int i;
@@ -105,13 +110,17 @@ char monst;
 
     for (scp = top_ten; scp < &top_ten[10]; scp++)
     {
-	scp->sc_score = 0;
+	scp->sc_score = -1;
 	for (i = 0; i < 80; i++)
 	    scp->sc_name[i] = rnd(255);
 	scp->sc_flags = RN;
 	scp->sc_level = RN;
 	scp->sc_monster = RN;
 	scp->sc_uid = RN;
+    scp->sc_hp = RN;
+    scp->sc_str = RN;
+    scp->sc_ac = RN;
+    scp->sc_explvl = RN;
     }
 
     signal(SIGINT, SIG_DFL);
@@ -170,6 +179,10 @@ char monst;
 		scp->sc_level = level;
 	    scp->sc_monster = monst;
 	    scp->sc_uid = getuid();
+		scp->sc_hp = max_hp;
+		scp->sc_str = pstats.s_str.st_str;
+		scp->sc_ac = cur_armor != NULL ? cur_armor->o_ac : pstats.s_arm;
+		scp->sc_explvl = pstats.s_lvl;
 	}
     }
     /*
@@ -177,10 +190,10 @@ char monst;
      */
     printf("\nTop Ten Adventurers:\nRank\tScore\tName\n");
     for (scp = top_ten; scp < &top_ten[10]; scp++) {
-	if (scp->sc_score) {
-	    printf("%d\t%d\t%s: %s on level %d", scp - top_ten + 1,
-		scp->sc_score, scp->sc_name, reason[scp->sc_flags],
-		scp->sc_level);
+	if (scp->sc_score >= 0) {
+	    printf("%d\t%d\t%s", scp - top_ten + 1, scp->sc_score, scp->sc_name);
+		printf("-%02d (%d/%d): ", scp->sc_explvl, scp->sc_str, scp->sc_ac);
+		printf("%s on level %d", reason[scp->sc_flags], scp->sc_level);
 	    if (scp->sc_flags == 0) {
 		printf(" by a");
 		killer = killname(scp->sc_monster);

@@ -6,7 +6,7 @@
 /*
  * where scorefile should live
  */
-#define SCOREFILE	"/usr/games/rogueroll"
+#define SCOREFILE	"/var/games/rogueroll"
 
 /*
  * Variables for checking to make sure the system isn't too loaded
