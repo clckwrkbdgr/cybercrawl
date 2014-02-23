@@ -82,6 +82,7 @@ register char monst;
 score(amount, flags, monst)
 char monst;
 {
+	enum { TOP_COUNT = 25 };
     static struct sc_ent {
 	int sc_score;
 	char sc_name[80];
@@ -94,7 +95,7 @@ char monst;
 	int sc_str;
 	int sc_ac;
 	int sc_explvl;
-    } top_ten[10];
+    } top_ten[TOP_COUNT];
     register struct sc_ent *scp;
     register int i;
     register struct sc_ent *sc2;
@@ -108,7 +109,7 @@ char monst;
 	"A total winner",
     };
 
-    for (scp = top_ten; scp < &top_ten[10]; scp++)
+    for (scp = top_ten; scp < &top_ten[TOP_COUNT]; scp++)
     {
 	scp->sc_score = -1;
 	for (i = 0; i < 80; i++)
@@ -163,12 +164,12 @@ char monst;
      */
     if (!waswizard)
     {
-	for (scp = top_ten; scp < &top_ten[10]; scp++)
+	for (scp = top_ten; scp < &top_ten[TOP_COUNT]; scp++)
 	    if (amount > scp->sc_score)
 		break;
-	if (scp < &top_ten[10])
+	if (scp < &top_ten[TOP_COUNT])
 	{
-	    for (sc2 = &top_ten[9]; sc2 > scp; sc2--)
+	    for (sc2 = &top_ten[TOP_COUNT - 1]; sc2 > scp; sc2--)
 		*sc2 = *(sc2-1);
 	    scp->sc_score = amount;
 	    strcpy(scp->sc_name, whoami);
@@ -189,7 +190,7 @@ char monst;
      * Print the list
      */
     printf("\nTop Ten Adventurers:\nRank\tScore\tName\n");
-    for (scp = top_ten; scp < &top_ten[10]; scp++) {
+    for (scp = top_ten; scp < &top_ten[TOP_COUNT]; scp++) {
 	if (scp->sc_score >= 0) {
 	    printf("%d\t%d\t%s", scp - top_ten + 1, scp->sc_score, scp->sc_name);
 		printf("-%02d (%d/%d): ", scp->sc_explvl, scp->sc_str, scp->sc_ac);
@@ -218,14 +219,14 @@ char monst;
 		fgets( prbuf , 255, stdin);
 		if (prbuf[0] == 'd')
 		{
-		    for (sc2 = scp; sc2 < &top_ten[9]; sc2++)
+		    for (sc2 = scp; sc2 < &top_ten[TOP_COUNT - 1]; sc2++)
 			*sc2 = *(sc2 + 1);
-		    top_ten[9].sc_score = 0;
+		    top_ten[TOP_COUNT - 1].sc_score = 0;
 		    for (i = 0; i < 80; i++)
-			top_ten[9].sc_name[i] = rnd(255);
-		    top_ten[9].sc_flags = RN;
-		    top_ten[9].sc_level = RN;
-		    top_ten[9].sc_monster = RN;
+			top_ten[TOP_COUNT - 1].sc_name[i] = rnd(255);
+		    top_ten[TOP_COUNT - 1].sc_flags = RN;
+		    top_ten[TOP_COUNT - 1].sc_level = RN;
+		    top_ten[TOP_COUNT - 1].sc_monster = RN;
 		    scp--;
 		}
 	    }
