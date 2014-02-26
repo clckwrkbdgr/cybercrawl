@@ -383,7 +383,7 @@ save_game()
     mpos = 0;
     if (file_name[0] != '\0')
     {
-	msg("Save file (%s)? ", file_name);
+	msg("Save game and exit (y/n)? ");
 	do
 	{
 	    c = getchar();
@@ -395,6 +395,7 @@ save_game()
 	    goto gotfile;
 	}
     }
+	return FALSE;
 
     do
     {
