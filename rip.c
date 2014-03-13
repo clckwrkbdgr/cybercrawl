@@ -162,11 +162,15 @@ char monst;
     /*
      * Insert her in list if need be
      */
+    struct sc_ent *current_scp = NULL;
     if (!waswizard)
     {
 	for (scp = top_ten; scp < &top_ten[TOP_COUNT]; scp++)
 	    if (amount > scp->sc_score)
 		break;
+	if(scp < &top_ten[TOP_COUNT]) {
+		current_scp = scp;
+	}
 	if (scp < &top_ten[TOP_COUNT])
 	{
 	    for (sc2 = &top_ten[TOP_COUNT - 1]; sc2 > scp; sc2--)
@@ -192,6 +196,7 @@ char monst;
     printf("\nTop Ten Adventurers:\nRank\tScore\tName\n");
     for (scp = top_ten; scp < &top_ten[TOP_COUNT]; scp++) {
 	if (scp->sc_score >= 0) {
+		printf((scp == current_scp) ? ">" : " ");
 	    printf("%d\t%d\t%s", scp - top_ten + 1, scp->sc_score, scp->sc_name);
 		printf("-%02d (%d/%d): ", scp->sc_explvl, scp->sc_str, scp->sc_ac);
 		printf("%s on level %d", reason[scp->sc_flags], scp->sc_level);
