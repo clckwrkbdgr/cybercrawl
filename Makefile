@@ -7,8 +7,10 @@ CFILES=	vers.c armor.c chase.c command.c daemon.c daemons.c fight.c \
 	init.c io.c list.c main.c misc.c monsters.c move.c newlevel.c \
 	options.c pack.c passages.c potions.c rings.c rip.c rooms.c \
 	save.c scrolls.c sticks.c things.c weapons.c wizard.c
+TEST_FILES = $(wildcard tests/*.c)
 $(shell mkdir -p tmp)
-OBJS = $(addprefix tmp/,$(CFILES:.c=.o))
+$(shell mkdir -p tmp/tests)
+OBJS = $(addprefix tmp/,$(CFILES:.c=.o)) $(addprefix tmp/,$(TEST_FILES:.c=.o))
 POBJS = $(addprefix tmp/,$(CFILES:.c=.po))
 CFLAGS= -O -Werror
 PROFLAGS= -p -O
@@ -30,6 +32,9 @@ GET=	echo
 rogue: newvers a.out
 	cp a.out rogue
 	strip rogue
+
+test: rogue
+	./rogue test
 
 .c.po:
 	@echo $(CC) -c $(PROFLAGS) $?

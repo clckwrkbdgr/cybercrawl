@@ -21,6 +21,48 @@
 #include "machdep.h"
 #include "rogue.h"
 
+// Unit test stuff.
+struct TestNode *test_list = NULL;
+bool current_test_result = true;
+
+// Appends test case to the test list.
+void add_test(TestCase test_case, const char * test_name)
+{
+	struct TestNode * new_node = (struct TestNode*)malloc(sizeof(struct TestNode));
+	new_node->test_case = test_case;
+	new_node->test_name = test_name;
+	new_node->next_test = NULL;
+	if(test_list == NULL) {
+		new_node->start = new_node;
+		test_list = new_node;
+	} else {
+		new_node->start = test_list->start;
+		test_list->next_test = new_node;
+		test_list = new_node;
+	}
+}
+
+// Runs all tests in linked list test_list.
+int run_all_tests()
+{
+	struct TestNode * current_test = test_list == NULL ? test_list : test_list->start;
+	int failed = 0;
+	while(current_test != NULL) {
+		current_test_result = true;
+		current_test->test_case();
+		printf("[%s] %s\n", current_test_result ? " OK " : "FAIL", current_test->test_name);
+		if(!current_test_result) {
+			++failed;
+		}
+		current_test = current_test->next_test;
+	}
+	if(failed > 0) {
+		printf("%d tests failed!", failed);
+	}
+	return failed;
+}
+
+
 #ifdef CHECKTIME
 static int num_checks;		/* times we've gone over in checkout() */
 #endif
@@ -31,6 +73,9 @@ main(argc, argv, envp)
 char **argv;
 char **envp;
 {
+	if(argc == 2 && strcmp(argv[1], "test") == 0) {
+		return run_all_tests();
+	}
     register char *env;
     register struct passwd *pw;
     register struct linked_list *item;

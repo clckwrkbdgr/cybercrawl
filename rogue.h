@@ -4,6 +4,8 @@
  * @(#)rogue.h	3.38 (Berkeley) 6/15/81
  */
 #include <stdlib.h>
+#include <stdio.h>
+#include "curses.h"
 
 /*
  * Maximum number of different things
@@ -527,3 +529,32 @@ struct delayed_action {
     int d_arg;
     int d_time;
 } d_list[MAXDAEMONS];
+
+int run_all_tests();
+extern struct TestNode *test_list;
+extern bool current_test_result;
+
+#define ASSERT(x) \
+	do { if(!(x)) { \
+		printf("%s:%d: failed assertion: %s\n", __FILE__, __LINE__, #x); \
+		current_test_result = false; \
+		return; \
+	} } while(0)
+
+#define TEST(name) \
+	void name(); \
+	__attribute__((constructor)) \
+	static void add_test_##name() \
+	{ \
+		add_test(name, #name); \
+	} \
+	void name()
+
+typedef void (*TestCase)(void);
+
+struct TestNode {
+	const char * test_name;
+	TestCase test_case;
+	struct TestNode * start;
+	struct TestNode * next_test;
+};
