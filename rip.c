@@ -369,5 +369,7 @@ register char monst;
 		return "dart";
 	    case 'b':
 		return "bolt";
+	    case 'h':
+		return "hunger";
 	}
 }

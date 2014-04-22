@@ -127,6 +127,10 @@ stomach()
 
     if (food_left <= 0)
     {
+	--food_left;
+	if(food_left < -MORETIME) {
+		death('h');
+	}
 	/*
 	 * the hero is fainting
 	 */
