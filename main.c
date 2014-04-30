@@ -154,9 +154,10 @@ char **envp;
 	exit(1);
     }
 #endif
-    if (argc == 2)
-	if (!restore(argv[1], envp)) /* Note: restore will never return */
-	    exit(1);
+    //if (argc == 2)
+	if (!restore(argc == 2 ? argv[1] : "-r", envp)) /* Note: restore will never return */
+	{
+	    //exit(1);
     time(&now);
     lowtime = (int) now;
     dnum = (wizard && getenv("SEED") != NULL ?
@@ -251,6 +252,7 @@ char **envp;
     obj->o_which = 0;
     add_pack(item, TRUE);
     playit();
+	}
 }
 
 /*
