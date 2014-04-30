@@ -174,6 +174,18 @@ quaff()
 	    msg("What an odd tasting potion!");
 	    return;
     }
+    if ((food_left += POTIONFOOD + rnd(40) - 20) > STOMACHSIZE)
+	food_left = STOMACHSIZE;
+	if(food_left <= 0) {
+		hungry_state = 3;
+	} else if(food_left < MORETIME) {
+	    hungry_state = 2;
+	} else if(food_left < 2 * MORETIME) {
+	    hungry_state = 1;
+	} else {
+	    hungry_state = 0;
+	}
+
     status();
     if (p_know[obj->o_which] && p_guess[obj->o_which])
     {

@@ -114,6 +114,7 @@
 #define SEEDURATION 850
 #define HUNGERTIME 1300
 #define MORETIME 150
+#define POTIONFOOD 100
 #define STOMACHSIZE 2000
 #define ESCAPE 27
 #define LEFT 0
