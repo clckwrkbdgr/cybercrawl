@@ -32,7 +32,7 @@ read_scroll()
 	    msg("Nothing to run");
 	return;
     }
-    msg("As you run the device, it vanishes.");
+    msg("As you run the device, it self-destructs.");
     /*
      * Calculate the effect it has on the poor guy.
      */
@@ -213,7 +213,7 @@ read_scroll()
 		{
 		    s_know[S_GFIND] = TRUE;
 		    show_win(hw,
-			"You begin to feel greedy and you sense credits.--More--");
+			"You connect to the Net and detect credits locations.--More--");
 		}
 		else msg("You begin to feel a pull downward");
 	    }
@@ -274,7 +274,7 @@ read_scroll()
 	    genocide();
 	    s_know[S_GENOCIDE] = TRUE;
 	otherwise:
-	    msg("What a puzzling scroll!");
+	    msg("What a puzzling nanodevice!");
 	    return;
     }
     look(TRUE);	/* put the result of the scroll on the screen */
