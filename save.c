@@ -34,7 +34,7 @@ write_linked_list(struct linked_list * l, FILE * savef, SaveFunc savefunc, int v
 	fwrite(&end, 1, 1, savef);
 }
 
-read_object_list(struct linked_list ** l, FILE* savef)
+read_linked_list(struct linked_list ** l, FILE * savef, SaveFunc savefunc, int value_size)
 {
 	*l = 0;
 	char ok = 1;
@@ -42,18 +42,22 @@ read_object_list(struct linked_list ** l, FILE* savef)
 	fread(&ok, 1, 1, savef);
 	while(ok) {
 		if(*l) {
-			next(ptr) = new_item(sizeof(struct object));
+			next(ptr) = new_item(value_size);
 			struct linked_list * tmp_ptr = ptr;
 			ptr = next(ptr);
 			ptr->l_next = NULL;
 			ptr->l_prev = tmp_ptr;
 		} else {
-			*l = ptr = new_item(sizeof(struct object));
+			*l = ptr = new_item(value_size);
 			ptr->l_next = NULL;
 			ptr->l_prev = NULL;
 		}
 
-		fread(ldata(ptr), 1, sizeof(struct object), savef);
+		if(savefunc) {
+			savefunc(ldata(ptr), savef);
+		} else {
+			fread(ldata(ptr), 1, value_size, savef);
+		}
 
 		fread(&ok, 1, 1, savef);
 	}
@@ -78,8 +82,9 @@ write_thing(void * ptr, FILE * savef)
 	write_linked_list(t->t_pack, savef, 0, sizeof(struct object));
 }
 
-read_thing(struct thing * t, FILE * savef)
+read_thing(void * ptr, FILE * savef)
 {
+	struct thing * t = (struct thing*)ptr;
 	fread(t, 1, sizeof(struct thing), savef);
 
 	char t_dest = 0;
@@ -91,23 +96,7 @@ read_thing(struct thing * t, FILE * savef)
 	} else {
 		t->t_dest = NULL;
 	}
-	read_object_list(&t->t_pack, savef);
-}
-
-read_monster_list(struct linked_list ** l, FILE* savef)
-{
-	*l = 0;
-	char ok = 1;
-	struct linked_list * ptr;
-	fread(&ok, 1, 1, savef);
-	while(ok) {
-		ptr = new_item(sizeof(struct thing));
-		struct thing * t = (struct thing *)ldata(ptr);
-		read_thing(t, savef);
-		attach(*l, ptr);
-
-		fread(&ok, 1, 1, savef);
-	}
+	read_linked_list(&t->t_pack, savef, NULL, sizeof(struct object));
 }
 
 void write_win(WINDOW * win, FILE * savef)
@@ -270,9 +259,9 @@ read_game(FILE *savef)
 	READ_AS_IT_IS(p_know); READ_AS_IT_IS(r_know); READ_AS_IT_IS(ws_know);
 	READ_AS_IT_IS(max_stats);
 
-	read_object_list(&lvl_obj, savef);
+	read_linked_list(&lvl_obj, savef, NULL, sizeof(struct object));
 	read_thing(&player, savef);
-	read_monster_list(&mlist, savef);
+	read_linked_list(&mlist, savef, read_thing, sizeof(struct thing));
 
 	int player_weapon = 0, player_armor = 0, player_r_ring = 0, player_l_ring = 0;
 	fread(&player_weapon, 1, sizeof(player_weapon), savef);
