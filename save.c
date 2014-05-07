@@ -13,37 +13,22 @@
 #include <errno.h>
 #include "rogue.h"
 
-#define AS_IT_IS(var) { &var, sizeof(var) }
 #define WRITE_AS_IT_IS(var) fwrite(&var, 1, sizeof(var), savef)
 #define READ_AS_IT_IS(var) fread(&var, 1, sizeof(var), savef)
-struct as_it_is_var {
-	void * variable;
-	int size;
-} as_it_is[] = {
-	AS_IT_IS(rooms), AS_IT_IS(rdes), AS_IT_IS(between), AS_IT_IS(level),
-	AS_IT_IS(purse), AS_IT_IS(ntraps), AS_IT_IS(no_move), AS_IT_IS(no_command),
-	AS_IT_IS(inpack), AS_IT_IS(max_hp), AS_IT_IS(lastscore), AS_IT_IS(no_food),
-	AS_IT_IS(count), AS_IT_IS(fung_hit), AS_IT_IS(quiet), AS_IT_IS(max_level),
-	AS_IT_IS(food_left), AS_IT_IS(group), AS_IT_IS(hungry_state),
-	AS_IT_IS(whoami), AS_IT_IS(fruit), AS_IT_IS(ch_ret), AS_IT_IS(nh),
-	AS_IT_IS(oldpos), AS_IT_IS(delta), AS_IT_IS(traps), AS_IT_IS(huh),
-	AS_IT_IS(running), AS_IT_IS(playing), AS_IT_IS(wizard), AS_IT_IS(after),
-	AS_IT_IS(notify), AS_IT_IS(fight_flush), AS_IT_IS(terse),
-	AS_IT_IS(door_stop), AS_IT_IS(jump), AS_IT_IS(slow_invent),
-	AS_IT_IS(firstmove), AS_IT_IS(waswizard), AS_IT_IS(askme), AS_IT_IS(amulet),
-	AS_IT_IS(in_shell), AS_IT_IS(take), AS_IT_IS(runch), AS_IT_IS(s_know),
-	AS_IT_IS(p_know), AS_IT_IS(r_know), AS_IT_IS(ws_know),
-	AS_IT_IS(max_stats),
-	{ 0, 0 }
-};
 
-write_object_list(struct linked_list * l, FILE * savef)
+typedef int (*SaveFunc)(void * ptr, FILE * savef);
+
+write_linked_list(struct linked_list * l, FILE * savef, SaveFunc savefunc, int value_size)
 {
 	char ok = 1, end = 0;
 	struct linked_list * ptr = l;
 	while(ptr) {
 		fwrite(&ok, 1, 1, savef);
-		fwrite(ldata(ptr), 1, sizeof(struct object), savef);
+		if(savefunc) {
+			savefunc(ldata(ptr), savef);
+		} else {
+			fwrite(ldata(ptr), 1, value_size, savef);
+		}
 		ptr = next(ptr);
 	}
 	fwrite(&end, 1, 1, savef);
@@ -74,8 +59,9 @@ read_object_list(struct linked_list ** l, FILE* savef)
 	}
 }
 
-write_thing(struct thing * t, FILE * savef)
+write_thing(void * ptr, FILE * savef)
 {
+	struct thing * t = (struct thing*)ptr;
 	fwrite(t, 1, sizeof(struct thing), savef);
 	char t_dest = 0;
 	if(t->t_dest == &hero) {
@@ -89,7 +75,7 @@ write_thing(struct thing * t, FILE * savef)
 		}
 	}
 	fwrite(&t_dest, 1, sizeof(t_dest), savef);
-	write_object_list(t->t_pack, savef);
+	write_linked_list(t->t_pack, savef, 0, sizeof(struct object));
 }
 
 read_thing(struct thing * t, FILE * savef)
@@ -106,18 +92,6 @@ read_thing(struct thing * t, FILE * savef)
 		t->t_dest = NULL;
 	}
 	read_object_list(&t->t_pack, savef);
-}
-
-write_monster_list(struct linked_list * l, FILE * savef)
-{
-	char ok = 1, end = 0;
-	struct linked_list * ptr = l;
-	while(ptr) {
-		fwrite(&ok, 1, 1, savef);
-		write_thing((struct thing *)ldata(ptr), savef);
-		ptr = next(ptr);
-	}
-	fwrite(&end, 1, 1, savef);
 }
 
 read_monster_list(struct linked_list ** l, FILE* savef)
@@ -211,10 +185,10 @@ write_game(FILE *savef)
 	WRITE_AS_IT_IS(max_stats);
 
 	if(lvl_obj) {
-		write_object_list(lvl_obj, savef);
+		write_linked_list(lvl_obj, savef, 0, sizeof(struct object));
 	}
 	write_thing(&player, savef);
-	write_monster_list(mlist, savef);
+	write_linked_list(mlist, savef, write_thing, 0);
 
 	int player_weapon = 0, player_armor = 0, player_r_ring = 0, player_l_ring = 0;
 	int index = 1;
