@@ -226,6 +226,11 @@ write_game(FILE *savef)
 		fwrite(&d, 1, sizeof(d), savef);
 	}
 
+	write_win(cw, savef);
+	write_win(mw, savef);
+	write_win(hw, savef);
+	write_win(stdscr, savef);
+
 	write_string_array(s_names, MAXSCROLLS, savef);
 	write_string_array(p_colors, MAXPOTIONS, savef);
 	write_string_array(r_stones, MAXRINGS, savef);
@@ -235,11 +240,6 @@ write_game(FILE *savef)
 	write_string_array(r_guess, MAXRINGS, savef);
 	write_string_array(ws_guess, MAXSTICKS, savef);
 	write_string_array(ws_type, MAXSTICKS, savef);
-
-	write_win(cw, savef);
-	write_win(mw, savef);
-	write_win(hw, savef);
-	write_win(stdscr, savef);
 }
 
 read_game(FILE *savef)
@@ -306,6 +306,11 @@ read_game(FILE *savef)
 		}
 	}
 
+	read_win(cw, savef);
+	read_win(mw, savef);
+	read_win(hw, savef);
+	read_win(stdscr, savef);
+
 	read_string_array(s_names, MAXSCROLLS, savef);
 	read_string_array(p_colors, MAXPOTIONS, savef);
 	read_string_array(r_stones, MAXRINGS, savef);
@@ -315,11 +320,6 @@ read_game(FILE *savef)
 	read_string_array(r_guess, MAXRINGS, savef);
 	read_string_array(ws_guess, MAXSTICKS, savef);
 	read_string_array(ws_type, MAXSTICKS, savef);
-
-	read_win(cw, savef);
-	read_win(mw, savef);
-	read_win(hw, savef);
-	read_win(stdscr, savef);
 }
 
 
