@@ -12,7 +12,7 @@ $(shell mkdir -p tmp)
 $(shell mkdir -p tmp/tests)
 OBJS = $(addprefix tmp/,$(CFILES:.c=.o)) $(addprefix tmp/,$(TEST_FILES:.c=.o))
 POBJS = $(addprefix tmp/,$(CFILES:.c=.po))
-CFLAGS= -O -Werror
+CFLAGS= -O # FIXME -Werror
 PROFLAGS= -p -O
 #LDFLAGS=-i	# For PDP-11's
 #LDFLAGS=	# For VAXes
