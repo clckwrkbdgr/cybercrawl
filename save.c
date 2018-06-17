@@ -334,6 +334,25 @@ char *sbrk();
 
 STAT sbuf;
 
+void ensure_save_dir(void)
+{
+	char dirname[256] = {0};
+	static const char * parts[] = {
+		".local",
+		"share",
+		"cybercrawl",
+		NULL
+	};
+	strcpy(dirname, getenv("HOME"));
+	const char ** part = parts;
+	while(*part) {
+		strcat(dirname, "/");
+		strcat(dirname, *part);
+		mkdir(dirname, 0755);
+		++part;
+	}
+}
+
 save_game()
 {
     register FILE *savef;
@@ -372,6 +391,7 @@ save_game()
 	}
 	strcpy(file_name, buf);
 gotfile:
+	ensure_save_dir();
 	if ((savef = fopen(file_name, "w")) == NULL)
 	    msg(strerror(errno));	/* fake perror() */
     } while (savef == NULL);
@@ -395,6 +415,7 @@ void auto_save()
 
     for (i = 0; i < NSIG; i++)
 	signal(i, SIG_IGN);
+	ensure_save_dir();
     if (file_name[0] != '\0' && (savef = fopen(file_name, "w")) != NULL)
 	save_file(savef);
     exit(1);
@@ -427,10 +448,21 @@ char **envp;
     extern char **environ;
     char buf[80];
     STAT sbuf2;
+	char oldfile[256] = {0};
 
 	// Reading.
-    if (strcmp(file, "-r") == 0)
-	file = file_name;
+	if (strcmp(file, "-r") == 0) {
+		struct stat savefilestat;
+		bool old_save_exists = false;
+		strcpy(oldfile, getenv("HOME"));
+		strcat(oldfile, "/.rogue.sav");
+		old_save_exists = (stat(oldfile, &savefilestat) == 0);
+		if(old_save_exists) {
+			file = oldfile;
+		} else {
+			file = file_name;
+		}
+	}
     if ((inf = fopen(file, "r")) == NULL)
     {
 	perror(file);

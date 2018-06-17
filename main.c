@@ -130,7 +130,7 @@ char **envp;
     strcat(home, "/");
 
     strcpy(file_name, home);
-    strcat(file_name, ".rogue.sav");
+    strcat(file_name, ".local/share/cybercrawl/rogue.sav");
 
     if ((env = getenv("ROGUEOPTS")) != NULL)
 	parse_opts(env);

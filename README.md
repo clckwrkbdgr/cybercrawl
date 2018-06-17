@@ -16,4 +16,4 @@ Next goals:
 ## Installation
 
 Just go to main dir and run `make`. Produced `rogue` file is the only game file.
-Savefile is stored in user home directory as `.rogue.sav`.
+Savefile is stored at `~.local/share/cybercrawl/rogue.sav`. If savefile is present in home dir `~/.rogue.sav`, it will be loaded instead.
