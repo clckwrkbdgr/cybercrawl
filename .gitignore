@@ -2,11 +2,13 @@
 *.swp
 
 # Build
+tmp/
 *.out
 rogue
 *.o
 crawl
 crawl.exe
+*.deb
 
 # Savefiles and morgue
 crawl.log

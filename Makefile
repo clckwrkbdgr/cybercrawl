@@ -2,6 +2,8 @@
 # Makefile for rogue
 # %W% (Berkeley) %G%
 #
+VERSION=$(shell git tag | sed 's/.*\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1/' | sort -nt . | tail -1)
+
 HDRS=	rogue.h machdep.h
 CFILES=	vers.c armor.c chase.c command.c daemon.c daemons.c fight.c \
 	init.c io.c list.c main.c misc.c monsters.c move.c newlevel.c \
@@ -109,3 +111,13 @@ vgrind:
 	@csh $(VGRIND) -t -x index > vgrind.out.tbl
 
 cfiles: $(CFILES)
+
+deb: rogue
+	@debpackage.py \
+		cybercrawl \
+		-v $(VERSION) \
+		--maintainer 'umi041 <umi0451@gmail.com>' \
+		--bin rogue \
+		--build-dir tmp \
+		--dest-dir . \
+		--description 'Original Rogue clone in cyberpunk setting.'
