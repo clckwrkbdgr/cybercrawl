@@ -244,6 +244,7 @@ write_game(FILE *savef)
 
 read_game(FILE *savef)
 {
+    // FIXME bug with restoring game: if there was different terminal sizes between previous and current session, game will fail
 	READ_AS_IT_IS(rooms); READ_AS_IT_IS(rdes); READ_AS_IT_IS(between); READ_AS_IT_IS(level);
 	READ_AS_IT_IS(purse); READ_AS_IT_IS(ntraps); READ_AS_IT_IS(no_move); READ_AS_IT_IS(no_command);
 	READ_AS_IT_IS(inpack); READ_AS_IT_IS(max_hp); READ_AS_IT_IS(lastscore); READ_AS_IT_IS(no_food);
